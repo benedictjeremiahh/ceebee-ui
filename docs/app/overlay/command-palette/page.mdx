@@ -1,0 +1,38 @@
+import { PaletteDemo } from '../../../components/batch5-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# CommandPalette <span className="docs__label">Composition</span>
+
+Search over actions. The palette ranks, renders, and runs; what a command does is entirely the
+app's business.
+
+## Usage
+
+<PaletteDemo />
+
+## How it ranks
+
+An exact label beats a label prefix, which beats a word start, which beats a bare substring, which
+beats a keyword hit. Ties keep the order you supplied, so a curated list stays curated — and
+`keywords` is how "Sign out" is found by someone typing `logout`.
+
+<Guidance
+  do="Give commands keywords for the words people actually type, not the words your UI uses."
+  dont="Put destructive commands in the palette without a confirmation; a palette is one keystroke from Enter."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'open / onOpenChange', type: 'boolean | fn', description: 'Controlled — the shortcut that opens it is yours to bind.' },
+  { name: 'commands', type: 'PaletteCommand[]', description: 'id, label, onRun, plus optional icon, group, shortcut, keywords.' },
+  { name: 'placeholder / emptyMessage', type: 'ReactNode', description: 'Copy for the input and for the no-match state.' },
+]} />
+
+## Keyboard
+
+| Key | Behaviour |
+| --- | --- |
+| `↑` / `↓` | Moves the highlight through the ranked list |
+| `Enter` | Runs the highlighted command and closes |
+| `Esc` | Closes, and the query resets — a reopened palette is empty, not half-typed |

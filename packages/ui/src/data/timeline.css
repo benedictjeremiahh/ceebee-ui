@@ -1,0 +1,36 @@
+.cb-timeline { list-style: none; margin: 0; padding: 0; font-family: var(--cb-font-sans); }
+.cb-timeline__entry { --cb-timeline-accent: var(--cb-fg-subtle); display: flex; gap: var(--cb-space-3); }
+.cb-timeline__entry[data-tone="brand"] { --cb-timeline-accent: var(--cb-tone-brand); }
+.cb-timeline__entry[data-tone="info"] { --cb-timeline-accent: var(--cb-tone-info); }
+.cb-timeline__entry[data-tone="success"] { --cb-timeline-accent: var(--cb-tone-success); }
+.cb-timeline__entry[data-tone="warning"] { --cb-timeline-accent: var(--cb-tone-warning); }
+.cb-timeline__entry[data-tone="danger"] { --cb-timeline-accent: var(--cb-tone-danger); }
+
+.cb-timeline__rail { position: relative; display: flex; justify-content: center; width: 1.5rem; flex: none; }
+/* The connecting line is drawn on every entry but the last, so the rail ends with the last event. */
+.cb-timeline__entry:not(:last-child) .cb-timeline__rail::after {
+  content: "";
+  position: absolute;
+  top: 1.5rem;
+  bottom: -0.25rem;
+  width: 1px;
+  background: var(--cb-border);
+}
+.cb-timeline__marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--cb-radius-full);
+  background: color-mix(in oklch, var(--cb-timeline-accent) 16%, var(--cb-surface));
+  color: var(--cb-timeline-accent);
+  border: var(--cb-border-width) solid color-mix(in oklch, var(--cb-timeline-accent) 35%, transparent);
+}
+
+.cb-timeline__body { flex: 1; padding-bottom: var(--cb-space-5); min-width: 0; }
+.cb-timeline__entry:last-child .cb-timeline__body { padding-bottom: 0; }
+.cb-timeline__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--cb-space-3); }
+.cb-timeline__title { margin: 0; font-size: var(--cb-text-sm); font-weight: var(--cb-weight-medium); color: var(--cb-fg); }
+.cb-timeline__time { font-size: var(--cb-text-xs); color: var(--cb-fg-subtle); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.cb-timeline__description { margin: var(--cb-space-1) 0 0; font-size: var(--cb-text-sm); color: var(--cb-fg-muted); line-height: var(--cb-leading-normal); }

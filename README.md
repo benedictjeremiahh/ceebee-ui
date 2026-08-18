@@ -42,11 +42,10 @@ Releases go through Changesets: `pnpm changeset` to describe a change, and mergi
 
 ## Status
 
-Built and green — 28 documented components across foundation, form, feedback, overlay, data,
-navigation, media, motion, and onboarding, plus the docs site and the Astra dashboard recipe.
-Still to build, per [docs/inventory.md](./docs/inventory.md): DataTable, Sidebar/TopBar,
-Breadcrumbs, Pagination, Stepper, Combobox, DateInput, FileDrop, DropdownMenu, CommandPalette,
-Timeline, ScrollReveal, and the onboarding Checklist.
+Built and green — every component in [docs/inventory.md](./docs/inventory.md) except `Leaderboard`
+and the blur-up `Image`, each with its own documentation page: foundation, the full form control
+set, feedback, overlays, data display, navigation and the app shell, media, motion, and onboarding.
+Three of the four board Recipes are still to build.
 
 ## Install (once published)
 

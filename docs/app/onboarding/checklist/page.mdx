@@ -1,0 +1,29 @@
+import { ChecklistDemo } from '../../../components/batch5-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Checklist <span className="docs__label">Composition</span>
+
+Getting-started tasks with progress — the quieter half of onboarding, next to the Tour.
+
+## Usage
+
+<ChecklistDemo />
+
+## It does not know what is done
+
+Which tasks are complete is passed in, exactly as a Tour's memory is. The library holds no account
+state, because a checklist that decides for itself what "done" means is one that disagrees with
+your backend the first time someone completes a step on another device.
+
+<Guidance
+  do="Give completeSlot something worth reaching — the checklist should be able to disappear."
+  dont="Leave a finished checklist on the page forever; it turns from encouragement into clutter."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'tasks', type: 'ChecklistTask[]', description: 'id, label, description, done, onSelect. Without onSelect a row is not clickable.' },
+  { name: 'title', type: 'ReactNode', default: "'Get started'", description: 'Also the accessible name of the region.' },
+  { name: 'completeSlot', type: 'ReactNode', description: 'Replaces the list once every task is done.' },
+]} />

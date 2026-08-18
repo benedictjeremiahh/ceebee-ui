@@ -1,0 +1,22 @@
+import { TimelineDemo } from '../../../components/batch5-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Timeline <span className="docs__label">Composition</span>
+
+What happened, in order. Server-safe, and an `<ol>` rather than a stack of divs — the order is a
+fact a screen reader reads out, not a visual convention.
+
+## Usage
+
+<TimelineDemo />
+
+<Guidance
+  do="Format the timestamps yourself; the library never decides what a date looks like in your product."
+  dont="Use tone='danger' for every failure in a long history — the colour stops meaning anything by the fourth one."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'entries', type: 'TimelineEntry[]', description: 'time, title, description, icon, tone. Newest first or oldest first is your call.' },
+]} />

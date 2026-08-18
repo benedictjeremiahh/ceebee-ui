@@ -1,0 +1,53 @@
+.cb-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-3);
+  padding: var(--cb-space-4);
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-lg);
+  background: var(--cb-surface);
+  font-family: var(--cb-font-sans);
+}
+.cb-checklist__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--cb-space-3); }
+.cb-checklist__title { margin: 0; font-size: var(--cb-text-sm); font-weight: var(--cb-weight-semibold); color: var(--cb-fg); }
+.cb-checklist__count { font-size: var(--cb-text-xs); color: var(--cb-fg-subtle); font-variant-numeric: tabular-nums; }
+
+.cb-checklist__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.125rem; }
+.cb-checklist__task {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--cb-space-3);
+  width: 100%;
+  padding: var(--cb-space-2);
+  border: none;
+  border-radius: var(--cb-radius-sm);
+  background: transparent;
+  color: var(--cb-fg);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.cb-checklist__task:disabled { cursor: default; }
+.cb-checklist__task:hover:not(:disabled) { background: var(--cb-bg-subtle); }
+.cb-checklist__task:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: -2px; }
+
+.cb-checklist__marker {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.0625rem;
+  border-radius: var(--cb-radius-full);
+  border: var(--cb-border-width) solid var(--cb-border-strong);
+  color: var(--cb-fg-on-brand);
+}
+.cb-checklist__task[data-done] .cb-checklist__marker { background: var(--cb-tone-success); border-color: var(--cb-tone-success); }
+
+.cb-checklist__text { flex: 1; display: flex; flex-direction: column; gap: 0.125rem; min-width: 0; }
+.cb-checklist__label { font-size: var(--cb-text-sm); }
+.cb-checklist__task[data-done] .cb-checklist__label { color: var(--cb-fg-muted); text-decoration: line-through; }
+.cb-checklist__description { font-size: var(--cb-text-xs); color: var(--cb-fg-subtle); }
+.cb-checklist__chevron { flex: none; color: var(--cb-fg-subtle); align-self: center; }
+.cb-checklist__complete { padding: var(--cb-space-2) 0; }

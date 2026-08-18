@@ -1,0 +1,33 @@
+import { FileDropDemo } from '../../../components/batch5-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# FileDrop <span className="docs__label">Composition</span>
+
+Drag and drop, with a real file input underneath. Dropping is an addition, never the only way in —
+a drop zone without a button is unusable by keyboard and unreachable on a phone.
+
+## Usage
+
+<FileDropDemo />
+
+## Rejections are reported, not swallowed
+
+Every rejected file comes back with a reason — `type`, `size`, or `count` — through `onReject`.
+A file that disappears without explanation reads as a broken uploader, and the person tries again
+with the same file.
+
+<Guidance
+  do="Say the limits in the hint before the drop, and surface rejections after it."
+  dont="Filter silently on accept alone; a dropped file that never appears looks like data loss."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'files / onFilesChange', type: 'File[] / (files) => void', description: 'Controlled. The component holds no list of its own.' },
+  { name: 'onReject', type: '(rejections) => void', description: 'Each carries the file and a reason.' },
+  { name: 'accept', type: 'string[]', description: "Extensions or MIME types: ['.pdf', 'image/*']." },
+  { name: 'maxSize', type: 'number', description: 'Bytes, per file.' },
+  { name: 'maxFiles', type: 'number', description: 'Counted against what is already held.' },
+  { name: 'multiple', type: 'boolean', default: 'true', description: 'false behaves as a limit of one.' },
+]} />

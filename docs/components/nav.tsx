@@ -35,12 +35,16 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
       { href: '/form/select', label: 'Select', kind: 'Atom' },
       { href: '/form/choice', label: 'Checkbox · Radio · Switch', kind: 'Atom' },
       { href: '/form/number-input', label: 'NumberInput', kind: 'Atom' },
+      { href: '/form/combobox', label: 'Combobox', kind: 'Atom' },
+      { href: '/form/date-input', label: 'DateInput', kind: 'Composition' },
+      { href: '/form/file-drop', label: 'FileDrop', kind: 'Composition' },
     ],
   },
   {
     title: 'Feedback',
     entries: [
       { href: '/feedback/skeleton', label: 'Skeleton', kind: 'Atom' },
+      { href: '/feedback/progress', label: 'Spinner · ProgressBar', kind: 'Atom' },
       { href: '/feedback/badge', label: 'Badge', kind: 'Atom' },
       { href: '/feedback/alert', label: 'Alert', kind: 'Composition' },
       { href: '/feedback/toast', label: 'Toast', kind: 'Composition' },
@@ -52,6 +56,7 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
     entries: [
       { href: '/overlay/dialog', label: 'Dialog', kind: 'Composition' },
       { href: '/overlay/popover', label: 'Popover · Tooltip', kind: 'Atom' },
+      { href: '/overlay/command-palette', label: 'CommandPalette', kind: 'Composition' },
     ],
   },
   {
@@ -62,6 +67,7 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
       { href: '/data/sparkline', label: 'Sparkline · BarMini', kind: 'Widget' },
       { href: '/data/stat-card', label: 'StatCard', kind: 'Composition' },
       { href: '/data/table', label: 'DataTable · Pagination', kind: 'Composition' },
+      { href: '/data/timeline', label: 'Timeline', kind: 'Composition' },
     ],
   },
   {
@@ -83,7 +89,10 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
   },
   {
     title: 'Onboarding',
-    entries: [{ href: '/onboarding/coachmark', label: 'Coachmark · Tour', kind: 'Composition' }],
+    entries: [
+      { href: '/onboarding/coachmark', label: 'Coachmark · Tour', kind: 'Composition' },
+      { href: '/onboarding/checklist', label: 'Checklist', kind: 'Composition' },
+    ],
   },
   {
     title: 'Motion',

@@ -1,0 +1,71 @@
+.cb-spinner {
+  --cb-spinner-accent: var(--cb-tone-brand);
+  display: inline-block;
+  border-radius: var(--cb-radius-full);
+  border: 2px solid color-mix(in oklch, var(--cb-spinner-accent) 25%, transparent);
+  border-top-color: var(--cb-spinner-accent);
+  animation: cb-spin calc(var(--cb-duration-deliberate) * 1.4) linear infinite;
+}
+.cb-spinner[data-tone="neutral"] { --cb-spinner-accent: var(--cb-fg-muted); }
+.cb-spinner[data-tone="info"] { --cb-spinner-accent: var(--cb-tone-info); }
+.cb-spinner[data-tone="success"] { --cb-spinner-accent: var(--cb-tone-success); }
+.cb-spinner[data-tone="warning"] { --cb-spinner-accent: var(--cb-tone-warning); }
+.cb-spinner[data-tone="danger"] { --cb-spinner-accent: var(--cb-tone-danger); }
+.cb-spinner--sm { width: 0.875rem; height: 0.875rem; }
+.cb-spinner--md { width: 1.25rem; height: 1.25rem; border-width: 2px; }
+.cb-spinner--lg { width: 2rem; height: 2rem; border-width: 3px; }
+/* Reduced motion: it stops turning and reads as a ring — the surrounding text says "loading". */
+@media (prefers-reduced-motion: reduce) {
+  .cb-spinner { animation: none; opacity: 0.6; }
+}
+
+.cb-progress {
+  --cb-progress-accent: var(--cb-tone-brand);
+  display: flex;
+  align-items: center;
+  gap: var(--cb-space-3);
+  width: 100%;
+  font-family: var(--cb-font-sans);
+}
+.cb-progress[data-tone="neutral"] { --cb-progress-accent: var(--cb-fg-muted); }
+.cb-progress[data-tone="info"] { --cb-progress-accent: var(--cb-tone-info); }
+.cb-progress[data-tone="success"] { --cb-progress-accent: var(--cb-tone-success); }
+.cb-progress[data-tone="warning"] { --cb-progress-accent: var(--cb-tone-warning); }
+.cb-progress[data-tone="danger"] { --cb-progress-accent: var(--cb-tone-danger); }
+
+.cb-progress__track {
+  flex: 1;
+  overflow: hidden;
+  border-radius: var(--cb-radius-full);
+  background: color-mix(in oklch, var(--cb-fg) 10%, transparent);
+}
+.cb-progress[data-size="sm"] .cb-progress__track { height: 0.25rem; }
+.cb-progress[data-size="md"] .cb-progress__track { height: 0.5rem; }
+
+.cb-progress__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--cb-progress-accent);
+  transition: width var(--cb-duration-base) var(--cb-ease-standard);
+}
+.cb-progress__fill[data-indeterminate] {
+  width: 40%;
+  animation: cb-progress-slide calc(var(--cb-duration-deliberate) * 2) var(--cb-ease-standard) infinite;
+}
+@keyframes cb-progress-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+/* Reduced motion: an indeterminate bar sits still at partial width rather than sliding forever. */
+@media (prefers-reduced-motion: reduce) {
+  .cb-progress__fill { transition: none; }
+  .cb-progress__fill[data-indeterminate] { animation: none; width: 100%; opacity: 0.4; }
+}
+
+.cb-progress__value {
+  font-size: var(--cb-text-xs);
+  color: var(--cb-fg-muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 2.5rem;
+  text-align: end;
+}

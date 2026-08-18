@@ -16,6 +16,10 @@ export { Badge } from './feedback/badge.js';
 export type { BadgeProps } from './feedback/badge.js';
 export { EmptyState } from './feedback/empty-state.js';
 export type { EmptyStateProps } from './feedback/empty-state.js';
+export { Spinner, ProgressBar } from './feedback/progress.js';
+export type { SpinnerProps, ProgressBarProps } from './feedback/progress.js';
+export { Timeline } from './data/timeline.js';
+export type { TimelineProps, TimelineEntry } from './data/timeline.js';
 export { Skeleton } from './feedback/skeleton.js';
 export type { SkeletonProps, SkeletonTextProps } from './feedback/skeleton.js';
 

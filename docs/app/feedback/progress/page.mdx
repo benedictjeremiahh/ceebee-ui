@@ -1,0 +1,34 @@
+import { ProgressDemo } from '../../../components/batch5-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Spinner · ProgressBar <span className="docs__label">Atom</span>
+
+Both are server-safe: a CSS animation and a width, no state.
+
+## Usage
+
+<ProgressDemo />
+
+## Determinate or not
+
+A `ProgressBar` without a `value` is indeterminate — "something is happening, duration unknown".
+With a value it exposes `aria-valuenow`, so the percentage is announced rather than merely drawn.
+
+Under reduced motion the spinner stops turning and the indeterminate bar stops sliding: an
+animation that loops forever is exactly what that preference is about. Both stay visible, because
+removing the feedback entirely would be worse than the movement.
+
+<Guidance
+  do="Prefer a Skeleton over a Spinner when you know the shape of what is loading."
+  dont="Show a bare spinner with no label or nearby text; on its own it announces nothing."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'Spinner label', type: 'string', description: 'Makes it a status region. Omit only when nearby text already says what is loading.' },
+  { name: 'Spinner size / tone', type: "'sm' | 'md' | 'lg' | Tone", description: 'Token sizes and semantic colour.' },
+  { name: 'ProgressBar value / max', type: 'number', description: 'Omit value for indeterminate.' },
+  { name: 'ProgressBar label', type: 'string', description: 'Required accessible name.' },
+  { name: 'ProgressBar showValue', type: 'boolean', description: 'Prints the percentage after the track.' },
+]} />

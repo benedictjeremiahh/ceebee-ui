@@ -28,16 +28,16 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 | Select | Atom | client | S2 — built |
 | Checkbox / Radio / Switch | Atom | client | S2 — built |
 | NumberInput | Atom | client | S2 — built |
-| DateInput | Atom | client | S3 |
-| Combobox / Autocomplete | Composition | client | S3 |
-| FileDrop | Composition | client | S4 |
+| DateInput | Composition | client | S3 — built |
+| Combobox | Atom | client | S3 — built |
+| FileDrop | Composition | client | S4 — built |
 
 ## feedback
 
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
 | Skeleton (`.Text` `.Circle` `.Rect`) | Atom | server | S1 |
-| Spinner / ProgressBar | Atom | server | S3 |
+| Spinner / ProgressBar | Atom | server | S3 — built |
 | Badge / Tag | Atom | server | S2 — built |
 | Alert / Callout | Composition | client | S2 — built |
 | Toast | Composition | client | S3 — built |
@@ -51,7 +51,7 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 | Popover | Atom | client | S2 — built |
 | Tooltip | Atom | client | S2 — built |
 | DropdownMenu | Composition | client | S3 — built |
-| CommandPalette | Composition | client | S4 |
+| CommandPalette | Composition | client | S4 — built |
 
 ## data
 
@@ -63,7 +63,7 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 | Sparkline / BarMini | Widget | server | S2 — built |
 | DataTable (+ `.Skeleton`) | Composition | client | S3 — built |
 | Leaderboard | Composition | server | S3 |
-| Timeline | Composition | server | S4 |
+| Timeline | Composition | server | S4 — built |
 
 ## nav
 
@@ -90,7 +90,7 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 | Motion tokens + presets | — | css | S1 |
 | Reveal / Stagger | Atom | client | S2 — built |
 | AnimatePresence wrappers (enter/exit) | Atom | client | S2 |
-| ScrollReveal | Composition | client | S4 |
+| ScrollReveal | Composition | client | dropped — `Reveal`/`Stagger` take `onView`, which is the same thing with one fewer component |
 
 ## onboarding
 
@@ -99,7 +99,7 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 | Coachmark (bubble + spotlight) | Composition | client | S2 — built |
 | Tour (sequencing controller) | Composition | client | S2 — built |
 | Seen Store interface | — | client | S2 — built |
-| Checklist / GettingStarted | Composition | client | S4 |
+| Checklist | Composition | client | S4 — built |
 
 ## Recipes (docs only, never shipped)
 

@@ -1,0 +1,25 @@
+import { ComboboxDemo } from '../../../components/batch5-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Combobox <span className="docs__label">Atom</span>
+
+A Select you can type into. Filtering, highlight, and keyboard behaviour are Base UI's.
+
+## Usage
+
+<ComboboxDemo />
+
+<Guidance
+  do="Reach for a Combobox past roughly a dozen options, where typing beats scanning."
+  dont="Use it for four options — a Select shows them all in one click, and a RadioGroup shows them without any."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'items', type: 'ComboboxOption[]', description: 'value, label, and an optional description line.' },
+  { name: 'value / defaultValue', type: 'string | null', description: 'Controlled or uncontrolled. null is "nothing chosen".' },
+  { name: 'onValueChange', type: '(value: string | null) => void', description: 'Clearing reports null rather than an empty string.' },
+  { name: 'emptyMessage', type: 'ReactNode', default: "'Nothing matched'", description: 'Shown when the query matches nothing — never an empty popup.' },
+  { name: 'size / disabled / invalid', type: '—', description: 'As every other control; inside a Field, invalid is inherited.' },
+]} />
