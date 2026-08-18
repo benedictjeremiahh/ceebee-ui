@@ -1,0 +1,67 @@
+import { Demo } from '../../components/demo';
+import { Guidance } from '../../components/props-table';
+import { Surface, Stack, Text, Heading } from '@ceebee/ui';
+
+# Theming
+
+Colour resolves in CSS, before React runs. A **Theme** is the light or dark rendering of the active
+**Skin**; a **Skin** is one CSS file that rewrites brand tokens and nothing else.
+
+## Selecting a theme
+
+`data-theme` on the document root wins in both directions; with no attribute the page follows
+`prefers-color-scheme`. `ThemeProvider` only writes that attribute — it never holds colour.
+
+<Demo layout="block" code={`import { ThemeProvider, useTheme } from '@ceebee/ui/client';
+
+export default function Layout({ children }) {
+  return <ThemeProvider defaultChoice="system">{children}</ThemeProvider>;
+}
+
+function ThemeToggle() {
+  const { choice, setChoice, resolved } = useTheme();
+  return <Button onClick={() => setChoice(resolved === 'dark' ? 'light' : 'dark')}>{resolved}</Button>;
+}`}>
+  <Text tone="muted">Use the toggle at the top right of this page — it is this exact hook.</Text>
+</Demo>
+
+## Writing a Skin
+
+A Skin rewrites skin tokens only. It never touches structure tokens and never writes a component
+rule; if a Skin needs a rule, the component is missing a token.
+
+<Demo layout="block" code={`/* skins/astra.css — the violet-gradient dashboard look */
+:root {
+  --cb-hue-brand: 278;
+  --cb-bg: oklch(0.97 0.02 285);
+  --cb-surface: oklch(1 0 0 / 0.86);
+  --cb-tint-strength: 0.12;
+  --cb-glass-blur: 22px;
+}
+
+:root[data-theme="dark"] {
+  --cb-bg: oklch(0.21 0.04 285);
+  --cb-surface: oklch(0.27 0.045 285);
+}`}>
+  <Stack direction="row" gap={3} wrap>
+    <Surface variant="tinted" hue="violet" padding="md"><Text size="sm">tinted · violet</Text></Surface>
+    <Surface variant="glass" padding="md"><Text size="sm">glass</Text></Surface>
+    <Surface variant="gradient" hue="blue" padding="md"><Text size="sm">gradient · blue</Text></Surface>
+  </Stack>
+</Demo>
+
+<Guidance
+  do="Put a project's brand in a Skin file and load it after the base stylesheet."
+  dont="Override component classes in the consuming app — that is a token the library is missing, and a fork waiting to happen."
+/>
+
+## Runtime colour
+
+If a person picks their own accent colour, write the value into the custom property and leave the
+tokens where they are:
+
+<Demo layout="block" code={`<div style={{ '--cb-hue-brand': userHue }}>
+  {children}
+</div>`}>
+  <Text tone="muted">Tokens stay in CSS; JavaScript only supplies a value.</Text>
+</Demo>

@@ -1,0 +1,51 @@
+import { Demo } from '../components/demo';
+import { Guidance } from '../components/props-table';
+import { Surface, Stack, Text, StatCard, ProgressRing } from '@ceebee/ui';
+
+# @ceebee/ui
+
+Tokens, themed primitives, motion, and the onboarding pieces a plain component library leaves out.
+Published to npm and imported — never copied into a project, so a fix reaches every app on
+`pnpm up` ([ADR 0001](https://github.com/ceebee/ui)).
+
+<Demo layout="block" code={`import '@ceebee/ui/styles.css';
+import '@ceebee/ui/skins/astra.css';        // optional Skin: rewrites brand tokens only
+
+import { Surface, StatCard, ProgressRing } from '@ceebee/ui';         // server-safe
+import { Button, Dialog, MotionProvider } from '@ceebee/ui/client';   // interactive`}>
+  <Stack direction="row" gap={4} wrap>
+    <StatCard label="Total balance" value="120,456.50" delta={{ value: '+2.4%', direction: 'up' }} hue="violet" />
+    <StatCard
+      label="Task progress"
+      value="84%"
+      hue="blue"
+      visual={<ProgressRing value={84} size={64} thickness={8} hue="blue" label="Task progress" />}
+    />
+  </Stack>
+</Demo>
+
+## The two entries
+
+The package splits at the React Server Component boundary, and the split is deliberate: a
+content-heavy page can be built from `@ceebee/ui` alone and ship no animation runtime at all.
+
+- **`@ceebee/ui`** — server-safe. `Surface`, `Stack`, `Grid`, `Container`, `Text`, `Heading`,
+  `Skeleton`, `ProgressRing`, `StatCard`.
+- **`@ceebee/ui/client`** — carries `"use client"`. `Button`, `Field`, `TextInput`, `Dialog`,
+  `ThemeProvider`, `MotionProvider`.
+
+<Guidance
+  do="Import from the server entry by default, and reach for /client only when the component actually needs to listen or animate."
+  dont="Import everything from /client because it always works — that quietly turns a whole page into a Client Component."
+/>
+
+## What this library refuses to do
+
+Saying no is what keeps it small enough to maintain alone.
+
+- **No charting.** Widgets with no axis (`ProgressRing`, `Donut`, `Sparkline`) ship here; anything
+  with an axis or a scale belongs to your app's charting library.
+- **No form engine.** `Field` owns label, hint, error, and the aria wiring between them. Validation
+  and form state stay with react-hook-form, TanStack Form, or Server Actions.
+- **No memory.** A `Tour` sequences Coachmarks; whether a person has already seen it is answered by
+  a Seen Store your app injects. The library never learns who your users are.

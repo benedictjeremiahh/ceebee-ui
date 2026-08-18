@@ -1,0 +1,42 @@
+.cb-ring {
+  --cb-ring-accent: var(--cb-tone-brand);
+  position: relative;
+  width: var(--cb-ring-size);
+  height: var(--cb-ring-size);
+  display: inline-grid;
+  place-items: center;
+}
+.cb-ring[data-tone="neutral"] { --cb-ring-accent: var(--cb-tone-neutral); }
+.cb-ring[data-tone="info"] { --cb-ring-accent: var(--cb-tone-info); }
+.cb-ring[data-tone="success"] { --cb-ring-accent: var(--cb-tone-success); }
+.cb-ring[data-tone="warning"] { --cb-ring-accent: var(--cb-tone-warning); }
+.cb-ring[data-tone="danger"] { --cb-ring-accent: var(--cb-tone-danger); }
+.cb-ring[data-hue="violet"] { --cb-ring-accent: var(--cb-decor-violet); }
+.cb-ring[data-hue="blue"] { --cb-ring-accent: var(--cb-decor-blue); }
+.cb-ring[data-hue="teal"] { --cb-ring-accent: var(--cb-decor-teal); }
+.cb-ring[data-hue="green"] { --cb-ring-accent: var(--cb-decor-green); }
+.cb-ring[data-hue="amber"] { --cb-ring-accent: var(--cb-decor-amber); }
+.cb-ring[data-hue="rose"] { --cb-ring-accent: var(--cb-decor-rose); }
+
+.cb-ring svg { position: absolute; inset: 0; }
+.cb-ring__track { stroke: color-mix(in oklch, var(--cb-ring-accent) 16%, transparent); }
+.cb-ring__value {
+  stroke: var(--cb-ring-accent);
+  animation: cb-ring-fill var(--cb-duration-deliberate) var(--cb-ease-entrance) both;
+}
+@keyframes cb-ring-fill {
+  from { stroke-dashoffset: var(--cb-ring-circumference); }
+  to { stroke-dashoffset: var(--cb-ring-offset); }
+}
+/* Reduced motion: the arc is drawn at its final length rather than swept into place. */
+@media (prefers-reduced-motion: reduce) {
+  .cb-ring__value { animation: none; }
+}
+
+.cb-ring__center {
+  font-family: var(--cb-font-sans);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--cb-weight-semibold);
+  font-size: var(--cb-text-lg);
+  color: var(--cb-fg);
+}

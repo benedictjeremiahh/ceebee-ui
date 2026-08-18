@@ -1,0 +1,54 @@
+import { Demo } from '../../../components/demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+import { ProgressRing, Stack, Text } from '@ceebee/ui';
+
+# ProgressRing <span className="docs__label">Widget</span>
+
+The 84%-style ring the reference dashboards lean on. Hand-written SVG with no charting dependency —
+it has no axis and no scale, which is exactly what separates a Widget from a Chart here.
+
+## Usage
+
+<Demo code={`<ProgressRing value={84} label="Task progress" hue="violet" />`}>
+  <ProgressRing value={84} label="Task progress" hue="violet" />
+  <ProgressRing value={91} label="Team performance" hue="blue" />
+  <ProgressRing value={38} label="Storage used" tone="warning" />
+  <ProgressRing value={12} label="Errors" tone="danger" size={72} thickness={8} />
+</Demo>
+
+## Custom centre
+
+Anything can sit in the middle. Keep it short — the ring is small and the label is what carries
+meaning for a screen reader anyway.
+
+<Demo code={`<ProgressRing value={7} max={12} label="Modules completed" size={112}>
+  <span>7<small>/12</small></span>
+</ProgressRing>`}>
+  <ProgressRing value={7} max={12} label="Modules completed" size={112} hue="green">
+    <Stack gap={0} align="center">
+      <Text weight="semibold" numeric>7/12</Text>
+      <Text size="xs" tone="subtle">modules</Text>
+    </Stack>
+  </ProgressRing>
+</Demo>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'value', type: 'number', description: 'Clamped into range; NaN and negatives render as empty rather than as a broken arc.' },
+  { name: 'max', type: 'number', default: '100', description: 'A zero max is survived rather than divided by.' },
+  { name: 'size', type: 'number', default: '96', description: 'Outer diameter in pixels.' },
+  { name: 'thickness', type: 'number', default: '10', description: 'Stroke width. The radius insets by half of it, so the ring is never clipped.' },
+  { name: 'tone / hue', type: 'Tone | DecorHue', default: "tone='brand'", description: 'Semantic or decorative colour.' },
+  { name: 'label', type: 'string', description: 'Required. Becomes "Task progress: 84%" for assistive technology.' },
+]} />
+
+<Guidance
+  do="Give a label that says what is being measured — the percentage alone is meaningless read aloud."
+  dont="Use a ring for a value with no maximum; that is a number, not a proportion."
+/>
+
+## Motion
+
+The arc sweeps from empty to its value over `--cb-duration-deliberate`. Under reduced motion it is
+drawn at its final length instead — the information arrives either way.

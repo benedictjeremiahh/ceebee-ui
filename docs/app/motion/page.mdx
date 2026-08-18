@@ -1,0 +1,58 @@
+import { Demo } from '../../components/demo';
+import { Guidance } from '../../components/props-table';
+import { PropsTable } from '../../components/props-table';
+import { Text } from '@ceebee/ui';
+
+# Motion contract
+
+Animation is on by default here, which is why the timings are tokens: a component reads
+`--cb-duration-base` or asks the provider for a spring, and never writes its own numbers. Without
+that rule twenty components drift into five different rhythms.
+
+## Tokens
+
+| Token | Value | Used for |
+| --- | --- | --- |
+| `--cb-duration-instant` | 80ms | State that must feel immediate: press, focus ring |
+| `--cb-duration-fast` | 140ms | Hover, colour changes |
+| `--cb-duration-base` | 220ms | Enter and exit of overlays |
+| `--cb-duration-slow` | 380ms | Larger movement, drawers |
+| `--cb-duration-deliberate` | 620ms | Things meant to be watched: a ring filling |
+
+Springs are named too — `snappy` for controls, `soft` for surfaces, `bouncy` for celebratory moments.
+
+## MotionProvider
+
+<Demo layout="block" code={`import { MotionProvider, useMotionSettings } from '@ceebee/ui/client';
+
+<MotionProvider scale={0.5}>       {/* everything at half speed */}
+  <App />
+</MotionProvider>
+
+function Card() {
+  const { enabled, duration, spring } = useMotionSettings();
+  return <motion.div animate={{ opacity: 1 }} transition={spring('soft')} />;
+}`}>
+  <Text as="div" tone="muted">
+    The stage footer of every example on this site reports what the provider currently resolves to.
+  </Text>
+</Demo>
+
+<PropsTable rows={[
+  { name: 'enabled', type: 'boolean', default: 'true', description: 'App-level off switch — a settings toggle, or a test.' },
+  { name: 'scale', type: 'number', default: '1', description: 'Multiplier on every duration. 0 is equivalent to disabled.' },
+]} />
+
+## Reduced motion
+
+`prefers-reduced-motion: reduce` is treated as a requirement, not a hint. It resolves `enabled` to
+`false`, collapses every duration to zero, and switches CSS animations off through
+`--cb-motion-scale`.
+
+<Guidance
+  do="Drop transforms and keep opacity, so the state change is still visible without movement."
+  dont="Remove the feedback entirely — a dialog that appears with no transition at all is worse than one that fades."
+/>
+
+Every animated component also takes `motion={false}` for a single opt-out that does not touch the
+provider.

@@ -1,0 +1,67 @@
+import { Demo } from '../../../components/demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+import { ButtonPlayground } from '../../../components/button-playground';
+import { Button } from '@ceebee/ui/client';
+import { Text } from '@ceebee/ui';
+
+# Button <span className="docs__label">Atom</span>
+
+Four variants, six tones, three sizes — and a press animation that comes from the motion tokens, so
+it feels the same as every other press in the product.
+
+## Playground
+
+<ButtonPlayground />
+
+## Variants
+
+<Demo code={`<Button variant="solid">Save</Button>
+<Button variant="soft">Save</Button>
+<Button variant="outline">Save</Button>
+<Button variant="ghost">Save</Button>`}>
+  <Button variant="solid">Solid</Button>
+  <Button variant="soft">Soft</Button>
+  <Button variant="outline">Outline</Button>
+  <Button variant="ghost">Ghost</Button>
+</Demo>
+
+## Tone
+
+<Demo code={`<Button tone="danger">Delete</Button>`}>
+  <Button tone="brand">Brand</Button>
+  <Button tone="neutral">Neutral</Button>
+  <Button tone="success">Success</Button>
+  <Button tone="warning">Warning</Button>
+  <Button tone="danger">Danger</Button>
+</Demo>
+
+## Loading
+
+`loading` disables the button, sets `aria-busy`, and swaps the leading icon for a spinner. The label
+stays, so the button does not change width and the pointer does not land on something else.
+
+<Demo code={`<Button loading>Saving</Button>`}>
+  <Button loading>Saving</Button>
+  <Button variant="outline" tone="neutral" loading>Saving</Button>
+</Demo>
+
+<Guidance
+  do="Keep the label visible while loading, so the button holds its size and its meaning."
+  dont="Replace the label with a bare spinner — the row reflows and the action becomes anonymous."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'variant', type: "'solid' | 'soft' | 'outline' | 'ghost'", default: "'solid'", description: 'Visual weight. One solid button per view is usually enough.' },
+  { name: 'tone', type: 'Tone', default: "'brand'", description: 'Semantic colour.' },
+  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Control height token.' },
+  { name: 'loading', type: 'boolean', default: 'false', description: 'Disables, sets aria-busy, shows a spinner in place of iconStart.' },
+  { name: 'iconStart / iconEnd', type: 'ReactNode', description: 'Any icon element — the library never picks the icon set for you.' },
+  { name: 'motion', type: 'boolean', default: 'true', description: 'Opts this button out of press feedback without touching MotionProvider.' },
+]} />
+
+<Text as="div" tone="subtle" size="sm">
+  Motion redefines the drag and animation DOM events, so those handlers are not accepted here. A
+  button that needs HTML5 drag is a different component.
+</Text>

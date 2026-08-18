@@ -1,0 +1,68 @@
+import { Demo } from '../../../components/demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+import { Surface, Stack, Text, Heading } from '@ceebee/ui';
+
+# Surface <span className="docs__label">Atom</span>
+
+Every raised or tinted panel in the library is a Surface. Its variants are where glass and gradients
+live, so those looks are a choice a screen makes rather than an identity baked into the brand.
+
+## Anatomy
+
+A Surface is a box with four independent decisions: **variant** (how it is filled), **tone** or
+**hue** (what colour it leans on), **elevation** (how far off the page it sits), and **radius** /
+**padding** (both token steps, never free values).
+
+<Demo code={`<Surface variant="tinted" hue="violet" padding="md">
+  <Text>Tinted card</Text>
+</Surface>`}>
+  <Surface padding="md"><Text size="sm">plain</Text></Surface>
+  <Surface variant="tinted" hue="violet" padding="md"><Text size="sm">tinted · violet</Text></Surface>
+  <Surface variant="tinted" tone="success" padding="md"><Text size="sm">tinted · success</Text></Surface>
+  <Surface variant="glass" padding="md"><Text size="sm">glass</Text></Surface>
+  <Surface variant="gradient" hue="blue" padding="md"><Text size="sm">gradient · blue</Text></Surface>
+</Demo>
+
+## Tone versus hue
+
+`tone` is semantic — it means something (`success`, `danger`). `hue` is decorative — it means
+nothing, and exists because a dashboard of six tiles reads better in six colours. Never use `tone`
+to get a colour you liked; that is what `hue` is for.
+
+<Demo code={`<Surface variant="tinted" tone="danger">Payment failed</Surface>
+<Surface variant="tinted" hue="teal">Storage</Surface>`}>
+  <Surface variant="tinted" tone="danger" padding="md"><Text size="sm">danger · means failure</Text></Surface>
+  <Surface variant="tinted" hue="teal" padding="md"><Text size="sm">teal · means nothing</Text></Surface>
+</Demo>
+
+<Guidance
+  do="Reach for hue when the colour is only there to tell tiles apart."
+  dont="Use tone='danger' because the red looked good — a screen reader user gets no colour, and the next reader believes something is wrong."
+/>
+
+## Elevation
+
+<Demo code={`<Surface elevation="lg" padding="md">Floating</Surface>`}>
+  <Surface elevation="none" padding="md"><Text size="sm">none</Text></Surface>
+  <Surface elevation="sm" padding="md"><Text size="sm">sm</Text></Surface>
+  <Surface elevation="md" padding="md"><Text size="sm">md</Text></Surface>
+  <Surface elevation="lg" padding="md"><Text size="sm">lg</Text></Surface>
+</Demo>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'variant', type: "'plain' | 'tinted' | 'glass' | 'gradient'", default: "'plain'", description: 'How the panel is filled. Glass blurs what is behind it, so it needs something behind it.' },
+  { name: 'tone', type: "'neutral' | 'brand' | 'info' | 'success' | 'warning' | 'danger'", default: "'neutral'", description: 'Semantic colour for tinted and gradient.' },
+  { name: 'hue', type: "'violet' | 'blue' | 'teal' | 'green' | 'amber' | 'rose'", description: 'Decorative colour. Wins over tone when both are given.' },
+  { name: 'elevation', type: "'none' | 'sm' | 'md' | 'lg'", default: "'sm'", description: 'Shadow step.' },
+  { name: 'radius', type: "'sm' | 'md' | 'lg' | 'xl'", default: "'lg'", description: 'Corner token.' },
+  { name: 'padding', type: "'none' | 'sm' | 'md' | 'lg'", default: "'md'", description: 'Inner spacing token.' },
+  { name: 'bordered', type: 'boolean', default: 'true', description: 'Hairline border. Glass keeps its own border colour.' },
+  { name: 'asSection', type: 'boolean', default: 'false', description: 'Renders a <section> for a landmark region.' },
+]} />
+
+## Tokens read
+
+`--cb-surface`, `--cb-border`, `--cb-tint-strength`, `--cb-glass-bg`, `--cb-glass-blur`,
+`--cb-gradient-angle`, `--cb-shadow-*`, `--cb-radius-*`, `--cb-space-*`.

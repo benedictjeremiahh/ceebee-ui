@@ -1,0 +1,115 @@
+/* Skin tokens: the default Ceebee skin. A Skin file rewrites only these (ADR 0002).
+   Light is defined on bare :root so no colour has its only definition inside a media query. */
+:root {
+  --cb-hue-brand: 274;
+  --cb-hue-info: 214;
+  --cb-hue-success: 152;
+  --cb-hue-warning: 38;
+  --cb-hue-danger: 4;
+
+  --cb-brand-50: oklch(0.97 0.02 var(--cb-hue-brand));
+  --cb-brand-100: oklch(0.94 0.05 var(--cb-hue-brand));
+  --cb-brand-200: oklch(0.88 0.09 var(--cb-hue-brand));
+  --cb-brand-300: oklch(0.8 0.13 var(--cb-hue-brand));
+  --cb-brand-400: oklch(0.71 0.17 var(--cb-hue-brand));
+  --cb-brand-500: oklch(0.62 0.2 var(--cb-hue-brand));
+  --cb-brand-600: oklch(0.54 0.19 var(--cb-hue-brand));
+  --cb-brand-700: oklch(0.45 0.16 var(--cb-hue-brand));
+
+  --cb-bg: oklch(0.985 0.004 280);
+  --cb-bg-subtle: oklch(0.96 0.008 280);
+  --cb-surface: oklch(1 0 0);
+  --cb-surface-raised: oklch(1 0 0);
+  --cb-border: oklch(0.9 0.008 280);
+  --cb-border-strong: oklch(0.82 0.012 280);
+
+  --cb-fg: oklch(0.22 0.02 280);
+  --cb-fg-muted: oklch(0.52 0.02 280);
+  --cb-fg-subtle: oklch(0.65 0.015 280);
+  --cb-fg-on-brand: oklch(0.99 0 0);
+
+  --cb-tone-neutral: var(--cb-fg-muted);
+  --cb-tone-brand: var(--cb-brand-500);
+  --cb-tone-info: oklch(0.62 0.16 var(--cb-hue-info));
+  --cb-tone-success: oklch(0.62 0.15 var(--cb-hue-success));
+  --cb-tone-warning: oklch(0.75 0.15 var(--cb-hue-warning));
+  --cb-tone-danger: oklch(0.6 0.19 var(--cb-hue-danger));
+
+  /* Decorative hues: the pastel card set the board leans on. */
+  --cb-decor-violet: oklch(0.68 0.17 292);
+  --cb-decor-blue: oklch(0.68 0.15 240);
+  --cb-decor-teal: oklch(0.72 0.12 190);
+  --cb-decor-green: oklch(0.74 0.14 150);
+  --cb-decor-amber: oklch(0.8 0.14 75);
+  --cb-decor-rose: oklch(0.7 0.16 15);
+
+  --cb-shadow-sm: 0 1px 2px oklch(0.3 0.03 280 / 0.06);
+  --cb-shadow-md: 0 4px 16px oklch(0.3 0.03 280 / 0.08);
+  --cb-shadow-lg: 0 18px 48px oklch(0.3 0.03 280 / 0.12);
+
+  --cb-glass-bg: oklch(1 0 0 / 0.62);
+  --cb-glass-border: oklch(1 0 0 / 0.55);
+  --cb-glass-blur: 18px;
+
+  --cb-tint-strength: 0.09;
+  --cb-gradient-angle: 145deg;
+
+  --cb-font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --cb-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+}
+
+/* System dark, unless the document explicitly asked for light. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --cb-bg: oklch(0.19 0.02 280);
+    --cb-bg-subtle: oklch(0.23 0.022 280);
+    --cb-surface: oklch(0.25 0.024 280);
+    --cb-surface-raised: oklch(0.29 0.026 280);
+    --cb-border: oklch(0.34 0.02 280);
+    --cb-border-strong: oklch(0.44 0.025 280);
+
+    --cb-fg: oklch(0.96 0.006 280);
+    --cb-fg-muted: oklch(0.76 0.015 280);
+    --cb-fg-subtle: oklch(0.62 0.018 280);
+
+    --cb-brand-500: oklch(0.72 0.19 var(--cb-hue-brand));
+    --cb-brand-600: oklch(0.64 0.2 var(--cb-hue-brand));
+
+    --cb-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.4);
+    --cb-shadow-md: 0 6px 20px oklch(0 0 0 / 0.45);
+    --cb-shadow-lg: 0 22px 56px oklch(0 0 0 / 0.55);
+
+    --cb-glass-bg: oklch(0.3 0.03 280 / 0.55);
+    --cb-glass-border: oklch(0.8 0.02 280 / 0.16);
+
+    --cb-tint-strength: 0.16;
+  }
+}
+
+/* Explicit choice wins in both directions. */
+:root[data-theme="dark"] {
+  --cb-bg: oklch(0.19 0.02 280);
+  --cb-bg-subtle: oklch(0.23 0.022 280);
+  --cb-surface: oklch(0.25 0.024 280);
+  --cb-surface-raised: oklch(0.29 0.026 280);
+  --cb-border: oklch(0.34 0.02 280);
+  --cb-border-strong: oklch(0.44 0.025 280);
+
+  --cb-fg: oklch(0.96 0.006 280);
+  --cb-fg-muted: oklch(0.76 0.015 280);
+  --cb-fg-subtle: oklch(0.62 0.018 280);
+
+  --cb-brand-500: oklch(0.72 0.19 var(--cb-hue-brand));
+  --cb-brand-600: oklch(0.64 0.2 var(--cb-hue-brand));
+
+  --cb-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.4);
+  --cb-shadow-md: 0 6px 20px oklch(0 0 0 / 0.45);
+  --cb-shadow-lg: 0 22px 56px oklch(0 0 0 / 0.55);
+
+  --cb-glass-bg: oklch(0.3 0.03 280 / 0.55);
+  --cb-glass-border: oklch(0.8 0.02 280 / 0.16);
+
+  --cb-tint-strength: 0.16;
+}
+
+html, body { background: var(--cb-bg); color: var(--cb-fg); }

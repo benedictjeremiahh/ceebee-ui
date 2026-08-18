@@ -1,0 +1,49 @@
+import { DialogDemo } from '../../../components/dialog-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+import { Text } from '@ceebee/ui';
+
+# Dialog <span className="docs__label">Composition</span>
+
+Focus trapping, scroll locking, dismissal, and the `aria-labelledby` wiring come from Base UI. This
+component adds the brand: token-driven surface, sizes, placement, and the enter/exit transition.
+
+## Usage
+
+<DialogDemo />
+
+## Placement
+
+`center` scales in from the middle — the default, for anything that interrupts. `end` slides up from
+the bottom-right corner, for confirmations that should not take the whole screen.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'open / defaultOpen', type: 'boolean', description: 'Controlled or uncontrolled. Pass onOpenChange with open.' },
+  { name: 'onOpenChange', type: '(open: boolean) => void', description: 'Fires for every dismissal path: backdrop, Escape, close button.' },
+  { name: 'title', type: 'ReactNode', description: 'Required — it is what names the dialog for assistive technology.' },
+  { name: 'description', type: 'ReactNode', description: 'Wired as the accessible description.' },
+  { name: 'footer', type: 'ReactNode', description: 'Actions, aligned to the end. Put the confirming action last.' },
+  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Max width step.' },
+  { name: 'placement', type: "'center' | 'end'", default: "'center'", description: 'Where it sits and how it enters.' },
+  { name: 'trigger', type: 'ReactNode', description: 'The element that opens it. Omit for a fully controlled dialog.' },
+]} />
+
+## Keyboard
+
+| Key | Behaviour |
+| --- | --- |
+| `Escape` | Closes the dialog |
+| `Tab` / `Shift+Tab` | Cycles focus inside it — focus cannot leave while open |
+| Focus on close | Returns to whatever opened it |
+
+<Guidance
+  do="Give every dialog a title, even a short one — it is the accessible name, not decoration."
+  dont="Nest a second dialog inside one to ask a follow-up question; use one dialog whose content changes."
+/>
+
+## Motion
+
+Enter and exit are CSS transitions driven by Base UI's `data-starting-style` and
+`data-ending-style`, because Base UI owns this element's mount lifecycle. Under reduced motion the
+dialog still fades — it just stops moving.

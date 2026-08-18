@@ -1,0 +1,58 @@
+import { Demo } from '../../../components/demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+import { Stack, Grid, Container, Surface, Text } from '@ceebee/ui';
+
+# Stack · Grid · Container <span className="docs__label">Atom</span>
+
+Layout primitives whose gaps can only be spacing tokens. That single constraint is why the library
+has no `style={{ padding: 13 }}` anywhere.
+
+## Stack
+
+<Demo layout="block" code={`<Stack direction="row" gap={4} align="center" justify="between">
+  <Text>Left</Text>
+  <Text>Right</Text>
+</Stack>`}>
+  <Stack gap={3}>
+    <Stack direction="row" gap={2}>
+      <Surface padding="sm"><Text size="sm">gap 2</Text></Surface>
+      <Surface padding="sm"><Text size="sm">gap 2</Text></Surface>
+    </Stack>
+    <Stack direction="row" gap={5}>
+      <Surface padding="sm"><Text size="sm">gap 5</Text></Surface>
+      <Surface padding="sm"><Text size="sm">gap 5</Text></Surface>
+    </Stack>
+  </Stack>
+</Demo>
+
+<PropsTable rows={[
+  { name: 'direction', type: "'row' | 'column'", default: "'column'", description: 'Flex direction.' },
+  { name: 'gap', type: '0 – 8', default: '4', description: 'Spacing token step, not pixels.' },
+  { name: 'align', type: "'start' | 'center' | 'end' | 'stretch' | 'baseline'", default: "'stretch'", description: 'Cross-axis alignment.' },
+  { name: 'justify', type: "'start' | 'center' | 'end' | 'between'", default: "'start'", description: 'Main-axis distribution.' },
+  { name: 'wrap', type: 'boolean', default: 'false', description: 'Allows items to wrap onto a new line.' },
+]} />
+
+## Grid
+
+Fixed `columns` collapse on their own below 900px and 560px. Pass `minItemWidth` instead when the
+count should follow the content rather than the breakpoint.
+
+<Demo layout="block" code={`<Grid minItemWidth="14rem" gap={4}>
+  {items.map((item) => <StatCard key={item.id} {...item} />)}
+</Grid>`}>
+  <Grid minItemWidth="10rem" gap={3}>
+    <Surface variant="tinted" hue="violet" padding="md"><Text size="sm">auto-fit</Text></Surface>
+    <Surface variant="tinted" hue="blue" padding="md"><Text size="sm">auto-fit</Text></Surface>
+    <Surface variant="tinted" hue="teal" padding="md"><Text size="sm">auto-fit</Text></Surface>
+  </Grid>
+</Demo>
+
+<Guidance
+  do="Use minItemWidth for card grids whose count varies with data."
+  dont="Hard-code columns={4} for a list that might hold two items — the row will look broken at low counts."
+/>
+
+## Container
+
+`sm` 40rem · `md` 56rem · `lg` 76rem · `full`. Centres content and applies the page gutter.

@@ -1,0 +1,63 @@
+# @ceebee/ui
+
+Ceebee's design system: Tokens, themed primitives, motion, and the onboarding pieces (Coachmark,
+Tour) that plain component libraries leave out. React 19, Next App Router friendly, published to npm
+and imported.
+
+## Read first
+
+- [CONTEXT.md](./CONTEXT.md) — the vocabulary. Atom, Composition, Recipe, Token, Skin, Surface, Tone,
+  Coachmark, Tour, Seen Store, Widget vs Chart.
+- [AGENTS.md](./AGENTS.md) — the authoring contract. Read before adding a component.
+- [docs/adr/](./docs/adr/) — why the shape is the shape.
+- [docs/inventory.md](./docs/inventory.md) — every planned component and where it sits in the build.
+
+## Shape
+
+```
+packages/ui/          @ceebee/ui        — the library
+  src/index.ts                          — server-safe entry
+  src/client.ts                         — "use client" entry
+  src/tokens/                           — structure + skin tokens, skins/
+docs/                                   — Next 16 docs site (MDX, live examples, Recipes)
+```
+
+## Stack
+
+React 19 · Base UI (behaviour) · Motion (animation) · Embla (carousel) · CSS Modules over CSS custom
+properties · lucide-react as a peer for consumer icons · Vitest + Testing Library · Changesets.
+
+## Working on it
+
+```bash
+pnpm install
+pnpm dev        # docs site on http://localhost:4100
+pnpm test       # vitest — logic, a11y wiring, reduced motion
+pnpm build      # library: dist/index.js, dist/client.js, dist/styles.css, dist/skins/
+pnpm typecheck
+```
+
+Releases go through Changesets: `pnpm changeset` to describe a change, and merging the generated
+"Version Packages" PR publishes to npm.
+
+## Status
+
+Built and green: tokens, theming, Surface, Stack/Grid/Container, Text/Heading, Skeleton,
+ProgressRing, StatCard, Button, Field/TextInput/Textarea, Dialog, ThemeProvider, MotionProvider,
+the docs site, and the Astra dashboard recipe. Everything else in
+[docs/inventory.md](./docs/inventory.md) — Carousel, Coachmark, Tour, Tabs, Popover, Toast,
+Donut/Sparkline — is still to build.
+
+## Install (once published)
+
+```bash
+pnpm add @ceebee/ui
+```
+
+```tsx
+import '@ceebee/ui/styles.css';
+import '@ceebee/ui/skins/astra.css';   // optional: a Skin rewrites brand tokens only
+
+import { Surface, StatCard, ProgressRing, Skeleton } from '@ceebee/ui';   // server-safe
+import { Button, Field, TextInput, Dialog } from '@ceebee/ui/client';     // interactive
+```

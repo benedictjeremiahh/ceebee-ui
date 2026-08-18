@@ -1,0 +1,51 @@
+{
+  "name": "@ceebee/ui",
+  "version": "0.1.0",
+  "description": "Ceebee's design system: tokens, themed primitives, motion, and onboarding.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./skins/*.css": "./dist/skins/*.css"
+  },
+  "scripts": {
+    "build": "tsup && node ./stamp-client.mjs && node ./build-css.mjs",
+    "lint": "tsc -p tsconfig.json --noEmit"
+  },
+  "peerDependencies": {
+    "@base-ui/react": "^1.7.0",
+    "lucide-react": ">=0.400.0",
+    "motion": "^13.0.0",
+    "react": ">=19",
+    "react-dom": ">=19"
+  },
+  "peerDependenciesMeta": {
+    "lucide-react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@base-ui/react": "^1.7.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "motion": "^13.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  }
+}

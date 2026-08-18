@@ -1,0 +1,61 @@
+import { Demo } from '../../../components/demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+import { StatCard, ProgressRing, Grid, Text } from '@ceebee/ui';
+
+# StatCard <span className="docs__label">Composition</span>
+
+The tinted metric tile every dashboard on the reference board repeats. A Surface, a label, a value,
+an optional delta, and room for a Widget.
+
+## Usage
+
+<Demo layout="block" code={`<StatCard
+  label="Total balance"
+  value="120,456.50"
+  delta={{ value: '+2.4%', direction: 'up' }}
+  hue="violet"
+/>`}>
+  <Grid minItemWidth="15rem" gap={4}>
+    <StatCard label="Total balance" value="120,456.50" delta={{ value: '+2.4%', direction: 'up' }} hue="violet" />
+    <StatCard label="Expenses" value="1,124.10" delta={{ value: '-8.1%', direction: 'down' }} hue="rose" />
+    <StatCard label="Open tickets" value="34" delta={{ value: '0%', direction: 'flat' }} hue="amber" caption="Unchanged this week" />
+    <StatCard
+      label="Task progress"
+      value="84%"
+      hue="blue"
+      visual={<ProgressRing value={84} size={64} thickness={8} hue="blue" label="Task progress" />}
+    />
+  </Grid>
+</Demo>
+
+## Delta direction
+
+Direction decides the colour, not the caller — so a falling cost and a falling revenue are never
+accidentally coloured to mean opposite things by two different authors.
+
+<Guidance
+  do="Pass direction and let the card colour it, then use caption when down is actually good news."
+  dont="Colour the delta yourself to 'fix' a case — that is how two dashboards end up disagreeing about what green means."
+/>
+
+## Loading
+
+<Demo code={`{loading ? <StatCard.Skeleton withVisual /> : <StatCard {...stat} />}`}>
+  <StatCard.Skeleton />
+  <StatCard.Skeleton withVisual />
+</Demo>
+
+The Skeleton is built from the card's own surface, radius, and padding tokens — a test asserts they
+match, so the tile cannot change size when the data arrives.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'label', type: 'string', description: 'What is measured. Kept small and muted.' },
+  { name: 'value', type: 'ReactNode', description: 'The number. Rendered with tabular numerals.' },
+  { name: 'delta', type: "{ value: string; direction: 'up' | 'down' | 'flat' }", description: 'Change since the comparison period.' },
+  { name: 'caption', type: 'string', description: 'One line under the value — the place for context the number lacks.' },
+  { name: 'hue', type: 'DecorHue', description: 'Decorative tint. Use it to tell tiles apart, not to signal status.' },
+  { name: 'icon', type: 'ReactNode', description: 'Small icon in the top-right corner.' },
+  { name: 'visual', type: 'ReactNode', description: 'A Widget beside the value — ring, sparkline, mini bars.' },
+]} />
