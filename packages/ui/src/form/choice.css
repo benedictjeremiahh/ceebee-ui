@@ -1,0 +1,94 @@
+.cb-choice { display: flex; align-items: flex-start; gap: var(--cb-space-3); }
+.cb-choice--justified { align-items: center; justify-content: space-between; width: 100%; }
+.cb-choice__text { display: flex; flex-direction: column; gap: var(--cb-space-1); }
+.cb-choice__label {
+  font-family: var(--cb-font-sans);
+  font-size: var(--cb-text-sm);
+  color: var(--cb-fg);
+  cursor: pointer;
+  line-height: 1.35;
+}
+.cb-choice__description { margin: 0; font-family: var(--cb-font-sans); font-size: var(--cb-text-xs); color: var(--cb-fg-subtle); }
+
+.cb-checkbox,
+.cb-radio {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.0625rem;
+  padding: 0;
+  background: var(--cb-surface);
+  border: var(--cb-border-width) solid var(--cb-border-strong);
+  color: var(--cb-fg-on-brand);
+  cursor: pointer;
+  transition: background-color var(--cb-duration-fast) var(--cb-ease-standard),
+    border-color var(--cb-duration-fast) var(--cb-ease-standard);
+}
+.cb-checkbox { border-radius: 0.3125rem; }
+.cb-radio { border-radius: var(--cb-radius-full); }
+
+.cb-checkbox[data-checked],
+.cb-checkbox[data-indeterminate] {
+  background: var(--cb-tone-brand);
+  border-color: var(--cb-tone-brand);
+}
+.cb-radio[data-checked] { border-color: var(--cb-tone-brand); border-width: 2px; }
+
+.cb-checkbox:focus-visible,
+.cb-radio:focus-visible,
+.cb-switch:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
+}
+.cb-checkbox[data-disabled],
+.cb-radio[data-disabled],
+.cb-switch[data-disabled] { opacity: 0.5; cursor: not-allowed; }
+
+.cb-checkbox__indicator { display: inline-flex; }
+.cb-radio__indicator {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--cb-radius-full);
+  background: var(--cb-tone-brand);
+  transition: scale var(--cb-duration-fast) var(--cb-ease-emphasis);
+}
+.cb-radio__indicator[data-starting-style] { scale: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .cb-radio__indicator { transition: none; }
+}
+
+.cb-radio-group { display: flex; gap: var(--cb-space-3); }
+.cb-radio-group--column { flex-direction: column; }
+.cb-radio-group--row { flex-direction: row; flex-wrap: wrap; gap: var(--cb-space-5); }
+
+.cb-switch {
+  flex: none;
+  position: relative;
+  width: 2.25rem;
+  height: 1.25rem;
+  padding: 0;
+  border: none;
+  border-radius: var(--cb-radius-full);
+  background: color-mix(in oklch, var(--cb-fg) 25%, transparent);
+  cursor: pointer;
+  transition: background-color var(--cb-duration-base) var(--cb-ease-standard);
+}
+.cb-switch[data-checked] { background: var(--cb-tone-brand); }
+.cb-switch__thumb {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  margin-inline-start: 0.125rem;
+  border-radius: var(--cb-radius-full);
+  background: var(--cb-surface-raised);
+  box-shadow: var(--cb-shadow-sm);
+  transition: translate var(--cb-duration-base) var(--cb-ease-emphasis);
+}
+.cb-switch[data-checked] .cb-switch__thumb { translate: 1rem 0; }
+/* Reduced motion: the thumb still moves — that is the state — it just stops easing. */
+@media (prefers-reduced-motion: reduce) {
+  .cb-switch__thumb { transition: none; }
+}

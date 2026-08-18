@@ -1,14 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@ceebee/ui/client';
-import { Stack, Surface, Text } from '@ceebee/ui';
+import { Button, Select, Switch } from '@ceebee/ui/client';
+import { Stack, Text } from '@ceebee/ui';
 
 const VARIANTS = ['solid', 'soft', 'outline', 'ghost'] as const;
 const TONES = ['brand', 'neutral', 'info', 'success', 'warning', 'danger'] as const;
 const SIZES = ['sm', 'md', 'lg'] as const;
 
-/** Knob-driven rather than code-editable: the props are the API, so those are what you try. */
+const asItems = <T extends string>(values: readonly T[]) => values.map((value) => ({ value, label: value }));
+
+/** Knob-driven rather than code-editable: the props are the API, so those are what you try.
+ *  The knobs themselves are library controls — the docs eat their own cooking. */
 export function ButtonPlayground() {
   const [variant, setVariant] = useState<(typeof VARIANTS)[number]>('solid');
   const [tone, setTone] = useState<(typeof TONES)[number]>('brand');
@@ -24,19 +27,14 @@ export function ButtonPlayground() {
           Save changes
         </Button>
       </div>
-      <Surface radius="sm" padding="sm" bordered={false} elevation="none">
-        <Stack direction="row" gap={4} wrap align="center">
-          <Knob label="variant" value={variant} options={VARIANTS} onChange={setVariant} />
-          <Knob label="tone" value={tone} options={TONES} onChange={setTone} />
-          <Knob label="size" value={size} options={SIZES} onChange={setSize} />
-          <label>
-            <Text size="xs" tone="subtle" as="span">
-              loading{' '}
-            </Text>
-            <input type="checkbox" checked={loading} onChange={(e) => setLoading(e.target.checked)} />
-          </label>
-        </Stack>
-      </Surface>
+
+      <div className="demo__knobs">
+        <Knob label="variant" value={variant} options={VARIANTS} onChange={setVariant} />
+        <Knob label="tone" value={tone} options={TONES} onChange={setTone} />
+        <Knob label="size" value={size} options={SIZES} onChange={setSize} />
+        <Switch label="loading" checked={loading} onCheckedChange={setLoading} />
+      </div>
+
       <pre className="demo__code">
         <code>{code}</code>
       </pre>
@@ -56,17 +54,11 @@ function Knob<T extends string>({
   onChange: (value: T) => void;
 }) {
   return (
-    <label>
-      <Text size="xs" tone="subtle" as="span">
-        {label}{' '}
+    <Stack gap={1} className="demo__knob">
+      <Text size="xs" tone="subtle">
+        {label}
       </Text>
-      <select value={value} onChange={(event) => onChange(event.target.value as T)}>
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    </label>
+      <Select<T> items={asItems(options)} value={value} onValueChange={onChange} size="sm" />
+    </Stack>
   );
 }

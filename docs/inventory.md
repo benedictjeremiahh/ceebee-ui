@@ -25,9 +25,9 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 | Field (label + hint + error wiring) | Atom | client | S1 |
 | Button | Atom | client | S1 |
 | TextInput / Textarea | Atom | client | S1 |
-| Select | Atom | client | S2 |
-| Checkbox / Radio / Switch | Atom | client | S2 |
-| NumberInput | Atom | client | S2 |
+| Select | Atom | client | S2 — built |
+| Checkbox / Radio / Switch | Atom | client | S2 — built |
+| NumberInput | Atom | client | S2 — built |
 | DateInput | Atom | client | S3 |
 | Combobox / Autocomplete | Composition | client | S3 |
 | FileDrop | Composition | client | S4 |

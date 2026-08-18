@@ -10,7 +10,7 @@ const CODE = `<Popover trigger={<Button variant="outline">Details</Button>} side
 </Popover>
 
 <Tooltip label="Copy invoice number">
-  <button aria-label="Copy invoice number"><Copy size={16} /></button>
+  <Button variant="ghost" iconStart={<Copy size={16} />} aria-label="Copy invoice number" />
 </Tooltip>`;
 
 export function PopoverDemo() {
@@ -29,9 +29,9 @@ export function PopoverDemo() {
         </Popover>
 
         <Tooltip label="This is a tooltip">
-          <button className="demo-chrome" aria-label="What is this">
-            <Info size={16} /> Hover me
-          </button>
+          <Button variant="ghost" tone="neutral" iconStart={<Info size={16} />}>
+            Hover me
+          </Button>
         </Tooltip>
       </div>
       <pre className="demo__code">

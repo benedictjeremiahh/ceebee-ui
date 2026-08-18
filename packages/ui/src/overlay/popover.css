@@ -21,13 +21,17 @@
   .cb-popover[data-ending-style] { transform: none; }
 }
 
-.cb-popover__arrow[data-side="bottom"] { top: -7px; }
-.cb-popover__arrow[data-side="top"] { bottom: -7px; rotate: 180deg; }
-.cb-popover__arrow[data-side="left"] { right: -10px; rotate: 90deg; }
-.cb-popover__arrow[data-side="right"] { left: -10px; rotate: -90deg; }
+/* The tail overlaps the popup by a pixel so the two fills meet with no hairline between them. */
+.cb-popover__arrow { width: 18px; height: 9px; }
+.cb-popover__arrow[data-side="bottom"] { top: -8px; }
+.cb-popover__arrow[data-side="top"] { bottom: -8px; rotate: 180deg; }
+.cb-popover__arrow[data-side="left"] { right: -13px; rotate: 90deg; }
+.cb-popover__arrow[data-side="right"] { left: -13px; rotate: -90deg; }
 
 .cb-arrow__fill { fill: var(--cb-surface-raised); }
-.cb-arrow__stroke { stroke: var(--cb-border); stroke-width: 1; }
+/* Erases the popup's border where the tail joins it. */
+.cb-arrow__seam { stroke: var(--cb-surface-raised); stroke-width: 2; }
+.cb-arrow__stroke { stroke: var(--cb-border); stroke-width: 1; fill: none; stroke-linecap: round; }
 
 .cb-tooltip {
   background: var(--cb-fg);

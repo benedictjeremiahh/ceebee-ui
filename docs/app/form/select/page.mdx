@@ -1,0 +1,41 @@
+import { SelectDemo } from '../../../components/form-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Select <span className="docs__label">Atom</span>
+
+A listbox, not a native `<select>`: typeahead, roving focus, scroll containment, and form
+association come from Base UI, and the popup is a real surface that can be themed and can hold an
+indicator per item.
+
+## Usage
+
+<SelectDemo />
+
+Inside a `Field`, the Select picks up the label, the description wiring, and the error state
+without being told — the same seam every other control uses.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'items', type: 'Array<{ value, label, disabled? }>', description: 'The options. Labels are ReactNode, so an item can carry an icon or a secondary line.' },
+  { name: 'value / defaultValue', type: 'string | null', description: 'Controlled or uncontrolled.' },
+  { name: 'onValueChange', type: '(value: string) => void', description: 'Receives the value only — Base UI’s event details do not leak through.' },
+  { name: 'placeholder', type: 'string', default: "'Select…'", description: 'Shown while nothing is chosen.' },
+  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Matches the control height of TextInput at the same size.' },
+  { name: 'name', type: 'string', description: 'Emits a hidden input, so it posts inside a plain form.' },
+  { name: 'disabled / invalid', type: 'boolean', description: 'Inside a Field, invalid is inherited.' },
+]} />
+
+<Guidance
+  do="Keep option labels short enough to read in the trigger — the trigger shows the chosen label, not the value."
+  dont="Use a Select for two options; that is a RadioGroup or a Switch, and both show their choices without a click."
+/>
+
+## Keyboard
+
+| Key | Behaviour |
+| --- | --- |
+| `Space` / `Enter` | Opens, and selects the highlighted item |
+| `↑` / `↓` | Moves the highlight |
+| Typing | Jumps to the first matching label |
+| `Esc` | Closes without changing the value |

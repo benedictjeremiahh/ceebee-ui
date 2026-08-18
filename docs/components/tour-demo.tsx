@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Bell, Search, Settings } from 'lucide-react';
-import { Button, Coachmark, Tour, type SeenStore, type TourStep } from '@ceebee/ui/client';
+import { Button, Coachmark, Switch, Tour, type SeenStore, type TourStep } from '@ceebee/ui/client';
 import { Stack, Surface, Text } from '@ceebee/ui';
 
 const STEPS: TourStep[] = [
@@ -43,15 +43,15 @@ export function TourDemo() {
         <Stack gap={4}>
           <Surface padding="sm" radius="md">
             <Stack direction="row" gap={3} align="center" justify="between">
-              <button id="demo-search" className="demo-chrome">
-                <Search size={16} /> Search
-              </button>
-              <button id="demo-alerts" className="demo-chrome">
-                <Bell size={16} /> Alerts
-              </button>
-              <button id="demo-settings" className="demo-chrome">
-                <Settings size={16} /> Settings
-              </button>
+              <Button id="demo-search" variant="ghost" tone="neutral" iconStart={<Search size={16} />}>
+                Search
+              </Button>
+              <Button id="demo-alerts" variant="ghost" tone="neutral" iconStart={<Bell size={16} />}>
+                Alerts
+              </Button>
+              <Button id="demo-settings" variant="ghost" tone="neutral" iconStart={<Settings size={16} />}>
+                Settings
+              </Button>
             </Stack>
           </Surface>
 
@@ -59,12 +59,11 @@ export function TourDemo() {
             <Button size="sm" onClick={() => { setOutcome(null); setRunning(true); }}>
               Start tour
             </Button>
-            <label>
-              <input type="checkbox" checked={useStore} onChange={(e) => setUseStore(e.target.checked)} />{' '}
-              <Text size="xs" tone="subtle" as="span">
-                remember it with sessionStorage
-              </Text>
-            </label>
+            <Switch
+              label="remember it with sessionStorage"
+              checked={useStore}
+              onCheckedChange={setUseStore}
+            />
             {outcome ? (
               <Text size="xs" tone="muted" as="span">
                 {outcome}
@@ -94,9 +93,9 @@ export function CoachmarkDemo() {
   return (
     <div className="demo">
       <div className="demo__stage">
-        <button ref={setAnchor} className="demo-chrome" onClick={() => setOpen((v) => !v)}>
-          <Settings size={16} /> Point at me
-        </button>
+        <Button ref={setAnchor} variant="outline" tone="neutral" iconStart={<Settings size={16} />} onClick={() => setOpen((v) => !v)}>
+          Point at me
+        </Button>
         <Coachmark
           open={open}
           anchor={anchor}

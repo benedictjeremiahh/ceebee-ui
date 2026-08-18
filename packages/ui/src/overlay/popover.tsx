@@ -75,12 +75,18 @@ export function Tooltip({ children, label, side = 'top', delay = 400 }: TooltipP
   );
 }
 
-/** Shared arrow, drawn rather than rotated so the border stays a single hairline. */
+/**
+ * The bubble's tail. Three passes in one shape, because the naive version leaves a seam:
+ * the filled tail, then a line in the surface colour that erases the popup's own border
+ * across the tail's base, then the two outer edges stroked back in. Without the middle
+ * pass the popup border cuts straight across the tail and it reads as a patch, not a tail.
+ */
 export function ArrowShape() {
   return (
-    <svg width="14" height="7" viewBox="0 0 14 7" fill="none" aria-hidden="true">
-      <path d="M0 7L7 0L14 7" className="cb-arrow__fill" />
-      <path d="M0 7L7 0L14 7" className="cb-arrow__stroke" fill="none" />
+    <svg width="18" height="9" viewBox="0 0 18 9" fill="none" aria-hidden="true">
+      <path d="M0 9C4 9 5.6 7.9 8 4.6C8.5 3.9 9.5 3.9 10 4.6C12.4 7.9 14 9 18 9Z" className="cb-arrow__fill" />
+      <path d="M0 8.5H18" className="cb-arrow__seam" />
+      <path d="M0 9C4 9 5.6 7.9 8 4.6C8.5 3.9 9.5 3.9 10 4.6C12.4 7.9 14 9 18 9" className="cb-arrow__stroke" />
     </svg>
   );
 }

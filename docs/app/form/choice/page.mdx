@@ -1,0 +1,45 @@
+import { ChoiceDemo } from '../../../components/form-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Checkbox · RadioGroup · Switch <span className="docs__label">Atom</span>
+
+Three controls with one shape: the control, its label, and an optional description line — wired
+together, because a checkbox whose label is not clickable is a bug that ships constantly.
+
+## Usage
+
+<ChoiceDemo />
+
+## Which one
+
+| Control | Use it when |
+| --- | --- |
+| **Checkbox** | Zero or more of several things, or a single opt-in that is saved with a form |
+| **RadioGroup** | Exactly one of a small, visible set |
+| **Switch** | A setting that applies the moment it is flipped |
+
+<Guidance
+  do="Use a Switch only when the change takes effect immediately — that is what a switch promises."
+  dont="Put a Switch in a form with a Save button; a person who flips it and leaves believes it was applied."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'label', type: 'ReactNode', description: 'Required on all three. It is the accessible name, and it is clickable.' },
+  { name: 'description', type: 'ReactNode', description: 'Second line, wired through aria-describedby.' },
+  { name: 'checked / defaultChecked', type: 'boolean', description: 'Checkbox and Switch.' },
+  { name: 'indeterminate', type: 'boolean', description: 'Checkbox only — the "some of the children" state.' },
+  { name: 'options', type: 'Array<{ value, label, description?, disabled? }>', description: 'RadioGroup only.' },
+  { name: 'direction', type: "'column' | 'row'", default: "'column'", description: 'RadioGroup layout.' },
+  { name: 'justified', type: 'boolean', default: 'false', description: 'Switch only: label left, control right — the settings-row arrangement.' },
+  { name: 'onCheckedChange / onValueChange', type: '(value) => void', description: 'One argument, always the value.' },
+]} />
+
+## Accessibility
+
+- The label is a real `<label for>`, so clicking the text toggles the control.
+- A description is linked with `aria-describedby`, not stuffed into the label.
+- A `RadioGroup` is a `radiogroup`; give it a `label` when it is not inside a `Field`.
+- The Switch thumb still moves under reduced motion — the movement *is* the state. Only the easing
+  goes.

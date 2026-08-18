@@ -32,6 +32,9 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
     entries: [
       { href: '/form/button', label: 'Button', kind: 'Atom' },
       { href: '/form/field', label: 'Field · Input', kind: 'Atom' },
+      { href: '/form/select', label: 'Select', kind: 'Atom' },
+      { href: '/form/choice', label: 'Checkbox · Radio · Switch', kind: 'Atom' },
+      { href: '/form/number-input', label: 'NumberInput', kind: 'Atom' },
     ],
   },
   {

@@ -40,3 +40,21 @@ if (!('IntersectionObserver' in globalThis)) {
   }
   globalThis.IntersectionObserver = NoopIntersectionObserver as unknown as typeof IntersectionObserver;
 }
+
+// jsdom implements pointer events as MouseEvent and exposes no PointerEvent constructor,
+// which Base UI's controls call when they forward a click.
+if (!('PointerEvent' in globalThis)) {
+  class JsdomPointerEvent extends MouseEvent {
+    readonly pointerId: number;
+    readonly pointerType: string;
+    readonly isPrimary: boolean;
+
+    constructor(type: string, params: PointerEventInit = {}) {
+      super(type, params);
+      this.pointerId = params.pointerId ?? 1;
+      this.pointerType = params.pointerType ?? 'mouse';
+      this.isPrimary = params.isPrimary ?? true;
+    }
+  }
+  globalThis.PointerEvent = JsdomPointerEvent as unknown as typeof PointerEvent;
+}

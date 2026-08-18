@@ -14,6 +14,14 @@ export { Field, useFieldWiring } from './form/field.js';
 export type { FieldProps } from './form/field.js';
 export { TextInput, Textarea } from './form/text-input.js';
 export type { TextInputProps, TextareaProps } from './form/text-input.js';
+export { Select } from './form/select.js';
+export type { SelectProps, SelectOption } from './form/select.js';
+export { Checkbox, RadioGroup, Switch } from './form/choice.js';
+export type { CheckboxProps, RadioGroupProps, RadioOption, SwitchProps } from './form/choice.js';
+export { NumberInput } from './form/number-input.js';
+export type { NumberInputProps } from './form/number-input.js';
+export { parseNumber, clamp, stepBy, canStep, decimalPlaces } from './form/number.js';
+export type { NumberBounds } from './form/number.js';
 
 export { Dialog, DialogClose } from './overlay/dialog.js';
 export type { DialogProps } from './overlay/dialog.js';
