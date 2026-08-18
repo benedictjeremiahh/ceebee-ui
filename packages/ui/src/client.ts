@@ -35,6 +35,17 @@ export type { ToastProviderProps, ToastOptions } from './feedback/toast.js';
 
 export { Tabs } from './nav/tabs.js';
 export type { TabsProps, TabItem } from './nav/tabs.js';
+export { DropdownMenu } from './nav/menu.js';
+export type { DropdownMenuProps, MenuItem } from './nav/menu.js';
+export { Sidebar, TopBar } from './nav/shell.js';
+export type { SidebarProps, TopBarProps, NavItem, NavSection } from './nav/shell.js';
+
+export { DataTable } from './data/table.js';
+export type { DataTableProps, DataTableSkeletonProps, Column } from './data/table.js';
+export { Pagination } from './data/pagination.js';
+export type { PaginationProps } from './data/pagination.js';
+export { nextSort, ariaSortFor, pageRange } from './data/table-sort.js';
+export type { SortState, SortDirection, PageRange } from './data/table-sort.js';
 
 export { Carousel } from './media/carousel.js';
 export type { CarouselProps, CarouselSlideProps, CarouselSkeletonProps } from './media/carousel.js';

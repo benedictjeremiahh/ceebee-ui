@@ -1,0 +1,30 @@
+import { BreadcrumbsDemo } from '../../../components/nav-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Breadcrumbs <span className="docs__label">Atom</span>
+
+Where you are, and the way back up. Server-safe.
+
+## Usage
+
+<BreadcrumbsDemo />
+
+## The last crumb is not a link
+
+It is text carrying `aria-current="page"`. A link to the page you are already on is a dead end —
+it looks actionable, it consumes a tab stop, and it does nothing.
+
+Longer trails collapse in the middle rather than wrapping onto a second line: the first crumb and
+the last two are what people actually use.
+
+<Guidance
+  do="Mirror the real hierarchy, so the trail is a way up and not a history of clicks."
+  dont="Use breadcrumbs as a back button — the previous page is often not the parent."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'items', type: 'Crumb[]', description: 'label plus an optional href or onClick. The last one is rendered as the current page.' },
+  { name: 'maxItems', type: 'number', default: '4', description: 'Past this, the middle collapses to an ellipsis.' },
+]} />

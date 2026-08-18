@@ -50,7 +50,7 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 | Dialog / Drawer | Composition | client | S1 |
 | Popover | Atom | client | S2 — built |
 | Tooltip | Atom | client | S2 — built |
-| DropdownMenu | Composition | client | S3 |
+| DropdownMenu | Composition | client | S3 — built |
 | CommandPalette | Composition | client | S4 |
 
 ## data
@@ -61,7 +61,7 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 | ProgressRing | Widget | server | S1 |
 | Donut | Widget | server | S2 — built |
 | Sparkline / BarMini | Widget | server | S2 — built |
-| DataTable (+ `.Skeleton`) | Composition | client | S3 |
+| DataTable (+ `.Skeleton`) | Composition | client | S3 — built |
 | Leaderboard | Composition | server | S3 |
 | Timeline | Composition | server | S4 |
 
@@ -70,9 +70,10 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
 | Tabs | Composition | client | S2 — built |
-| Sidebar / TopBar | Composition | client | S3 |
-| Breadcrumbs / Pagination | Composition | server | S3 |
-| Stepper | Composition | client | S4 |
+| Sidebar / TopBar | Composition | client | S3 — built |
+| Breadcrumbs | Atom | server | S3 — built |
+| Pagination | Composition | client | S3 — built |
+| Stepper | Composition | server | S4 — built |
 
 ## media
 

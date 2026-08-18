@@ -1,0 +1,33 @@
+import { MenuDemo } from '../../../components/nav-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# DropdownMenu <span className="docs__label">Composition</span>
+
+Actions on a thing — the row-actions menu, the account menu. Typeahead, roving focus, and
+dismissal are Base UI's; the surface, the separator rhythm, and the danger tone are ours.
+
+## Usage
+
+<MenuDemo />
+
+<Guidance
+  do="Put the destructive item last, behind a separator, and give it tone='danger'."
+  dont="Use a menu for navigation between pages — a menu hides where you can go behind a click."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'trigger', type: 'ReactElement', description: 'Rendered as the trigger, so your Button stays your Button.' },
+  { name: 'items', type: 'MenuItem[]', description: 'label, icon, shortcut, tone, disabled, checked, onSelect — or { separator: true }.' },
+  { name: 'side / align', type: 'Side | Align', default: "'bottom' / 'end'", description: 'Preferred placement; it flips when there is no room.' },
+]} />
+
+## Keyboard
+
+| Key | Behaviour |
+| --- | --- |
+| `Enter` / `Space` / `↓` | Opens |
+| `↑` / `↓` | Moves the highlight, skipping disabled items |
+| Typing | Jumps to the first matching item |
+| `Esc` | Closes and returns focus to the trigger |

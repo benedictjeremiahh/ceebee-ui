@@ -61,11 +61,18 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
       { href: '/data/donut', label: 'Donut', kind: 'Widget' },
       { href: '/data/sparkline', label: 'Sparkline · BarMini', kind: 'Widget' },
       { href: '/data/stat-card', label: 'StatCard', kind: 'Composition' },
+      { href: '/data/table', label: 'DataTable · Pagination', kind: 'Composition' },
     ],
   },
   {
     title: 'Navigation',
-    entries: [{ href: '/nav/tabs', label: 'Tabs', kind: 'Composition' }],
+    entries: [
+      { href: '/nav/tabs', label: 'Tabs', kind: 'Composition' },
+      { href: '/nav/menu', label: 'DropdownMenu', kind: 'Composition' },
+      { href: '/nav/breadcrumbs', label: 'Breadcrumbs', kind: 'Atom' },
+      { href: '/nav/stepper', label: 'Stepper', kind: 'Composition' },
+      { href: '/nav/shell', label: 'Sidebar · TopBar', kind: 'Composition' },
+    ],
   },
   {
     title: 'Media',

@@ -93,3 +93,15 @@ body { margin: 0; font-family: var(--cb-font-sans); }
   background: var(--cb-surface);
 }
 .demo__knob { min-width: 8rem; }
+
+.shell-demo {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-lg);
+  overflow: hidden;
+  min-height: 20rem;
+  background: var(--cb-surface);
+}
+.shell-demo__main { display: flex; flex-direction: column; min-width: 0; }
+.shell-demo__body { padding: var(--cb-space-5); }

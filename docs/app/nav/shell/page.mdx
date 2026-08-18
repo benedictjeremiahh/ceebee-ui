@@ -1,0 +1,33 @@
+import { ShellDemo } from '../../../components/nav-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Sidebar · TopBar <span className="docs__label">Composition</span>
+
+The app shell: navigation down the side, context across the top. Both are slot-driven, because
+every product disagrees about what belongs in its chrome.
+
+## Usage
+
+<ShellDemo />
+
+## Collapsed is still navigable
+
+Collapsing hides the labels visually and keeps them in the accessible name, so a screen reader
+still reads "Invoices" where a sighted user sees only an icon. The rail also carries a `title`, so
+a pointer user can hover to find out.
+
+<Guidance
+  do="Mark the active item with active — it sets aria-current='page', which is how the current page is announced."
+  dont="Put more than two levels of navigation in the sidebar; the third level belongs on the page."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'sections', type: 'NavSection[]', description: 'Each has an optional title and its items: label, icon, href or onClick, active, adornment.' },
+  { name: 'header / footer', type: 'ReactNode', description: 'Brand at the top, account at the bottom. Both are yours.' },
+  { name: 'collapsed / onCollapsedChange', type: 'boolean | fn', description: 'Controlled. Omit the handler and the toggle button disappears.' },
+  { name: 'TopBar title / subtitle', type: 'ReactNode', description: 'A string, or a Breadcrumbs trail.' },
+  { name: 'TopBar center / actions', type: 'ReactNode', description: 'Search in the middle, controls at the end.' },
+  { name: 'TopBar sticky', type: 'boolean', default: 'true', description: 'Sticks to the top of its scroll container.' },
+]} />
