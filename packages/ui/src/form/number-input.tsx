@@ -67,16 +67,6 @@ export function NumberInput({
 
   return (
     <div className={cn('cb-number', `cb-number--${size}`, className)} data-disabled={disabled || undefined}>
-      <button
-        type="button"
-        className="cb-number__step"
-        aria-label="Decrease"
-        disabled={disabled || !canStep(current, -1, bounds)}
-        onClick={() => commit(stepBy(current, -1, bounds))}
-      >
-        <Minus size={14} />
-      </button>
-
       <input
         className="cb-number__input"
         inputMode="decimal"
@@ -100,15 +90,26 @@ export function NumberInput({
         </span>
       ) : null}
 
-      <button
-        type="button"
-        className="cb-number__step"
-        aria-label="Increase"
-        disabled={disabled || !canStep(current, 1, bounds)}
-        onClick={() => commit(stepBy(current, 1, bounds))}
-      >
-        <Plus size={14} />
-      </button>
+      <span className="cb-number__steppers">
+        <button
+          type="button"
+          className="cb-number__step"
+          aria-label="Decrease"
+          disabled={disabled || !canStep(current, -1, bounds)}
+          onClick={() => commit(stepBy(current, -1, bounds))}
+        >
+          <Minus size={14} />
+        </button>
+        <button
+          type="button"
+          className="cb-number__step"
+          aria-label="Increase"
+          disabled={disabled || !canStep(current, 1, bounds)}
+          onClick={() => commit(stepBy(current, 1, bounds))}
+        >
+          <Plus size={14} />
+        </button>
+      </span>
     </div>
   );
 }

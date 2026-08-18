@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button, Select, Switch } from '@ceebee/ui/client';
 import { Stack, Text } from '@ceebee/ui';
+import { CodeBlock } from './code-block';
 
 const VARIANTS = ['solid', 'soft', 'outline', 'ghost'] as const;
 const TONES = ['brand', 'neutral', 'info', 'success', 'warning', 'danger'] as const;
@@ -35,9 +36,7 @@ export function ButtonPlayground() {
         <Switch label="loading" checked={loading} onCheckedChange={setLoading} />
       </div>
 
-      <pre className="demo__code">
-        <code>{code}</code>
-      </pre>
+      <CodeBlock bare code={code} />
     </div>
   );
 }

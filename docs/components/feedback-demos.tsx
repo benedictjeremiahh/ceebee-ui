@@ -3,6 +3,7 @@
 import { Inbox, Search } from 'lucide-react';
 import { Alert, Button, Tabs, useToast } from '@ceebee/ui/client';
 import { Badge, EmptyState, Stack, Surface, Text, Avatar, AvatarGroup } from '@ceebee/ui';
+import { CodeBlock } from './code-block';
 
 export function AlertDemo() {
   return (
@@ -34,11 +35,9 @@ export function AlertDemo() {
           </Alert>
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`<Alert tone="danger" title="Payment failed" actions={<Button size="sm" tone="danger">Retry</Button>}>
+      <CodeBlock bare code={`<Alert tone="danger" title="Payment failed" actions={<Button size="sm" tone="danger">Retry</Button>}>
   The bank declined the charge. Nothing has been billed.
-</Alert>`}</code>
-      </pre>
+</Alert>`} />
     </div>
   );
 }
@@ -72,12 +71,10 @@ export function ToastDemo() {
           Error (stays put)
         </Button>
       </div>
-      <pre className="demo__code">
-        <code>{`const toast = useToast();
+      <CodeBlock bare code={`const toast = useToast();
 
 toast.show({ title: 'Saved', description: 'Your changes are live.', tone: 'success' });
-toast.show({ title: 'Draft deleted', action: { label: 'Undo', onClick: restore } });`}</code>
-      </pre>
+toast.show({ title: 'Draft deleted', action: { label: 'Undo', onClick: restore } });`} />
     </div>
   );
 }
@@ -101,10 +98,8 @@ export function BadgeDemo() {
           sm
         </Badge>
       </div>
-      <pre className="demo__code">
-        <code>{`<Badge tone="success" dot>Live</Badge>
-<Badge tone="danger" variant="solid">Overdue</Badge>`}</code>
-      </pre>
+      <CodeBlock bare code={`<Badge tone="success" dot>Live</Badge>
+<Badge tone="danger" variant="solid">Overdue</Badge>`} />
     </div>
   );
 }
@@ -137,14 +132,12 @@ export function EmptyStateDemo() {
           </Surface>
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`<EmptyState
+      <CodeBlock bare code={`<EmptyState
   icon={<Inbox size={22} />}
   title="No invoices yet"
   description="Invoices appear here once your first customer is billed."
   actions={<Button size="sm">Create an invoice</Button>}
-/>`}</code>
-      </pre>
+/>`} />
     </div>
   );
 }
@@ -178,14 +171,12 @@ export function TabsDemo() {
           />
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`<Tabs
+      <CodeBlock bare code={`<Tabs
   items={[
     { value: 'overview', label: 'Overview', content: <Overview /> },
     { value: 'activity', label: 'Activity', adornment: <Badge size="sm">12</Badge>, content: <Activity /> },
   ]}
-/>`}</code>
-      </pre>
+/>`} />
     </div>
   );
 }
@@ -204,13 +195,11 @@ export function AvatarDemo() {
           <Avatar name="Rio Hakim" />
         </AvatarGroup>
       </div>
-      <pre className="demo__code">
-        <code>{`<Avatar name="Rio Hakim" size="lg" status="online" />
+      <CodeBlock bare code={`<Avatar name="Rio Hakim" size="lg" status="online" />
 
 <AvatarGroup overflow={3}>
   {members.map((member) => <Avatar key={member.id} name={member.name} src={member.photo} />)}
-</AvatarGroup>`}</code>
-      </pre>
+</AvatarGroup>`} />
     </div>
   );
 }

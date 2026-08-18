@@ -3,6 +3,7 @@
 import { Info } from 'lucide-react';
 import { Button, Popover, Tooltip } from '@ceebee/ui/client';
 import { Stack, Text } from '@ceebee/ui';
+import { CodeBlock } from './code-block';
 
 const CODE = `<Popover trigger={<Button variant="outline">Details</Button>} side="bottom">
   <Text weight="semibold">Billing period</Text>
@@ -34,9 +35,7 @@ export function PopoverDemo() {
           </Button>
         </Tooltip>
       </div>
-      <pre className="demo__code">
-        <code>{CODE}</code>
-      </pre>
+      <CodeBlock bare code={CODE} />
     </div>
   );
 }

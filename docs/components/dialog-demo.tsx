@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button, Dialog } from '@ceebee/ui/client';
 import { Text } from '@ceebee/ui';
+import { CodeBlock } from './code-block';
 
 const CODE = `const [open, setOpen] = useState(false);
 
@@ -66,9 +67,7 @@ export function DialogDemo() {
           }
         />
       </div>
-      <pre className="demo__code">
-        <code>{CODE}</code>
-      </pre>
+      <CodeBlock bare code={CODE} />
     </div>
   );
 }

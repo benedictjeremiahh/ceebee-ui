@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   z-index: var(--cb-z-overlay);
-  background: oklch(0.15 0.02 280 / 0.45);
+  background: var(--cb-scrim);
   backdrop-filter: blur(2px);
   transition: opacity var(--cb-duration-base) var(--cb-ease-standard);
 }

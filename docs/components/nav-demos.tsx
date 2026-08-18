@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { Button, DropdownMenu, Sidebar, TopBar, TextInput } from '@ceebee/ui/client';
 import { Avatar, Badge, Breadcrumbs, Stack, Stepper, Surface, Text } from '@ceebee/ui';
+import { CodeBlock } from './code-block';
 
 export function MenuDemo() {
   return (
@@ -34,16 +35,14 @@ export function MenuDemo() {
           ]}
         />
       </div>
-      <pre className="demo__code">
-        <code>{`<DropdownMenu
+      <CodeBlock bare code={`<DropdownMenu
   trigger={<Button variant="outline">Actions</Button>}
   items={[
     { label: 'Rename', icon: <FileText size={14} />, shortcut: '⌘R' },
     { separator: true },
     { label: 'Delete', icon: <Trash2 size={14} />, tone: 'danger' },
   ]}
-/>`}</code>
-      </pre>
+/>`} />
     </div>
   );
 }
@@ -65,13 +64,11 @@ export function BreadcrumbsDemo() {
           />
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`<Breadcrumbs items={[
+      <CodeBlock bare code={`<Breadcrumbs items={[
   { label: 'Workspace', href: '/' },
   { label: 'Billing', href: '/billing' },
   { label: 'INV-1043' },
-]} />`}</code>
-      </pre>
+]} />`} />
     </div>
   );
 }
@@ -103,12 +100,10 @@ export function StepperDemo() {
           </Surface>
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`<Stepper current={1} steps={[
+      <CodeBlock bare code={`<Stepper current={1} steps={[
   { label: 'Account', description: 'Who is signing up' },
   { label: 'Workspace', description: 'Name and members' },
-]} />`}</code>
-      </pre>
+]} />`} />
     </div>
   );
 }
@@ -194,8 +189,7 @@ export function ShellDemo() {
           </div>
         </div>
       </div>
-      <pre className="demo__code">
-        <code>{`<Sidebar
+      <CodeBlock bare code={`<Sidebar
   sections={sections}
   collapsed={collapsed}
   onCollapsedChange={setCollapsed}
@@ -203,8 +197,7 @@ export function ShellDemo() {
   footer={<Avatar name={user.name} />}
 />
 
-<TopBar title={<Breadcrumbs items={trail} />} center={<Search />} actions={<Actions />} />`}</code>
-      </pre>
+<TopBar title={<Breadcrumbs items={trail} />} center={<Search />} actions={<Actions />} />`} />
     </div>
   );
 }

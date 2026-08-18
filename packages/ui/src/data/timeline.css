@@ -1,5 +1,5 @@
 .cb-timeline { list-style: none; margin: 0; padding: 0; font-family: var(--cb-font-sans); }
-.cb-timeline__entry { --cb-timeline-accent: var(--cb-fg-subtle); display: flex; gap: var(--cb-space-3); }
+.cb-timeline__entry { margin: 0; --cb-timeline-accent: var(--cb-fg-subtle); display: flex; gap: var(--cb-space-3); }
 .cb-timeline__entry[data-tone="brand"] { --cb-timeline-accent: var(--cb-tone-brand); }
 .cb-timeline__entry[data-tone="info"] { --cb-timeline-accent: var(--cb-tone-info); }
 .cb-timeline__entry[data-tone="success"] { --cb-timeline-accent: var(--cb-tone-success); }

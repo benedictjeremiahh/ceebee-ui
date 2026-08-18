@@ -2,6 +2,10 @@
 .cb-donut svg { position: absolute; inset: 0; }
 .cb-donut__track { stroke: color-mix(in oklch, var(--cb-fg) 8%, transparent); }
 .cb-donut__arc { transition: stroke-dasharray var(--cb-duration-deliberate) var(--cb-ease-entrance); }
+/* Reduced motion: the arcs are drawn at their final length rather than growing into place. */
+@media (prefers-reduced-motion: reduce) {
+  .cb-donut__arc { transition: none; }
+}
 .cb-donut__arc[data-hue="violet"] { stroke: var(--cb-decor-violet); }
 .cb-donut__arc[data-hue="blue"] { stroke: var(--cb-decor-blue); }
 .cb-donut__arc[data-hue="teal"] { stroke: var(--cb-decor-teal); }

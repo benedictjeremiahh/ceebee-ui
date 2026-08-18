@@ -66,4 +66,4 @@
 }
 .cb-toast__close:hover { color: var(--cb-fg); }
 .cb-toast__close:focus-visible,
-.cb-toast__action:focus-visible { outline: var(--cb-focus-width) solid var(--cb-toast-accent); outline-offset: 1px; }
+.cb-toast__action:focus-visible { outline: var(--cb-focus-width) solid var(--cb-toast-accent); outline-offset: var(--cb-focus-offset); }

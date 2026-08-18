@@ -2,6 +2,7 @@
 
 import { Image } from '@ceebee/ui/client';
 import { Grid, Leaderboard, Stack, Surface, Text } from '@ceebee/ui';
+import { CodeBlock } from './code-block';
 
 const LEADERS = [
   { id: '1', name: 'Ada Putri', score: '2,480', detail: '12 modules', delta: { value: '▲2', direction: 'up' as const } },
@@ -19,15 +20,13 @@ export function LeaderboardDemo() {
           <Leaderboard label="Weekly leaders" entries={LEADERS} />
         </Surface>
       </div>
-      <pre className="demo__code">
-        <code>{`<Leaderboard
+      <CodeBlock bare code={`<Leaderboard
   label="Weekly leaders"
   entries={[
     { id: '1', name: 'Ada Putri', score: '2,480', detail: '12 modules' },
     { id: '4', name: 'Benedict J', score: '1,840', you: true },
   ]}
-/>`}</code>
-      </pre>
+/>`} />
     </div>
   );
 }
@@ -64,15 +63,13 @@ export function ImageDemo() {
           </Stack>
         </Grid>
       </div>
-      <pre className="demo__code">
-        <code>{`<Image
+      <CodeBlock bare code={`<Image
   src={photo.url}
   alt="Abstract gradient"
   aspectRatio={4 / 3}
   blurDataUrl={photo.blur}
   radius="lg"
-/>`}</code>
-      </pre>
+/>`} />
     </div>
   );
 }

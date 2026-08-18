@@ -24,7 +24,7 @@
 .cb-button[data-tone="neutral"] { --cb-button-accent: var(--cb-fg); --cb-button-fg: var(--cb-bg); }
 .cb-button[data-tone="info"] { --cb-button-accent: var(--cb-tone-info); }
 .cb-button[data-tone="success"] { --cb-button-accent: var(--cb-tone-success); }
-.cb-button[data-tone="warning"] { --cb-button-accent: var(--cb-tone-warning); --cb-button-fg: oklch(0.24 0.05 75); }
+.cb-button[data-tone="warning"] { --cb-button-accent: var(--cb-tone-warning); --cb-button-fg: var(--cb-on-warning); }
 .cb-button[data-tone="danger"] { --cb-button-accent: var(--cb-tone-danger); }
 
 .cb-button--sm { height: var(--cb-control-height-sm); padding-inline: var(--cb-space-3); font-size: var(--cb-text-sm); }

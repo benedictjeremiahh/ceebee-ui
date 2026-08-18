@@ -21,7 +21,7 @@
 .cb-tabs__tab:hover:not([data-disabled]) { color: var(--cb-fg); }
 .cb-tabs__tab[data-selected] { color: var(--cb-fg); }
 .cb-tabs__tab[data-disabled] { opacity: 0.45; cursor: not-allowed; }
-.cb-tabs__tab:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: -2px; }
+.cb-tabs__tab:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: var(--cb-focus-offset-inset); }
 .cb-tabs__adornment { display: inline-flex; }
 
 .cb-tabs--pill .cb-tabs__list { background: var(--cb-bg-subtle); padding: var(--cb-space-1); border-radius: var(--cb-radius-md); }

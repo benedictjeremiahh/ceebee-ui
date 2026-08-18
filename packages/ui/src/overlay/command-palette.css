@@ -68,5 +68,5 @@
 .cb-palette__item[data-active] { background: color-mix(in oklch, var(--cb-tone-brand) 12%, transparent); }
 .cb-palette__icon { display: inline-flex; color: var(--cb-fg-subtle); width: 1.25rem; justify-content: center; }
 .cb-palette__label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.cb-palette__shortcut { font-family: var(--cb-font-mono); font-size: var(--cb-text-xs); color: var(--cb-fg-subtle); }
+.cb-palette__shortcut { margin: 0; padding: 0; border: none; background: none; font-family: var(--cb-font-mono); font-size: var(--cb-text-xs); color: var(--cb-fg-subtle); }
 .cb-palette__empty { margin: 0; padding: var(--cb-space-5); text-align: center; font-size: var(--cb-text-sm); color: var(--cb-fg-subtle); }

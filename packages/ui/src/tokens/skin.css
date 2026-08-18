@@ -24,8 +24,8 @@
   --cb-border-strong: oklch(0.82 0.012 280);
 
   --cb-fg: oklch(0.22 0.02 280);
-  --cb-fg-muted: oklch(0.52 0.02 280);
-  --cb-fg-subtle: oklch(0.65 0.015 280);
+  --cb-fg-muted: oklch(0.45 0.02 280);
+  --cb-fg-subtle: oklch(0.53 0.018 280);
   --cb-fg-on-brand: oklch(0.99 0 0);
 
   --cb-tone-neutral: var(--cb-fg-muted);
@@ -42,6 +42,12 @@
   --cb-decor-green: oklch(0.74 0.14 150);
   --cb-decor-amber: oklch(0.8 0.14 75);
   --cb-decor-rose: oklch(0.7 0.16 15);
+
+  /* The wash behind an overlay, and the dark field a coachmark cuts its hole out of. */
+  --cb-scrim: oklch(0.15 0.02 280 / 0.45);
+  --cb-scrim-strong: oklch(0.15 0.02 280 / 0.55);
+  /* Text that sits on the warning ramp, which is too light to carry white. */
+  --cb-on-warning: oklch(0.24 0.05 75);
 
   --cb-shadow-sm: 0 1px 2px oklch(0.3 0.03 280 / 0.06);
   --cb-shadow-md: 0 4px 16px oklch(0.3 0.03 280 / 0.08);
@@ -69,8 +75,8 @@
     --cb-border-strong: oklch(0.44 0.025 280);
 
     --cb-fg: oklch(0.96 0.006 280);
-    --cb-fg-muted: oklch(0.76 0.015 280);
-    --cb-fg-subtle: oklch(0.62 0.018 280);
+    --cb-fg-muted: oklch(0.78 0.015 280);
+    --cb-fg-subtle: oklch(0.66 0.018 280);
 
     --cb-brand-500: oklch(0.72 0.19 var(--cb-hue-brand));
     --cb-brand-600: oklch(0.64 0.2 var(--cb-hue-brand));
@@ -81,6 +87,9 @@
 
     --cb-glass-bg: oklch(0.3 0.03 280 / 0.55);
     --cb-glass-border: oklch(0.8 0.02 280 / 0.16);
+
+    --cb-scrim: oklch(0.08 0.01 280 / 0.6);
+    --cb-scrim-strong: oklch(0.08 0.01 280 / 0.7);
 
     --cb-tint-strength: 0.16;
   }
@@ -96,8 +105,8 @@
   --cb-border-strong: oklch(0.44 0.025 280);
 
   --cb-fg: oklch(0.96 0.006 280);
-  --cb-fg-muted: oklch(0.76 0.015 280);
-  --cb-fg-subtle: oklch(0.62 0.018 280);
+  --cb-fg-muted: oklch(0.78 0.015 280);
+  --cb-fg-subtle: oklch(0.66 0.018 280);
 
   --cb-brand-500: oklch(0.72 0.19 var(--cb-hue-brand));
   --cb-brand-600: oklch(0.64 0.2 var(--cb-hue-brand));
@@ -108,6 +117,9 @@
 
   --cb-glass-bg: oklch(0.3 0.03 280 / 0.55);
   --cb-glass-border: oklch(0.8 0.02 280 / 0.16);
+
+  --cb-scrim: oklch(0.08 0.01 280 / 0.6);
+  --cb-scrim-strong: oklch(0.08 0.01 280 / 0.7);
 
   --cb-tint-strength: 0.16;
 }

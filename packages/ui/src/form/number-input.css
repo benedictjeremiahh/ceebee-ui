@@ -7,7 +7,7 @@
   background: var(--cb-surface);
   border: var(--cb-border-width) solid var(--cb-border-strong);
   border-radius: var(--cb-radius-md);
-  padding-inline: var(--cb-space-1);
+  padding-inline: var(--cb-space-3) var(--cb-space-1);
   transition: border-color var(--cb-duration-fast) var(--cb-ease-standard),
     box-shadow var(--cb-duration-fast) var(--cb-ease-standard);
 }
@@ -30,10 +30,11 @@
   font-family: var(--cb-font-sans);
   font-size: var(--cb-text-sm);
   font-variant-numeric: tabular-nums;
-  text-align: center;
   outline: none;
 }
 .cb-number__suffix { font-family: var(--cb-font-sans); font-size: var(--cb-text-xs); color: var(--cb-fg-subtle); }
+
+.cb-number__steppers { display: inline-flex; flex: none; gap: 0.125rem; }
 
 .cb-number__step {
   flex: none;
@@ -51,4 +52,4 @@
 }
 .cb-number__step:hover:not(:disabled) { background: var(--cb-bg-subtle); color: var(--cb-fg); }
 .cb-number__step:disabled { opacity: 0.35; cursor: not-allowed; }
-.cb-number__step:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: -2px; }
+.cb-number__step:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: var(--cb-focus-offset-inset); }

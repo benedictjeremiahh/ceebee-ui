@@ -11,6 +11,7 @@ import {
   type SortState,
 } from '@ceebee/ui/client';
 import { Avatar, Badge, EmptyState, Stack, Text } from '@ceebee/ui';
+import { CodeBlock } from './code-block';
 
 interface Invoice {
   id: string;
@@ -128,8 +129,7 @@ export function TableDemo() {
           <Pagination page={page} pageSize={20} total={137} onPageChange={setPage} />
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`const [sort, setSort] = useState<SortState | null>(null);
+      <CodeBlock bare code={`const [sort, setSort] = useState<SortState | null>(null);
 
 <DataTable
   label="Invoices"
@@ -141,8 +141,7 @@ export function TableDemo() {
   empty={<EmptyState title="No invoices yet" />}
 />
 
-<Pagination page={page} pageSize={20} total={137} onPageChange={setPage} />`}</code>
-      </pre>
+<Pagination page={page} pageSize={20} total={137} onPageChange={setPage} />`} />
     </div>
   );
 }
@@ -158,9 +157,7 @@ export function PaginationDemo() {
           <Pagination page={1} pageSize={20} total={0} onPageChange={() => {}} />
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`<Pagination page={page} pageSize={10} total={300} onPageChange={setPage} />`}</code>
-      </pre>
+      <CodeBlock bare code={`<Pagination page={page} pageSize={10} total={300} onPageChange={setPage} />`} />
     </div>
   );
 }

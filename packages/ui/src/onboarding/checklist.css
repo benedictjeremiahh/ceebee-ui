@@ -29,7 +29,7 @@
 }
 .cb-checklist__task:disabled { cursor: default; }
 .cb-checklist__task:hover:not(:disabled) { background: var(--cb-bg-subtle); }
-.cb-checklist__task:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: -2px; }
+.cb-checklist__task:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: var(--cb-focus-offset-inset); }
 
 .cb-checklist__marker {
   flex: none;

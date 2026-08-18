@@ -18,8 +18,3 @@
 @media (prefers-reduced-motion: reduce) {
   :root { --cb-motion-scale: 0; }
 }
-
-/* Reduced motion drops transform, keeps opacity — never "no feedback at all". */
-@media (prefers-reduced-motion: reduce) {
-  .cb-shimmer::after { animation: none; }
-}

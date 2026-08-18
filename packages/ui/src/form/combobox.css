@@ -50,7 +50,7 @@
 .cb-combobox__clear:hover,
 .cb-combobox__trigger:hover { color: var(--cb-fg); background: var(--cb-bg-subtle); }
 .cb-combobox__clear:focus-visible,
-.cb-combobox__trigger:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: -2px; }
+.cb-combobox__trigger:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: var(--cb-focus-offset-inset); }
 
 .cb-combobox__popup {
   box-sizing: border-box;

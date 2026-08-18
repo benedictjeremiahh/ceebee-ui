@@ -1,9 +1,8 @@
 'use client';
 
-import { Check, Copy } from 'lucide-react';
-import { useState, type ReactNode } from 'react';
-import { Button, useMotionSettings } from '@ceebee/ui/client';
-import { Text } from '@ceebee/ui';
+import type { ReactNode } from 'react';
+import { useMotionSettings } from '@ceebee/ui/client';
+import { CodeBlock } from './code-block';
 
 export interface DemoProps {
   children: ReactNode;
@@ -13,7 +12,6 @@ export interface DemoProps {
 }
 
 export function Demo({ children, code, layout = 'row' }: DemoProps) {
-  const [copied, setCopied] = useState(false);
   const { enabled } = useMotionSettings();
 
   return (
@@ -21,27 +19,9 @@ export function Demo({ children, code, layout = 'row' }: DemoProps) {
       <div className="demo__stage" data-layout={layout}>
         {children}
       </div>
-      <div className="demo__bar">
-        <Text size="xs" tone="subtle">
-          {enabled ? 'Motion on' : 'Reduced motion'}
-        </Text>
-        <Button
-          size="sm"
-          variant="ghost"
-          tone="neutral"
-          iconStart={copied ? <Check size={14} /> : <Copy size={14} />}
-          onClick={() => {
-            void navigator.clipboard.writeText(code);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 1600);
-          }}
-        >
-          {copied ? 'Copied' : 'Copy'}
-        </Button>
-      </div>
-      <pre className="demo__code">
-        <code>{code}</code>
-      </pre>
+      {/* The code block carries its own copy control, so the stage footer only reports the
+          motion state the examples are running under. */}
+      <CodeBlock bare code={code} filename={enabled ? 'tsx · motion on' : 'tsx · reduced motion'} />
     </div>
   );
 }

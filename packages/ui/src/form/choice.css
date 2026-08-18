@@ -1,4 +1,6 @@
 .cb-choice { display: flex; align-items: flex-start; gap: var(--cb-space-3); }
+/* A row whose text is a single line centres on the control instead of hanging from its top. */
+.cb-choice:not(:has(.cb-choice__description)) { align-items: center; }
 .cb-choice--justified { align-items: center; justify-content: space-between; width: 100%; }
 .cb-choice__text { display: flex; flex-direction: column; gap: var(--cb-space-1); }
 .cb-choice__label {
@@ -65,11 +67,19 @@
 .cb-radio-group--row { flex-direction: row; flex-wrap: wrap; gap: var(--cb-space-5); }
 
 .cb-switch {
+  /* Geometry is derived, not hand-tuned: the thumb size and its travel both come from the
+     track's own dimensions, so changing one number keeps the whole control symmetrical. */
+  --cb-switch-width: 2.5rem;
+  --cb-switch-height: 1.5rem;
+  --cb-switch-inset: 0.1875rem;
+  --cb-switch-thumb: calc(var(--cb-switch-height) - var(--cb-switch-inset) * 2);
   flex: none;
-  position: relative;
-  width: 2.25rem;
-  height: 1.25rem;
-  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  width: var(--cb-switch-width);
+  height: var(--cb-switch-height);
+  padding: var(--cb-switch-inset);
+  box-sizing: border-box;
   border: none;
   border-radius: var(--cb-radius-full);
   background: color-mix(in oklch, var(--cb-fg) 25%, transparent);
@@ -79,15 +89,16 @@
 .cb-switch[data-checked] { background: var(--cb-tone-brand); }
 .cb-switch__thumb {
   display: block;
-  width: 1rem;
-  height: 1rem;
-  margin-inline-start: 0.125rem;
+  width: var(--cb-switch-thumb);
+  height: var(--cb-switch-thumb);
   border-radius: var(--cb-radius-full);
   background: var(--cb-surface-raised);
   box-shadow: var(--cb-shadow-sm);
   transition: translate var(--cb-duration-base) var(--cb-ease-emphasis);
 }
-.cb-switch[data-checked] .cb-switch__thumb { translate: 1rem 0; }
+.cb-switch[data-checked] .cb-switch__thumb {
+  translate: calc(var(--cb-switch-width) - var(--cb-switch-height)) 0;
+}
 /* Reduced motion: the thumb still moves — that is the state — it just stops easing. */
 @media (prefers-reduced-motion: reduce) {
   .cb-switch__thumb { transition: none; }

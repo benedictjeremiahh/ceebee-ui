@@ -37,7 +37,11 @@
 
   --cb-border-width: 1px;
   --cb-focus-width: 2px;
+  /* Outside a control's own edge. */
   --cb-focus-offset: 2px;
+  /* Inset, for a control that sits flush inside a bordered container — a stepper button, a
+     sidebar row, a tab — where an outside ring would be clipped or would overlap its neighbour. */
+  --cb-focus-offset-inset: -2px;
 
   --cb-z-base: 0;
   --cb-z-sticky: 100;

@@ -1,6 +1,7 @@
 'use client';
 
 import { Donut, Sparkline, BarMini, Stack, StatCard, Text, Grid } from '@ceebee/ui';
+import { CodeBlock } from './code-block';
 
 const REVENUE = [12, 18, 15, 22, 26, 21, 30, 28, 35];
 const SIGNUPS = [4, 9, 6, 12, 8, 15, 11, 18];
@@ -30,12 +31,10 @@ export function DonutDemo() {
 
         <Donut label="Storage" size={88} thickness={12} slices={[{ value: 3, label: 'Used' }, { value: 7, label: 'Free' }]} />
       </div>
-      <pre className="demo__code">
-        <code>{`<Donut
+      <CodeBlock bare code={`<Donut
   label="Spend by category"
   slices={[{ value: 42, label: 'Infrastructure' }, { value: 28, label: 'Salaries' }]}
-/>`}</code>
-      </pre>
+/>`} />
     </div>
   );
 }
@@ -70,12 +69,10 @@ export function SparklineDemo() {
           </Grid>
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`<Sparkline values={revenue} filled hue="teal" label="Revenue trend" />
+      <CodeBlock bare code={`<Sparkline values={revenue} filled hue="teal" label="Revenue trend" />
 <BarMini values={signups} hue="violet" label="Signups per day" />
 
-<StatCard label="Revenue" value="35.2M" visual={<Sparkline values={revenue} filled />} />`}</code>
-      </pre>
+<StatCard label="Revenue" value="35.2M" visual={<Sparkline values={revenue} filled />} />`} />
     </div>
   );
 }

@@ -11,6 +11,7 @@ import {
   TextInput,
 } from '@ceebee/ui/client';
 import { Stack, Surface, Text } from '@ceebee/ui';
+import { CodeBlock } from './code-block';
 
 const CURRENCIES = [
   { value: 'idr', label: 'Indonesian rupiah' },
@@ -36,15 +37,13 @@ export function SelectDemo() {
           </Field>
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`<Field label="Settlement currency" hint="Payouts convert at the daily rate.">
+      <CodeBlock bare code={`<Field label="Settlement currency" hint="Payouts convert at the daily rate.">
   <Select
     items={[{ value: 'idr', label: 'Indonesian rupiah' }, …]}
     value={value}
     onValueChange={setValue}
   />
-</Field>`}</code>
-      </pre>
+</Field>`} />
     </div>
   );
 }
@@ -83,7 +82,7 @@ export function ChoiceDemo() {
           </Stack>
 
           <Surface padding="md" radius="md">
-            <Stack gap={4}>
+            <Stack gap={3}>
               <Switch
                 justified
                 label="Reduce motion"
@@ -95,8 +94,7 @@ export function ChoiceDemo() {
           </Surface>
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`<RadioGroup
+      <CodeBlock bare code={`<RadioGroup
   value={plan}
   onValueChange={setPlan}
   options={[
@@ -106,8 +104,7 @@ export function ChoiceDemo() {
 />
 
 <Checkbox label="Email me receipts" description="One message per payment." defaultChecked />
-<Switch justified label="Reduce motion" description="Turns off transforms." />`}</code>
-      </pre>
+<Switch justified label="Reduce motion" description="Turns off transforms." />`} />
     </div>
   );
 }
@@ -132,11 +129,9 @@ export function NumberDemo() {
           </Text>
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`<Field label="Seats" hint="Between 1 and 10.">
+      <CodeBlock bare code={`<Field label="Seats" hint="Between 1 and 10.">
   <NumberInput value={seats} onValueChange={setSeats} min={1} max={10} />
-</Field>`}</code>
-      </pre>
+</Field>`} />
     </div>
   );
 }

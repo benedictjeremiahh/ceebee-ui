@@ -15,6 +15,7 @@ import {
   type PaletteCommand,
 } from '@ceebee/ui/client';
 import { ProgressBar, Spinner, Stack, Surface, Text, Timeline } from '@ceebee/ui';
+import { CodeBlock } from './code-block';
 
 const COUNTRIES = [
   { value: 'id', label: 'Indonesia', description: 'Asia · IDR' },
@@ -41,11 +42,9 @@ export function ComboboxDemo() {
           </Text>
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`<Field label="Country" hint="Type to narrow the list.">
+      <CodeBlock bare code={`<Field label="Country" hint="Type to narrow the list.">
   <Combobox items={countries} value={value} onValueChange={setValue} />
-</Field>`}</code>
-      </pre>
+</Field>`} />
     </div>
   );
 }
@@ -69,11 +68,9 @@ export function DateDemo() {
           </Text>
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`<Field label="Invoice date">
+      <CodeBlock bare code={`<Field label="Invoice date">
   <DateInput value={date} onValueChange={setDate} min={start} max={end} />
-</Field>`}</code>
-      </pre>
+</Field>`} />
     </div>
   );
 }
@@ -102,16 +99,14 @@ export function FileDropDemo() {
           ) : null}
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`<FileDrop
+      <CodeBlock bare code={`<FileDrop
   files={files}
   onFilesChange={setFiles}
   onReject={(rejections) => notify(rejections)}
   accept={['.pdf']}
   maxSize={2 * 1024 * 1024}
   maxFiles={3}
-/>`}</code>
-      </pre>
+/>`} />
     </div>
   );
 }
@@ -154,16 +149,14 @@ export function PaletteDemo() {
         </Text>
         <CommandPalette open={open} onOpenChange={setOpen} commands={commands} />
       </div>
-      <pre className="demo__code">
-        <code>{`<CommandPalette
+      <CodeBlock bare code={`<CommandPalette
   open={open}
   onOpenChange={setOpen}
   commands={[
     { id: 'invoice', label: 'New invoice', group: 'Create', shortcut: '⌘N', onRun: createInvoice },
     { id: 'signout', label: 'Sign out', keywords: ['logout'], onRun: signOut },
   ]}
-/>`}</code>
-      </pre>
+/>`} />
     </div>
   );
 }
@@ -195,12 +188,10 @@ export function ProgressDemo() {
           </Stack>
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`<Spinner label="Loading invoices" />
+      <CodeBlock bare code={`<Spinner label="Loading invoices" />
 
 <ProgressBar value={35} label="Upload progress" showValue />
-<ProgressBar label="Syncing" />   {/* no value — indeterminate */}`}</code>
-      </pre>
+<ProgressBar label="Syncing" />   {/* no value — indeterminate */}`} />
     </div>
   );
 }
@@ -220,12 +211,10 @@ export function TimelineDemo() {
           />
         </Surface>
       </div>
-      <pre className="demo__code">
-        <code>{`<Timeline entries={[
+      <CodeBlock bare code={`<Timeline entries={[
   { time: '09:12', title: 'Invoice created', description: 'INV-1043', tone: 'brand' },
   { time: '11:31', title: 'Paid', tone: 'success' },
-]} />`}</code>
-      </pre>
+]} />`} />
     </div>
   );
 }
@@ -266,12 +255,10 @@ export function ChecklistDemo() {
           </Text>
         </Stack>
       </div>
-      <pre className="demo__code">
-        <code>{`<Checklist
+      <CodeBlock bare code={`<Checklist
   tasks={tasks.map((task) => ({ ...task, done: completed.includes(task.id), onSelect: () => go(task) }))}
   completeSlot={<Text>All set.</Text>}
-/>`}</code>
-      </pre>
+/>`} />
     </div>
   );
 }
