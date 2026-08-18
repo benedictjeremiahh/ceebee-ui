@@ -46,12 +46,19 @@ export function Combobox({
 }: ComboboxProps) {
   const field = useFieldWiring();
 
+  /* Base UI works in whole items, not in ids. Handing it a bare string makes the input show the
+     id — "id" instead of "Indonesia" — and hands the caller an object back on selection. The
+     mapping happens here so the public API can stay a plain value. */
+  const optionFor = (candidate: string | null | undefined) =>
+    items.find((item) => item.value === candidate) ?? null;
+
   return (
     <BaseCombobox.Root
       items={items}
-      value={value}
-      defaultValue={defaultValue}
-      onValueChange={(next) => onValueChange?.((next as string | null) ?? null)}
+      value={value === undefined ? undefined : optionFor(value)}
+      defaultValue={defaultValue === undefined ? undefined : optionFor(defaultValue)}
+      onValueChange={(next) => onValueChange?.((next as ComboboxOption | null)?.value ?? null)}
+      isItemEqualToValue={(a: ComboboxOption, b: ComboboxOption) => a?.value === b?.value}
       itemToStringLabel={(item: ComboboxOption | string) => (typeof item === 'string' ? item : item.label)}
       disabled={disabled}
       name={name}

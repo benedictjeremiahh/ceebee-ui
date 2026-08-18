@@ -31,9 +31,23 @@ export interface CodeBlockProps {
   bare?: boolean;
 }
 
+/**
+ * Strips the indentation the surrounding source file happened to have. Without it every example
+ * is published with however many spaces the JSX around the template literal was sitting at.
+ */
+function dedent(code: string): string {
+  const lines = code.replace(/\t/g, '  ').split('\n');
+  const indents = lines.filter((line) => line.trim()).map((line) => line.match(/^ */)![0].length);
+  const shortest = indents.length > 0 ? Math.min(...indents) : 0;
+  return lines
+    .map((line) => line.slice(shortest))
+    .join('\n')
+    .replace(/^\n+|\s+$/g, '');
+}
+
 export function CodeBlock({ code, language = 'tsx', filename, bare = false }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
-  const source = code.replace(/\n$/, '');
+  const source = dedent(code);
 
   return (
     <div className="code" data-bare={bare || undefined}>

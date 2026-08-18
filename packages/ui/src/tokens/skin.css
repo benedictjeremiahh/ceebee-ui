@@ -17,16 +17,18 @@
   --cb-brand-700: oklch(0.45 0.16 var(--cb-hue-brand));
 
   --cb-bg: oklch(0.985 0.004 280);
-  --cb-bg-subtle: oklch(0.96 0.008 280);
+  --cb-bg-subtle: oklch(0.945 0.01 280);
   --cb-surface: oklch(1 0 0);
   --cb-surface-raised: oklch(1 0 0);
-  --cb-border: oklch(0.9 0.008 280);
-  --cb-border-strong: oklch(0.82 0.012 280);
+  --cb-border: oklch(0.84 0.012 280);
+  --cb-border-strong: oklch(0.64 0.018 280);
 
   --cb-fg: oklch(0.22 0.02 280);
   --cb-fg-muted: oklch(0.45 0.02 280);
   --cb-fg-subtle: oklch(0.53 0.018 280);
   --cb-fg-on-brand: oklch(0.99 0 0);
+  /* A boundary has to be visible to be a boundary: border-strong carries the 3:1 WCAG asks of a
+     control's edge, and border the quieter separation between panels. */
 
   --cb-tone-neutral: var(--cb-fg-muted);
   --cb-tone-brand: var(--cb-brand-500);
@@ -67,12 +69,12 @@
 /* System dark, unless the document explicitly asked for light. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --cb-bg: oklch(0.19 0.02 280);
-    --cb-bg-subtle: oklch(0.23 0.022 280);
+    --cb-bg: oklch(0.16 0.02 280);
+    --cb-bg-subtle: oklch(0.225 0.024 280);
     --cb-surface: oklch(0.25 0.024 280);
-    --cb-surface-raised: oklch(0.29 0.026 280);
-    --cb-border: oklch(0.34 0.02 280);
-    --cb-border-strong: oklch(0.44 0.025 280);
+    --cb-surface-raised: oklch(0.31 0.026 280);
+    --cb-border: oklch(0.45 0.024 280);
+    --cb-border-strong: oklch(0.56 0.028 280);
 
     --cb-fg: oklch(0.96 0.006 280);
     --cb-fg-muted: oklch(0.78 0.015 280);
@@ -97,12 +99,12 @@
 
 /* Explicit choice wins in both directions. */
 :root[data-theme="dark"] {
-  --cb-bg: oklch(0.19 0.02 280);
-  --cb-bg-subtle: oklch(0.23 0.022 280);
+  --cb-bg: oklch(0.16 0.02 280);
+  --cb-bg-subtle: oklch(0.225 0.024 280);
   --cb-surface: oklch(0.25 0.024 280);
-  --cb-surface-raised: oklch(0.29 0.026 280);
-  --cb-border: oklch(0.34 0.02 280);
-  --cb-border-strong: oklch(0.44 0.025 280);
+  --cb-surface-raised: oklch(0.31 0.026 280);
+  --cb-border: oklch(0.45 0.024 280);
+  --cb-border-strong: oklch(0.56 0.028 280);
 
   --cb-fg: oklch(0.96 0.006 280);
   --cb-fg-muted: oklch(0.78 0.015 280);

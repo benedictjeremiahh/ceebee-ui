@@ -37,6 +37,7 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
       { href: '/form/number-input', label: 'NumberInput', kind: 'Atom' },
       { href: '/form/combobox', label: 'Combobox', kind: 'Atom' },
       { href: '/form/date-input', label: 'DateInput', kind: 'Composition' },
+      { href: '/form/time-input', label: 'TimeInput', kind: 'Composition' },
       { href: '/form/file-drop', label: 'FileDrop', kind: 'Composition' },
     ],
   },

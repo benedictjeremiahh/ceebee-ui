@@ -10,8 +10,10 @@ const CODE = `<Popover trigger={<Button variant="outline">Details</Button>} side
   <Text size="sm" tone="muted">Charges run from the 1st to the last day of the month.</Text>
 </Popover>
 
-<Tooltip label="Copy invoice number">
-  <Button variant="ghost" iconStart={<Copy size={16} />} aria-label="Copy invoice number" />
+<Tooltip label="This is a tooltip">
+  <Button variant="ghost" tone="neutral" iconStart={<Info size={16} />}>
+    Hover me
+  </Button>
 </Tooltip>`;
 
 export function PopoverDemo() {

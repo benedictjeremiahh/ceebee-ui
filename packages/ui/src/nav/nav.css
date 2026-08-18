@@ -34,7 +34,7 @@
 .cb-menu__item[data-highlighted] { background: color-mix(in oklch, var(--cb-tone-brand) 12%, transparent); }
 .cb-menu__item[data-tone="danger"] { color: var(--cb-tone-danger); }
 .cb-menu__item[data-tone="danger"][data-highlighted] { background: color-mix(in oklch, var(--cb-tone-danger) 12%, transparent); }
-.cb-menu__item[data-disabled] { opacity: 0.45; cursor: not-allowed; }
+.cb-menu__item[data-disabled] { color: var(--cb-fg-subtle); text-decoration: line-through; cursor: not-allowed; }
 .cb-menu__icon { display: inline-flex; justify-content: center; color: var(--cb-fg-subtle); }
 .cb-menu__item[data-tone="danger"] .cb-menu__icon { color: inherit; }
 .cb-menu__shortcut {

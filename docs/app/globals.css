@@ -183,3 +183,30 @@ body { margin: 0; font-family: var(--cb-font-sans); }
 
 .recipe--gamified, .recipe--fintech { max-width: 30rem; margin-inline: auto; }
 .recipe__balance { font-size: var(--cb-text-2xl); }
+
+/* GFM tables in the docs prose. */
+.docs__main table:not(.props) {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--cb-text-sm);
+  margin-block: var(--cb-space-4);
+  display: block;
+  overflow-x: auto;
+}
+.docs__main table:not(.props) th,
+.docs__main table:not(.props) td {
+  text-align: left;
+  padding: var(--cb-space-2) var(--cb-space-3);
+  border-bottom: var(--cb-border-width) solid var(--cb-border);
+  color: var(--cb-fg-muted);
+  vertical-align: top;
+}
+.docs__main table:not(.props) th {
+  color: var(--cb-fg-subtle);
+  font-weight: var(--cb-weight-medium);
+  font-size: var(--cb-text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.docs__main table:not(.props) td:first-child { color: var(--cb-fg); white-space: nowrap; }

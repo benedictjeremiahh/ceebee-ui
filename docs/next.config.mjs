@@ -1,6 +1,11 @@
 import createMDX from '@next/mdx';
 
-const withMDX = createMDX({ extension: /\.mdx?$/ });
+// Without gfm, every markdown table in the docs renders as literal text full of pipe characters.
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+  // Turbopack needs the plugin named rather than imported: loader options must stay serializable.
+  options: { remarkPlugins: [['remark-gfm', {}]] },
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

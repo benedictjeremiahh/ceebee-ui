@@ -129,7 +129,7 @@ export function TableDemo() {
           <Pagination page={page} pageSize={20} total={137} onPageChange={setPage} />
         </Stack>
       </div>
-      <CodeBlock bare code={`const [sort, setSort] = useState<SortState | null>(null);
+      <CodeBlock bare code={`const [sort, setSort] = useState<SortState | null>({ column: 'issued', direction: 'desc' });
 
 <DataTable
   label="Invoices"

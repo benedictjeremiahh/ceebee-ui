@@ -29,6 +29,7 @@ built in, which is worth keeping: it is the record of what turned out to be foun
 | Checkbox / Radio / Switch | Atom | client | S2 — built |
 | NumberInput | Atom | client | S2 — built |
 | DateInput | Composition | client | S3 — built |
+| TimeInput | Composition | client | S5 — built |
 | Combobox | Atom | client | S3 — built |
 | FileDrop | Composition | client | S4 — built |
 

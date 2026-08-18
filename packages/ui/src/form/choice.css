@@ -45,9 +45,24 @@
   outline: var(--cb-focus-width) solid var(--cb-tone-brand);
   outline-offset: var(--cb-focus-offset);
 }
+/* Disabled has to be legible as a state, not merely dimmer: the control loses its fill, drops
+   to a dashed edge, and takes the muted foreground with it. */
 .cb-checkbox[data-disabled],
 .cb-radio[data-disabled],
-.cb-switch[data-disabled] { opacity: 0.5; cursor: not-allowed; }
+.cb-switch[data-disabled] {
+  cursor: not-allowed;
+  opacity: 1;
+  background: var(--cb-bg-subtle);
+  border-style: dashed;
+  border-color: var(--cb-border-strong);
+  color: var(--cb-fg-subtle);
+}
+.cb-switch[data-disabled] { border-style: solid; background: color-mix(in oklch, var(--cb-fg) 12%, transparent); }
+.cb-switch[data-disabled] .cb-switch__thumb { background: var(--cb-bg-subtle); box-shadow: none; }
+.cb-radio[data-disabled] .cb-radio__indicator,
+.cb-checkbox[data-disabled] .cb-checkbox__indicator { color: var(--cb-fg-subtle); background: var(--cb-fg-subtle); }
+.cb-choice:has([data-disabled]) .cb-choice__label,
+.cb-choice:has([data-disabled]) .cb-choice__description { color: var(--cb-fg-subtle); cursor: not-allowed; }
 
 .cb-checkbox__indicator { display: inline-flex; }
 .cb-radio__indicator {

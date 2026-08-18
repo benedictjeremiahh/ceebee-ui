@@ -11,9 +11,14 @@
 
 .cb-toast {
   --cb-toast-accent: var(--cb-tone-info);
-  display: flex;
-  align-items: flex-start;
-  gap: var(--cb-space-3);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "icon content close"
+    ".    action  .";
+  align-items: start;
+  column-gap: var(--cb-space-3);
+  row-gap: var(--cb-space-2);
   box-sizing: border-box;
   width: 100%;
   padding: var(--cb-space-3) var(--cb-space-4);
@@ -36,14 +41,15 @@
   .cb-toast[data-ending-style] { transform: none; }
 }
 
-.cb-toast__icon { flex: none; color: var(--cb-toast-accent); display: inline-flex; margin-top: 0.125rem; }
-.cb-toast__content { flex: 1; display: flex; flex-direction: column; gap: 0.125rem; min-width: 0; }
+.cb-toast__icon { grid-area: icon; color: var(--cb-toast-accent); display: inline-flex; margin-top: 0.125rem; }
+.cb-toast__content { grid-area: content; display: flex; flex-direction: column; gap: 0.125rem; min-width: 0; }
 /* Base UI renders these as <h2> and <p>, which inherit the host app's heading and paragraph
    margins — without this reset a two-line toast is twice as tall in one app as in another. */
 .cb-toast__title { margin: 0; font-size: var(--cb-text-sm); font-weight: var(--cb-weight-semibold); color: var(--cb-fg); }
 .cb-toast__description { margin: 0; font-size: var(--cb-text-sm); color: var(--cb-fg-muted); }
 .cb-toast__action {
-  flex: none;
+  grid-area: action;
+  justify-self: start;
   border: none;
   background: transparent;
   color: var(--cb-toast-accent);
@@ -55,8 +61,10 @@
   border-radius: var(--cb-radius-sm);
 }
 .cb-toast__action:hover { background: color-mix(in oklch, var(--cb-toast-accent) 12%, transparent); }
+/* An action-less toast must not reserve the row it would have sat in. */
+.cb-toast:not(:has(.cb-toast__action)) { grid-template-areas: "icon content close"; }
 .cb-toast__close {
-  flex: none;
+  grid-area: close;
   border: none;
   background: transparent;
   color: var(--cb-fg-subtle);

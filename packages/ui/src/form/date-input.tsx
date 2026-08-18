@@ -2,7 +2,7 @@
 
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { cn, type Size } from '../lib/cn.js';
 import { useFieldWiring } from './field.js';
 import { formatISO, isOutOfRange, isSameDay, monthMatrix, parseDateInput } from './date.util.js';
@@ -54,6 +54,9 @@ export function DateInput({
   const [text, setText] = useState(() => (current ? display(current) : ''));
   const [open, setOpen] = useState(false);
   const [cursor, setCursor] = useState(() => current ?? new Date());
+  // The calendar anchors to the whole field, not to the little button, so it lines up with the
+  // control whichever way it was opened.
+  const fieldRef = useRef<HTMLDivElement>(null);
 
   const commit = (next: Date | null) => {
     if (!controlled) setInternal(next);
@@ -66,7 +69,11 @@ export function DateInput({
 
   return (
     <BasePopover.Root open={open} onOpenChange={setOpen}>
-      <div className={cn('cb-date', `cb-date--${size}`, className)} data-disabled={disabled || undefined}>
+      <div
+        ref={fieldRef}
+        className={cn('cb-date', `cb-date--${size}`, className)}
+        data-disabled={disabled || undefined}
+      >
         <input
           className="cb-date__input"
           id={field?.controlId}
@@ -75,6 +82,9 @@ export function DateInput({
           disabled={disabled}
           aria-describedby={field?.describedBy}
           aria-invalid={invalid ?? field?.invalid ? true : undefined}
+          // Clicking the field opens the calendar too — the button is a second way in, not the
+          // only one — while typing still works because the input keeps focus.
+          onClick={() => !disabled && setOpen(true)}
           onChange={(event) => setText(event.target.value)}
           onBlur={() => {
             // An unparseable string clears rather than silently keeping the old date.
@@ -98,7 +108,7 @@ export function DateInput({
       </div>
 
       <BasePopover.Portal>
-        <BasePopover.Positioner side="bottom" align="start" sideOffset={6}>
+        <BasePopover.Positioner anchor={fieldRef} side="bottom" align="start" sideOffset={6}>
           <BasePopover.Popup className="cb-calendar">
             <div className="cb-calendar__head">
               <button

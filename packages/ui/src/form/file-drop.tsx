@@ -1,7 +1,7 @@
 'use client';
 
 import { Upload, X } from 'lucide-react';
-import { useRef, useState, type DragEvent, type ReactNode } from 'react';
+import { useState, type DragEvent, type ReactNode } from 'react';
 import { cn } from '../lib/cn.js';
 import { useFieldWiring } from './field.js';
 import { describeAccept, partitionFiles, type FileRules } from './file-drop.util.js';
@@ -28,7 +28,6 @@ export function FileDrop({
   children,
   className,
 }: FileDropProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
   const [over, setOver] = useState(false);
   const field = useFieldWiring();
   const rules: FileRules = { accept, maxSize, maxFiles, multiple };
@@ -40,7 +39,7 @@ export function FileDrop({
     if (rejected.length > 0) onReject?.(rejected);
   };
 
-  const onDrop = (event: DragEvent<HTMLDivElement>) => {
+  const onDrop = (event: DragEvent<HTMLLabelElement>) => {
     event.preventDefault();
     setOver(false);
     if (!disabled) take(event.dataTransfer.files);
@@ -48,11 +47,11 @@ export function FileDrop({
 
   return (
     <div className={cn('cb-filedrop', className)}>
-      <div
+      <label
         className="cb-filedrop__zone"
         data-over={over || undefined}
         data-disabled={disabled || undefined}
-        onDragOver={(event) => {
+        onDragOver={(event: DragEvent<HTMLLabelElement>) => {
           event.preventDefault();
           if (!disabled) setOver(true);
         }}
@@ -61,7 +60,6 @@ export function FileDrop({
       >
         {/* The input stays a real file input: drag and drop is an addition, never the only way in. */}
         <input
-          ref={inputRef}
           type="file"
           className="cb-visually-hidden"
           id={field?.controlId}
@@ -77,17 +75,10 @@ export function FileDrop({
         <span className="cb-filedrop__icon" aria-hidden="true">
           <Upload size={20} />
         </span>
-        <button
-          type="button"
-          className="cb-filedrop__button"
-          disabled={disabled}
-          onClick={() => inputRef.current?.click()}
-        >
-          Choose {multiple ? 'files' : 'a file'}
-        </button>
+        <span className="cb-filedrop__button">Choose {multiple ? 'files' : 'a file'}</span>
         <p className="cb-filedrop__hint">or drop {multiple ? 'them' : 'it'} here{describeAccept(rules)}</p>
         {children}
-      </div>
+      </label>
 
       {files.length > 0 ? (
         <ul className="cb-filedrop__list">

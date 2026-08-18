@@ -4,11 +4,18 @@ import { PropsTable, Guidance } from '../../../components/props-table';
 # FileDrop <span className="docs__label">Composition</span>
 
 Drag and drop, with a real file input underneath. Dropping is an addition, never the only way in —
-a drop zone without a button is unusable by keyboard and unreachable on a phone.
+a drop zone that only accepts drops is unusable by keyboard and unreachable on a phone.
 
 ## Usage
 
 <FileDropDemo />
+
+## One target, one behaviour
+
+The zone is a `<label>` wrapping the file input, so the whole area opens the picker exactly once
+and the keyboard focus ring lands on the control itself. The earlier arrangement — a button beside
+a hidden input floating inside the zone — meant the picker could also be opened by clicking what
+looked like empty space.
 
 ## Rejections are reported, not swallowed
 

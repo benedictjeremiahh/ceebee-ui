@@ -20,11 +20,14 @@
   .cb-spotlight { transition: none; }
 }
 
+/* The positioner is what the portal places, so the stacking order has to live here; a z-index
+   on the popup alone loses to the spotlight's own layer. */
+.cb-coachmark__positioner { z-index: calc(var(--cb-z-coachmark) + 1); }
+
 .cb-coachmark {
   box-sizing: border-box;
   width: 20rem;
   max-width: calc(100vw - var(--cb-space-6));
-  z-index: calc(var(--cb-z-coachmark) + 1);
   background: var(--cb-surface-raised);
   color: var(--cb-fg);
   border: var(--cb-border-width) solid var(--cb-border);

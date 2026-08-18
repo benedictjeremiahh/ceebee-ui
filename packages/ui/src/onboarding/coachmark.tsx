@@ -63,7 +63,13 @@ export function Coachmark({
 
       <BasePopover.Root open={open && Boolean(anchor)} onOpenChange={(next) => !next && onDismiss?.()}>
         <BasePopover.Portal>
-          <BasePopover.Positioner anchor={anchor} side={side} align={align} sideOffset={12}>
+          <BasePopover.Positioner
+            className="cb-coachmark__positioner"
+            anchor={anchor}
+            side={side}
+            align={align}
+            sideOffset={12}
+          >
             <BasePopover.Popup className={cn('cb-coachmark', className)}>
               <BasePopover.Arrow className="cb-popover__arrow">
                 <ArrowShape />

@@ -10,6 +10,7 @@ import {
   CommandPalette,
   DateInput,
   Field,
+  TimeInput,
   FileDrop,
   formatISO,
   type PaletteCommand,
@@ -42,9 +43,17 @@ export function ComboboxDemo() {
           </Text>
         </Stack>
       </div>
-      <CodeBlock bare code={`<Field label="Country" hint="Type to narrow the list.">
-  <Combobox items={countries} value={value} onValueChange={setValue} />
-</Field>`} />
+      <CodeBlock
+        bare
+        code={`<Field label="Country" hint="Type to narrow the list.">
+  <Combobox
+    items={countries}
+    value={value}
+    onValueChange={setValue}
+    placeholder="Search countries…"
+  />
+</Field>`}
+      />
     </div>
   );
 }
@@ -71,6 +80,33 @@ export function DateDemo() {
       <CodeBlock bare code={`<Field label="Invoice date">
   <DateInput value={date} onValueChange={setDate} min={start} max={end} />
 </Field>`} />
+    </div>
+  );
+}
+
+export function TimeDemo() {
+  const [time, setTime] = useState<{ hours: number; minutes: number } | null>({ hours: 9, minutes: 30 });
+  return (
+    <div className="demo">
+      <div className="demo__stage" data-layout="block">
+        <Stack gap={4}>
+          <Field label="Start time" hint="Type 9, 0930, 9:30 or 9pm — or pick one.">
+            <TimeInput value={time} onValueChange={setTime} step={30} />
+          </Field>
+          <Field label="Office hours only">
+            <TimeInput defaultValue={null} min={{ hours: 8, minutes: 0 }} max={{ hours: 17, minutes: 0 }} step={15} />
+          </Field>
+          <Text size="sm" tone="muted">
+            Selected: <code>{time ? `${String(time.hours).padStart(2, '0')}:${String(time.minutes).padStart(2, '0')}` : 'none'}</code>
+          </Text>
+        </Stack>
+      </div>
+      <CodeBlock
+        bare
+        code={`<Field label="Start time" hint="Type 9, 0930, 9:30 or 9pm — or pick one.">
+  <TimeInput value={time} onValueChange={setTime} step={30} />
+</Field>`}
+      />
     </div>
   );
 }
