@@ -1,0 +1,32 @@
+import { Demo } from '../../../components/demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+import { PopoverDemo } from '../../../components/popover-demo';
+
+# Popover · Tooltip <span className="docs__label">Atom</span>
+
+Both are thin: positioning, collision handling, dismissal, and focus return come from Base UI, and
+the library supplies the surface and the arrow.
+
+## Popover
+
+<PopoverDemo />
+
+## Tooltip
+
+A Tooltip takes a plain string, on purpose. It is announced as the trigger's description, and
+markup inside one is either unreadable to a screen reader or a Popover in disguise.
+
+<Guidance
+  do="Use a Tooltip for a short label on an icon-only control."
+  dont="Put a link or a button inside a Tooltip — a pointer user cannot reach it before it closes."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'trigger', type: 'ReactElement', description: 'The element that opens it. Rendered as the trigger rather than wrapped, so your button stays your button.' },
+  { name: 'side / align', type: "Side | Align", default: "'bottom' / 'center'", description: 'Preferred placement; it flips when there is no room.' },
+  { name: 'sideOffset', type: 'number', default: '8', description: 'Distance from the anchor, in px.' },
+  { name: 'showArrow', type: 'boolean', default: 'true', description: 'The arrow is drawn, not a rotated square, so its border stays one hairline.' },
+  { name: 'open / onOpenChange', type: 'boolean | fn', description: 'Optional control. Uncontrolled by default.' },
+]} />

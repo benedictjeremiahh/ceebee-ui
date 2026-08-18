@@ -31,10 +31,14 @@
     "lucide-react": ">=0.400.0",
     "motion": "^13.0.0",
     "react": ">=19",
-    "react-dom": ">=19"
+    "react-dom": ">=19",
+    "embla-carousel-react": "^8.6.0"
   },
   "peerDependenciesMeta": {
     "lucide-react": {
+      "optional": true
+    },
+    "embla-carousel-react": {
       "optional": true
     }
   },
@@ -46,6 +50,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tsup": "^8.3.5",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "embla-carousel-react": "^8.6.0"
   }
 }

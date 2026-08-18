@@ -48,8 +48,8 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
 | Dialog / Drawer | Composition | client | S1 |
-| Popover | Atom | client | S2 |
-| Tooltip | Atom | client | S2 |
+| Popover | Atom | client | S2 — built |
+| Tooltip | Atom | client | S2 — built |
 | DropdownMenu | Composition | client | S3 |
 | CommandPalette | Composition | client | S4 |
 
@@ -78,7 +78,7 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
-| Carousel (Embla + Motion, `.Skeleton`) | Composition | client | S2 |
+| Carousel (Embla + Motion, `.Skeleton`) | Composition | client | S2 — built |
 | Avatar / AvatarGroup | Atom | server | S2 |
 | Image with blur-up | Composition | client | S4 |
 
@@ -87,7 +87,7 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
 | Motion tokens + presets | — | css | S1 |
-| Reveal / Stagger | Atom | client | S2 |
+| Reveal / Stagger | Atom | client | S2 — built |
 | AnimatePresence wrappers (enter/exit) | Atom | client | S2 |
 | ScrollReveal | Composition | client | S4 |
 
@@ -95,9 +95,9 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
-| Coachmark (bubble + spotlight) | Composition | client | S2 |
-| Tour (sequencing controller) | Composition | client | S2 |
-| Seen Store interface | — | server | S2 |
+| Coachmark (bubble + spotlight) | Composition | client | S2 — built |
+| Tour (sequencing controller) | Composition | client | S2 — built |
+| Seen Store interface | — | client | S2 — built |
 | Checklist / GettingStarted | Composition | client | S4 |
 
 ## Recipes (docs only, never shipped)

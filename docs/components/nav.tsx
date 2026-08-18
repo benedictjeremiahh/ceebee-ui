@@ -40,7 +40,10 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
   },
   {
     title: 'Overlay',
-    entries: [{ href: '/overlay/dialog', label: 'Dialog', kind: 'Composition' }],
+    entries: [
+      { href: '/overlay/dialog', label: 'Dialog', kind: 'Composition' },
+      { href: '/overlay/popover', label: 'Popover · Tooltip', kind: 'Atom' },
+    ],
   },
   {
     title: 'Data',
@@ -48,6 +51,14 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
       { href: '/data/progress-ring', label: 'ProgressRing', kind: 'Widget' },
       { href: '/data/stat-card', label: 'StatCard', kind: 'Composition' },
     ],
+  },
+  {
+    title: 'Media',
+    entries: [{ href: '/media/carousel', label: 'Carousel', kind: 'Composition' }],
+  },
+  {
+    title: 'Onboarding',
+    entries: [{ href: '/onboarding/coachmark', label: 'Coachmark · Tour', kind: 'Composition' }],
   },
   {
     title: 'Motion',

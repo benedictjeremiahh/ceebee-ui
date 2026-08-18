@@ -17,3 +17,21 @@ export type { TextInputProps, TextareaProps } from './form/text-input.js';
 
 export { Dialog, DialogClose } from './overlay/dialog.js';
 export type { DialogProps } from './overlay/dialog.js';
+export { Popover, Tooltip } from './overlay/popover.js';
+export type { PopoverProps, TooltipProps, Side, Align } from './overlay/popover.js';
+
+export { Carousel } from './media/carousel.js';
+export type { CarouselProps, CarouselSlideProps, CarouselSkeletonProps } from './media/carousel.js';
+export { shouldAutoplay } from './media/autoplay.js';
+export type { AutoplayConditions } from './media/autoplay.js';
+
+export { Coachmark } from './onboarding/coachmark.js';
+export type { CoachmarkProps } from './onboarding/coachmark.js';
+export { Tour } from './onboarding/tour.js';
+export type { TourProps, TourStep } from './onboarding/tour.js';
+export { tourReducer, initialTourState, resolveTarget, hasEnded } from './onboarding/tour-machine.js';
+export type { TourState, TourAction, TourStatus, StepTarget } from './onboarding/tour-machine.js';
+export type { SeenStore } from './onboarding/seen-store.js';
+
+export { Reveal, Stagger } from './motion/reveal.js';
+export type { RevealProps, StaggerProps } from './motion/reveal.js';

@@ -56,3 +56,30 @@ function Card() {
 
 Every animated component also takes `motion={false}` for a single opt-out that does not touch the
 provider.
+
+## Reveal and Stagger
+
+Two primitives for content that arrives rather than pops. Both collapse to a plain fade under
+reduced motion — the transform is what goes, not the feedback.
+
+<Demo layout="block" code={`<Reveal from="below" onView>
+  <StatCard {...stat} />
+</Reveal>
+
+<Stagger step={0.06} onView>
+  {items.map((item) => <Row key={item.id} {...item} />)}
+</Stagger>`}>
+  <Text as="div" tone="muted">
+    `Reveal` animates one element on mount or on scroll into view; `Stagger` wraps each child in a
+    Reveal with an increasing delay, so a list assembles instead of appearing all at once.
+  </Text>
+</Demo>
+
+<PropsTable rows={[
+  { name: 'from', type: "'below' | 'above' | 'left' | 'right' | 'none'", default: "'below'", description: 'Direction travelled from. Ignored under reduced motion.' },
+  { name: 'distance', type: 'number', default: '12', description: 'Travel in px. Keep it small — large entrances read as sluggish.' },
+  { name: 'delay', type: 'number', default: '0', description: 'Seconds before it starts.' },
+  { name: 'spring', type: "'snappy' | 'soft' | 'bouncy'", default: "'soft'", description: 'Spring preset from the motion tokens.' },
+  { name: 'onView', type: 'boolean', default: 'false', description: 'Waits until it scrolls into view, and fires once.' },
+  { name: 'step', type: 'number', default: '0.06', description: 'Stagger only: seconds between children.' },
+]} />

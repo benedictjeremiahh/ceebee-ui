@@ -1,0 +1,97 @@
+import { CoachmarkDemo, TourDemo } from '../../../components/tour-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Coachmark · Tour <span className="docs__label">Composition</span>
+
+Two layers, deliberately. A **Coachmark** is one anchored bubble pointing at one element. A **Tour**
+sequences them. Neither remembers anything — whether a person has seen a tour is answered by a
+**Seen Store** your app injects.
+
+## Coachmark alone
+
+<CoachmarkDemo />
+
+```tsx
+const [anchor, setAnchor] = useState<Element | null>(null);
+
+<button ref={setAnchor}>Settings</button>
+
+<Coachmark open={open} anchor={anchor} title="Make it yours" onDismiss={close}>
+  Theme, motion, and notification preferences live here.
+</Coachmark>
+```
+
+The spotlight is a hole cut in a dimmed page, and it tracks the anchor through scroll and resize —
+a bubble whose hole has drifted off its target is worse than no bubble at all.
+
+## Tour
+
+<TourDemo />
+
+```tsx
+const steps: TourStep[] = [
+  { target: '#search', title: 'Find anything', content: 'Search across everything.' },
+  { target: '#alerts', title: 'Stay in the loop', content: 'Alerts collect here.' },
+];
+
+<Tour id="first-run" steps={steps} open={running} onOpenChange={setRunning} seenStore={store} />
+```
+
+## The Seen Store
+
+The library ships this interface and no implementation. A library that reaches for `localStorage`
+has quietly decided what a user is and where their state lives — and that is the assumption that
+makes an onboarding library impossible to remove later.
+
+```tsx
+// localStorage — four lines
+const store: SeenStore = {
+  has: (id) => localStorage.getItem(`tour:${id}`) === 'seen',
+  mark: (id) => localStorage.setItem(`tour:${id}`, 'seen'),
+};
+
+// or per account, server-side — the Tour does not care which
+const store: SeenStore = {
+  has: (id) => fetch(`/api/tours/${id}`).then((r) => r.json()).then((d) => d.seen),
+  mark: (id) => void fetch(`/api/tours/${id}`, { method: 'POST' }),
+};
+```
+
+Both endings mark the store: finishing and skipping alike. Someone who dismissed your tour has
+seen it, and showing it again is how a helpful feature becomes an annoying one.
+
+<Guidance
+  do="Give the tour a stable id and let the app decide where 'seen' is stored."
+  dont="Start a tour on every mount without a store — a returning person meets it forever."
+/>
+
+## Tour props
+
+<PropsTable rows={[
+  { name: 'id', type: 'string', description: 'Stable identifier — this is what the Seen Store remembers.' },
+  { name: 'steps', type: 'TourStep[]', description: 'target, title, content, side, align, spotlight. Targets may be a selector, an element, a ref, or a callback.' },
+  { name: 'open', type: 'boolean', default: 'false', description: 'Starts the tour when it turns true.' },
+  { name: 'onOpenChange', type: '(open: boolean) => void', description: 'Called with false when the tour ends, either way.' },
+  { name: 'seenStore', type: 'SeenStore', description: 'Injected memory. Sync or async — the Tour waits before showing anything.' },
+  { name: 'onFinish / onSkip', type: '() => void', description: 'Which ending happened.' },
+  { name: 'labels', type: "{ back, next, done, skip }", description: 'Button copy, for products that do not speak English.' },
+]} />
+
+## Coachmark props
+
+<PropsTable rows={[
+  { name: 'open', type: 'boolean', description: 'Controlled — a Coachmark has no trigger of its own.' },
+  { name: 'anchor', type: 'Element | null', description: 'Already resolved. A Tour does the resolving, including retrying while the target mounts.' },
+  { name: 'title', type: 'ReactNode', description: 'One line. If it needs two, the step is doing too much.' },
+  { name: 'side / align', type: "Side | Align", default: "'bottom' / 'center'", description: 'Placement, with collision handling from Base UI.' },
+  { name: 'spotlight', type: 'boolean | number', default: 'true', description: 'A number sets the padding around the hole, in px.' },
+  { name: 'progress', type: '{ current, total }', description: 'Rendered as "2 of 5".' },
+  { name: 'actions / onDismiss', type: 'ReactNode | () => void', description: 'Footer buttons and the close affordance.' },
+]} />
+
+## Edge cases the Tour handles
+
+- **A target that mounts late** is retried for about half a second before the step gives up — a
+  target that appears one frame after the tour starts is normal, not an error.
+- **A step list that changes mid-tour** cannot leave the index pointing past the end.
+- **Reduced motion** jumps the spotlight to the next target instead of gliding it there.

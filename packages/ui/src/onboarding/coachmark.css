@@ -1,0 +1,66 @@
+/* The hole is a box-shadow spread rather than an SVG mask: it stays crisp at any size and
+   costs no extra element, and the shadow colour is the same token the dialog backdrop uses. */
+.cb-spotlight {
+  position: fixed;
+  z-index: var(--cb-z-coachmark);
+  left: var(--cb-spotlight-x);
+  top: var(--cb-spotlight-y);
+  width: var(--cb-spotlight-w);
+  height: var(--cb-spotlight-h);
+  border-radius: var(--cb-radius-md);
+  box-shadow: 0 0 0 9999px oklch(0.15 0.02 280 / 0.55);
+  pointer-events: auto;
+  transition: left var(--cb-duration-base) var(--cb-ease-standard),
+    top var(--cb-duration-base) var(--cb-ease-standard),
+    width var(--cb-duration-base) var(--cb-ease-standard),
+    height var(--cb-duration-base) var(--cb-ease-standard);
+}
+/* Reduced motion: the hole jumps to the next target instead of gliding to it. */
+@media (prefers-reduced-motion: reduce) {
+  .cb-spotlight { transition: none; }
+}
+
+.cb-coachmark {
+  box-sizing: border-box;
+  width: 20rem;
+  max-width: calc(100vw - var(--cb-space-6));
+  z-index: calc(var(--cb-z-coachmark) + 1);
+  background: var(--cb-surface-raised);
+  color: var(--cb-fg);
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-lg);
+  box-shadow: var(--cb-shadow-lg);
+  padding: var(--cb-space-4);
+  font-family: var(--cb-font-sans);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-3);
+  transition: opacity var(--cb-duration-base) var(--cb-ease-entrance),
+    transform var(--cb-duration-base) var(--cb-ease-entrance);
+}
+.cb-coachmark[data-starting-style],
+.cb-coachmark[data-ending-style] { opacity: 0; transform: scale(0.96); }
+@media (prefers-reduced-motion: reduce) {
+  .cb-coachmark { transition: opacity var(--cb-duration-fast) linear; }
+  .cb-coachmark[data-starting-style],
+  .cb-coachmark[data-ending-style] { transform: none; }
+}
+
+.cb-coachmark__head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--cb-space-2); }
+.cb-coachmark__title { margin: 0; font-size: var(--cb-text-md); font-weight: var(--cb-weight-semibold); }
+.cb-coachmark__close {
+  border: none;
+  background: transparent;
+  color: var(--cb-fg-subtle);
+  cursor: pointer;
+  padding: var(--cb-space-1);
+  border-radius: var(--cb-radius-sm);
+  display: inline-flex;
+}
+.cb-coachmark__close:hover { color: var(--cb-fg); background: var(--cb-bg-subtle); }
+.cb-coachmark__close:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: 1px; }
+
+.cb-coachmark__body { font-size: var(--cb-text-sm); color: var(--cb-fg-muted); line-height: var(--cb-leading-normal); }
+.cb-coachmark__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--cb-space-3); }
+.cb-coachmark__progress { font-size: var(--cb-text-xs); color: var(--cb-fg-subtle); font-variant-numeric: tabular-nums; }
+.cb-coachmark__actions { display: flex; gap: var(--cb-space-2); }

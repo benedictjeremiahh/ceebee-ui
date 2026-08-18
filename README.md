@@ -43,10 +43,10 @@ Releases go through Changesets: `pnpm changeset` to describe a change, and mergi
 ## Status
 
 Built and green: tokens, theming, Surface, Stack/Grid/Container, Text/Heading, Skeleton,
-ProgressRing, StatCard, Button, Field/TextInput/Textarea, Dialog, ThemeProvider, MotionProvider,
-the docs site, and the Astra dashboard recipe. Everything else in
-[docs/inventory.md](./docs/inventory.md) — Carousel, Coachmark, Tour, Tabs, Popover, Toast,
-Donut/Sparkline — is still to build.
+ProgressRing, StatCard, Button, Field/TextInput/Textarea, Dialog, Popover/Tooltip, Carousel,
+Coachmark, Tour, Reveal/Stagger, ThemeProvider, MotionProvider, the docs site, and the Astra
+dashboard recipe. Still to build, per [docs/inventory.md](./docs/inventory.md): Select, Checkbox,
+Radio, Switch, Tabs, Toast, Donut, Sparkline, DataTable, Sidebar/TopBar.
 
 ## Install (once published)
 

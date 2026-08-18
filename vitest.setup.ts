@@ -14,3 +14,29 @@ if (!window.matchMedia) {
     dispatchEvent: () => false,
   })) as unknown as typeof window.matchMedia;
 }
+
+// jsdom has no ResizeObserver, and the Coachmark watches its anchor with one.
+if (!('ResizeObserver' in globalThis)) {
+  class NoopResizeObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  }
+  globalThis.ResizeObserver = NoopResizeObserver as unknown as typeof ResizeObserver;
+}
+
+// Embla tracks which slides are in view with an IntersectionObserver, which jsdom lacks.
+if (!('IntersectionObserver' in globalThis)) {
+  class NoopIntersectionObserver {
+    readonly root = null;
+    readonly rootMargin = '';
+    readonly thresholds: readonly number[] = [];
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+    takeRecords(): IntersectionObserverEntry[] {
+      return [];
+    }
+  }
+  globalThis.IntersectionObserver = NoopIntersectionObserver as unknown as typeof IntersectionObserver;
+}
