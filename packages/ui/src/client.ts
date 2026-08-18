@@ -63,6 +63,8 @@ export type { PaginationProps } from './data/pagination.js';
 export { nextSort, ariaSortFor, pageRange } from './data/table-sort.js';
 export type { SortState, SortDirection, PageRange } from './data/table-sort.js';
 
+export { Image } from './media/image.js';
+export type { ImageProps } from './media/image.js';
 export { Carousel } from './media/carousel.js';
 export type { CarouselProps, CarouselSlideProps, CarouselSkeletonProps } from './media/carousel.js';
 export { shouldAutoplay } from './media/autoplay.js';

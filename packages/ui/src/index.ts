@@ -35,6 +35,8 @@ export { Sparkline, BarMini } from './data/sparkline.js';
 export type { SparklineProps, BarMiniProps } from './data/sparkline.js';
 export { sparklineGeometry } from './data/sparkline.math.js';
 export type { SparklineGeometry } from './data/sparkline.math.js';
+export { Leaderboard } from './data/leaderboard.js';
+export type { LeaderboardProps, LeaderboardEntry } from './data/leaderboard.js';
 export { Avatar, AvatarGroup } from './media/avatar.js';
 export type { AvatarProps, AvatarGroupProps } from './media/avatar.js';
 export { initialsOf, hueForName } from './media/avatar.util.js';

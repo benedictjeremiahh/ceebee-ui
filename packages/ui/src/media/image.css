@@ -1,0 +1,37 @@
+.cb-image {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background-color: var(--cb-bg-subtle);
+  background-size: cover;
+  background-position: center;
+}
+/* The placeholder is blurred hard and scaled up, so its edges never show through. */
+.cb-image[data-blurred]::before {
+  content: "";
+  position: absolute;
+  inset: -5%;
+  background: inherit;
+  background-size: cover;
+  background-position: center;
+  filter: blur(16px);
+  transform: scale(1.05);
+  transition: opacity var(--cb-duration-slow) var(--cb-ease-standard);
+}
+.cb-image[data-loaded][data-blurred]::before { opacity: 0; }
+
+.cb-image__img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity var(--cb-duration-slow) var(--cb-ease-entrance);
+}
+.cb-image[data-loaded] .cb-image__img { opacity: 1; }
+
+/* Reduced motion: the image appears rather than fading, and the placeholder still holds the space. */
+@media (prefers-reduced-motion: reduce) {
+  .cb-image__img,
+  .cb-image[data-blurred]::before { transition: none; }
+}

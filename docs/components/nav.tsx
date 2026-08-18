@@ -68,6 +68,7 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
       { href: '/data/stat-card', label: 'StatCard', kind: 'Composition' },
       { href: '/data/table', label: 'DataTable · Pagination', kind: 'Composition' },
       { href: '/data/timeline', label: 'Timeline', kind: 'Composition' },
+      { href: '/data/leaderboard', label: 'Leaderboard', kind: 'Composition' },
     ],
   },
   {
@@ -85,6 +86,7 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
     entries: [
       { href: '/media/carousel', label: 'Carousel', kind: 'Composition' },
       { href: '/media/avatar', label: 'Avatar', kind: 'Atom' },
+      { href: '/media/image', label: 'Image', kind: 'Composition' },
     ],
   },
   {
@@ -100,7 +102,12 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
   },
   {
     title: 'Recipes',
-    entries: [{ href: '/recipes/astra-dashboard', label: 'Astra dashboard' }],
+    entries: [
+      { href: '/recipes/astra-dashboard', label: 'Astra dashboard' },
+      { href: '/recipes/control-center', label: 'Glass control center' },
+      { href: '/recipes/gamified', label: 'Gamified learning' },
+      { href: '/recipes/fintech', label: 'Fintech mobile' },
+    ],
   },
 ];
 

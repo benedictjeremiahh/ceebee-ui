@@ -105,3 +105,32 @@ body { margin: 0; font-family: var(--cb-font-sans); }
 }
 .shell-demo__main { display: flex; flex-direction: column; min-width: 0; }
 .shell-demo__body { padding: var(--cb-space-5); }
+
+.recipe { position: relative; border-radius: var(--cb-radius-xl); }
+.recipe--control { padding: var(--cb-space-6); overflow: hidden; }
+.recipe__field {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 60% at 20% 20%, color-mix(in oklch, var(--cb-decor-violet) 55%, transparent), transparent),
+    radial-gradient(50% 50% at 80% 30%, color-mix(in oklch, var(--cb-decor-blue) 45%, transparent), transparent),
+    radial-gradient(60% 60% at 60% 90%, color-mix(in oklch, var(--cb-decor-rose) 40%, transparent), transparent),
+    var(--cb-bg-subtle);
+}
+.recipe__content { position: relative; max-width: 26rem; margin-inline: auto; }
+.recipe__glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex: none;
+  border-radius: var(--cb-radius-md);
+  background: color-mix(in oklch, var(--cb-fg) 8%, transparent);
+  color: var(--cb-fg-muted);
+}
+.recipe__glyph[data-on] { background: color-mix(in oklch, var(--cb-tone-brand) 18%, transparent); color: var(--cb-tone-brand); }
+.recipe__grow { flex: 1; min-width: 0; }
+
+.recipe--gamified, .recipe--fintech { max-width: 30rem; margin-inline: auto; }
+.recipe__balance { font-size: var(--cb-text-2xl); }

@@ -1,0 +1,25 @@
+import { LeaderboardDemo } from '../../../components/misc-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Leaderboard <span className="docs__label">Composition</span>
+
+A ranked list. Server-safe, and an `<ol>` — the ranking is a fact a screen reader reads out, not a
+column of numbers it has to infer from the layout.
+
+## Usage
+
+<LeaderboardDemo />
+
+<Guidance
+  do="Mark the viewer's own row with you, wherever it sits — finding yourself is the point of a leaderboard."
+  dont="Use medal tints on a plain ranked table; gold on row one implies a competition that may not exist."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'entries', type: 'LeaderboardEntry[]', description: 'id, name, score, plus optional avatarSrc, detail, delta, you, hue. Order is the ranking.' },
+  { name: 'label', type: 'string', description: 'Required accessible name for the list.' },
+  { name: 'medals', type: 'boolean', default: 'true', description: 'Tints the top three. Turn it off for a neutral ranking.' },
+  { name: 'entry.score', type: 'ReactNode', description: 'Already formatted — the library does not decide what a score looks like.' },
+]} />

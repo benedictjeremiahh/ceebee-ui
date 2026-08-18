@@ -1,0 +1,49 @@
+.cb-leaderboard { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--cb-space-1); font-family: var(--cb-font-sans); }
+.cb-leaderboard__row {
+  --cb-rank-accent: transparent;
+  display: flex;
+  align-items: center;
+  gap: var(--cb-space-3);
+  padding: var(--cb-space-2) var(--cb-space-3);
+  border-radius: var(--cb-radius-md);
+  border: var(--cb-border-width) solid transparent;
+}
+.cb-leaderboard__row[data-rank="1"] { --cb-rank-accent: var(--cb-decor-amber); }
+.cb-leaderboard__row[data-rank="2"] { --cb-rank-accent: var(--cb-fg-subtle); }
+.cb-leaderboard__row[data-rank="3"] { --cb-rank-accent: var(--cb-decor-rose); }
+.cb-leaderboard__row[data-rank] {
+  background: color-mix(in oklch, var(--cb-rank-accent) 12%, transparent);
+}
+.cb-leaderboard__row[data-you] {
+  border-color: color-mix(in oklch, var(--cb-tone-brand) 45%, transparent);
+  background: color-mix(in oklch, var(--cb-tone-brand) 10%, transparent);
+}
+
+.cb-leaderboard__rank {
+  flex: none;
+  width: 1.5rem;
+  text-align: center;
+  font-size: var(--cb-text-sm);
+  font-weight: var(--cb-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--cb-fg-subtle);
+}
+.cb-leaderboard__row[data-rank] .cb-leaderboard__rank { color: color-mix(in oklch, var(--cb-rank-accent) 70%, var(--cb-fg)); }
+
+.cb-leaderboard__text { flex: 1; display: flex; flex-direction: column; gap: 0.0625rem; min-width: 0; }
+.cb-leaderboard__name { display: flex; align-items: center; gap: var(--cb-space-2); font-size: var(--cb-text-sm); color: var(--cb-fg); }
+.cb-leaderboard__you {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cb-tone-brand);
+  background: color-mix(in oklch, var(--cb-tone-brand) 14%, transparent);
+  border-radius: var(--cb-radius-full);
+  padding: 0 var(--cb-space-2);
+}
+.cb-leaderboard__detail { font-size: var(--cb-text-xs); color: var(--cb-fg-subtle); }
+.cb-leaderboard__delta { font-size: var(--cb-text-xs); font-variant-numeric: tabular-nums; }
+.cb-leaderboard__delta[data-direction="up"] { color: var(--cb-tone-success); }
+.cb-leaderboard__delta[data-direction="down"] { color: var(--cb-tone-danger); }
+.cb-leaderboard__delta[data-direction="flat"] { color: var(--cb-fg-subtle); }
+.cb-leaderboard__score { font-size: var(--cb-text-sm); font-weight: var(--cb-weight-semibold); font-variant-numeric: tabular-nums; color: var(--cb-fg); }

@@ -1,0 +1,38 @@
+import { ImageDemo } from '../../../components/misc-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Image <span className="docs__label">Composition</span>
+
+An `<img>` that reserves its space and fades in. It is deliberately **not** a Next.js Image: no
+resizing service, no loader, no framework coupling — that belongs to whichever framework the app
+already chose.
+
+## Usage
+
+<ImageDemo />
+
+## What it handles
+
+- **The space is reserved** through `aspectRatio`, so nothing below the image jumps when it lands.
+- **A cached image still fades in correctly.** An image can finish loading before React attaches
+  `onLoad`, which is the bug that leaves a permanently blank frame; the ref checks `complete`.
+- **A broken source keeps the placeholder** rather than collapsing to a broken-image icon.
+- **`alt` is required, and `""` is allowed** — but decorative has to be said out loud rather than
+  achieved by forgetting the prop.
+
+<Guidance
+  do="Generate blurDataUrl at build time, a few hundred bytes at most; it ships inline with the markup."
+  dont="Use a full-size image as its own placeholder — the point is the bytes that arrive first."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'src / alt', type: 'string', description: 'alt is required; pass "" for decorative images.' },
+  { name: 'aspectRatio', type: 'number', description: 'Width / height, e.g. 16 / 9. Reserves the box.' },
+  { name: 'blurDataUrl', type: 'string', description: 'Tiny data URI, blurred and scaled up until the real image loads.' },
+  { name: 'background', type: 'string', description: 'Flat colour behind the image when there is no blur placeholder.' },
+  { name: 'fit', type: "'cover' | 'contain'", default: "'cover'", description: 'object-fit.' },
+  { name: 'radius', type: "'none' | 'sm' | 'md' | 'lg' | 'xl'", default: "'md'", description: 'Corner token.' },
+  { name: 'loading', type: "'lazy' | 'eager'", default: "'lazy'", description: 'Eager for anything above the fold.' },
+]} />

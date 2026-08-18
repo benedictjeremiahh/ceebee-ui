@@ -3,8 +3,8 @@
 Every planned piece, its group (folder), its docs label (Atom / Composition), which entry it exports
 from (server-safe `@ceebee/ui` vs `@ceebee/ui/client`), and which slice builds it.
 
-`S1` = the tracer bullet: tokens, theme, build, docs site, release, proven end to end on a narrow
-path — **built**. `S2`+ = mechanical additions afterwards, still to do.
+Everything planned here is now built and documented. The slice column records the order it was
+built in, which is worth keeping: it is the record of what turned out to be foundational.
 
 ## foundation
 
@@ -62,7 +62,7 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 | Donut | Widget | server | S2 — built |
 | Sparkline / BarMini | Widget | server | S2 — built |
 | DataTable (+ `.Skeleton`) | Composition | client | S3 — built |
-| Leaderboard | Composition | server | S3 |
+| Leaderboard | Composition | server | S3 — built |
 | Timeline | Composition | server | S4 — built |
 
 ## nav
@@ -81,7 +81,7 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 |---|---|---|---|
 | Carousel (Embla + Motion, `.Skeleton`) | Composition | client | S2 — built |
 | Avatar / AvatarGroup | Atom | server | S2 — built |
-| Image with blur-up | Composition | client | S4 |
+| Image with blur-up | Composition | client | S4 — built |
 
 ## motion
 
@@ -106,6 +106,6 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 | Recipe | Source pin | Slice |
 |---|---|---|
 | Astra dashboard — sidebar, greeting, 84% ring, project line, task lists | board | S1 |
-| Glass control center — notification panels | board | S3 |
-| Gamified mobile — progress rings, streaks, leaderboard | board | S3 |
-| Fintech mobile — balance card, split bill, transactions | board | S4 |
+| Glass control center — notification panels | board | S3 — built |
+| Gamified mobile — progress rings, streaks, leaderboard | board | S3 — built |
+| Fintech mobile — balance card, split bill, transactions | board | S4 — built |

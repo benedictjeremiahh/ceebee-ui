@@ -42,10 +42,10 @@ Releases go through Changesets: `pnpm changeset` to describe a change, and mergi
 
 ## Status
 
-Built and green — every component in [docs/inventory.md](./docs/inventory.md) except `Leaderboard`
-and the blur-up `Image`, each with its own documentation page: foundation, the full form control
-set, feedback, overlays, data display, navigation and the app shell, media, motion, and onboarding.
-Three of the four board Recipes are still to build.
+Every component in [docs/inventory.md](./docs/inventory.md) is built, documented, and green:
+foundation, the full form control set, feedback, overlays, data display, navigation and the app
+shell, media, motion, and onboarding — plus all four Recipes reproducing screens from the reference
+board. 113 tests cover the parts that can be wrong rather than the parts that are merely ugly.
 
 ## Install (once published)
 
