@@ -47,20 +47,27 @@
    margins — without this reset a two-line toast is twice as tall in one app as in another. */
 .cb-toast__title { margin: 0; font-size: var(--cb-text-sm); font-weight: var(--cb-weight-semibold); color: var(--cb-fg); }
 .cb-toast__description { margin: 0; font-size: var(--cb-text-sm); color: var(--cb-fg-muted); }
+/* A bare text action reads as misaligned until it is hovered: its padding pushes the label off
+   the line the title sits on, and nothing explains the gap. Carrying the soft Button treatment
+   at rest makes the padding part of a control instead of stray space. */
 .cb-toast__action {
   grid-area: action;
   justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  height: var(--cb-control-height-sm);
+  padding-inline: var(--cb-space-3);
   border: none;
-  background: transparent;
+  border-radius: var(--cb-radius-md);
+  background: color-mix(in oklch, var(--cb-toast-accent) 16%, transparent);
   color: var(--cb-toast-accent);
   font-family: var(--cb-font-sans);
   font-size: var(--cb-text-sm);
   font-weight: var(--cb-weight-medium);
   cursor: pointer;
-  padding: var(--cb-space-1) var(--cb-space-2);
-  border-radius: var(--cb-radius-sm);
+  transition: background-color var(--cb-duration-fast) var(--cb-ease-standard);
 }
-.cb-toast__action:hover { background: color-mix(in oklch, var(--cb-toast-accent) 12%, transparent); }
+.cb-toast__action:hover { background: color-mix(in oklch, var(--cb-toast-accent) 26%, transparent); }
 /* An action-less toast must not reserve the row it would have sat in. */
 .cb-toast:not(:has(.cb-toast__action)) { grid-template-areas: "icon content close"; }
 .cb-toast__close {
