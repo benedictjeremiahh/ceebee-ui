@@ -1,0 +1,35 @@
+import { SparklineDemo } from '../../../components/widget-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Sparkline · BarMini <span className="docs__label">Widget</span>
+
+Shape of a series, sized to sit inside a StatCard. No axis, no scale, no tooltip — the moment you
+need those, reach for a charting library.
+
+## Usage
+
+<SparklineDemo />
+
+## The cases that break naive versions
+
+- **A flat series sits on the middle line**, not on the floor. Dividing by a zero range is how a
+  steady metric renders as a crash.
+- **A single point is centred** rather than pinned to the left edge.
+- **A zero-height bar keeps a one-pixel foot**, so "none" is visible as a bar rather than absent.
+- **Non-finite values are filtered out** before anything is measured.
+
+<Guidance
+  do="Give it a label that names the series — 'Revenue trend', not 'Chart'."
+  dont="Ask people to read values off it. It shows direction; the number belongs next to it."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'values', type: 'number[]', description: 'In order. Non-finite entries are ignored.' },
+  { name: 'width / height', type: 'number', default: '120 / 32', description: 'The drawing box, in px.' },
+  { name: 'tone / hue', type: 'Tone | DecorHue', default: "tone='brand'", description: 'Line and fill colour.' },
+  { name: 'filled', type: 'boolean', default: 'false', description: 'Sparkline only: fills under the line.' },
+  { name: 'showLast', type: 'boolean', default: 'true', description: 'Sparkline only: dot on the final point.' },
+  { name: 'label', type: 'string', description: 'Required accessible name.' },
+]} />

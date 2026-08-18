@@ -37,11 +37,11 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
 | Skeleton (`.Text` `.Circle` `.Rect`) | Atom | server | S1 |
-| Spinner / ProgressBar | Atom | server | S2 |
-| Badge / Tag | Atom | server | S2 |
-| Alert / Callout | Composition | server | S2 |
-| Toast | Composition | client | S3 |
-| EmptyState | Composition | server | S3 |
+| Spinner / ProgressBar | Atom | server | S3 |
+| Badge / Tag | Atom | server | S2 — built |
+| Alert / Callout | Composition | client | S2 — built |
+| Toast | Composition | client | S3 — built |
+| EmptyState | Composition | server | S3 — built |
 
 ## overlay
 
@@ -59,8 +59,8 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 |---|---|---|---|
 | StatCard (+ `.Skeleton`) | Composition | server | S1 |
 | ProgressRing | Widget | server | S1 |
-| Donut | Widget | server | S2 |
-| Sparkline / BarMini | Widget | server | S2 |
+| Donut | Widget | server | S2 — built |
+| Sparkline / BarMini | Widget | server | S2 — built |
 | DataTable (+ `.Skeleton`) | Composition | client | S3 |
 | Leaderboard | Composition | server | S3 |
 | Timeline | Composition | server | S4 |
@@ -69,7 +69,7 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
-| Tabs | Composition | client | S2 |
+| Tabs | Composition | client | S2 — built |
 | Sidebar / TopBar | Composition | client | S3 |
 | Breadcrumbs / Pagination | Composition | server | S3 |
 | Stepper | Composition | client | S4 |
@@ -79,7 +79,7 @@ path — **built**. `S2`+ = mechanical additions afterwards, still to do.
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
 | Carousel (Embla + Motion, `.Skeleton`) | Composition | client | S2 — built |
-| Avatar / AvatarGroup | Atom | server | S2 |
+| Avatar / AvatarGroup | Atom | server | S2 — built |
 | Image with blur-up | Composition | client | S4 |
 
 ## motion

@@ -1,0 +1,33 @@
+import { DonutDemo } from '../../../components/widget-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Donut <span className="docs__label">Widget</span>
+
+Parts of a whole, drawn as one SVG with no charting dependency. It has no axis and no scale, which
+is what keeps it a Widget rather than a Chart.
+
+## Usage
+
+<DonutDemo />
+
+## What the maths refuses to do
+
+- **Negative values are dropped, not drawn backwards.** A negative slice has no meaning in a whole.
+- **A set that sums to zero draws nothing** rather than dividing by it.
+- **Arcs are laid end to end from the offset of the previous one**, so there is no gap or overlap
+  from rounding.
+
+<Guidance
+  do="Keep it to five slices or fewer; past that the arcs are too thin to tell apart."
+  dont="Use a Donut for values over time — that is a Sparkline, and a circle implies a whole."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'slices', type: 'Array<{ value, label }>', description: 'Order is drawing order and colour order.' },
+  { name: 'size / thickness', type: 'number', default: '120 / 16', description: 'Outer diameter and stroke, in px.' },
+  { name: 'hues', type: 'DecorHue[]', description: 'Colour per slice, cycled. Defaults to the decorative palette.' },
+  { name: 'label', type: 'string', description: 'Required — the accessible name of the whole widget.' },
+  { name: 'children', type: 'ReactNode', description: 'Content in the hole, usually a total.' },
+]} />

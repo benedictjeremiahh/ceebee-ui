@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { MotionProvider, ThemeProvider } from '@ceebee/ui/client';
+import { MotionProvider, ThemeProvider, ToastProvider } from '@ceebee/ui/client';
 import { Nav } from '../components/nav';
 import { Toolbar } from '../components/toolbar';
 import '@ceebee/ui/styles.css';
@@ -16,6 +16,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <ThemeProvider>
           <MotionProvider>
+            <ToastProvider>
             <div className="docs">
               <Nav />
               <main className="docs__main">
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 {children}
               </main>
             </div>
+            </ToastProvider>
           </MotionProvider>
         </ThemeProvider>
       </body>

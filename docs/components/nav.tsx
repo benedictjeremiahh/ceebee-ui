@@ -39,7 +39,13 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
   },
   {
     title: 'Feedback',
-    entries: [{ href: '/feedback/skeleton', label: 'Skeleton', kind: 'Atom' }],
+    entries: [
+      { href: '/feedback/skeleton', label: 'Skeleton', kind: 'Atom' },
+      { href: '/feedback/badge', label: 'Badge', kind: 'Atom' },
+      { href: '/feedback/alert', label: 'Alert', kind: 'Composition' },
+      { href: '/feedback/toast', label: 'Toast', kind: 'Composition' },
+      { href: '/feedback/empty-state', label: 'EmptyState', kind: 'Composition' },
+    ],
   },
   {
     title: 'Overlay',
@@ -52,12 +58,21 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
     title: 'Data',
     entries: [
       { href: '/data/progress-ring', label: 'ProgressRing', kind: 'Widget' },
+      { href: '/data/donut', label: 'Donut', kind: 'Widget' },
+      { href: '/data/sparkline', label: 'Sparkline · BarMini', kind: 'Widget' },
       { href: '/data/stat-card', label: 'StatCard', kind: 'Composition' },
     ],
   },
   {
+    title: 'Navigation',
+    entries: [{ href: '/nav/tabs', label: 'Tabs', kind: 'Composition' }],
+  },
+  {
     title: 'Media',
-    entries: [{ href: '/media/carousel', label: 'Carousel', kind: 'Composition' }],
+    entries: [
+      { href: '/media/carousel', label: 'Carousel', kind: 'Composition' },
+      { href: '/media/avatar', label: 'Avatar', kind: 'Atom' },
+    ],
   },
   {
     title: 'Onboarding',

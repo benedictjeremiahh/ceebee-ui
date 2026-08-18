@@ -1,0 +1,59 @@
+.cb-avatar {
+  --cb-avatar-accent: var(--cb-decor-violet);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border-radius: var(--cb-radius-full);
+  background: color-mix(in oklch, var(--cb-avatar-accent) 22%, var(--cb-surface));
+  color: color-mix(in oklch, var(--cb-avatar-accent) 70%, var(--cb-fg));
+  font-family: var(--cb-font-sans);
+  font-weight: var(--cb-weight-semibold);
+  overflow: visible;
+}
+.cb-avatar[data-hue="violet"] { --cb-avatar-accent: var(--cb-decor-violet); }
+.cb-avatar[data-hue="blue"] { --cb-avatar-accent: var(--cb-decor-blue); }
+.cb-avatar[data-hue="teal"] { --cb-avatar-accent: var(--cb-decor-teal); }
+.cb-avatar[data-hue="green"] { --cb-avatar-accent: var(--cb-decor-green); }
+.cb-avatar[data-hue="amber"] { --cb-avatar-accent: var(--cb-decor-amber); }
+.cb-avatar[data-hue="rose"] { --cb-avatar-accent: var(--cb-decor-rose); }
+
+.cb-avatar--sm { width: 1.75rem; height: 1.75rem; font-size: 0.625rem; }
+.cb-avatar--md { width: 2.25rem; height: 2.25rem; font-size: var(--cb-text-xs); }
+.cb-avatar--lg { width: 3rem; height: 3rem; font-size: var(--cb-text-sm); }
+.cb-avatar--xl { width: 4rem; height: 4rem; font-size: var(--cb-text-lg); }
+
+.cb-avatar__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+.cb-avatar__initials { line-height: 1; }
+.cb-avatar--overflow {
+  background: var(--cb-bg-subtle);
+  color: var(--cb-fg-muted);
+}
+
+.cb-avatar__status {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 0.6em;
+  height: 0.6em;
+  min-width: 0.5rem;
+  min-height: 0.5rem;
+  border-radius: var(--cb-radius-full);
+  border: 2px solid var(--cb-surface);
+}
+.cb-avatar__status[data-status="online"] { background: var(--cb-tone-success); }
+.cb-avatar__status[data-status="busy"] { background: var(--cb-tone-danger); }
+.cb-avatar__status[data-status="away"] { background: var(--cb-tone-warning); }
+.cb-avatar__status[data-status="offline"] { background: var(--cb-fg-subtle); }
+
+.cb-avatar-group { display: inline-flex; }
+.cb-avatar-group > .cb-avatar { box-shadow: 0 0 0 2px var(--cb-surface); }
+.cb-avatar-group > .cb-avatar + .cb-avatar { margin-inline-start: -0.5rem; }

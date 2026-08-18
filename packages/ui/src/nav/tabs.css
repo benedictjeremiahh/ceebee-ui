@@ -1,0 +1,57 @@
+.cb-tabs { display: flex; flex-direction: column; gap: var(--cb-space-4); }
+.cb-tabs__list { position: relative; display: flex; gap: var(--cb-space-1); }
+.cb-tabs--underline .cb-tabs__list { border-bottom: var(--cb-border-width) solid var(--cb-border); }
+
+.cb-tabs__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cb-space-2);
+  border: none;
+  background: transparent;
+  color: var(--cb-fg-muted);
+  font-family: var(--cb-font-sans);
+  font-size: var(--cb-text-sm);
+  font-weight: var(--cb-weight-medium);
+  padding: var(--cb-space-2) var(--cb-space-3);
+  cursor: pointer;
+  border-radius: var(--cb-radius-sm);
+  transition: color var(--cb-duration-fast) var(--cb-ease-standard),
+    background-color var(--cb-duration-fast) var(--cb-ease-standard);
+}
+.cb-tabs__tab:hover:not([data-disabled]) { color: var(--cb-fg); }
+.cb-tabs__tab[data-selected] { color: var(--cb-fg); }
+.cb-tabs__tab[data-disabled] { opacity: 0.45; cursor: not-allowed; }
+.cb-tabs__tab:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: -2px; }
+.cb-tabs__adornment { display: inline-flex; }
+
+.cb-tabs--pill .cb-tabs__list { background: var(--cb-bg-subtle); padding: var(--cb-space-1); border-radius: var(--cb-radius-md); }
+.cb-tabs--pill .cb-tabs__tab[data-selected] { color: var(--cb-fg); }
+
+/* The indicator is positioned by Base UI's own custom properties; we only style it. */
+.cb-tabs__indicator {
+  position: absolute;
+  transition: translate var(--cb-duration-base) var(--cb-ease-emphasis),
+    width var(--cb-duration-base) var(--cb-ease-emphasis);
+  translate: var(--active-tab-left) 0;
+  width: var(--active-tab-width);
+}
+.cb-tabs--underline .cb-tabs__indicator {
+  bottom: -1px;
+  height: 2px;
+  background: var(--cb-tone-brand);
+  border-radius: var(--cb-radius-full);
+}
+.cb-tabs--pill .cb-tabs__indicator {
+  top: var(--cb-space-1);
+  height: calc(100% - var(--cb-space-2));
+  background: var(--cb-surface-raised);
+  border-radius: var(--cb-radius-sm);
+  box-shadow: var(--cb-shadow-sm);
+  z-index: 0;
+}
+.cb-tabs--pill .cb-tabs__tab { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .cb-tabs__indicator { transition: none; }
+}
+
+.cb-tabs__panel:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: var(--cb-focus-offset); }

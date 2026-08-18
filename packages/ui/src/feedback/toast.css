@@ -1,0 +1,69 @@
+.cb-toast__viewport {
+  position: fixed;
+  inset-block-end: var(--cb-space-4);
+  inset-inline-end: var(--cb-space-4);
+  z-index: var(--cb-z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-2);
+  width: min(22rem, calc(100vw - var(--cb-space-6)));
+}
+
+.cb-toast {
+  --cb-toast-accent: var(--cb-tone-info);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--cb-space-3);
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--cb-space-3) var(--cb-space-4);
+  border-radius: var(--cb-radius-md);
+  border: var(--cb-border-width) solid var(--cb-border);
+  background: var(--cb-surface-raised);
+  box-shadow: var(--cb-shadow-md);
+  font-family: var(--cb-font-sans);
+  transition: opacity var(--cb-duration-base) var(--cb-ease-entrance),
+    transform var(--cb-duration-base) var(--cb-ease-entrance);
+}
+.cb-toast[data-tone="success"] { --cb-toast-accent: var(--cb-tone-success); }
+.cb-toast[data-tone="warning"] { --cb-toast-accent: var(--cb-tone-warning); }
+.cb-toast[data-tone="danger"] { --cb-toast-accent: var(--cb-tone-danger); }
+.cb-toast[data-starting-style],
+.cb-toast[data-ending-style] { opacity: 0; transform: translateY(8px); }
+@media (prefers-reduced-motion: reduce) {
+  .cb-toast { transition: opacity var(--cb-duration-fast) linear; }
+  .cb-toast[data-starting-style],
+  .cb-toast[data-ending-style] { transform: none; }
+}
+
+.cb-toast__icon { flex: none; color: var(--cb-toast-accent); display: inline-flex; margin-top: 0.125rem; }
+.cb-toast__content { flex: 1; display: flex; flex-direction: column; gap: 0.125rem; min-width: 0; }
+/* Base UI renders these as <h2> and <p>, which inherit the host app's heading and paragraph
+   margins — without this reset a two-line toast is twice as tall in one app as in another. */
+.cb-toast__title { margin: 0; font-size: var(--cb-text-sm); font-weight: var(--cb-weight-semibold); color: var(--cb-fg); }
+.cb-toast__description { margin: 0; font-size: var(--cb-text-sm); color: var(--cb-fg-muted); }
+.cb-toast__action {
+  flex: none;
+  border: none;
+  background: transparent;
+  color: var(--cb-toast-accent);
+  font-family: var(--cb-font-sans);
+  font-size: var(--cb-text-sm);
+  font-weight: var(--cb-weight-medium);
+  cursor: pointer;
+  padding: var(--cb-space-1) var(--cb-space-2);
+  border-radius: var(--cb-radius-sm);
+}
+.cb-toast__action:hover { background: color-mix(in oklch, var(--cb-toast-accent) 12%, transparent); }
+.cb-toast__close {
+  flex: none;
+  border: none;
+  background: transparent;
+  color: var(--cb-fg-subtle);
+  cursor: pointer;
+  padding: var(--cb-space-1);
+  border-radius: var(--cb-radius-sm);
+}
+.cb-toast__close:hover { color: var(--cb-fg); }
+.cb-toast__close:focus-visible,
+.cb-toast__action:focus-visible { outline: var(--cb-focus-width) solid var(--cb-toast-accent); outline-offset: 1px; }

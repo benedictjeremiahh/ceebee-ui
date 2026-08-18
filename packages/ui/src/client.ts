@@ -28,6 +28,14 @@ export type { DialogProps } from './overlay/dialog.js';
 export { Popover, Tooltip } from './overlay/popover.js';
 export type { PopoverProps, TooltipProps, Side, Align } from './overlay/popover.js';
 
+export { Alert } from './feedback/alert.js';
+export type { AlertProps } from './feedback/alert.js';
+export { ToastProvider, useToast } from './feedback/toast.js';
+export type { ToastProviderProps, ToastOptions } from './feedback/toast.js';
+
+export { Tabs } from './nav/tabs.js';
+export type { TabsProps, TabItem } from './nav/tabs.js';
+
 export { Carousel } from './media/carousel.js';
 export type { CarouselProps, CarouselSlideProps, CarouselSkeletonProps } from './media/carousel.js';
 export { shouldAutoplay } from './media/autoplay.js';

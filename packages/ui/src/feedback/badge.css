@@ -1,0 +1,80 @@
+.cb-badge {
+  --cb-badge-accent: var(--cb-fg-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cb-space-1);
+  border-radius: var(--cb-radius-full);
+  font-family: var(--cb-font-sans);
+  font-weight: var(--cb-weight-medium);
+  white-space: nowrap;
+  border: var(--cb-border-width) solid transparent;
+}
+.cb-badge--sm { font-size: 0.6875rem; padding: 0.0625rem var(--cb-space-2); }
+.cb-badge--md { font-size: var(--cb-text-xs); padding: var(--cb-space-1) var(--cb-space-3); }
+
+.cb-badge[data-tone="brand"] { --cb-badge-accent: var(--cb-tone-brand); }
+.cb-badge[data-tone="info"] { --cb-badge-accent: var(--cb-tone-info); }
+.cb-badge[data-tone="success"] { --cb-badge-accent: var(--cb-tone-success); }
+.cb-badge[data-tone="warning"] { --cb-badge-accent: var(--cb-tone-warning); }
+.cb-badge[data-tone="danger"] { --cb-badge-accent: var(--cb-tone-danger); }
+
+.cb-badge--soft { background: color-mix(in oklch, var(--cb-badge-accent) 14%, transparent); color: var(--cb-badge-accent); }
+.cb-badge--solid { background: var(--cb-badge-accent); color: var(--cb-fg-on-brand); }
+.cb-badge--outline { border-color: color-mix(in oklch, var(--cb-badge-accent) 45%, transparent); color: var(--cb-badge-accent); }
+.cb-badge__dot { width: 0.375rem; height: 0.375rem; border-radius: var(--cb-radius-full); background: currentColor; }
+
+.cb-alert {
+  --cb-alert-accent: var(--cb-tone-info);
+  display: flex;
+  gap: var(--cb-space-3);
+  padding: var(--cb-space-4);
+  border-radius: var(--cb-radius-md);
+  border: var(--cb-border-width) solid color-mix(in oklch, var(--cb-alert-accent) 30%, transparent);
+  background: color-mix(in oklch, var(--cb-alert-accent) 9%, var(--cb-surface));
+  font-family: var(--cb-font-sans);
+}
+.cb-alert[data-tone="neutral"] { --cb-alert-accent: var(--cb-fg-muted); }
+.cb-alert[data-tone="brand"] { --cb-alert-accent: var(--cb-tone-brand); }
+.cb-alert[data-tone="success"] { --cb-alert-accent: var(--cb-tone-success); }
+.cb-alert[data-tone="warning"] { --cb-alert-accent: var(--cb-tone-warning); }
+.cb-alert[data-tone="danger"] { --cb-alert-accent: var(--cb-tone-danger); }
+
+.cb-alert__icon { flex: none; color: var(--cb-alert-accent); display: inline-flex; margin-top: 0.0625rem; }
+.cb-alert__body { flex: 1; display: flex; flex-direction: column; gap: var(--cb-space-1); min-width: 0; }
+.cb-alert__title { margin: 0; font-size: var(--cb-text-sm); font-weight: var(--cb-weight-semibold); color: var(--cb-fg); }
+.cb-alert__text { font-size: var(--cb-text-sm); color: var(--cb-fg-muted); line-height: var(--cb-leading-normal); }
+.cb-alert__actions { display: flex; gap: var(--cb-space-2); margin-top: var(--cb-space-2); }
+.cb-alert__close {
+  flex: none; border: none; background: transparent; color: var(--cb-fg-subtle);
+  cursor: pointer; border-radius: var(--cb-radius-sm); padding: var(--cb-space-1); height: fit-content;
+}
+.cb-alert__close:hover { color: var(--cb-fg); background: color-mix(in oklch, var(--cb-fg) 8%, transparent); }
+.cb-alert__close:focus-visible { outline: var(--cb-focus-width) solid var(--cb-alert-accent); outline-offset: 1px; }
+
+.cb-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--cb-space-2);
+  padding: var(--cb-space-7) var(--cb-space-5);
+  font-family: var(--cb-font-sans);
+}
+.cb-empty__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--cb-radius-full);
+  background: var(--cb-bg-subtle);
+  color: var(--cb-fg-subtle);
+  margin-bottom: var(--cb-space-2);
+}
+.cb-empty[data-variant="error"] .cb-empty__icon {
+  background: color-mix(in oklch, var(--cb-tone-danger) 12%, transparent);
+  color: var(--cb-tone-danger);
+}
+.cb-empty__title { margin: 0; font-size: var(--cb-text-md); font-weight: var(--cb-weight-semibold); color: var(--cb-fg); }
+.cb-empty__description { margin: 0; font-size: var(--cb-text-sm); color: var(--cb-fg-muted); max-width: 32rem; }
+.cb-empty__actions { display: flex; gap: var(--cb-space-2); margin-top: var(--cb-space-3); }

@@ -1,0 +1,35 @@
+.cb-donut { position: relative; display: inline-grid; place-items: center; }
+.cb-donut svg { position: absolute; inset: 0; }
+.cb-donut__track { stroke: color-mix(in oklch, var(--cb-fg) 8%, transparent); }
+.cb-donut__arc { transition: stroke-dasharray var(--cb-duration-deliberate) var(--cb-ease-entrance); }
+.cb-donut__arc[data-hue="violet"] { stroke: var(--cb-decor-violet); }
+.cb-donut__arc[data-hue="blue"] { stroke: var(--cb-decor-blue); }
+.cb-donut__arc[data-hue="teal"] { stroke: var(--cb-decor-teal); }
+.cb-donut__arc[data-hue="green"] { stroke: var(--cb-decor-green); }
+.cb-donut__arc[data-hue="amber"] { stroke: var(--cb-decor-amber); }
+.cb-donut__arc[data-hue="rose"] { stroke: var(--cb-decor-rose); }
+.cb-donut__center {
+  font-family: var(--cb-font-sans);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  color: var(--cb-fg);
+  z-index: 1;
+}
+
+.cb-sparkline { --cb-spark-accent: var(--cb-tone-brand); display: inline-flex; }
+.cb-sparkline[data-tone="neutral"] { --cb-spark-accent: var(--cb-fg-muted); }
+.cb-sparkline[data-tone="info"] { --cb-spark-accent: var(--cb-tone-info); }
+.cb-sparkline[data-tone="success"] { --cb-spark-accent: var(--cb-tone-success); }
+.cb-sparkline[data-tone="warning"] { --cb-spark-accent: var(--cb-tone-warning); }
+.cb-sparkline[data-tone="danger"] { --cb-spark-accent: var(--cb-tone-danger); }
+.cb-sparkline[data-hue="violet"] { --cb-spark-accent: var(--cb-decor-violet); }
+.cb-sparkline[data-hue="blue"] { --cb-spark-accent: var(--cb-decor-blue); }
+.cb-sparkline[data-hue="teal"] { --cb-spark-accent: var(--cb-decor-teal); }
+.cb-sparkline[data-hue="green"] { --cb-spark-accent: var(--cb-decor-green); }
+.cb-sparkline[data-hue="amber"] { --cb-spark-accent: var(--cb-decor-amber); }
+.cb-sparkline[data-hue="rose"] { --cb-spark-accent: var(--cb-decor-rose); }
+
+.cb-sparkline__line { stroke: var(--cb-spark-accent); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.cb-sparkline__area { fill: color-mix(in oklch, var(--cb-spark-accent) 16%, transparent); }
+.cb-sparkline__last { fill: var(--cb-spark-accent); }
+.cb-sparkline__bar { fill: color-mix(in oklch, var(--cb-spark-accent) 70%, transparent); }

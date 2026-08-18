@@ -42,11 +42,11 @@ Releases go through Changesets: `pnpm changeset` to describe a change, and mergi
 
 ## Status
 
-Built and green: tokens, theming, Surface, Stack/Grid/Container, Text/Heading, Skeleton,
-ProgressRing, StatCard, Button, Field/TextInput/Textarea, Dialog, Popover/Tooltip, Carousel,
-Coachmark, Tour, Reveal/Stagger, ThemeProvider, MotionProvider, the docs site, and the Astra
-dashboard recipe. Still to build, per [docs/inventory.md](./docs/inventory.md): Select, Checkbox,
-Radio, Switch, Tabs, Toast, Donut, Sparkline, DataTable, Sidebar/TopBar.
+Built and green — 28 documented components across foundation, form, feedback, overlay, data,
+navigation, media, motion, and onboarding, plus the docs site and the Astra dashboard recipe.
+Still to build, per [docs/inventory.md](./docs/inventory.md): DataTable, Sidebar/TopBar,
+Breadcrumbs, Pagination, Stepper, Combobox, DateInput, FileDrop, DropdownMenu, CommandPalette,
+Timeline, ScrollReveal, and the onboarding Checklist.
 
 ## Install (once published)
 

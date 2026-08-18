@@ -1,0 +1,36 @@
+import { AvatarDemo } from '../../../components/feedback-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Avatar <span className="docs__label">Atom</span>
+
+Server-safe, and deliberately so: the initials render underneath and the image covers them once it
+loads, so a broken URL degrades to initials with no JavaScript and no flash of an empty circle.
+
+## Usage
+
+<AvatarDemo />
+
+## The details that matter
+
+- **Initials are first and last word, capped at two letters.** Three stop fitting at `sm`, and a
+  clipped initial reads as a rendering bug.
+- **The fallback colour is derived from the name**, so the same person keeps the same colour across
+  sessions, devices, and anyone else's screen.
+- **The image is `alt=""`** — the accessible name lives on the wrapper, so a screen reader says the
+  person's name once rather than twice.
+
+<Guidance
+  do="Pass the person's name even when you have a photo; it is the accessible name and the fallback both."
+  dont="Use status dots for anything but presence — a green dot means 'here', and repurposing it confuses every reader."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'name', type: 'string', description: 'Required. Accessible name, initials, and fallback hue.' },
+  { name: 'src', type: 'string', description: 'Photo. Covers the initials when it loads.' },
+  { name: 'size', type: "'sm' | 'md' | 'lg' | 'xl'", default: "'md'", description: 'Token sizes.' },
+  { name: 'hue', type: 'DecorHue', description: 'Overrides the name-derived colour.' },
+  { name: 'status', type: "'online' | 'busy' | 'away' | 'offline'", description: 'Presence dot.' },
+  { name: 'AvatarGroup overflow', type: 'number', description: 'Renders a "+N" chip after the stack.' },
+]} />

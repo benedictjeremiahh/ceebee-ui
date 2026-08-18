@@ -1,0 +1,24 @@
+import { BadgeDemo } from '../../../components/feedback-demos';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Badge <span className="docs__label">Atom</span>
+
+A label. Server-safe, because it neither listens nor animates.
+
+## Usage
+
+<BadgeDemo />
+
+<Guidance
+  do="Add dot when the badge carries status — colour alone is invisible to a colour-blind reader and to a screen reader both."
+  dont="Make a Badge clickable. Something you can press is a Button, and something you can remove needs a labelled control."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'tone', type: 'Tone', default: "'neutral'", description: 'Semantic colour.' },
+  { name: 'variant', type: "'soft' | 'solid' | 'outline'", default: "'soft'", description: 'Solid is loud; reserve it for one thing per view.' },
+  { name: 'size', type: "'sm' | 'md'", default: "'md'", description: 'sm fits inside a table row or a tab.' },
+  { name: 'dot', type: 'boolean', default: 'false', description: 'Leading status dot.' },
+]} />
