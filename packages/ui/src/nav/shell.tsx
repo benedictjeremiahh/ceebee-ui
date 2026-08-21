@@ -1,7 +1,9 @@
 'use client';
 
-import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
-import type { ReactNode } from 'react';
+import { Popover as BasePopover } from '@base-ui/react/popover';
+import { ChevronRight, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { useState, type ReactNode } from 'react';
+import { useLabels } from '../lib/labels.js';
 import { cn } from '../lib/cn.js';
 
 export interface NavItem {
@@ -12,6 +14,8 @@ export interface NavItem {
   active?: boolean;
   /** A count or status shown at the end of the row. */
   adornment?: ReactNode;
+  /** One level of children. A parent with children is a disclosure, not a destination. */
+  items?: NavItem[];
 }
 
 export interface NavSection {
@@ -29,11 +33,16 @@ export interface SidebarProps {
   className?: string;
 }
 
+const hasActiveChild = (item: NavItem) => Boolean(item.items?.some((child) => child.active));
+
 /**
- * The shell's navigation. Collapsed, it keeps the icons and hides the labels — the labels stay
- * in the accessible name, so a collapsed sidebar is still navigable by screen reader.
+ * The shell's navigation. Collapsed, it keeps the icons and hides the labels — the labels stay in
+ * the accessible name, and hovering or focusing a rail item opens a flyout carrying that label and
+ * any children, so a collapsed rail stays readable instead of becoming a column of guesses.
  */
 export function Sidebar({ sections, header, footer, collapsed = false, onCollapsedChange, className }: SidebarProps) {
+  const labels = useLabels();
+
   return (
     <nav
       className={cn('cb-sidebar', collapsed && 'cb-sidebar--collapsed', className)}
@@ -46,32 +55,9 @@ export function Sidebar({ sections, header, footer, collapsed = false, onCollaps
         {sections.map((section, index) => (
           <div className="cb-sidebar__section" key={index}>
             {section.title && !collapsed ? <p className="cb-sidebar__title">{section.title}</p> : null}
-            {section.items.map((item, itemIndex) => {
-              const content = (
-                <>
-                  {item.icon ? <span className="cb-sidebar__icon">{item.icon}</span> : null}
-                  <span className="cb-sidebar__label">{item.label}</span>
-                  {item.adornment && !collapsed ? (
-                    <span className="cb-sidebar__adornment">{item.adornment}</span>
-                  ) : null}
-                </>
-              );
-              const props = {
-                className: 'cb-sidebar__item',
-                'data-active': item.active || undefined,
-                'aria-current': item.active ? ('page' as const) : undefined,
-                title: collapsed && typeof item.label === 'string' ? item.label : undefined,
-              };
-              return item.href ? (
-                <a key={itemIndex} href={item.href} {...props}>
-                  {content}
-                </a>
-              ) : (
-                <button key={itemIndex} type="button" onClick={item.onClick} {...props}>
-                  {content}
-                </button>
-              );
-            })}
+            {section.items.map((item, itemIndex) => (
+              <SidebarEntry item={item} collapsed={collapsed} key={itemIndex} />
+            ))}
           </div>
         ))}
       </div>
@@ -82,7 +68,7 @@ export function Sidebar({ sections, header, footer, collapsed = false, onCollaps
         <button
           type="button"
           className="cb-sidebar__toggle"
-          aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'}
+          aria-label={collapsed ? labels.expandNavigation : labels.collapseNavigation}
           aria-expanded={!collapsed}
           onClick={() => onCollapsedChange(!collapsed)}
         >
@@ -90,6 +76,103 @@ export function Sidebar({ sections, header, footer, collapsed = false, onCollaps
         </button>
       ) : null}
     </nav>
+  );
+}
+
+function SidebarEntry({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
+  const children = item.items ?? [];
+  const [open, setOpen] = useState(() => hasActiveChild(item));
+
+  if (children.length === 0) {
+    const row = <SidebarRow item={item} collapsed={collapsed} />;
+    // Collapsed, a leaf shows no label, so the flyout supplies one.
+    return collapsed ? <Flyout label={item.label}>{row}</Flyout> : row;
+  }
+
+  if (collapsed) {
+    return (
+      <Flyout label={item.label} items={children}>
+        <SidebarRow item={{ ...item, active: item.active || hasActiveChild(item) }} collapsed />
+      </Flyout>
+    );
+  }
+
+  return (
+    <>
+      <button
+        type="button"
+        className="cb-sidebar__item"
+        data-active={item.active || hasActiveChild(item) || undefined}
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+      >
+        {item.icon ? <span className="cb-sidebar__icon">{item.icon}</span> : null}
+        <span className="cb-sidebar__label">{item.label}</span>
+        {item.adornment ? <span className="cb-sidebar__adornment">{item.adornment}</span> : null}
+        <ChevronRight size={14} className="cb-sidebar__chevron" data-open={open || undefined} />
+      </button>
+
+      {open ? (
+        <div className="cb-sidebar__children">
+          {children.map((child, index) => (
+            <SidebarRow item={child} collapsed={false} nested key={index} />
+          ))}
+        </div>
+      ) : null}
+    </>
+  );
+}
+
+function SidebarRow({ item, collapsed, nested }: { item: NavItem; collapsed: boolean; nested?: boolean }) {
+  const content = (
+    <>
+      {item.icon ? <span className="cb-sidebar__icon">{item.icon}</span> : null}
+      <span className="cb-sidebar__label">{item.label}</span>
+      {item.adornment && !collapsed ? <span className="cb-sidebar__adornment">{item.adornment}</span> : null}
+    </>
+  );
+  const props = {
+    className: cn('cb-sidebar__item', nested && 'cb-sidebar__item--nested'),
+    'data-active': item.active || undefined,
+    'aria-current': item.active ? ('page' as const) : undefined,
+  };
+
+  return item.href ? (
+    <a href={item.href} {...props}>
+      {content}
+    </a>
+  ) : (
+    <button type="button" onClick={item.onClick} {...props}>
+      {content}
+    </button>
+  );
+}
+
+/** The collapsed rail's label carrier: hover or focus, and the name — plus any children — appears. */
+function Flyout({ label, items, children }: { label: ReactNode; items?: NavItem[]; children: ReactNode }) {
+  return (
+    <BasePopover.Root>
+      <BasePopover.Trigger
+        openOnHover
+        delay={120}
+        nativeButton={false}
+        render={<span className="cb-sidebar__flyout-trigger">{children}</span>}
+      />
+      <BasePopover.Portal>
+        <BasePopover.Positioner side="right" align="start" sideOffset={8} className="cb-sidebar__flyout-positioner">
+          <BasePopover.Popup className="cb-sidebar__flyout">
+            <p className="cb-sidebar__flyout-title">{label}</p>
+            {items?.length ? (
+              <div className="cb-sidebar__flyout-items">
+                {items.map((child, index) => (
+                  <SidebarRow item={child} collapsed={false} key={index} />
+                ))}
+              </div>
+            ) : null}
+          </BasePopover.Popup>
+        </BasePopover.Positioner>
+      </BasePopover.Portal>
+    </BasePopover.Root>
   );
 }
 

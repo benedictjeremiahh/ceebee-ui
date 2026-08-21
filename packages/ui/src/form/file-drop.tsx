@@ -2,6 +2,7 @@
 
 import { Upload, X } from 'lucide-react';
 import { useState, type DragEvent, type ReactNode } from 'react';
+import { useLabels } from '../lib/labels.js';
 import { cn } from '../lib/cn.js';
 import { useFieldWiring } from './field.js';
 import { describeAccept, partitionFiles, type FileRules } from './file-drop.util.js';
@@ -30,6 +31,7 @@ export function FileDrop({
 }: FileDropProps) {
   const [over, setOver] = useState(false);
   const field = useFieldWiring();
+  const labels = useLabels();
   const rules: FileRules = { accept, maxSize, maxFiles, multiple };
 
   const take = (incoming: FileList | null) => {
@@ -75,8 +77,11 @@ export function FileDrop({
         <span className="cb-filedrop__icon" aria-hidden="true">
           <Upload size={20} />
         </span>
-        <span className="cb-filedrop__button">Choose {multiple ? 'files' : 'a file'}</span>
-        <p className="cb-filedrop__hint">or drop {multiple ? 'them' : 'it'} here{describeAccept(rules)}</p>
+        <span className="cb-filedrop__button">{multiple ? labels.chooseFiles : labels.chooseFile}</span>
+        <p className="cb-filedrop__hint">
+          {multiple ? labels.dropFilesHere : labels.dropFileHere}
+          {describeAccept(rules)}
+        </p>
         {children}
       </label>
 
@@ -89,7 +94,7 @@ export function FileDrop({
               <button
                 type="button"
                 className="cb-filedrop__remove"
-                aria-label={`Remove ${file.name}`}
+                aria-label={labels.removeFile(file.name)}
                 onClick={() => onFilesChange(files.filter((_, i) => i !== index))}
               >
                 <X size={14} />

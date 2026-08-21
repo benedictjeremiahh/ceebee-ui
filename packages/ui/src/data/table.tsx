@@ -16,6 +16,8 @@ export interface Column<Row> {
   sortable?: boolean;
   /** Hides the column below 720px — for the ones a phone can live without. */
   secondary?: boolean;
+  /** Clips overflowing text with an ellipsis instead of widening the column. */
+  truncate?: boolean;
 }
 
 export interface DataTableProps<Row> {
@@ -89,7 +91,12 @@ export function DataTable<Row>({
               onClick={onRowClick ? () => onRowClick(row) : undefined}
             >
               {columns.map((column) => (
-                <td key={column.key} data-align={column.align} data-secondary={column.secondary || undefined}>
+                <td
+                  key={column.key}
+                  data-align={column.align}
+                  data-secondary={column.secondary || undefined}
+                  data-truncate={column.truncate || undefined}
+                >
                   {column.cell(row)}
                 </td>
               ))}

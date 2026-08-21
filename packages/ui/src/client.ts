@@ -2,6 +2,9 @@
  * Client entry: everything that animates, listens, or holds state. Published with a
  * "use client" banner so a Next app never has to add one (ADR 0004).
  */
+export { LabelsProvider, useLabels, DEFAULT_LABELS } from './lib/labels.js';
+export type { Labels, LabelsProviderProps } from './lib/labels.js';
+
 export { MotionProvider, useMotionSettings } from './motion/motion-provider.js';
 export type { MotionProviderProps, MotionSettings, MotionHelpers, SpringPreset, DurationToken } from './motion/motion-provider.js';
 
@@ -51,7 +54,7 @@ export type { PopoverProps, TooltipProps, Side, Align } from './overlay/popover.
 export { Alert } from './feedback/alert.js';
 export type { AlertProps } from './feedback/alert.js';
 export { ToastProvider, useToast } from './feedback/toast.js';
-export type { ToastProviderProps, ToastOptions } from './feedback/toast.js';
+export type { ToastProviderProps, ToastOptions, ToastPosition } from './feedback/toast.js';
 
 export { Tabs } from './nav/tabs.js';
 export type { TabsProps, TabItem } from './nav/tabs.js';

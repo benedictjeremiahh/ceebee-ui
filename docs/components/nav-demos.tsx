@@ -121,8 +121,11 @@ export function ShellDemo() {
           label: 'Invoices',
           icon: <FileText size={16} />,
           adornment: <Badge tone="brand" size="sm">6</Badge>,
-          active: active === 'Invoices',
-          onClick: () => setActive('Invoices'),
+          items: [
+            { label: 'All invoices', active: active === 'All invoices', onClick: () => setActive('All invoices') },
+            { label: 'Drafts', active: active === 'Drafts', onClick: () => setActive('Drafts') },
+            { label: 'Overdue', adornment: <Badge tone="danger" size="sm">2</Badge>, active: active === 'Overdue', onClick: () => setActive('Overdue') },
+          ],
         },
         { label: 'Customers', icon: <Users size={16} />, active: active === 'Customers', onClick: () => setActive('Customers') },
       ],

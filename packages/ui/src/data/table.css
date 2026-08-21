@@ -28,6 +28,13 @@
 }
 .cb-table tbody tr:last-child td { border-bottom: none; }
 .cb-table [data-align="end"] { text-align: end; }
+/* Truncation needs a bound to truncate against, which a table cell only gets from max-width. */
+.cb-table td[data-truncate] {
+  max-width: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 /* First and last cells keep the table's own gutter, so content lines up with the panel edge
    rather than floating a second inset inside it. */

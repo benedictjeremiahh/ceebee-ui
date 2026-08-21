@@ -1,0 +1,66 @@
+import { PropsTable, Guidance } from '../../components/props-table';
+
+# Labels
+
+Every string the library says out loud lives in one place. A component that hard-codes
+"Previous slide" is an English component, and this library exists to build products that are not
+in English.
+
+## Usage
+
+Wrap the app once and override only what you are translating; anything you leave out falls back to
+the English default.
+
+```tsx
+import { LabelsProvider } from '@ceebee/ui/client';
+
+<LabelsProvider
+  labels={{
+    dismiss: 'Tutup',
+    previousSlide: 'Slide sebelumnya',
+    nextSlide: 'Slide berikutnya',
+    goToSlide: (index) => `Ke slide ${index}`,
+    previousPage: 'Halaman sebelumnya',
+    nextPage: 'Halaman berikutnya',
+    pageSummary: (from, to, total) => `${from}–${to} dari ${total}`,
+    chooseFiles: 'Pilih berkas',
+    dropFilesHere: 'atau jatuhkan di sini',
+    back: 'Kembali',
+    next: 'Lanjut',
+    done: 'Selesai',
+    skip: 'Lewati',
+  }}
+>
+  <App />
+</LabelsProvider>
+```
+
+## What it covers
+
+| Area | Strings |
+| --- | --- |
+| Overlays | `dismiss`, `close` |
+| Carousel | `previousSlide`, `nextSlide`, `goToSlide(index)` |
+| Pagination | `previousPage`, `nextPage`, `page(index)`, `pageSummary(from, to, total)` |
+| Date and time | `chooseDate`, `chooseTime`, `previousMonth`, `nextMonth` |
+| Files | `chooseFiles`, `chooseFile`, `dropFilesHere`, `dropFileHere`, `removeFile(name)` |
+| Numbers | `increase`, `decrease` |
+| Combobox | `clear`, `open` |
+| Shell | `expandNavigation`, `collapseNavigation` |
+| Tour | `back`, `next`, `done`, `skip`, `progress(current, total)` |
+
+<Guidance
+  do="Pass functions for anything with a number in it — word order differs between languages, and a template built from fragments cannot follow it."
+  dont="Translate by wrapping components; the strings a component says are its own business, not the call site's."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'labels', type: 'Partial<Labels>', description: 'Only what you are replacing. The rest fall back to English.' },
+  { name: 'useLabels()', type: '() => Labels', description: 'Read the resolved set inside your own components.' },
+  { name: 'DEFAULT_LABELS', type: 'Labels', description: 'The English defaults, exported so you can diff against them.' },
+]} />
+
+A `Tour`'s own `labels` prop still wins over the provider, because one tour may speak differently
+from the rest of the product.

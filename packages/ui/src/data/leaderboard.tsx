@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { cn, type DecorHue } from '../lib/cn.js';
 import { Avatar } from '../media/avatar.js';
+import { Skeleton } from '../feedback/skeleton.js';
 
 export interface LeaderboardEntry {
   id: string;
@@ -29,7 +30,7 @@ export interface LeaderboardProps {
  * A ranked list — the gamified board pattern. Server-safe, and an `<ol>`, so the ranking is a
  * fact a screen reader reads out rather than a column of numbers it has to infer.
  */
-export function Leaderboard({ entries, label, medals = true, className }: LeaderboardProps) {
+function LeaderboardRoot({ entries, label, medals = true, className }: LeaderboardProps) {
   return (
     <ol className={cn('cb-leaderboard', className)} aria-label={label}>
       {entries.map((entry, index) => {
@@ -64,3 +65,30 @@ export function Leaderboard({ entries, label, medals = true, className }: Leader
     </ol>
   );
 }
+
+export interface LeaderboardSkeletonProps {
+  rows?: number;
+  className?: string;
+}
+
+/** Same row geometry as the real list, so the panel does not resize on load (ADR 0009). */
+function LeaderboardSkeleton({ rows = 5, className }: LeaderboardSkeletonProps) {
+  return (
+    <div className={cn('cb-leaderboard', className)} aria-hidden="true">
+      {Array.from({ length: rows }, (_, index) => (
+        <div className="cb-leaderboard__row" key={index}>
+          <span className="cb-leaderboard__rank">
+            <Skeleton width="0.75rem" height="0.75rem" />
+          </span>
+          <Skeleton.Circle size="1.75rem" />
+          <span className="cb-leaderboard__text">
+            <Skeleton width="7rem" height="0.875rem" />
+          </span>
+          <Skeleton width="2.5rem" height="0.875rem" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export const Leaderboard = Object.assign(LeaderboardRoot, { Skeleton: LeaderboardSkeleton });

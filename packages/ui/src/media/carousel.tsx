@@ -10,6 +10,7 @@ import {
   type CSSProperties,
   type ReactNode,
 } from 'react';
+import { useLabels } from '../lib/labels.js';
 import { cn } from '../lib/cn.js';
 import { useMotionSettings } from '../motion/motion-provider.js';
 import { Skeleton } from '../feedback/skeleton.js';
@@ -44,6 +45,7 @@ function CarouselRoot({
   className,
 }: CarouselProps) {
   const { enabled: motionEnabled } = useMotionSettings();
+  const labels = useLabels();
   const [emblaRef, embla] = useEmblaCarousel({ loop, align, containScroll: 'trimSnaps' });
   const [selected, setSelected] = useState(0);
   const [snapCount, setSnapCount] = useState(0);
@@ -135,7 +137,7 @@ function CarouselRoot({
           <button
             type="button"
             className="cb-carousel__arrow"
-            aria-label="Previous slide"
+            aria-label={labels.previousSlide}
             onClick={() => embla?.scrollPrev()}
             disabled={!loop && selected === 0}
           >
@@ -144,7 +146,7 @@ function CarouselRoot({
           <button
             type="button"
             className="cb-carousel__arrow"
-            aria-label="Next slide"
+            aria-label={labels.nextSlide}
             onClick={() => embla?.scrollNext()}
             disabled={!loop && snapCount > 0 && selected === snapCount - 1}
           >
@@ -161,7 +163,7 @@ function CarouselRoot({
               type="button"
               className="cb-carousel__dot"
               data-active={index === selected || undefined}
-              aria-label={`Go to slide ${index + 1}`}
+              aria-label={labels.goToSlide(index + 1)}
               aria-current={index === selected || undefined}
               onClick={() => embla?.scrollTo(index)}
             />

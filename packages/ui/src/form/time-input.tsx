@@ -3,6 +3,7 @@
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { Clock } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { useLabels } from '../lib/labels.js';
 import { cn, type Size } from '../lib/cn.js';
 import { useFieldWiring } from './field.js';
 import {
@@ -47,6 +48,7 @@ export function TimeInput({
   className,
 }: TimeInputProps) {
   const field = useFieldWiring();
+  const labels = useLabels();
   const controlled = value !== undefined;
   const [internal, setInternal] = useState<TimeValue | null>(defaultValue);
   const current = controlled ? (value ?? null) : internal;
@@ -87,7 +89,7 @@ export function TimeInput({
         />
         <BasePopover.Trigger
           className="cb-date__trigger"
-          aria-label="Choose a time"
+          aria-label={labels.chooseTime}
           disabled={disabled}
           render={<button type="button" />}
         >

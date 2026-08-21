@@ -3,6 +3,7 @@
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { X } from 'lucide-react';
 import { useEffect, useState, type CSSProperties, type ReactNode } from 'react';
+import { useLabels } from '../lib/labels.js';
 import { cn } from '../lib/cn.js';
 import { ArrowShape, type Align, type Side } from '../overlay/popover.js';
 
@@ -40,6 +41,7 @@ export function Coachmark({
   onDismiss,
   className,
 }: CoachmarkProps) {
+  const labels = useLabels();
   const rect = useAnchorRect(anchor, open && spotlight !== false);
   const padding = typeof spotlight === 'number' ? spotlight : 8;
 
@@ -81,7 +83,7 @@ export function Coachmark({
                   <button
                     type="button"
                     className="cb-coachmark__close"
-                    aria-label="Dismiss"
+                    aria-label={labels.dismiss}
                     onClick={onDismiss}
                   >
                     <X size={16} />
@@ -95,7 +97,7 @@ export function Coachmark({
                 <div className="cb-coachmark__foot">
                   {progress ? (
                     <span className="cb-coachmark__progress">
-                      {progress.current} of {progress.total}
+                      {labels.progress(progress.current, progress.total)}
                     </span>
                   ) : (
                     <span />

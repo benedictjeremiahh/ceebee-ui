@@ -38,6 +38,7 @@ error toast waits to be dismissed while every other tone leaves on its own.
 <PropsTable rows={[
   { name: 'ToastProvider timeout', type: 'number', default: '5000', description: 'Milliseconds before a toast leaves. Errors ignore it.' },
   { name: 'ToastProvider limit', type: 'number', default: '4', description: 'How many stack before the oldest is dropped.' },
+  { name: 'ToastProvider position', type: "'bottom-end' | 'bottom-center' | 'bottom-start' | 'top-end' | 'top-center' | 'top-start'", default: "'bottom-end'", description: 'Logical, so end follows the writing direction. A top stack enters from above.' },
   { name: 'toast.show({...})', type: '(options) => string', description: 'title, description, tone, timeout, action. Returns an id.' },
   { name: 'toast.close(id?)', type: '(id?: string) => void', description: 'Closes one, or all of them.' },
   { name: 'toast.promise(p, states)', type: 'function', description: 'Loading, success, and error in one call.' },

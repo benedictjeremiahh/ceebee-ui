@@ -19,7 +19,7 @@ export type { EmptyStateProps } from './feedback/empty-state.js';
 export { Spinner, ProgressBar } from './feedback/progress.js';
 export type { SpinnerProps, ProgressBarProps } from './feedback/progress.js';
 export { Timeline } from './data/timeline.js';
-export type { TimelineProps, TimelineEntry } from './data/timeline.js';
+export type { TimelineProps, TimelineEntry, TimelineSkeletonProps } from './data/timeline.js';
 export { Skeleton } from './feedback/skeleton.js';
 export type { SkeletonProps, SkeletonTextProps } from './feedback/skeleton.js';
 
@@ -36,7 +36,7 @@ export type { SparklineProps, BarMiniProps } from './data/sparkline.js';
 export { sparklineGeometry } from './data/sparkline.math.js';
 export type { SparklineGeometry } from './data/sparkline.math.js';
 export { Leaderboard } from './data/leaderboard.js';
-export type { LeaderboardProps, LeaderboardEntry } from './data/leaderboard.js';
+export type { LeaderboardProps, LeaderboardEntry, LeaderboardSkeletonProps } from './data/leaderboard.js';
 export { Avatar, AvatarGroup } from './media/avatar.js';
 export type { AvatarProps, AvatarGroupProps } from './media/avatar.js';
 export { initialsOf, hueForName } from './media/avatar.util.js';

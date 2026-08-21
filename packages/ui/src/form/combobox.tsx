@@ -3,6 +3,7 @@
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { Check, ChevronsUpDown, X } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { useLabels } from '../lib/labels.js';
 import { cn, type Size } from '../lib/cn.js';
 import { useFieldWiring } from './field.js';
 
@@ -45,6 +46,7 @@ export function Combobox({
   className,
 }: ComboboxProps) {
   const field = useFieldWiring();
+  const labels = useLabels();
 
   /* Base UI works in whole items, not in ids. Handing it a bare string makes the input show the
      id — "id" instead of "Indonesia" — and hands the caller an object back on selection. The
@@ -71,10 +73,10 @@ export function Combobox({
           aria-describedby={field?.describedBy}
           aria-invalid={invalid ?? field?.invalid ? true : undefined}
         />
-        <BaseCombobox.Clear className="cb-combobox__clear" aria-label="Clear">
+        <BaseCombobox.Clear className="cb-combobox__clear" aria-label={labels.clear}>
           <X size={14} />
         </BaseCombobox.Clear>
-        <BaseCombobox.Trigger className="cb-combobox__trigger" aria-label="Open">
+        <BaseCombobox.Trigger className="cb-combobox__trigger" aria-label={labels.open}>
           <ChevronsUpDown size={16} />
         </BaseCombobox.Trigger>
       </div>

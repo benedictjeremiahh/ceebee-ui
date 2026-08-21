@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useReducer, useRef, useState, type ReactNode } from 'react';
+import { useLabels } from '../lib/labels.js';
 import { Button } from '../form/button.js';
 import { useMotionSettings } from '../motion/motion-provider.js';
 import { Coachmark } from './coachmark.js';
@@ -39,8 +40,6 @@ export interface TourProps {
   labels?: Partial<Record<'back' | 'next' | 'done' | 'skip', string>>;
 }
 
-const DEFAULT_LABELS = { back: 'Back', next: 'Next', done: 'Done', skip: 'Skip' };
-
 /**
  * Sequences Coachmarks. It owns order and nothing else: memory is the Seen Store's, the bubble
  * is the Coachmark's, and the steps belong to the caller.
@@ -52,9 +51,10 @@ export function Tour({ id, steps, open = false, onOpenChange, seenStore, onFinis
   );
   const [anchor, setAnchor] = useState<Element | null>(null);
   const { enabled: motionEnabled } = useMotionSettings();
+  const provided = useLabels();
   const [allowed, setAllowed] = useState<boolean | null>(seenStore ? null : true);
   const marked = useRef(false);
-  const text = { ...DEFAULT_LABELS, ...labels };
+  const text = { back: provided.back, next: provided.next, done: provided.done, skip: provided.skip, ...labels };
 
   // Ask the injected store once, before anything is shown.
   useEffect(() => {

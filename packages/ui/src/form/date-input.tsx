@@ -3,6 +3,7 @@
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { useLabels } from '../lib/labels.js';
 import { cn, type Size } from '../lib/cn.js';
 import { useFieldWiring } from './field.js';
 import { formatISO, isOutOfRange, isSameDay, monthMatrix, parseDateInput } from './date.util.js';
@@ -44,6 +45,7 @@ export function DateInput({
   className,
 }: DateInputProps) {
   const field = useFieldWiring();
+  const labels = useLabels();
   const controlled = value !== undefined;
   const [internal, setInternal] = useState<Date | null>(defaultValue);
   const current = controlled ? (value ?? null) : internal;
@@ -99,7 +101,7 @@ export function DateInput({
         />
         <BasePopover.Trigger
           className="cb-date__trigger"
-          aria-label="Choose a date"
+          aria-label={labels.chooseDate}
           disabled={disabled}
           render={<button type="button" />}
         >
@@ -114,7 +116,7 @@ export function DateInput({
               <button
                 type="button"
                 className="cb-calendar__nav"
-                aria-label="Previous month"
+                aria-label={labels.previousMonth}
                 onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1))}
               >
                 <ChevronLeft size={16} />
@@ -125,7 +127,7 @@ export function DateInput({
               <button
                 type="button"
                 className="cb-calendar__nav"
-                aria-label="Next month"
+                aria-label={labels.nextMonth}
                 onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1))}
               >
                 <ChevronRight size={16} />

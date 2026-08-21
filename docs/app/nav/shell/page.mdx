@@ -10,11 +10,17 @@ every product disagrees about what belongs in its chrome.
 
 <ShellDemo />
 
+## Submenus
+
+An item with `items` is a disclosure rather than a destination: it expands in place, its children
+indent against a rail, and a child being active keeps the parent open and marked.
+
 ## Collapsed is still navigable
 
 Collapsing hides the labels visually and keeps them in the accessible name, so a screen reader
-still reads "Invoices" where a sighted user sees only an icon. The rail also carries a `title`, so
-a pointer user can hover to find out.
+still reads "Invoices" where a sighted user sees only an icon. Hovering or focusing a rail item
+opens a flyout carrying that label — and, for a parent, its whole submenu — so a collapsed rail
+stays readable instead of becoming a column of guesses.
 
 <Guidance
   do="Mark the active item with active — it sets aria-current='page', which is how the current page is announced."
@@ -24,7 +30,8 @@ a pointer user can hover to find out.
 ## Props
 
 <PropsTable rows={[
-  { name: 'sections', type: 'NavSection[]', description: 'Each has an optional title and its items: label, icon, href or onClick, active, adornment.' },
+  { name: 'sections', type: 'NavSection[]', description: 'Each has an optional title and its items: label, icon, href or onClick, active, adornment, items.' },
+  { name: 'item.items', type: 'NavItem[]', description: 'One level of children. The parent becomes a disclosure, and collapsed it becomes a flyout.' },
   { name: 'header / footer', type: 'ReactNode', description: 'Brand at the top, account at the bottom. Both are yours.' },
   { name: 'collapsed / onCollapsedChange', type: 'boolean | fn', description: 'Controlled. Omit the handler and the toggle button disappears.' },
   { name: 'TopBar title / subtitle', type: 'ReactNode', description: 'A string, or a Breadcrumbs trail.' },

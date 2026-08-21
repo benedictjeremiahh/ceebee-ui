@@ -3,25 +3,35 @@
 import { Toast as BaseToast } from '@base-ui/react/toast';
 import { AlertTriangle, CheckCircle2, Info, X, XCircle } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { useLabels } from '../lib/labels.js';
 import { cn, type Tone } from '../lib/cn.js';
+
+export type ToastPosition = 'bottom-end' | 'bottom-center' | 'bottom-start' | 'top-end' | 'top-center' | 'top-start';
 
 export interface ToastProviderProps {
   children: ReactNode;
   /** Milliseconds before a toast leaves on its own. Errors ignore it and stay. */
   timeout?: number;
   limit?: number;
+  /** Where the stack lives. Logical, so `end` follows the writing direction. */
+  position?: ToastPosition;
 }
 
 /**
  * Wrap the app once. The viewport is rendered here rather than left to the caller, because a
  * provider without a viewport fails silently: the toast is created and nothing appears.
  */
-export function ToastProvider({ children, timeout = 5000, limit = 4 }: ToastProviderProps) {
+export function ToastProvider({
+  children,
+  timeout = 5000,
+  limit = 4,
+  position = 'bottom-end',
+}: ToastProviderProps) {
   return (
     <BaseToast.Provider timeout={timeout} limit={limit}>
       {children}
       <BaseToast.Portal>
-        <BaseToast.Viewport className="cb-toast__viewport">
+        <BaseToast.Viewport className="cb-toast__viewport" data-position={position}>
           <ToastList />
         </BaseToast.Viewport>
       </BaseToast.Portal>
@@ -39,6 +49,7 @@ const ICONS: Record<string, ReactNode> = {
 
 function ToastList() {
   const { toasts } = BaseToast.useToastManager();
+  const labels = useLabels();
 
   return toasts.map((toast) => (
     <BaseToast.Root key={toast.id} toast={toast} className={cn('cb-toast')} data-tone={toast.type ?? 'neutral'}>
@@ -48,7 +59,7 @@ function ToastList() {
         <BaseToast.Description className="cb-toast__description" />
       </BaseToast.Content>
       <BaseToast.Action className="cb-toast__action" />
-      <BaseToast.Close className="cb-toast__close" aria-label="Dismiss">
+      <BaseToast.Close className="cb-toast__close" aria-label={labels.dismiss}>
         <X size={14} />
       </BaseToast.Close>
     </BaseToast.Root>

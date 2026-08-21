@@ -1,13 +1,19 @@
 .cb-toast__viewport {
   position: fixed;
-  inset-block-end: var(--cb-space-4);
-  inset-inline-end: var(--cb-space-4);
   z-index: var(--cb-z-toast);
   display: flex;
   flex-direction: column;
   gap: var(--cb-space-2);
   width: min(22rem, calc(100vw - var(--cb-space-6)));
 }
+.cb-toast__viewport[data-position^="bottom"] { inset-block-end: var(--cb-space-4); }
+.cb-toast__viewport[data-position^="top"] { inset-block-start: var(--cb-space-4); }
+.cb-toast__viewport[data-position$="end"] { inset-inline-end: var(--cb-space-4); }
+.cb-toast__viewport[data-position$="start"] { inset-inline-start: var(--cb-space-4); }
+.cb-toast__viewport[data-position$="center"] { inset-inline-start: 50%; translate: -50% 0; }
+/* A stack at the top should enter from above, not slide up from below. */
+.cb-toast__viewport[data-position^="top"] .cb-toast[data-starting-style],
+.cb-toast__viewport[data-position^="top"] .cb-toast[data-ending-style] { transform: translateY(-8px); }
 
 .cb-toast {
   --cb-toast-accent: var(--cb-tone-info);

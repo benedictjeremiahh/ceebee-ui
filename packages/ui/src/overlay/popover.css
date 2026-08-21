@@ -21,30 +21,33 @@
   .cb-popover[data-ending-style] { transform: none; }
 }
 
-/* Container clips the diamond in half; the visible half is the tail. */
+/* The tail is a square straddling the popup's edge, rotated 45deg, with a border on only the
+   two edges that end up facing outward. Its own fill covers the popup's border underneath, so
+   the outline runs from bubble into tail without a line across the join — which is what the
+   clip-a-diamond-in-half version could never do: the popup border still crossed its base. */
 .cb-popover__arrow {
   position: absolute;
-  width: 16px;
-  height: 8px;
-  overflow: hidden;
+  width: 18px;
+  height: 9px;
   pointer-events: none;
 }
-.cb-popover__arrow[data-side="bottom"] { top: -8px; }
-.cb-popover__arrow[data-side="top"] { bottom: -8px; rotate: 180deg; }
-.cb-popover__arrow[data-side="left"] { right: -12px; rotate: 90deg; }
-.cb-popover__arrow[data-side="right"] { left: -12px; rotate: -90deg; }
+.cb-popover__arrow[data-side="bottom"] { top: 0; }
+.cb-popover__arrow[data-side="top"] { bottom: 0; rotate: 180deg; }
+.cb-popover__arrow[data-side="left"] { right: 0; rotate: 90deg; }
+.cb-popover__arrow[data-side="right"] { left: 0; rotate: -90deg; }
 
 .cb-arrow {
   position: absolute;
   left: 50%;
-  top: 100%;
-  width: 11px;
-  height: 11px;
+  top: 0;
+  width: 12px;
+  height: 12px;
   translate: -50% -50%;
   rotate: 45deg;
   background: var(--cb-surface-raised);
-  border: var(--cb-border-width) solid var(--cb-border);
-  border-radius: 2px;
+  border-top: var(--cb-border-width) solid var(--cb-border);
+  border-left: var(--cb-border-width) solid var(--cb-border);
+  border-start-start-radius: 3px;
 }
 
 .cb-tooltip {

@@ -19,6 +19,7 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
       { href: '/', label: 'Introduction' },
       { href: '/tokens', label: 'Tokens' },
       { href: '/theming', label: 'Theming' },
+      { href: '/labels', label: 'Labels' },
     ],
   },
   {

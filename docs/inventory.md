@@ -63,8 +63,8 @@ built in, which is worth keeping: it is the record of what turned out to be foun
 | Donut | Widget | server | S2 — built |
 | Sparkline / BarMini | Widget | server | S2 — built |
 | DataTable (+ `.Skeleton`) | Composition | client | S3 — built |
-| Leaderboard | Composition | server | S3 — built |
-| Timeline | Composition | server | S4 — built |
+| Leaderboard (+ `.Skeleton`) | Composition | server | S3 — built |
+| Timeline (+ `.Skeleton`) | Composition | server | S4 — built |
 
 ## nav
 

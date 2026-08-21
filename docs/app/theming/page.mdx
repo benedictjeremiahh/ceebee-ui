@@ -55,6 +55,12 @@ rule; if a Skin needs a rule, the component is missing a token.
   dont="Override component classes in the consuming app — that is a token the library is missing, and a fork waiting to happen."
 />
 
+## More contrast
+
+`prefers-contrast: more` steps the borders and the secondary text up without changing hue, so
+someone who asked their system for stronger contrast gets it from the tokens rather than from a
+separate theme you have to maintain.
+
 ## Runtime colour
 
 If a person picks their own accent colour, write the value into the custom property and leave the

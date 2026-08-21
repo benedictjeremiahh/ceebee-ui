@@ -2,6 +2,7 @@
 
 import { AlertTriangle, CheckCircle2, Info, XCircle, X } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { useLabels } from '../lib/labels.js';
 import { cn, type Tone } from '../lib/cn.js';
 
 export interface AlertProps {
@@ -29,6 +30,7 @@ const ICONS: Record<Tone, ReactNode> = {
  * because a success note that interrupts a screen reader mid-sentence is not helpful.
  */
 export function Alert({ title, children, tone = 'info', icon, actions, onDismiss, className }: AlertProps) {
+  const labels = useLabels();
   const assertive = tone === 'danger' || tone === 'warning';
   return (
     <div
@@ -44,7 +46,7 @@ export function Alert({ title, children, tone = 'info', icon, actions, onDismiss
         {actions ? <div className="cb-alert__actions">{actions}</div> : null}
       </div>
       {onDismiss ? (
-        <button type="button" className="cb-alert__close" aria-label="Dismiss" onClick={onDismiss}>
+        <button type="button" className="cb-alert__close" aria-label={labels.dismiss} onClick={onDismiss}>
           <X size={16} />
         </button>
       ) : null}

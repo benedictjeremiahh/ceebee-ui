@@ -186,3 +186,56 @@
 .cb-topbar__subtitle { margin: 0; font-size: var(--cb-text-xs); color: var(--cb-fg-subtle); }
 .cb-topbar__center { flex: 1; display: flex; justify-content: center; min-width: 0; }
 .cb-topbar__actions { display: flex; align-items: center; gap: var(--cb-space-2); margin-inline-start: auto; }
+
+/* Submenus. A parent is a disclosure, and its children indent under a rail that ties them to it. */
+.cb-sidebar__chevron {
+  flex: none;
+  color: var(--cb-fg-subtle);
+  transition: rotate var(--cb-duration-fast) var(--cb-ease-standard);
+}
+.cb-sidebar__chevron[data-open] { rotate: 90deg; }
+@media (prefers-reduced-motion: reduce) {
+  .cb-sidebar__chevron { transition: none; }
+}
+
+.cb-sidebar__children {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  margin-inline-start: calc(var(--cb-space-3) + 0.5rem);
+  padding-inline-start: var(--cb-space-3);
+  border-inline-start: var(--cb-border-width) solid var(--cb-border);
+}
+.cb-sidebar__item--nested { font-size: var(--cb-text-sm); }
+
+.cb-sidebar__flyout-trigger { display: block; width: 100%; }
+.cb-sidebar__flyout-positioner { z-index: var(--cb-z-popover); }
+
+/* Collapsed, this is where the labels live. */
+.cb-sidebar__flyout {
+  min-width: 11rem;
+  padding: var(--cb-space-2);
+  background: var(--cb-surface-raised);
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-md);
+  box-shadow: var(--cb-shadow-md);
+  font-family: var(--cb-font-sans);
+  transition: opacity var(--cb-duration-fast) var(--cb-ease-entrance);
+}
+.cb-sidebar__flyout[data-starting-style],
+.cb-sidebar__flyout[data-ending-style] { opacity: 0; }
+.cb-sidebar__flyout-title {
+  margin: 0;
+  padding: var(--cb-space-1) var(--cb-space-2);
+  font-size: var(--cb-text-sm);
+  font-weight: var(--cb-weight-semibold);
+  color: var(--cb-fg);
+}
+.cb-sidebar__flyout-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  margin-top: var(--cb-space-1);
+  padding-top: var(--cb-space-1);
+  border-top: var(--cb-border-width) solid var(--cb-border);
+}

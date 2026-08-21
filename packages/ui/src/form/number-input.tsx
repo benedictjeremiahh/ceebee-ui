@@ -2,6 +2,7 @@
 
 import { Minus, Plus } from 'lucide-react';
 import { useState, type ChangeEvent } from 'react';
+import { useLabels } from '../lib/labels.js';
 import { cn, type Size } from '../lib/cn.js';
 import { useFieldWiring } from './field.js';
 import { canStep, clamp, parseNumber, stepBy, type NumberBounds } from './number.js';
@@ -40,6 +41,7 @@ export function NumberInput({
   className,
 }: NumberInputProps) {
   const field = useFieldWiring();
+  const labels = useLabels();
   const controlled = value !== undefined;
   const [internal, setInternal] = useState<number | null>(defaultValue);
   const [text, setText] = useState(() => formatValue(controlled ? (value ?? null) : defaultValue));
@@ -94,7 +96,7 @@ export function NumberInput({
         <button
           type="button"
           className="cb-number__step"
-          aria-label="Decrease"
+          aria-label={labels.decrease}
           disabled={disabled || !canStep(current, -1, bounds)}
           onClick={() => commit(stepBy(current, -1, bounds))}
         >
@@ -103,7 +105,7 @@ export function NumberInput({
         <button
           type="button"
           className="cb-number__step"
-          aria-label="Increase"
+          aria-label={labels.increase}
           disabled={disabled || !canStep(current, 1, bounds)}
           onClick={() => commit(stepBy(current, 1, bounds))}
         >
