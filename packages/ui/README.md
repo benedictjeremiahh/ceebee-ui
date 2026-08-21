@@ -25,7 +25,6 @@ from `@ceebee/ui/client`.
 ## Requirements
 
 - React and React DOM 19 or newer
-- `@base-ui/react` and `motion`
-- `lucide-react` and `embla-carousel-react` only when using components that need them
+- `@base-ui/react`, `motion`, `lucide-react`, and `embla-carousel-react` as runtime peers
 
 Licensed under MIT.

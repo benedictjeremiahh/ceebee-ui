@@ -1,5 +1,12 @@
 # @ceebee/ui
 
+## 0.2.1
+
+### Patch Changes
+
+- Mark Lucide and Embla as required runtime peers so a clean package installation can resolve both
+  public entry points without consumers manually repairing the dependency graph.
+
 ## 0.2.0
 
 ### Minor Changes
