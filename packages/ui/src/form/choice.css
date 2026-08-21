@@ -32,10 +32,11 @@
 }
 .cb-checkbox { border-radius: 0.3125rem; }
 
-/* The pointer target is 24px even though the box reads as 18px. */
+/* The pointer target is 24px even though the box reads as 18px. The switch is excluded: it is
+   already 40x24, and without a positioned ancestor its pseudo-element grew to the width of a
+   distant container and swallowed every click on the page. */
 .cb-checkbox::before,
-.cb-radio::before,
-.cb-switch::before {
+.cb-radio::before {
   content: "";
   position: absolute;
   inset: 50% auto auto 50%;
