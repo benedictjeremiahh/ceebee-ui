@@ -87,6 +87,7 @@ body { margin: 0; font-family: var(--cb-font-sans); }
   display: inline-flex;
   align-items: center;
   gap: var(--cb-space-1);
+  min-height: 1.5rem;
   padding: var(--cb-space-1) var(--cb-space-2);
   border: none;
   border-radius: var(--cb-radius-sm);
@@ -184,8 +185,8 @@ body { margin: 0; font-family: var(--cb-font-sans); }
 .recipe--gamified, .recipe--fintech { max-width: 30rem; margin-inline: auto; }
 .recipe__balance { font-size: var(--cb-text-2xl); }
 
-/* GFM tables in the docs prose. */
-.docs__main table:not(.props) {
+/* GFM tables in the docs prose — never the library's own tables. */
+.docs__main table:not(.props):not(.cb-table) {
   width: 100%;
   border-collapse: collapse;
   font-size: var(--cb-text-sm);
@@ -193,15 +194,15 @@ body { margin: 0; font-family: var(--cb-font-sans); }
   display: block;
   overflow-x: auto;
 }
-.docs__main table:not(.props) th,
-.docs__main table:not(.props) td {
+.docs__main table:not(.props):not(.cb-table) th,
+.docs__main table:not(.props):not(.cb-table) td {
   text-align: left;
   padding: var(--cb-space-2) var(--cb-space-3);
   border-bottom: var(--cb-border-width) solid var(--cb-border);
   color: var(--cb-fg-muted);
   vertical-align: top;
 }
-.docs__main table:not(.props) th {
+.docs__main table:not(.props):not(.cb-table) th {
   color: var(--cb-fg-subtle);
   font-weight: var(--cb-weight-medium);
   font-size: var(--cb-text-xs);
@@ -209,4 +210,41 @@ body { margin: 0; font-family: var(--cb-font-sans); }
   letter-spacing: 0.05em;
   white-space: nowrap;
 }
-.docs__main table:not(.props) td:first-child { color: var(--cb-fg); white-space: nowrap; }
+.docs__main table:not(.props):not(.cb-table) td:first-child { color: var(--cb-fg); white-space: nowrap; }
+
+/* The docs navigation collapses out of the way; the choice persists across pages. */
+.docs__brand { position: relative; }
+.docs__nav-close,
+.docs__nav-open {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: none;
+  border-radius: var(--cb-radius-sm);
+  background: transparent;
+  color: var(--cb-fg-subtle);
+  cursor: pointer;
+}
+.docs__nav-close { margin-inline-start: auto; }
+.docs__nav-close:hover,
+.docs__nav-open:hover { background: var(--cb-surface); color: var(--cb-fg); }
+.docs__nav-close:focus-visible,
+.docs__nav-open:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: var(--cb-focus-offset); }
+
+.docs__nav-open {
+  position: fixed;
+  top: var(--cb-space-3);
+  inset-inline-start: var(--cb-space-3);
+  z-index: var(--cb-z-sticky);
+  background: var(--cb-surface);
+  border: var(--cb-border-width) solid var(--cb-border);
+  box-shadow: var(--cb-shadow-sm);
+  display: none;
+}
+
+:root[data-nav="hidden"] .docs { grid-template-columns: minmax(0, 1fr); }
+:root[data-nav="hidden"] .docs__sidebar { display: none; }
+:root[data-nav="hidden"] .docs__nav-open { display: inline-flex; }
+:root[data-nav="hidden"] .docs__main { padding-top: var(--cb-space-7); }

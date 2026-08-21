@@ -77,7 +77,7 @@ export function TableDemo() {
       key: 'actions',
       header: '',
       align: 'end',
-      width: '3rem',
+      width: '2.75rem',
       cell: () => (
         <DropdownMenu
           trigger={<Button size="sm" variant="ghost" tone="neutral" iconStart={<MoreHorizontal size={16} />} aria-label="Row actions" />}

@@ -14,13 +14,14 @@
   color: var(--cb-fg-subtle);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: var(--cb-space-3) var(--cb-space-4);
+  padding: var(--cb-space-2) var(--cb-space-3);
   border-bottom: var(--cb-border-width) solid var(--cb-border);
   white-space: nowrap;
   background: var(--cb-bg-subtle);
 }
 .cb-table td {
-  padding: var(--cb-space-3) var(--cb-space-4);
+  padding: var(--cb-space-2) var(--cb-space-3);
+  height: 3rem;
   border-bottom: var(--cb-border-width) solid var(--cb-border);
   color: var(--cb-fg);
   vertical-align: middle;
@@ -28,12 +29,26 @@
 .cb-table tbody tr:last-child td { border-bottom: none; }
 .cb-table [data-align="end"] { text-align: end; }
 
+/* First and last cells keep the table's own gutter, so content lines up with the panel edge
+   rather than floating a second inset inside it. */
+.cb-table th:first-child,
+.cb-table td:first-child { padding-inline-start: var(--cb-space-4); }
+.cb-table th:last-child,
+.cb-table td:last-child { padding-inline-end: var(--cb-space-2); }
+
+/* A cell holding only a control does not need text padding around it. */
+.cb-table td:has(> .cb-button--icon),
+.cb-table td:has(> .cb-menu-anchor) { padding-block: 0; }
+
 .cb-table tbody tr[data-clickable] { cursor: pointer; }
 .cb-table tbody tr[data-clickable]:hover td { background: var(--cb-bg-subtle); }
 
 .cb-table__sort {
   display: inline-flex;
   align-items: center;
+  min-height: 1.5rem;
+  margin-block: calc(var(--cb-space-1) * -1);
+  padding-block: var(--cb-space-1);
   gap: var(--cb-space-1);
   border: none;
   background: transparent;

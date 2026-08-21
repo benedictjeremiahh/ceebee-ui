@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Text } from '@ceebee/ui';
 
 interface Entry {
@@ -114,14 +116,48 @@ const GROUPS: Array<{ title: string; entries: Entry[] }> = [
 
 export function Nav() {
   const pathname = usePathname();
+  const [hidden, setHidden] = useState(false);
+
+  // The attribute lives on the document so the grid can react to it without threading state
+  // through a server layout.
+  useEffect(() => {
+    const stored = window.localStorage.getItem('docs-nav') === 'hidden';
+    setHidden(stored);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.nav = hidden ? 'hidden' : 'shown';
+    window.localStorage.setItem('docs-nav', hidden ? 'hidden' : 'shown');
+  }, [hidden]);
+
   return (
-    <aside className="docs__sidebar">
-      <div className="docs__brand">
-        <span className="docs__mark" />
-        <Text weight="semibold">@ceebee/ui</Text>
-      </div>
-      {GROUPS.map((group) => (
-        <div className="docs__group" key={group.title}>
+    <>
+      <button
+        type="button"
+        className="docs__nav-open"
+        aria-label="Show navigation"
+        aria-expanded={!hidden}
+        onClick={() => setHidden(false)}
+      >
+        <PanelLeftOpen size={16} />
+      </button>
+
+      <aside className="docs__sidebar">
+        <div className="docs__brand">
+          <span className="docs__mark" />
+          <Text weight="semibold">@ceebee/ui</Text>
+          <button
+            type="button"
+            className="docs__nav-close"
+            aria-label="Hide navigation"
+            aria-expanded={!hidden}
+            onClick={() => setHidden(true)}
+          >
+            <PanelLeftClose size={16} />
+          </button>
+        </div>
+        {GROUPS.map((group) => (
+          <div className="docs__group" key={group.title}>
           <p className="docs__group-title">{group.title}</p>
           {group.entries.map((entry) => (
             <Link
@@ -135,7 +171,8 @@ export function Nav() {
             </Link>
           ))}
         </div>
-      ))}
-    </aside>
+        ))}
+      </aside>
+    </>
   );
 }

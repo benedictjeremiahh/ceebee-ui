@@ -46,6 +46,12 @@
 .cb-button--ghost { background: transparent; color: var(--cb-fg-muted); }
 .cb-button--ghost:hover:not(:disabled) { background: var(--cb-bg-subtle); color: var(--cb-fg); }
 
+/* Square, no text padding, no gap: the glyph sits on the centre of the control. */
+.cb-button--icon { padding-inline: 0; gap: 0; }
+.cb-button--icon.cb-button--sm { width: var(--cb-control-height-sm); }
+.cb-button--icon.cb-button--md { width: var(--cb-control-height-md); }
+.cb-button--icon.cb-button--lg { width: var(--cb-control-height-lg); }
+
 .cb-button__spinner {
   width: 1em;
   height: 1em;
@@ -57,5 +63,11 @@
 @keyframes cb-spin { to { transform: rotate(360deg); } }
 /* Reduced motion: the spinner stops turning but the busy state stays visible and announced. */
 @media (prefers-reduced-motion: reduce) {
-  .cb-button__spinner { animation: none; opacity: 0.6; }
+  /* Square, no text padding, no gap: the glyph sits on the centre of the control. */
+.cb-button--icon { padding-inline: 0; gap: 0; }
+.cb-button--icon.cb-button--sm { width: var(--cb-control-height-sm); }
+.cb-button--icon.cb-button--md { width: var(--cb-control-height-md); }
+.cb-button--icon.cb-button--lg { width: var(--cb-control-height-lg); }
+
+.cb-button__spinner { animation: none; opacity: 0.6; }
 }

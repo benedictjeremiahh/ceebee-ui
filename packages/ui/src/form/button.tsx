@@ -42,11 +42,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 ) {
   const { enabled, spring } = useMotionSettings();
   const animate = enabled && motionProp;
+  // No children means the icon is the whole button: it becomes square, loses the text padding,
+  // and must carry an aria-label, which the type system cannot enforce but the docs state.
+  const iconOnly = children === undefined || children === null || children === false || children === '';
 
   return (
     <motion.button
       ref={ref}
-      className={cn('cb-button', `cb-button--${variant}`, `cb-button--${size}`, className)}
+      className={cn(
+        'cb-button',
+        `cb-button--${variant}`,
+        `cb-button--${size}`,
+        iconOnly && 'cb-button--icon',
+        className,
+      )}
       data-tone={tone}
       data-loading={loading || undefined}
       disabled={disabled ?? loading}
@@ -57,8 +66,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       {...rest}
     >
       {loading ? <span className="cb-button__spinner" aria-hidden="true" /> : iconStart}
-      <span className="cb-button__label">{children}</span>
-      {loading ? null : iconEnd}
+      {iconOnly ? null : <span className="cb-button__label">{children}</span>}
+      {loading || iconOnly ? null : iconEnd}
     </motion.button>
   );
 });

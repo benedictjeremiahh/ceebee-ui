@@ -34,7 +34,7 @@
 .cb-dialog--center[data-starting-style],
 .cb-dialog--center[data-ending-style] { opacity: 0; transform: translate(-50%, -48%) scale(0.96); }
 
-.cb-dialog--end { right: var(--cb-space-4); bottom: var(--cb-space-4); transform: translateY(0); }
+.cb-dialog--end { inset-inline-end: var(--cb-space-4); inset-block-end: var(--cb-space-4); transform: translateY(0); }
 .cb-dialog--end[data-starting-style],
 .cb-dialog--end[data-ending-style] { opacity: 0; transform: translateY(12px); }
 
