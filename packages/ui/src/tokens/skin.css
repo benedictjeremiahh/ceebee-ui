@@ -51,13 +51,19 @@
   /* Text that sits on the warning ramp, which is too light to carry white. */
   --cb-on-warning: oklch(0.24 0.05 75);
 
+  --cb-shadow-none: 0 0 transparent;
   --cb-shadow-sm: 0 1px 2px oklch(0.3 0.03 280 / 0.06);
   --cb-shadow-md: 0 4px 16px oklch(0.3 0.03 280 / 0.08);
   --cb-shadow-lg: 0 18px 48px oklch(0.3 0.03 280 / 0.12);
 
   --cb-glass-bg: oklch(1 0 0 / 0.62);
+  --cb-glass-bg-opaque: oklch(0.985 0.004 280);
   --cb-glass-border: oklch(1 0 0 / 0.55);
+  --cb-glass-border-strong: oklch(0.64 0.018 280);
   --cb-glass-blur: 18px;
+  --cb-glass-saturation: 1.4;
+  --cb-glass-specular: linear-gradient(145deg, oklch(1 0 0 / 0.34), transparent 42%);
+  --cb-glass-inset: inset 0 1px 0 oklch(1 0 0 / 0.62), inset 0 -1px 0 oklch(0.3 0.03 280 / 0.1);
 
   --cb-tint-strength: 0.09;
   --cb-gradient-angle: 145deg;
@@ -88,7 +94,13 @@
     --cb-shadow-lg: 0 22px 56px oklch(0 0 0 / 0.55);
 
     --cb-glass-bg: oklch(0.3 0.03 280 / 0.55);
+    --cb-glass-bg-opaque: oklch(0.25 0.024 280);
     --cb-glass-border: oklch(0.8 0.02 280 / 0.16);
+    --cb-glass-border-strong: oklch(0.72 0.03 280);
+    --cb-glass-blur: 20px;
+    --cb-glass-saturation: 1.25;
+    --cb-glass-specular: linear-gradient(145deg, oklch(1 0 0 / 0.18), transparent 42%);
+    --cb-glass-inset: inset 0 1px 0 oklch(1 0 0 / 0.26), inset 0 -1px 0 oklch(0 0 0 / 0.34);
 
     --cb-scrim: oklch(0.08 0.01 280 / 0.6);
     --cb-scrim-strong: oklch(0.08 0.01 280 / 0.7);
@@ -118,7 +130,13 @@
   --cb-shadow-lg: 0 22px 56px oklch(0 0 0 / 0.55);
 
   --cb-glass-bg: oklch(0.3 0.03 280 / 0.55);
+  --cb-glass-bg-opaque: oklch(0.25 0.024 280);
   --cb-glass-border: oklch(0.8 0.02 280 / 0.16);
+  --cb-glass-border-strong: oklch(0.72 0.03 280);
+  --cb-glass-blur: 20px;
+  --cb-glass-saturation: 1.25;
+  --cb-glass-specular: linear-gradient(145deg, oklch(1 0 0 / 0.18), transparent 42%);
+  --cb-glass-inset: inset 0 1px 0 oklch(1 0 0 / 0.26), inset 0 -1px 0 oklch(0 0 0 / 0.34);
 
   --cb-scrim: oklch(0.08 0.01 280 / 0.6);
   --cb-scrim-strong: oklch(0.08 0.01 280 / 0.7);
@@ -137,6 +155,7 @@ html, body { background: var(--cb-bg); color: var(--cb-fg); }
     --cb-fg-muted: oklch(0.35 0.02 280);
     --cb-fg-subtle: oklch(0.4 0.018 280);
     --cb-tint-strength: 0.16;
+    --cb-glass-border-strong: oklch(0.45 0.02 280);
   }
 
   :root[data-theme="dark"],
@@ -145,5 +164,6 @@ html, body { background: var(--cb-bg); color: var(--cb-fg); }
     --cb-border-strong: oklch(0.72 0.03 280);
     --cb-fg-muted: oklch(0.88 0.012 280);
     --cb-fg-subtle: oklch(0.78 0.016 280);
+    --cb-glass-border-strong: oklch(0.72 0.03 280);
   }
 }

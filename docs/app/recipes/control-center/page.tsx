@@ -7,10 +7,10 @@ export default function ControlCenterPage() {
       <div>
         <Heading level={1}>Glass control center</Heading>
         <Text tone="muted">
-          The frosted-panel pin, rebuilt from `Surface variant=&quot;glass&quot;`, `Switch`, `Badge`, and
-          `Avatar`. The blur has something to blur because the coloured field behind it belongs to
-          the page, not the library — glass is a surface treatment, and it needs a background to be
-          worth anything.
+          An elevated control layer built from `Surface variant=&quot;glass&quot;`, `Switch`, `Badge`, and
+          `Avatar`. The coloured field belongs to the page so the material has real content to react
+          to. Keep this treatment selective: the controls float in glass while the content remains
+          on its own plane.
         </Text>
       </div>
       <ControlCenterRecipe />

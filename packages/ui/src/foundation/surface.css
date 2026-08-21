@@ -1,5 +1,6 @@
 .cb-surface {
   --cb-surface-accent: var(--cb-tone-neutral);
+  --cb-surface-material-shadow: var(--cb-shadow-none);
   background: var(--cb-surface);
   color: var(--cb-fg);
   box-sizing: border-box;
@@ -26,10 +27,11 @@
 }
 
 .cb-surface--glass {
-  background: var(--cb-glass-bg);
+  background: var(--cb-glass-specular), var(--cb-glass-bg);
   border-color: var(--cb-glass-border);
-  backdrop-filter: blur(var(--cb-glass-blur)) saturate(1.4);
-  -webkit-backdrop-filter: blur(var(--cb-glass-blur)) saturate(1.4);
+  backdrop-filter: blur(var(--cb-glass-blur)) saturate(var(--cb-glass-saturation));
+  -webkit-backdrop-filter: blur(var(--cb-glass-blur)) saturate(var(--cb-glass-saturation));
+  --cb-surface-material-shadow: var(--cb-glass-inset);
 }
 
 .cb-surface--gradient {
@@ -41,10 +43,42 @@
   border-color: color-mix(in oklch, var(--cb-surface-accent) 24%, transparent);
 }
 
-.cb-elevation--none { box-shadow: none; }
-.cb-elevation--sm { box-shadow: var(--cb-shadow-sm); }
-.cb-elevation--md { box-shadow: var(--cb-shadow-md); }
-.cb-elevation--lg { box-shadow: var(--cb-shadow-lg); }
+.cb-elevation--none { box-shadow: var(--cb-surface-material-shadow); }
+.cb-elevation--sm { box-shadow: var(--cb-surface-material-shadow), var(--cb-shadow-sm); }
+.cb-elevation--md { box-shadow: var(--cb-surface-material-shadow), var(--cb-shadow-md); }
+.cb-elevation--lg { box-shadow: var(--cb-surface-material-shadow), var(--cb-shadow-lg); }
+
+@supports not ((backdrop-filter: blur(var(--cb-glass-blur))) or (-webkit-backdrop-filter: blur(var(--cb-glass-blur)))) {
+  .cb-surface--glass { background: var(--cb-glass-bg-opaque); }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .cb-surface--glass {
+    background: var(--cb-glass-bg-opaque);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .cb-surface--glass {
+    background: var(--cb-glass-bg-opaque);
+    border-color: var(--cb-glass-border-strong);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .cb-surface--glass {
+    background: Canvas;
+    border-color: CanvasText;
+    color: CanvasText;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
 
 .cb-radius--sm { border-radius: var(--cb-radius-sm); }
 .cb-radius--md { border-radius: var(--cb-radius-md); }

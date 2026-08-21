@@ -6,6 +6,8 @@ import { Surface, Stack, Text, Heading } from '@ceebee/ui';
 
 Every raised or tinted panel in the library is a Surface. Its variants are where glass and gradients
 live, so those looks are a choice a screen makes rather than an identity baked into the brand.
+Glass is deliberately selective: it marks a control or navigation layer above content, not every
+card on a dashboard.
 
 ## Anatomy
 
@@ -40,6 +42,22 @@ to get a colour you liked; that is what `hue` is for.
   dont="Use tone='danger' because the red looked good — a screen reader user gets no colour, and the next reader believes something is wrong."
 />
 
+## Glass as a material
+
+Glass needs visible content behind it. Its translucent fill, specular light, edge illumination,
+backdrop blur, and grounding shadow work together as one Skin-controlled material. Browsers without
+backdrop filtering, reduced-transparency preferences, increased contrast, and forced-colour modes
+receive a legible opaque surface automatically.
+
+Use glass for a small control, toolbar, navigation, or overlay plane above content. Keep ordinary
+content on `plain` or `tinted` surfaces, and never stack glass inside glass. See the
+[Glass control center](/recipes/control-center) for the material over a useful backdrop.
+
+<Guidance
+  do="Place one glass control plane over content with enough colour or detail to reveal the material."
+  dont="Turn every card into glass or nest glass surfaces — the page loses hierarchy and contrast."
+/>
+
 ## Elevation
 
 <Demo code={`<Surface elevation="lg" padding="md">Floating</Surface>`}>
@@ -64,5 +82,5 @@ to get a colour you liked; that is what `hue` is for.
 
 ## Tokens read
 
-`--cb-surface`, `--cb-border`, `--cb-tint-strength`, `--cb-glass-bg`, `--cb-glass-blur`,
-`--cb-gradient-angle`, `--cb-shadow-*`, `--cb-radius-*`, `--cb-space-*`.
+`--cb-surface`, `--cb-border`, `--cb-tint-strength`, `--cb-glass-*`, `--cb-gradient-angle`,
+`--cb-shadow-*`, `--cb-radius-*`, `--cb-space-*`.
