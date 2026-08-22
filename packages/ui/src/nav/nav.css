@@ -1,6 +1,9 @@
 .cb-menu {
   box-sizing: border-box;
   min-width: 14rem;
+  max-height: min(calc(100dvh - var(--cb-space-6)), var(--available-height));
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: var(--cb-space-1);
   background: var(--cb-surface-raised);
   border: var(--cb-border-width) solid var(--cb-border);

@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 0.4.1
+
+### Patch Changes
+
+- Keep tall grouped dropdown menus inside the viewport with contained internal scrolling.
+
 ## 0.4.0
 
 ### Minor Changes
