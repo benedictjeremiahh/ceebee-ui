@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 0.3.3
+
+### Patch Changes
+
+- Preserve the standard backdrop-filter declaration when consumer CSS is compiled by Lightning CSS.
+
 ## 0.3.2
 
 ### Patch Changes

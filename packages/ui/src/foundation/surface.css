@@ -36,8 +36,8 @@
   --cb-glass-material-inset: var(--cb-glass-inset);
   background: var(--cb-glass-material-specular), var(--cb-glass-fill);
   border-color: var(--cb-glass-edge);
-  backdrop-filter: blur(var(--cb-glass-material-blur)) saturate(var(--cb-glass-material-saturation));
   -webkit-backdrop-filter: blur(var(--cb-glass-material-blur)) saturate(var(--cb-glass-material-saturation));
+  backdrop-filter: blur(var(--cb-glass-material-blur)) saturate(var(--cb-glass-material-saturation));
   --cb-surface-material-shadow: var(--cb-glass-material-inset);
 }
 
@@ -71,8 +71,8 @@
 @media (prefers-reduced-transparency: reduce) {
   .cb-surface--glass {
     background: var(--cb-glass-opaque-fill);
-    backdrop-filter: none;
     -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
 
@@ -80,8 +80,8 @@
   .cb-surface--glass {
     background: var(--cb-glass-opaque-fill);
     border-color: var(--cb-glass-border-strong);
-    backdrop-filter: none;
     -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
 
@@ -91,8 +91,8 @@
     border-color: CanvasText;
     color: CanvasText;
     box-shadow: none;
-    backdrop-filter: none;
     -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
 
