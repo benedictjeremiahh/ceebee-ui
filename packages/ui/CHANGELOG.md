@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 0.3.2
+
+### Patch Changes
+
+- Increase regular-glass backdrop diffusion while preserving enough translucency for the frosted effect to remain visible.
+
 ## 0.3.1
 
 ### Patch Changes

@@ -167,6 +167,14 @@ body { margin: 0; font-family: var(--cb-font-sans); }
     radial-gradient(60% 60% at 60% 90%, color-mix(in oklch, var(--cb-decor-rose) 40%, transparent), transparent),
     var(--cb-bg-subtle);
 }
+.recipe__field::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(90deg, color-mix(in oklch, var(--cb-fg) 12%, transparent) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(0deg, color-mix(in oklch, var(--cb-fg) 12%, transparent) 0 1px, transparent 1px 24px);
+}
 .recipe__content { position: relative; max-width: 26rem; margin-inline: auto; }
 .recipe__glyph {
   display: inline-flex;
