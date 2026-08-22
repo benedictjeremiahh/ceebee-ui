@@ -59,7 +59,7 @@ export type { ToastProviderProps, ToastOptions, ToastPosition } from './feedback
 export { Tabs } from './nav/tabs.js';
 export type { TabsProps, TabItem } from './nav/tabs.js';
 export { DropdownMenu } from './nav/menu.js';
-export type { DropdownMenuProps, MenuItem } from './nav/menu.js';
+export type { DropdownMenuProps, MenuItem, MenuSection } from './nav/menu.js';
 export { Sidebar, TopBar } from './nav/shell.js';
 export type { SidebarProps, TopBarProps, NavItem, NavSection } from './nav/shell.js';
 

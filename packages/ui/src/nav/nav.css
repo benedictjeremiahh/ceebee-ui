@@ -1,6 +1,6 @@
 .cb-menu {
   box-sizing: border-box;
-  min-width: 12rem;
+  min-width: 14rem;
   padding: var(--cb-space-1);
   background: var(--cb-surface-raised);
   border: var(--cb-border-width) solid var(--cb-border);
@@ -11,6 +11,14 @@
   z-index: var(--cb-z-popover);
   transition: opacity var(--cb-duration-fast) var(--cb-ease-entrance),
     transform var(--cb-duration-fast) var(--cb-ease-entrance);
+}
+.cb-menu__group-label {
+  padding: var(--cb-space-2) var(--cb-space-2) var(--cb-space-1);
+  color: var(--cb-fg-subtle);
+  font-size: var(--cb-text-xs);
+  font-weight: var(--cb-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 .cb-menu[data-starting-style],
 .cb-menu[data-ending-style] { opacity: 0; transform: scale(0.97); }

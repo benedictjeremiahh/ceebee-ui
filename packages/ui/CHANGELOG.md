@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 0.4.0
+
+### Minor Changes
+
+- Add accessible labelled sections to DropdownMenu for app menus that combine distinct action kinds.
+
 ## 0.3.3
 
 ### Patch Changes
