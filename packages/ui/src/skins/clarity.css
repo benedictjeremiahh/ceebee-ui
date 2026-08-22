@@ -1,0 +1,78 @@
+/* Clarity: CeeBee's content-first glass skin. It follows the hierarchy and adaptivity principles
+   of modern system materials without pretending CSS can reproduce a native compositor. */
+:root {
+  --cb-hue-brand: 264;
+
+  --cb-bg: oklch(0.98 0.012 255);
+  --cb-bg-subtle: oklch(0.945 0.026 258);
+  --cb-surface: oklch(0.995 0.003 255);
+  --cb-surface-raised: oklch(1 0 0);
+  --cb-border: oklch(0.86 0.018 255);
+  --cb-border-strong: oklch(0.62 0.028 255);
+
+  --cb-shadow-sm: 0 2px 8px oklch(0.32 0.06 260 / 0.08);
+  --cb-shadow-md: 0 10px 32px oklch(0.32 0.07 260 / 0.12);
+  --cb-shadow-lg: 0 28px 72px oklch(0.28 0.08 260 / 0.17);
+
+  --cb-glass-bg: oklch(0.99 0.008 255 / 0.64);
+  --cb-glass-bg-opaque: oklch(0.97 0.014 255);
+  --cb-glass-border: oklch(1 0 0 / 0.72);
+  --cb-glass-border-strong: oklch(0.58 0.03 255);
+  --cb-glass-blur: 24px;
+  --cb-glass-saturation: 1.35;
+  --cb-glass-specular: linear-gradient(145deg, oklch(1 0 0 / 0.58), transparent 40%);
+  --cb-glass-inset: inset 0 1px 0 oklch(1 0 0 / 0.78), inset 0 -1px 0 oklch(0.28 0.05 260 / 0.1);
+
+  --cb-glass-clear-bg: oklch(0.99 0.006 255 / 0.3);
+  --cb-glass-clear-border: oklch(1 0 0 / 0.78);
+  --cb-glass-clear-blur: 14px;
+  --cb-glass-clear-saturation: 1.2;
+  --cb-glass-clear-specular: linear-gradient(145deg, oklch(1 0 0 / 0.66), transparent 34%);
+  --cb-glass-clear-inset: inset 0 1px 0 oklch(1 0 0 / 0.84), inset 0 -1px 0 oklch(0.28 0.05 260 / 0.08);
+}
+
+:root[data-theme="dark"] {
+  --cb-bg: oklch(0.14 0.025 265);
+  --cb-bg-subtle: oklch(0.19 0.035 265);
+  --cb-surface: oklch(0.21 0.03 265);
+  --cb-surface-raised: oklch(0.25 0.032 265);
+  --cb-border: oklch(0.38 0.035 265);
+  --cb-border-strong: oklch(0.58 0.038 265);
+
+  --cb-glass-bg: oklch(0.24 0.032 265 / 0.62);
+  --cb-glass-bg-opaque: oklch(0.21 0.03 265);
+  --cb-glass-border: oklch(0.9 0.018 255 / 0.2);
+  --cb-glass-border-strong: oklch(0.76 0.025 255);
+  --cb-glass-specular: linear-gradient(145deg, oklch(1 0 0 / 0.24), transparent 40%);
+  --cb-glass-inset: inset 0 1px 0 oklch(1 0 0 / 0.3), inset 0 -1px 0 oklch(0 0 0 / 0.38);
+
+  --cb-glass-clear-bg: oklch(0.2 0.026 265 / 0.34);
+  --cb-glass-clear-border: oklch(0.9 0.018 255 / 0.28);
+  --cb-glass-clear-saturation: 1.12;
+  --cb-glass-clear-specular: linear-gradient(145deg, oklch(1 0 0 / 0.3), transparent 34%);
+  --cb-glass-clear-inset: inset 0 1px 0 oklch(1 0 0 / 0.36), inset 0 -1px 0 oklch(0 0 0 / 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --cb-bg: oklch(0.14 0.025 265);
+    --cb-bg-subtle: oklch(0.19 0.035 265);
+    --cb-surface: oklch(0.21 0.03 265);
+    --cb-surface-raised: oklch(0.25 0.032 265);
+    --cb-border: oklch(0.38 0.035 265);
+    --cb-border-strong: oklch(0.58 0.038 265);
+
+    --cb-glass-bg: oklch(0.24 0.032 265 / 0.62);
+    --cb-glass-bg-opaque: oklch(0.21 0.03 265);
+    --cb-glass-border: oklch(0.9 0.018 255 / 0.2);
+    --cb-glass-border-strong: oklch(0.76 0.025 255);
+    --cb-glass-specular: linear-gradient(145deg, oklch(1 0 0 / 0.24), transparent 40%);
+    --cb-glass-inset: inset 0 1px 0 oklch(1 0 0 / 0.3), inset 0 -1px 0 oklch(0 0 0 / 0.38);
+
+    --cb-glass-clear-bg: oklch(0.2 0.026 265 / 0.34);
+    --cb-glass-clear-border: oklch(0.9 0.018 255 / 0.28);
+    --cb-glass-clear-saturation: 1.12;
+    --cb-glass-clear-specular: linear-gradient(145deg, oklch(1 0 0 / 0.3), transparent 34%);
+    --cb-glass-clear-inset: inset 0 1px 0 oklch(1 0 0 / 0.36), inset 0 -1px 0 oklch(0 0 0 / 0.3);
+  }
+}

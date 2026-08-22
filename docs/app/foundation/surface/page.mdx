@@ -21,7 +21,8 @@ A Surface is a box with four independent decisions: **variant** (how it is fille
   <Surface padding="md"><Text size="sm">plain</Text></Surface>
   <Surface variant="tinted" hue="violet" padding="md"><Text size="sm">tinted · violet</Text></Surface>
   <Surface variant="tinted" tone="success" padding="md"><Text size="sm">tinted · success</Text></Surface>
-  <Surface variant="glass" padding="md"><Text size="sm">glass</Text></Surface>
+  <Surface variant="glass" padding="md"><Text size="sm">glass · regular</Text></Surface>
+  <Surface variant="glass" glassStyle="clear" padding="md"><Text size="sm">glass · clear</Text></Surface>
   <Surface variant="gradient" hue="blue" padding="md"><Text size="sm">gradient · blue</Text></Surface>
 </Demo>
 
@@ -53,6 +54,11 @@ Use glass for a small control, toolbar, navigation, or overlay plane above conte
 content on `plain` or `tinted` surfaces, and never stack glass inside glass. See the
 [Glass control center](/recipes/control-center) for the material over a useful backdrop.
 
+`regular` is the default because it holds separation and legibility across more backdrops. Use
+`clear` only for a compact control over visually rich content when its label or glyph is bold enough
+to remain legible. It intentionally becomes the same opaque fallback as regular glass when someone
+requests reduced transparency or increased contrast.
+
 <Guidance
   do="Place one glass control plane over content with enough colour or detail to reveal the material."
   dont="Turn every card into glass or nest glass surfaces — the page loses hierarchy and contrast."
@@ -71,6 +77,7 @@ content on `plain` or `tinted` surfaces, and never stack glass inside glass. See
 
 <PropsTable rows={[
   { name: 'variant', type: "'plain' | 'tinted' | 'glass' | 'gradient'", default: "'plain'", description: 'How the panel is filled. Glass blurs what is behind it, so it needs something behind it.' },
+  { name: 'glassStyle', type: "'regular' | 'clear'", default: "'regular'", description: 'Glass density. Clear is reserved for compact, bold controls over visually rich content.' },
   { name: 'tone', type: "'neutral' | 'brand' | 'info' | 'success' | 'warning' | 'danger'", default: "'neutral'", description: 'Semantic colour for tinted and gradient.' },
   { name: 'hue', type: "'violet' | 'blue' | 'teal' | 'green' | 'amber' | 'rose'", description: 'Decorative colour. Wins over tone when both are given.' },
   { name: 'elevation', type: "'none' | 'sm' | 'md' | 'lg'", default: "'sm'", description: 'Shadow step.' },

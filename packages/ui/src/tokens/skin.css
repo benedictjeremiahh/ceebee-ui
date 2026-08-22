@@ -64,6 +64,12 @@
   --cb-glass-saturation: 1.4;
   --cb-glass-specular: linear-gradient(145deg, oklch(1 0 0 / 0.34), transparent 42%);
   --cb-glass-inset: inset 0 1px 0 oklch(1 0 0 / 0.62), inset 0 -1px 0 oklch(0.3 0.03 280 / 0.1);
+  --cb-glass-clear-bg: oklch(1 0 0 / 0.34);
+  --cb-glass-clear-border: oklch(1 0 0 / 0.68);
+  --cb-glass-clear-blur: 12px;
+  --cb-glass-clear-saturation: 1.25;
+  --cb-glass-clear-specular: linear-gradient(145deg, oklch(1 0 0 / 0.42), transparent 38%);
+  --cb-glass-clear-inset: inset 0 1px 0 oklch(1 0 0 / 0.72), inset 0 -1px 0 oklch(0.3 0.03 280 / 0.08);
 
   --cb-tint-strength: 0.09;
   --cb-gradient-angle: 145deg;
@@ -101,6 +107,12 @@
     --cb-glass-saturation: 1.25;
     --cb-glass-specular: linear-gradient(145deg, oklch(1 0 0 / 0.18), transparent 42%);
     --cb-glass-inset: inset 0 1px 0 oklch(1 0 0 / 0.26), inset 0 -1px 0 oklch(0 0 0 / 0.34);
+    --cb-glass-clear-bg: oklch(0.24 0.025 280 / 0.34);
+    --cb-glass-clear-border: oklch(0.88 0.015 280 / 0.24);
+    --cb-glass-clear-blur: 14px;
+    --cb-glass-clear-saturation: 1.15;
+    --cb-glass-clear-specular: linear-gradient(145deg, oklch(1 0 0 / 0.24), transparent 38%);
+    --cb-glass-clear-inset: inset 0 1px 0 oklch(1 0 0 / 0.32), inset 0 -1px 0 oklch(0 0 0 / 0.28);
 
     --cb-scrim: oklch(0.08 0.01 280 / 0.6);
     --cb-scrim-strong: oklch(0.08 0.01 280 / 0.7);
@@ -137,6 +149,12 @@
   --cb-glass-saturation: 1.25;
   --cb-glass-specular: linear-gradient(145deg, oklch(1 0 0 / 0.18), transparent 42%);
   --cb-glass-inset: inset 0 1px 0 oklch(1 0 0 / 0.26), inset 0 -1px 0 oklch(0 0 0 / 0.34);
+  --cb-glass-clear-bg: oklch(0.24 0.025 280 / 0.34);
+  --cb-glass-clear-border: oklch(0.88 0.015 280 / 0.24);
+  --cb-glass-clear-blur: 14px;
+  --cb-glass-clear-saturation: 1.15;
+  --cb-glass-clear-specular: linear-gradient(145deg, oklch(1 0 0 / 0.24), transparent 38%);
+  --cb-glass-clear-inset: inset 0 1px 0 oklch(1 0 0 / 0.32), inset 0 -1px 0 oklch(0 0 0 / 0.28);
 
   --cb-scrim: oklch(0.08 0.01 280 / 0.6);
   --cb-scrim-strong: oklch(0.08 0.01 280 / 0.7);

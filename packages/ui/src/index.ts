@@ -6,7 +6,7 @@ export { cn } from './lib/cn.js';
 export type { Tone, Size, DecorHue } from './lib/cn.js';
 
 export { Surface } from './foundation/surface.js';
-export type { SurfaceProps, SurfaceVariant } from './foundation/surface.js';
+export type { GlassStyle, SurfaceProps, SurfaceVariant } from './foundation/surface.js';
 export { Stack, Grid, Container } from './foundation/layout.js';
 export type { StackProps, GridProps, ContainerProps } from './foundation/layout.js';
 export { Text, Heading } from './foundation/text.js';

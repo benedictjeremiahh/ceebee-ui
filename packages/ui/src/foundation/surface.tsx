@@ -2,9 +2,12 @@ import type { ReactNode } from 'react';
 import { cn, type DecorHue, type Tone } from '../lib/cn.js';
 
 export type SurfaceVariant = 'plain' | 'tinted' | 'glass' | 'gradient';
+export type GlassStyle = 'regular' | 'clear';
 
 export interface SurfaceProps {
   variant?: SurfaceVariant;
+  /** Glass density. `clear` is reserved for bold controls over visually rich content. */
+  glassStyle?: GlassStyle;
   /** Semantic colour for `tinted`; ignored by `plain`. */
   tone?: Tone;
   /** Decorative hue for `tinted` / `gradient` — the pastel card set. Wins over `tone`. */
@@ -26,6 +29,7 @@ export interface SurfaceProps {
  */
 export function Surface({
   variant = 'plain',
+  glassStyle = 'regular',
   tone = 'neutral',
   hue,
   elevation = 'sm',
@@ -50,6 +54,7 @@ export function Surface({
       )}
       data-tone={variant === 'plain' ? undefined : tone}
       data-hue={hue}
+      data-glass-style={variant === 'glass' ? glassStyle : undefined}
     >
       {children}
     </Tag>

@@ -11,6 +11,12 @@ values are Skin Tokens so a product can tune the material without changing `Surf
 inspired web material, not a claim that CSS reproduces Apple's native rendering, lensing, or
 system-aware behaviour one-for-one.
 
+The public API exposes the same semantic density distinction as Apple's guidance: `regular` is the
+default material, while `clear` is an explicit opt-in for compact, bold controls over visually rich
+content. The distinction is not a light/dark colour choice. Both styles still adapt through Skin
+Tokens, and both converge on the legible opaque fallback when transparency or contrast preferences
+require it.
+
 The material adapts to light and dark themes. It becomes opaque when the browser cannot blur the
 backdrop or the user asks for reduced transparency, and it strengthens boundaries for increased
 contrast and forced-colour modes. These fallbacks are part of the material contract, not optional
