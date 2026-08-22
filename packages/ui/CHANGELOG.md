@@ -1,5 +1,13 @@
 # @ceebee/ui
 
+## 0.3.1
+
+### Patch Changes
+
+- Increase regular glass density across the default, Astra, and Clarity skins so navigation, toolbars,
+  and text-bearing overlays retain separation and legibility over content. Clear glass remains the
+  high-translucency option for compact controls over media.
+
 ## 0.3.0
 
 ### Minor Changes

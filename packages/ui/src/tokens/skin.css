@@ -56,7 +56,7 @@
   --cb-shadow-md: 0 4px 16px oklch(0.3 0.03 280 / 0.08);
   --cb-shadow-lg: 0 18px 48px oklch(0.3 0.03 280 / 0.12);
 
-  --cb-glass-bg: oklch(1 0 0 / 0.62);
+  --cb-glass-bg: oklch(1 0 0 / 0.78);
   --cb-glass-bg-opaque: oklch(0.985 0.004 280);
   --cb-glass-border: oklch(1 0 0 / 0.55);
   --cb-glass-border-strong: oklch(0.64 0.018 280);
@@ -99,7 +99,7 @@
     --cb-shadow-md: 0 6px 20px oklch(0 0 0 / 0.45);
     --cb-shadow-lg: 0 22px 56px oklch(0 0 0 / 0.55);
 
-    --cb-glass-bg: oklch(0.3 0.03 280 / 0.55);
+    --cb-glass-bg: oklch(0.28 0.028 280 / 0.74);
     --cb-glass-bg-opaque: oklch(0.25 0.024 280);
     --cb-glass-border: oklch(0.8 0.02 280 / 0.16);
     --cb-glass-border-strong: oklch(0.72 0.03 280);
@@ -141,7 +141,7 @@
   --cb-shadow-md: 0 6px 20px oklch(0 0 0 / 0.45);
   --cb-shadow-lg: 0 22px 56px oklch(0 0 0 / 0.55);
 
-  --cb-glass-bg: oklch(0.3 0.03 280 / 0.55);
+  --cb-glass-bg: oklch(0.28 0.028 280 / 0.74);
   --cb-glass-bg-opaque: oklch(0.25 0.024 280);
   --cb-glass-border: oklch(0.8 0.02 280 / 0.16);
   --cb-glass-border-strong: oklch(0.72 0.03 280);
