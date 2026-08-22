@@ -1,5 +1,12 @@
 # @ceebee/ui
 
+## 0.3.0
+
+### Minor Changes
+
+- 8b926fb: Add regular and clear glass materials to `Surface`, plus the content-first Clarity skin and its
+  adaptive accessibility fallbacks.
+
 ## 0.2.1
 
 ### Patch Changes
