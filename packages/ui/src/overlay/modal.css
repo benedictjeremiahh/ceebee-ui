@@ -50,5 +50,25 @@
 
 .cb-modal__title { margin: 0; font-family: var(--cb-font-sans); font-size: var(--cb-text-lg); font-weight: var(--cb-weight-semibold); }
 .cb-modal__description { margin: 0; font-family: var(--cb-font-sans); font-size: var(--cb-text-sm); color: var(--cb-fg-muted); }
-.cb-modal__body { min-height: 0; overflow-y: auto; font-family: var(--cb-font-sans); font-size: var(--cb-text-sm); }
+/* The body is the only scrolling part of the dialog, and a scroller draws its
+   bar at its own inline edge — which, with the body running to the content edge,
+   is the right edge of every field inside it. Platforms differ in how that looks
+   and neither way is acceptable: macOS and Android float an overlay bar over the
+   field, Windows reserves real width and squeezes it.
+
+   So both halves are needed. `scrollbar-gutter: stable` keeps the reserved bar
+   out of the content box — always, not only while the content overflows, so a
+   field appearing does not shift the rest sideways. The bleed-and-pad puts a
+   space-5 margin between the content and the edge where an overlay bar is drawn,
+   and hands the width back to the dialog so the padding costs nothing. It also
+   stops a focused field's ring being clipped at the scroller's edge. */
+.cb-modal__body {
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  margin-inline: calc(-1 * var(--cb-space-5));
+  padding-inline: var(--cb-space-5);
+  font-family: var(--cb-font-sans);
+  font-size: var(--cb-text-sm);
+}
 .cb-modal__footer { flex: none; display: flex; justify-content: flex-end; gap: var(--cb-space-2); margin-top: var(--cb-space-2); }

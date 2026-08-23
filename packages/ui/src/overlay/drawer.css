@@ -42,5 +42,15 @@
 
 .cb-drawer__title { margin: 0; font-family: var(--cb-font-sans); font-size: var(--cb-text-lg); font-weight: var(--cb-weight-semibold); }
 .cb-drawer__description { margin: 0; font-family: var(--cb-font-sans); font-size: var(--cb-text-sm); color: var(--cb-fg-muted); }
-.cb-drawer__body { min-height: 0; flex: 1; overflow-y: auto; font-family: var(--cb-font-sans); font-size: var(--cb-text-sm); }
+/* Same scrollbar as the Modal's body, same answer — see modal.css. */
+.cb-drawer__body {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  margin-inline: calc(-1 * var(--cb-space-5));
+  padding-inline: var(--cb-space-5);
+  font-family: var(--cb-font-sans);
+  font-size: var(--cb-text-sm);
+}
 .cb-drawer__footer { display: flex; justify-content: flex-end; gap: var(--cb-space-2); }
