@@ -9,7 +9,7 @@
     "start": "next start --port 4100",
     "lint": "tsc -p tsconfig.json --noEmit",
     "predev": "node ./copy-skins.mjs && node ./ui-manifest.mjs",
-    "prebuild": "node ./copy-skins.mjs && node ./ui-manifest.mjs"
+    "prebuild": "pnpm --filter @ceebee/ui build && node ./copy-skins.mjs && node ./ui-manifest.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
