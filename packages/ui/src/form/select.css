@@ -32,11 +32,26 @@
 .cb-select[data-disabled] { opacity: 0.55; cursor: not-allowed; }
 .cb-select__icon { display: inline-flex; color: var(--cb-fg-subtle); }
 
+/* As wide as its longest option, and never wider than the screen.
+ *
+ * Pinned to the anchor's width, a popup dropping from a field that is half a
+ * filter row is 175px on a phone — and the options in it are place names.
+ * "Kabupaten Tangerang Selatan (5)" wrapped to three lines there, the one below
+ * it to two, and the list read as a cramped column of broken phrases rather
+ * than as a set of choices.
+ *
+ * So the anchor's width becomes the floor rather than the value: still never
+ * narrower than the field it belongs to, because a popup narrower than its
+ * field reads as belonging to something else. `--available-width` is the room
+ * the positioner measured between the anchor and the edge of the screen, so
+ * the ceiling moves with the viewport instead of being a number written here.
+ */
 .cb-select__popup {
   box-sizing: border-box;
-  width: var(--anchor-width, auto);
+  width: max-content;
   min-width: var(--anchor-width, 10rem);
-  max-height: 18rem;
+  max-width: var(--available-width, 100vw);
+  max-height: min(18rem, var(--available-height, 18rem));
   overflow-y: auto;
   background: var(--cb-surface-raised);
   border: var(--cb-border-width) solid var(--cb-border);

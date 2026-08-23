@@ -64,11 +64,13 @@
    not line up with the thing it was a list for. The tick moves to the trailing
    edge — `order`, so the reading order is untouched — and the row's inline
    padding matches the field's. */
+/* Same shape and the same reasoning as the Select's popup — see select.css. */
 .cb-autocomplete__popup {
   box-sizing: border-box;
-  width: var(--anchor-width, auto);
+  width: max-content;
   min-width: var(--anchor-width, 12rem);
-  max-height: 18rem;
+  max-width: var(--available-width, 100vw);
+  max-height: min(18rem, var(--available-height, 18rem));
   overflow-y: auto;
   padding: var(--cb-space-1);
   background: var(--cb-surface-raised);
