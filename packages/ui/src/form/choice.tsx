@@ -89,6 +89,14 @@ export interface RadioGroupProps<T extends string = string> {
   /** Names the group for assistive technology when it is not inside a Field. */
   label?: string;
   direction?: 'column' | 'row';
+  /**
+   * `segmented` draws the group as one track of adjoining cells instead of a
+   * list of dots. Appearance and geometry only — the role, the keyboard, and
+   * the value it reports are a radiogroup's either way (ADR 0014). Reach for it
+   * where the options are few enough to show at once, which is where a dropdown
+   * is the wrong control anyway.
+   */
+  variant?: 'list' | 'segmented';
   disabled?: boolean;
   className?: string;
 }
@@ -101,6 +109,7 @@ export function RadioGroup<T extends string = string>({
   name,
   label,
   direction = 'column',
+  variant = 'list',
   disabled,
   className,
 }: RadioGroupProps<T>) {
@@ -116,7 +125,12 @@ export function RadioGroup<T extends string = string>({
       disabled={disabled}
       aria-label={label}
       aria-describedby={field?.describedBy}
-      className={cn('cb-radio-group', `cb-radio-group--${direction}`, className)}
+      className={cn(
+        'cb-radio-group',
+        `cb-radio-group--${variant === 'segmented' ? 'row' : direction}`,
+        variant === 'segmented' && 'cb-radio-group--segmented',
+        className,
+      )}
     >
       {options.map((option) => {
         const id = `${groupId}-${option.value}`;

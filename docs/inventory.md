@@ -6,6 +6,9 @@ from (server-safe `@ceebee/ui` vs `@ceebee/ui/client`), and which slice builds i
 Everything planned here is now built and documented. The slice column records the order it was
 built in, which is worth keeping: it is the record of what turned out to be foundational.
 
+What is *not* here — the gaps measured against Ant Design's breadth, and the pieces a product has
+already had to write for itself — is in [roadmap.md](./roadmap.md).
+
 ## foundation
 
 | Piece | Label | Entry | Slice | Notes |
@@ -48,7 +51,8 @@ built in, which is worth keeping: it is the record of what turned out to be foun
 
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
-| Dialog / Drawer | Composition | client | S1 |
+| Dialog | Composition | client | S1 — built |
+| Drawer | Composition | client | S1 — built |
 | Popover | Atom | client | S2 — built |
 | Tooltip | Atom | client | S2 — built |
 | DropdownMenu | Composition | client | S3 — built |

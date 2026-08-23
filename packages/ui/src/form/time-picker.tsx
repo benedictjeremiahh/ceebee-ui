@@ -31,10 +31,10 @@ export interface TimeInputProps {
 }
 
 /**
- * The DateInput's sibling. Typing accepts what people actually type — `9`, `0930`, `9:30`,
+ * The DatePicker's sibling. Typing accepts what people actually type — `9`, `0930`, `9:30`,
  * `9pm` — and the list is a convenience on top, never the only way to answer.
  */
-export function TimeInput({
+export function TimePicker({
   value,
   defaultValue = null,
   onValueChange,
@@ -98,7 +98,13 @@ export function TimeInput({
       </div>
 
       <BasePopover.Portal>
-        <BasePopover.Positioner anchor={fieldRef} side="bottom" align="start" sideOffset={6}>
+        <BasePopover.Positioner
+          anchor={fieldRef}
+          side="bottom"
+          align="start"
+          sideOffset={6}
+          className="cb-times__positioner"
+        >
           <BasePopover.Popup className="cb-times">
             <ul className="cb-times__list">
               {options.map((option) => {

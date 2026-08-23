@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Button, Select, Switch } from '@ceebee/ui/client';
-import { Stack, Text } from '@ceebee/ui';
+import { Flex, Text } from '@ceebee/ui';
 import { CodeBlock } from './code-block';
 
 const VARIANTS = ['solid', 'soft', 'outline', 'ghost'] as const;
@@ -53,11 +53,11 @@ function Knob<T extends string>({
   onChange: (value: T) => void;
 }) {
   return (
-    <Stack gap={1} className="demo__knob">
+    <Flex gap={1} className="demo__knob">
       <Text size="xs" tone="subtle">
         {label}
       </Text>
       <Select<T> items={asItems(options)} value={value} onValueChange={onChange} size="sm" />
-    </Stack>
+    </Flex>
   );
 }

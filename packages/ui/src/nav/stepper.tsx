@@ -19,24 +19,24 @@ export interface StepperProps {
  * Progress through an ordered sequence — the thing Tabs must not be used for. Server-safe:
  * it displays position, it does not navigate.
  */
-export function Stepper({ steps, current, orientation = 'horizontal', className }: StepperProps) {
+export function Steps({ steps, current, orientation = 'horizontal', className }: StepperProps) {
   return (
-    <ol className={cn('cb-stepper', `cb-stepper--${orientation}`, className)}>
+    <ol className={cn('cb-steps', `cb-steps--${orientation}`, className)}>
       {steps.map((step, index) => {
         const state = index < current ? 'done' : index === current ? 'current' : 'todo';
         return (
-          <li className="cb-stepper__step" data-state={state} key={index}>
-            <span className="cb-stepper__marker" aria-hidden="true">
+          <li className="cb-steps__step" data-state={state} key={index}>
+            <span className="cb-steps__marker" aria-hidden="true">
               {state === 'done' ? <Check size={13} strokeWidth={3} /> : index + 1}
             </span>
-            <span className="cb-stepper__text">
-              <span className="cb-stepper__label">
+            <span className="cb-steps__text">
+              <span className="cb-steps__label">
                 {step.label}
                 <span className="cb-visually-hidden">
                   {state === 'done' ? ' (completed)' : state === 'current' ? ' (current step)' : ''}
                 </span>
               </span>
-              {step.description ? <span className="cb-stepper__description">{step.description}</span> : null}
+              {step.description ? <span className="cb-steps__description">{step.description}</span> : null}
             </span>
           </li>
         );

@@ -9,10 +9,10 @@ export interface SpinnerProps {
 }
 
 /** Server-safe: a CSS animation, no state. It stops turning under reduced motion. */
-export function Spinner({ size = 'md', tone = 'brand', label, className }: SpinnerProps) {
+export function Spin({ size = 'md', tone = 'brand', label, className }: SpinnerProps) {
   return (
     <span
-      className={cn('cb-spinner', `cb-spinner--${size}`, className)}
+      className={cn('cb-spin', `cb-spin--${size}`, className)}
       data-tone={tone}
       role={label ? 'status' : undefined}
       aria-label={label}

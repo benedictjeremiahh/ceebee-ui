@@ -37,7 +37,12 @@ export function Popover({
     <BasePopover.Root open={open} onOpenChange={onOpenChange}>
       <BasePopover.Trigger render={trigger} />
       <BasePopover.Portal>
-        <BasePopover.Positioner side={side} align={align} sideOffset={sideOffset}>
+        <BasePopover.Positioner
+          side={side}
+          align={align}
+          sideOffset={sideOffset}
+          className="cb-popover-positioner"
+        >
           <BasePopover.Popup className={cn('cb-popover', className)}>
             {showArrow ? (
               <BasePopover.Arrow className="cb-popover__arrow">
@@ -57,17 +62,41 @@ export interface TooltipProps {
   /** Plain text. A tooltip that needs markup is a Popover — screen readers read this as a label. */
   label: string;
   side?: Side;
+  align?: Align;
+  /** Distance from the anchor, in px. */
+  sideOffset?: number;
+  showArrow?: boolean;
   delay?: number;
 }
 
-export function Tooltip({ children, label, side = 'top', delay = 400 }: TooltipProps) {
+export function Tooltip({
+  children,
+  label,
+  side = 'top',
+  align = 'center',
+  sideOffset = 6,
+  showArrow = true,
+  delay = 400,
+}: TooltipProps) {
   return (
     <BaseTooltip.Provider delay={delay}>
       <BaseTooltip.Root>
         <BaseTooltip.Trigger render={children} />
         <BaseTooltip.Portal>
-          <BaseTooltip.Positioner side={side} sideOffset={6}>
-            <BaseTooltip.Popup className="cb-tooltip">{label}</BaseTooltip.Popup>
+          <BaseTooltip.Positioner
+            side={side}
+            align={align}
+            sideOffset={sideOffset}
+            className="cb-tooltip-positioner"
+          >
+            <BaseTooltip.Popup className="cb-tooltip">
+              {showArrow ? (
+                <BaseTooltip.Arrow className="cb-tooltip__arrow">
+                  <ArrowShape />
+                </BaseTooltip.Arrow>
+              ) : null}
+              {label}
+            </BaseTooltip.Popup>
           </BaseTooltip.Positioner>
         </BaseTooltip.Portal>
       </BaseTooltip.Root>
@@ -76,9 +105,20 @@ export function Tooltip({ children, label, side = 'top', delay = 400 }: TooltipP
 }
 
 /**
- * The bubble's tail is drawn in CSS (a clipped, rotated square), so this is only the element
- * Base UI positions. Kept as a component so Popover and Coachmark cannot drift apart.
+ * The bubble's tail is drawn in CSS inside Base UI's positioned, direction-aware Arrow wrapper.
+ * Kept private and shared so Popover, Tooltip, and Coachmark cannot drift apart.
  */
 export function ArrowShape() {
-  return <span className="cb-arrow" aria-hidden="true" />;
+  return (
+    <svg
+      className="cb-arrow"
+      viewBox="0 0 16 8"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path className="cb-arrow__fill" d="M0 8 L8 0 L16 8 Z" />
+      <path className="cb-arrow__edge" d="M0 8 L8 0 L16 8" />
+    </svg>
+  );
 }

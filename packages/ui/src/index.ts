@@ -7,16 +7,20 @@ export type { Tone, Size, DecorHue } from './lib/cn.js';
 
 export { Surface } from './foundation/surface.js';
 export type { GlassStyle, SurfaceProps, SurfaceVariant } from './foundation/surface.js';
-export { Stack, Grid, Container } from './foundation/layout.js';
+export { Flex, Grid, Container } from './foundation/layout.js';
 export type { StackProps, GridProps, ContainerProps } from './foundation/layout.js';
 export { Text, Heading } from './foundation/text.js';
 export type { TextProps, HeadingProps } from './foundation/text.js';
 
+export { LinkButton } from './nav/link-button.js';
+export type { LinkButtonProps } from './nav/link-button.js';
+export { Divider } from './foundation/divider.js';
+export type { DividerProps } from './foundation/divider.js';
 export { Badge } from './feedback/badge.js';
 export type { BadgeProps } from './feedback/badge.js';
-export { EmptyState } from './feedback/empty-state.js';
-export type { EmptyStateProps } from './feedback/empty-state.js';
-export { Spinner, ProgressBar } from './feedback/progress.js';
+export { Empty } from './feedback/empty.js';
+export type { EmptyStateProps } from './feedback/empty.js';
+export { Spin, ProgressBar } from './feedback/progress.js';
 export type { SpinnerProps, ProgressBarProps } from './feedback/progress.js';
 export { Timeline } from './data/timeline.js';
 export type { TimelineProps, TimelineEntry, TimelineSkeletonProps } from './data/timeline.js';
@@ -40,9 +44,9 @@ export type { LeaderboardProps, LeaderboardEntry, LeaderboardSkeletonProps } fro
 export { Avatar, AvatarGroup } from './media/avatar.js';
 export type { AvatarProps, AvatarGroupProps } from './media/avatar.js';
 export { initialsOf, hueForName } from './media/avatar.util.js';
-export { Breadcrumbs } from './nav/breadcrumbs.js';
+export { Breadcrumb } from './nav/breadcrumbs.js';
 export type { BreadcrumbsProps, Crumb } from './nav/breadcrumbs.js';
-export { Stepper } from './nav/stepper.js';
+export { Steps } from './nav/stepper.js';
 export type { StepperProps, Step } from './nav/stepper.js';
-export { StatCard } from './data/stat-card.js';
-export type { StatCardProps, StatCardSkeletonProps } from './data/stat-card.js';
+export { Statistic } from './data/statistic.js';
+export type { StatCardProps, StatCardSkeletonProps } from './data/statistic.js';

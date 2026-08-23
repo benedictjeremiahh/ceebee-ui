@@ -25,7 +25,7 @@ export interface NumberInputProps extends NumberBounds {
  * A text input that speaks numbers, not `<input type="number">`: that one scrolls its value
  * away under the wheel, accepts 'e' and '+', and formats inconsistently across locales.
  */
-export function NumberInput({
+export function InputNumber({
   value,
   defaultValue = null,
   onValueChange,

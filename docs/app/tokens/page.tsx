@@ -1,4 +1,4 @@
-import { Heading, Stack, Surface, Text } from '@ceebee/ui';
+import { Heading, Flex, Surface, Text } from '@ceebee/ui';
 
 const COLOUR_TOKENS = [
   '--cb-bg',
@@ -28,7 +28,7 @@ const DURATIONS = ['instant', 'fast', 'base', 'slow', 'deliberate'];
 
 export default function TokensPage() {
   return (
-    <Stack gap={5}>
+    <Flex gap={5}>
       <div>
         <Heading level={1}>Tokens</Heading>
         <Text tone="muted">
@@ -52,9 +52,9 @@ export default function TokensPage() {
 
       <div>
         <Heading level={2} size="xl">Spacing</Heading>
-        <Stack gap={2}>
+        <Flex gap={2}>
           {SPACE_STEPS.map((step) => (
-            <Stack direction="row" gap={3} align="center" key={step}>
+            <Flex direction="row" gap={3} align="center" key={step}>
               <Text size="xs" tone="subtle" className="cb-numeric">
                 --cb-space-{step}
               </Text>
@@ -66,20 +66,20 @@ export default function TokensPage() {
                   borderRadius: 'var(--cb-radius-sm)',
                 }}
               />
-            </Stack>
+            </Flex>
           ))}
-        </Stack>
+        </Flex>
       </div>
 
       <div>
         <Heading level={2} size="xl">Radius</Heading>
-        <Stack direction="row" gap={3} wrap>
+        <Flex direction="row" gap={3} wrap>
           {RADII.map((radius) => (
             <Surface key={radius} radius={radius === 'full' ? 'xl' : (radius as 'sm' | 'md' | 'lg' | 'xl')} padding="sm">
               <Text size="xs" tone="muted">--cb-radius-{radius}</Text>
             </Surface>
           ))}
-        </Stack>
+        </Flex>
       </div>
 
       <div>
@@ -88,14 +88,14 @@ export default function TokensPage() {
           Durations and easings are tokens too, so timing stays consistent across components and can
           be retuned in one place.
         </Text>
-        <Stack gap={2}>
+        <Flex gap={2}>
           {DURATIONS.map((token) => (
             <Text key={token} size="sm" tone="muted">
               <code>--cb-duration-{token}</code>
             </Text>
           ))}
-        </Stack>
+        </Flex>
       </div>
-    </Stack>
+    </Flex>
   );
 }

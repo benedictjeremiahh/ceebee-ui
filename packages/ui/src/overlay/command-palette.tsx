@@ -56,7 +56,7 @@ export function CommandPalette({
   return (
     <BaseDialog.Root open={open} onOpenChange={onOpenChange}>
       <BaseDialog.Portal>
-        <BaseDialog.Backdrop className="cb-dialog__backdrop" />
+        <BaseDialog.Backdrop className="cb-palette__backdrop" />
         <BaseDialog.Popup className={cn('cb-palette', className)} aria-label="Command palette">
           <div className="cb-palette__search">
             <Search size={16} className="cb-palette__search-icon" />

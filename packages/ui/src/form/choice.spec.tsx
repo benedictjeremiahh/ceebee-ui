@@ -79,3 +79,51 @@ describe('controls inside a Field', () => {
     expect(document.getElementById(describedBy)).toHaveTextContent('Pick one');
   });
 });
+
+/* A variant may change how a control is drawn and nothing else (ADR 0014). What
+   can be wrong here is that the segmented look removes the control it is
+   drawing — a dot styled away is a dot nobody can focus or press. */
+describe('RadioGroup segmented', () => {
+  it('is the same radiogroup, still reporting the value it was given', async () => {
+    const user = userEvent.setup({ delay: null });
+    const onValueChange = vi.fn();
+    render(
+      <RadioGroup
+        variant="segmented"
+        label="Kind"
+        defaultValue="food"
+        onValueChange={onValueChange}
+        options={[
+          { value: 'food', label: 'Food' },
+          { value: 'activity', label: 'Activity' },
+        ]}
+      />,
+    );
+
+    expect(screen.getByRole('radiogroup', { name: 'Kind' })).toBeInTheDocument();
+    expect(screen.getAllByRole('radio')).toHaveLength(2);
+
+    await user.click(screen.getByRole('radio', { name: 'Activity' }));
+    expect(onValueChange).toHaveBeenCalledWith('activity');
+  });
+
+  it('keeps every cell focusable rather than styling the control away', () => {
+    render(
+      <RadioGroup
+        variant="segmented"
+        label="Status"
+        defaultValue="all"
+        options={[
+          { value: 'all', label: 'All' },
+          { value: 'tried', label: 'Tried' },
+        ]}
+      />,
+    );
+
+    for (const radio of screen.getAllByRole('radio')) {
+      expect(radio).toBeVisible();
+      radio.focus();
+      expect(radio).toHaveFocus();
+    }
+  });
+});

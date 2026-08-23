@@ -71,3 +71,7 @@
 
 .cb-button__spinner { animation: none; opacity: 0.6; }
 }
+
+/* An anchor does not inherit a button's reset, so the two only match once the
+   browser's own link styling is taken back off. */
+.cb-link-button { text-decoration: none; }

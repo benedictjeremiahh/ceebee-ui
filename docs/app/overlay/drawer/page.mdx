@@ -1,0 +1,32 @@
+import { DrawerDemo } from '../../../components/drawer-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Drawer <span className="docs__label">Composition</span>
+
+A modal edge panel for page navigation or a longer contextual task. It is a separate interaction
+contract from Modal and Popover even though Base UI supplies the same proven focus and dismissal
+foundation.
+
+## Usage
+
+<DrawerDemo />
+
+## Props
+
+<PropsTable rows={[
+  { name: 'open / defaultOpen', type: 'boolean', description: 'Controlled or uncontrolled open state.' },
+  { name: 'onOpenChange', type: '(open: boolean) => void', description: 'Fires for backdrop, Escape, close control, and controlled changes.' },
+  { name: 'title', type: 'ReactNode', description: 'Required accessible name.' },
+  { name: 'description', type: 'ReactNode', description: 'Optional accessible description.' },
+  { name: 'footer', type: 'ReactNode', description: 'Persistent actions at the bottom edge.' },
+  { name: 'trigger', type: 'ReactNode', description: 'Optional uncontrolled trigger.' },
+]} />
+
+<Guidance
+  do="Use Drawer for mobile page navigation or a contextual workflow that belongs at the screen edge."
+  dont="Add a drawer placement to Modal or use Popover for modal navigation."
+/>
+
+## Keyboard
+
+`Escape` closes it. `Tab` and `Shift+Tab` stay inside while open. Focus returns to its trigger.

@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Dialog } from '@ceebee/ui/client';
+import { Button, Modal } from '@ceebee/ui/client';
 import { Text } from '@ceebee/ui';
 import { CodeBlock } from './code-block';
 
 const CODE = `const [open, setOpen] = useState(false);
 
-<Dialog
+<Modal
   open={open}
   onOpenChange={setOpen}
   title="Delete workspace"
@@ -32,7 +32,7 @@ export function DialogDemo() {
           Open from the corner
         </Button>
 
-        <Dialog
+        <Modal
           open={center}
           onOpenChange={setCenter}
           title="Delete workspace"
@@ -51,9 +51,9 @@ export function DialogDemo() {
           <Text size="sm" tone="muted">
             Try Escape, or click the backdrop — both close it, and focus returns to the button.
           </Text>
-        </Dialog>
+        </Modal>
 
-        <Dialog
+        <Modal
           open={end}
           onOpenChange={setEnd}
           placement="end"

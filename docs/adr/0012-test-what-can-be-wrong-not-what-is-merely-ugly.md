@@ -6,6 +6,9 @@ resolution, Skeleton geometry, and accessible naming. CSS values and matters of 
 asserted — the docs site is where those are judged, and snapshotting them produces tests that fail
 for the wrong reasons.
 
+Semantic Token relationships are behavior, not visual taste. The stacking-ladder test therefore
+asserts relative order and ownership, while deliberately ignoring the exact gap between its values.
+
 ## Consequences
 
 - Visual regression (Playwright) and axe assertions are deliberately deferred, not rejected; the day

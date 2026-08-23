@@ -3,17 +3,17 @@ import axe from 'axe-core';
 import { describe, expect, it } from 'vitest';
 import { Alert } from './feedback/alert.js';
 import { Badge } from './feedback/badge.js';
-import { Breadcrumbs } from './nav/breadcrumbs.js';
+import { Breadcrumb } from './nav/breadcrumbs.js';
 import { Checkbox, RadioGroup, Switch } from './form/choice.js';
-import { DataTable, type Column } from './data/table.js';
-import { EmptyState } from './feedback/empty-state.js';
+import { Table, type Column } from './data/table.js';
+import { Empty } from './feedback/empty.js';
 import { Field } from './form/field.js';
 import { Leaderboard } from './data/leaderboard.js';
 import { Pagination } from './data/pagination.js';
-import { ProgressBar, Spinner } from './feedback/progress.js';
+import { ProgressBar, Spin } from './feedback/progress.js';
 import { ProgressRing } from './data/progress-ring.js';
-import { Stepper } from './nav/stepper.js';
-import { TextInput } from './form/text-input.js';
+import { Steps } from './nav/stepper.js';
+import { Input } from './form/input.js';
 import { Timeline } from './data/timeline.js';
 
 interface Row {
@@ -45,7 +45,7 @@ describe('accessibility', () => {
       await violationsIn(
         <div>
           <Field label="Email" hint="Work address" error="Already taken">
-            <TextInput />
+            <Input />
           </Field>
           <Checkbox label="Email me receipts" description="One per payment" />
           <Switch label="Reduce motion" />
@@ -65,7 +65,7 @@ describe('accessibility', () => {
     expect(
       await violationsIn(
         <div>
-          <DataTable
+          <Table
             label="People"
             columns={COLUMNS}
             rows={[{ id: '1', name: 'Ada Putri' }]}
@@ -78,7 +78,7 @@ describe('accessibility', () => {
           <Timeline entries={[{ time: '09:00', title: 'Created' }]} />
           <ProgressRing value={40} label="Task progress" />
           <ProgressBar value={40} label="Upload" />
-          <Spinner label="Loading" />
+          <Spin label="Loading" />
         </div>,
       ),
     ).toEqual([]);
@@ -88,13 +88,13 @@ describe('accessibility', () => {
     expect(
       await violationsIn(
         <div>
-          <Breadcrumbs items={[{ label: 'Workspace', href: '#' }, { label: 'Billing' }]} />
-          <Stepper current={1} steps={[{ label: 'Account' }, { label: 'Workspace' }]} />
+          <Breadcrumb items={[{ label: 'Workspace', href: '#' }, { label: 'Billing' }]} />
+          <Steps current={1} steps={[{ label: 'Account' }, { label: 'Workspace' }]} />
           <Alert tone="danger" title="Payment failed" onDismiss={() => {}} />
           <Badge tone="success" dot>
             Live
           </Badge>
-          <EmptyState title="No invoices yet" description="They appear here once billed." />
+          <Empty title="No invoices yet" description="They appear here once billed." />
         </div>,
       ),
     ).toEqual([]);

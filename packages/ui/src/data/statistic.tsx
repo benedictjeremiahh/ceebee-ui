@@ -18,7 +18,7 @@ export interface StatCardProps {
 }
 
 /** The tinted metric tile the reference board repeats on every dashboard. */
-export function StatCard({ label, value, delta, caption, hue, icon, visual, className }: StatCardProps) {
+export function Statistic({ label, value, delta, caption, hue, icon, visual, className }: StatCardProps) {
   return (
     <Surface variant="tinted" hue={hue} radius="lg" padding="md" className={cn('cb-stat', className)}>
       <div className="cb-stat__head">
@@ -52,7 +52,7 @@ export interface StatCardSkeletonProps {
   className?: string;
 }
 
-/** Built from StatCard's own spacing, so the tile does not resize when data arrives (ADR 0009). */
+/** Built from Statistic's own spacing, so the tile does not resize when data arrives (ADR 0009). */
 function StatCardSkeleton({ withVisual = false, className }: StatCardSkeletonProps) {
   return (
     <Surface variant="tinted" radius="lg" padding="md" className={cn('cb-stat', className)}>
@@ -70,4 +70,4 @@ function StatCardSkeleton({ withVisual = false, className }: StatCardSkeletonPro
   );
 }
 
-StatCard.Skeleton = StatCardSkeleton;
+Statistic.Skeleton = StatCardSkeleton;

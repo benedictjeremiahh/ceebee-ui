@@ -1,9 +1,9 @@
-import { Heading, Stack, Text } from '@ceebee/ui';
+import { Heading, Flex, Text } from '@ceebee/ui';
 import { GamifiedRecipe } from '../../../components/recipes/gamified';
 
 export default function GamifiedPage() {
   return (
-    <Stack gap={5}>
+    <Flex gap={5}>
       <div>
         <Heading level={1}>Gamified learning</Heading>
         <Text tone="muted">
@@ -13,6 +13,6 @@ export default function GamifiedPage() {
         </Text>
       </div>
       <GamifiedRecipe />
-    </Stack>
+    </Flex>
   );
 }

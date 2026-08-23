@@ -23,6 +23,34 @@ together, because a checkbox whose label is not clickable is a bug that ships co
   dont="Put a Switch in a form with a Save button; a person who flips it and leaves believes it was applied."
 />
 
+## Segmented
+
+`RadioGroup` takes `variant="segmented"` to draw itself as one track of adjoining cells
+rather than a column of dots. It is the same radiogroup: same role, same arrow keys, same
+value — only the drawing changes (ADR 0014).
+
+```tsx
+<RadioGroup
+  variant="segmented"
+  label="Kind"
+  value={kind}
+  onValueChange={setKind}
+  options={[
+    { value: 'food', label: 'Food' },
+    { value: 'activity', label: 'Activity' },
+  ]}
+/>
+```
+
+This is the control for two to four options — the band where a `Select` costs a press to
+reveal choices that would have fitted on screen anyway. See
+[the table on Select's page](/form/select) for where the boundary sits and why.
+
+<Guidance
+  do="Keep segmented labels to a word or two — the cells share a track and the longest one sets the width."
+  dont="Use segmented past four or five options; it stops fitting and becomes a Select."
+/>
+
 ## Props
 
 <PropsTable rows={[

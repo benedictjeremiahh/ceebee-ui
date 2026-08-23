@@ -1,9 +1,9 @@
-import { Heading, Stack, Text } from '@ceebee/ui';
+import { Heading, Flex, Text } from '@ceebee/ui';
 import { FintechRecipe } from '../../../components/recipes/fintech';
 
 export default function FintechPage() {
   return (
-    <Stack gap={5}>
+    <Flex gap={5}>
       <div>
         <Heading level={1}>Fintech mobile</Heading>
         <Text tone="muted">
@@ -13,6 +13,6 @@ export default function FintechPage() {
         </Text>
       </div>
       <FintechRecipe />
-    </Stack>
+    </Flex>
   );
 }

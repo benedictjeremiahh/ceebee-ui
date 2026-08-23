@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { StatCard } from './stat-card.js';
+import { Statistic } from './statistic.js';
 
 /** ADR 0009: the placeholder must not resize the tile when the real data lands. */
-describe('StatCard.Skeleton', () => {
+describe('Statistic.Skeleton', () => {
   it('wears the same surface, radius and padding classes as the card it stands in for', () => {
-    const { container: real } = render(<StatCard label="Revenue" value="120,456" hue="violet" />);
-    const { container: placeholder } = render(<StatCard.Skeleton />);
+    const { container: real } = render(<Statistic label="Revenue" value="120,456" hue="violet" />);
+    const { container: placeholder } = render(<Statistic.Skeleton />);
 
     const classesOf = (root: HTMLElement) =>
       Array.from(root.firstElementChild!.classList)
@@ -17,7 +17,7 @@ describe('StatCard.Skeleton', () => {
   });
 
   it('hides its shapes from assistive technology', () => {
-    const { container } = render(<StatCard.Skeleton withVisual />);
+    const { container } = render(<Statistic.Skeleton withVisual />);
     const shapes = container.querySelectorAll('.cb-skeleton');
     expect(shapes.length).toBeGreaterThan(0);
     shapes.forEach((shape) => expect(shape).toHaveAttribute('aria-hidden', 'true'));

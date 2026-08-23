@@ -14,6 +14,30 @@ indicator per item.
 Inside a `Field`, the Select picks up the label, the description wiring, and the error state
 without being told — the same seam every other control uses.
 
+
+## Choosing between this, a RadioGroup and a AutoComplete
+
+How many options there are decides the control, and the numbers are not a house
+preference — usability testing puts a dropdown's useful band between roughly five and
+ten options. Below five, opening a menu to read choices that would have fitted on screen
+costs a click for nothing. Above ten, the list stops being scannable and typing beats
+scrolling.
+
+| Options | Reach for | Why |
+| --- | --- | --- |
+| 2–4 | `RadioGroup`, `variant="segmented"` | They all fit at once; a menu hides them behind a press |
+| 5–10 | `Select` | Enough to be worth collapsing, few enough to scan |
+| More than ~10 | `AutoComplete` | Typing is faster than scrolling, and the tail of a long list is never read |
+| Too many to ship | `AutoComplete` with `loadItems` | The list lives behind a query rather than in the bundle |
+
+Note what the research says to do at the top of that table: **replace the control**, not add
+a search box to a dropdown. That is why searching lives in its own component here rather
+than behind a flag on this one (ADR 0014).
+
+Sources: [Baymard, Drop-Down Usability](https://baymard.com/blog/drop-down-usability);
+[NN/g, Dropdowns: Design Guidelines](https://www.nngroup.com/articles/drop-down-menus/);
+[GOV.UK Design System, Select](https://design-system.service.gov.uk/components/select/).
+
 ## Props
 
 <PropsTable rows={[
@@ -21,14 +45,14 @@ without being told — the same seam every other control uses.
   { name: 'value / defaultValue', type: 'string | null', description: 'Controlled or uncontrolled.' },
   { name: 'onValueChange', type: '(value: string) => void', description: 'Receives the value only — Base UI’s event details do not leak through.' },
   { name: 'placeholder', type: 'string', default: "'Select…'", description: 'Shown while nothing is chosen.' },
-  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Matches the control height of TextInput at the same size.' },
+  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Matches the control height of Input at the same size.' },
   { name: 'name', type: 'string', description: 'Emits a hidden input, so it posts inside a plain form.' },
   { name: 'disabled / invalid', type: 'boolean', description: 'Inside a Field, invalid is inherited.' },
 ]} />
 
 <Guidance
   do="Keep option labels short enough to read in the trigger — the trigger shows the chosen label, not the value."
-  dont="Use a Select for two options; that is a RadioGroup or a Switch, and both show their choices without a click."
+  dont="Use a Select for two options; that is a segmented RadioGroup or a Switch, and both show their choices without a click."
 />
 
 ## Keyboard

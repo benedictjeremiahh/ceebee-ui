@@ -23,6 +23,27 @@ without invention, and so nothing has to be re-litigated per component. The reas
    know about the outside world arrives as an injected adapter (ADR 0006).
 8. **Test what can be wrong.** Logic, sequencing, a11y wiring, reduced motion — yes. CSS values —
    no (ADR 0012).
+9. **One interaction contract, one component.** For every existing or proposed component, compare
+   semantic role, keyboard/focus model, state/value ownership, dismissal, anchoring/layout, and
+   gesture model. A material difference in any of them requires a separate public component, props,
+   tests, docs, and `cb-` CSS namespace. `variant`, `size`, `tone`, and `placement` may change visual
+   treatment or geometry only; they must not switch the interaction contract. Shared Base UI
+   behaviour and internal utilities are encouraged, but a generic public component is not (ADR 0014).
+10. **Name it what Ant Design names it.** Where a component does the same job as one in Ant, it
+    takes Ant's name, and the `cb-` namespace and the file travel with it. Where Ant's is a compound
+    (`Radio.Group`, `Typography.Text`) or would collide two components into one name, it keeps its
+    own — that is a structural difference, not a naming one (ADR 0016).
+11. **Use the semantic stacking ladder.** Global layers use only the `--cb-z-*` Tokens in their
+    documented order. For a portalled anchored overlay, the Base UI `Positioner` owns `z-index`;
+    never put it on `Popup`. Raw `z-index` is allowed only for local children inside one component's
+    stacking context (ADR 0015).
+
+## Component-boundary check
+
+Before adding a component or a new variant, write down its role, keyboard/focus behavior, state
+model, dismissal, positioning, and gestures. If they match an existing component, extend it only
+with visual or geometric props. If one materially differs, make a new component and add a regression
+test proving the contracts remain distinct. Dialog/Drawer and Popover/Menu are the canonical cases.
 
 ## Shape of a component
 

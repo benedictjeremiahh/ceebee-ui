@@ -1,0 +1,49 @@
+/* The look is Badge's, literally — the same `cb-badge` classes rather than a
+   second set that would agree today and drift apart later. Only what a Tag can
+   do that a Badge cannot lives here. */
+.cb-tag { max-width: 100%; }
+
+.cb-tag--pressable {
+  border-width: var(--cb-border-width);
+  cursor: pointer;
+  text-decoration: none;
+  /* NOT `font: inherit`. The shorthand resets size and line-height too, so a
+     pressable tag took the page's 16px and stood two pixels taller than the
+     badge beside it — the size classes were being overruled by a reset meant
+     only to undo the browser's button face. */
+  font-family: inherit;
+  font-weight: inherit;
+  transition: border-color var(--cb-duration-fast) var(--cb-ease-standard),
+    background-color var(--cb-duration-fast) var(--cb-ease-standard);
+}
+.cb-tag--pressable:hover { border-color: var(--cb-tone-brand); }
+.cb-tag--pressable:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
+}
+.cb-tag--pressable[aria-pressed="true"] { border-color: var(--cb-tone-brand); }
+
+.cb-tag__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: var(--cb-space-1);
+  margin-inline-end: calc(var(--cb-space-1) * -1);
+  padding: 0;
+  border: 0;
+  border-radius: var(--cb-radius-full);
+  background: none;
+  color: inherit;
+  opacity: 0.7;
+  cursor: pointer;
+}
+.cb-tag__close:hover { opacity: 1; }
+.cb-tag__close:focus-visible {
+  outline: var(--cb-focus-width) solid currentColor;
+  outline-offset: 1px;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cb-tag--pressable { transition: none; }
+}

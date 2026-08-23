@@ -50,6 +50,30 @@ stays, so the button does not change width and the pointer does not land on some
   dont="Replace the label with a bare spinner — the row reflows and the action becomes anonymous."
 />
 
+## A link that looks like one
+
+`Button` renders a `<button>` and only a `<button>`. Where the thing goes somewhere
+rather than does something, reach for `LinkButton` — same classes, same tones and
+sizes, but an anchor.
+
+```tsx
+import { LinkButton } from '@ceebee/ui';
+
+<LinkButton href="/places/12" variant="ghost" tone="neutral" size="sm">History</LinkButton>
+
+// A router's own Link has to stay itself, or navigation stops being client-side:
+<LinkButton render={<Link href="/places/12" />} variant="ghost" iconStart={<History />} />
+```
+
+They are two components because they are two contracts (ADR 0014). A link can be
+opened in a new tab, copied, and reached from a screen reader's list of links; a
+button can be disabled and can submit a form. The look is shared literally — the
+same `cb-button` classes — so it cannot drift.
+
+`LinkButton` is server-safe: an anchor needs no hook, no handler and no motion. It
+does not animate on press, which is honest — a link does not depress, it goes
+somewhere.
+
 ## Props
 
 <PropsTable rows={[

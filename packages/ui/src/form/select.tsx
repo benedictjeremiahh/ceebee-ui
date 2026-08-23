@@ -67,7 +67,11 @@ export function Select<T extends string = string>({
       </BaseSelect.Trigger>
 
       <BaseSelect.Portal>
-        <BaseSelect.Positioner sideOffset={6} alignItemWithTrigger={false}>
+        <BaseSelect.Positioner
+          sideOffset={6}
+          alignItemWithTrigger={false}
+          className="cb-select__positioner"
+        >
           <BaseSelect.Popup className="cb-select__popup">
             {items.map((item) => (
               <BaseSelect.Item key={item.value} value={item.value} disabled={item.disabled} className="cb-select__item">

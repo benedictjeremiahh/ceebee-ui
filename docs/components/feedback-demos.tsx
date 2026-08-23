@@ -2,14 +2,14 @@
 
 import { Inbox, Search } from 'lucide-react';
 import { Alert, Button, Tabs, useToast } from '@ceebee/ui/client';
-import { Badge, EmptyState, Stack, Surface, Text, Avatar, AvatarGroup } from '@ceebee/ui';
+import { Badge, Empty, Flex, Surface, Text, Avatar, AvatarGroup } from '@ceebee/ui';
 import { CodeBlock } from './code-block';
 
 export function AlertDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={3}>
+        <Flex gap={3}>
           <Alert tone="info" title="Scheduled maintenance">
             The dashboard will be read-only on Sunday from 02:00 to 04:00 WIB.
           </Alert>
@@ -33,7 +33,7 @@ export function AlertDemo() {
           >
             The bank declined the charge. Nothing has been billed.
           </Alert>
-        </Stack>
+        </Flex>
       </div>
       <CodeBlock bare code={`<Alert tone="danger" title="Payment failed" actions={<Button size="sm" tone="danger">Retry</Button>}>
   The bank declined the charge. Nothing has been billed.
@@ -108,9 +108,9 @@ export function EmptyStateDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={4}>
+        <Flex gap={4}>
           <Surface padding="none" radius="lg">
-            <EmptyState
+            <Empty
               icon={<Inbox size={22} />}
               title="No invoices yet"
               description="Invoices appear here once your first customer is billed."
@@ -118,7 +118,7 @@ export function EmptyStateDemo() {
             />
           </Surface>
           <Surface padding="none" radius="lg">
-            <EmptyState
+            <Empty
               variant="search"
               icon={<Search size={22} />}
               title="Nothing matched “quarterly”"
@@ -130,9 +130,9 @@ export function EmptyStateDemo() {
               }
             />
           </Surface>
-        </Stack>
+        </Flex>
       </div>
-      <CodeBlock bare code={`<EmptyState
+      <CodeBlock bare code={`<Empty
   icon={<Inbox size={22} />}
   title="No invoices yet"
   description="Invoices appear here once your first customer is billed."
@@ -146,7 +146,7 @@ export function TabsDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={6}>
+        <Flex gap={6}>
           <Tabs
             items={[
               { value: 'overview', label: 'Overview', content: <Text tone="muted">Totals, trends, and the week at a glance.</Text> },
@@ -169,7 +169,7 @@ export function TabsDemo() {
               { value: 'month', label: 'Month', content: <Text tone="muted">30 days.</Text> },
             ]}
           />
-        </Stack>
+        </Flex>
       </div>
       <CodeBlock bare code={`<Tabs
   items={[

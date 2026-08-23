@@ -14,7 +14,7 @@ export interface StackProps {
 }
 
 /** Flex layout whose gap can only be a spacing token — the reason the library has no raw padding. */
-export function Stack({
+export function Flex({
   direction = 'column',
   gap = 4,
   align = 'stretch',
@@ -23,10 +23,10 @@ export function Stack({
   className,
   children,
 }: StackProps) {
-  const style = { '--cb-stack-gap': `var(--cb-space-${gap})` } as CSSProperties;
+  const style = { '--cb-flex-gap': `var(--cb-space-${gap})` } as CSSProperties;
   return (
     <div
-      className={cn('cb-stack', `cb-stack--${direction}`, wrap && 'cb-stack--wrap', className)}
+      className={cn('cb-flex', `cb-flex--${direction}`, wrap && 'cb-flex--wrap', className)}
       style={style}
       data-align={align}
       data-justify={justify}

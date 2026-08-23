@@ -15,6 +15,8 @@ the library supplies the surface and the arrow.
 
 A Tooltip takes a plain string, on purpose. It is announced as the trigger's description, and
 markup inside one is either unreadable to a screen reader or a Popover in disguise.
+It supports the same preferred `side`, `align`, `sideOffset`, and `showArrow` placement controls as
+Popover; Base UI may flip the resolved side to avoid a collision.
 
 <Guidance
   do="Use a Tooltip for a short label on an icon-only control."
@@ -27,6 +29,9 @@ markup inside one is either unreadable to a screen reader or a Popover in disgui
   { name: 'trigger', type: 'ReactElement', description: 'The element that opens it. Rendered as the trigger rather than wrapped, so your button stays your button.' },
   { name: 'side / align', type: "Side | Align", default: "'bottom' / 'center'", description: 'Preferred placement; it flips when there is no room.' },
   { name: 'sideOffset', type: 'number', default: '8', description: 'Distance from the anchor, in px.' },
-  { name: 'showArrow', type: 'boolean', default: 'true', description: 'The arrow is drawn, not a rotated square, so its border stays one hairline.' },
+  { name: 'showArrow', type: 'boolean', default: 'true', description: 'Shows the complete, direction-aware SVG tail that connects the surface to its trigger.' },
   { name: 'open / onOpenChange', type: 'boolean | fn', description: 'Optional control. Uncontrolled by default.' },
 ]} />
+
+Tooltip uses the same placement rows above, with `side='top'`, `sideOffset={6}`, and
+`showArrow={true}` by default. It intentionally takes `label` instead of Popover content.

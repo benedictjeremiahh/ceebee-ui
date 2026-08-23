@@ -1,6 +1,6 @@
 import { Demo } from '../../components/demo';
 import { Guidance } from '../../components/props-table';
-import { Surface, Stack, Text, Heading } from '@ceebee/ui';
+import { Surface, Flex, Text, Heading } from '@ceebee/ui';
 
 # Theming
 
@@ -52,11 +52,11 @@ import '@ceebee/ui/skins/clarity.css';
   --cb-bg: oklch(0.21 0.04 285);
   --cb-surface: oklch(0.27 0.045 285);
 }`}>
-  <Stack direction="row" gap={3} wrap>
+  <Flex direction="row" gap={3} wrap>
     <Surface variant="tinted" hue="violet" padding="md"><Text size="sm">tinted · violet</Text></Surface>
     <Surface variant="glass" padding="md"><Text size="sm">glass</Text></Surface>
     <Surface variant="gradient" hue="blue" padding="md"><Text size="sm">gradient · blue</Text></Surface>
-  </Stack>
+  </Flex>
 </Demo>
 
 <Guidance

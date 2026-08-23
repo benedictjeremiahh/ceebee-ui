@@ -30,7 +30,7 @@ const WEEKDAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
  * Typing and picking, both. Typing is what fast people do and what a date of birth needs; the
  * calendar is for "the second Tuesday" questions a text field cannot answer.
  */
-export function DateInput({
+export function DatePicker({
   value,
   defaultValue = null,
   onValueChange,
@@ -110,7 +110,13 @@ export function DateInput({
       </div>
 
       <BasePopover.Portal>
-        <BasePopover.Positioner anchor={fieldRef} side="bottom" align="start" sideOffset={6}>
+        <BasePopover.Positioner
+          anchor={fieldRef}
+          side="bottom"
+          align="start"
+          sideOffset={6}
+          className="cb-calendar__positioner"
+        >
           <BasePopover.Popup className="cb-calendar">
             <div className="cb-calendar__head">
               <button

@@ -2,7 +2,7 @@ import { DialogDemo } from '../../../components/dialog-demo';
 import { PropsTable, Guidance } from '../../../components/props-table';
 import { Text } from '@ceebee/ui';
 
-# Dialog <span className="docs__label">Composition</span>
+# Modal <span className="docs__label">Composition</span>
 
 Focus trapping, scroll locking, dismissal, and the `aria-labelledby` wiring come from Base UI. This
 component adds the brand: token-driven surface, sizes, placement, and the enter/exit transition.
@@ -47,3 +47,6 @@ the bottom-right corner, for confirmations that should not take the whole screen
 Enter and exit are CSS transitions driven by Base UI's `data-starting-style` and
 `data-ending-style`, because Base UI owns this element's mount lifecycle. Under reduced motion the
 dialog still fades — it just stops moving.
+
+Long content scrolls inside the body while the title and footer remain visible. The popup never
+exceeds the viewport, including on small mobile screens.

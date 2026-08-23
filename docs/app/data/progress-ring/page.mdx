@@ -1,6 +1,6 @@
 import { Demo } from '../../../components/demo';
 import { PropsTable, Guidance } from '../../../components/props-table';
-import { ProgressRing, Stack, Text } from '@ceebee/ui';
+import { ProgressRing, Flex, Text } from '@ceebee/ui';
 
 # ProgressRing <span className="docs__label">Widget</span>
 
@@ -25,10 +25,10 @@ meaning for a screen reader anyway.
   <span>7<small>/12</small></span>
 </ProgressRing>`}>
   <ProgressRing value={7} max={12} label="Modules completed" size={112} hue="green">
-    <Stack gap={0} align="center">
+    <Flex gap={0} align="center">
       <Text weight="semibold" numeric>7/12</Text>
       <Text size="xs" tone="subtle">modules</Text>
-    </Stack>
+    </Flex>
   </ProgressRing>
 </Demo>
 

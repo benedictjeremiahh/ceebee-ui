@@ -1,13 +1,14 @@
 'use client';
 
-import { Upload, X } from 'lucide-react';
+/* Aliased: the glyph and the component now want the same name. */
+import { Upload as UploadGlyph, X } from 'lucide-react';
 import { useState, type DragEvent, type ReactNode } from 'react';
 import { useLabels } from '../lib/labels.js';
 import { cn } from '../lib/cn.js';
 import { useFieldWiring } from './field.js';
-import { describeAccept, partitionFiles, type FileRules } from './file-drop.util.js';
+import { describeAccept, partitionFiles, type FileRules } from './upload.util.js';
 
-export interface FileDropProps extends FileRules {
+export interface UploadProps extends FileRules {
   onFilesChange: (files: File[]) => void;
   files?: File[];
   /** Rejections are surfaced rather than swallowed — a file that vanishes silently reads as a bug. */
@@ -17,7 +18,7 @@ export interface FileDropProps extends FileRules {
   className?: string;
 }
 
-export function FileDrop({
+export function Upload({
   onFilesChange,
   files = [],
   onReject,
@@ -28,7 +29,7 @@ export function FileDrop({
   disabled,
   children,
   className,
-}: FileDropProps) {
+}: UploadProps) {
   const [over, setOver] = useState(false);
   const field = useFieldWiring();
   const labels = useLabels();
@@ -75,7 +76,7 @@ export function FileDrop({
           }}
         />
         <span className="cb-filedrop__icon" aria-hidden="true">
-          <Upload size={20} />
+          <UploadGlyph size={20} />
         </span>
         <span className="cb-filedrop__button">{multiple ? labels.chooseFiles : labels.chooseFile}</span>
         <p className="cb-filedrop__hint">

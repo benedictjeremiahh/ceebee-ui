@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Bell, Moon, ShieldCheck, Volume2, Wifi } from 'lucide-react';
 import { Button, Switch } from '@ceebee/ui/client';
-import { Avatar, Badge, Stack, Surface, Text } from '@ceebee/ui';
+import { Avatar, Badge, Flex, Surface, Text } from '@ceebee/ui';
 
 const NOTIFICATIONS = [
   { id: 1, from: 'Sarah Chen', text: 'Left three comments on the pricing brief.', time: '2m', hue: 'violet' as const },
@@ -26,17 +26,17 @@ export function ControlCenterRecipe() {
     <div className="recipe recipe--control">
       <div className="recipe__field" aria-hidden="true" />
       <div className="recipe__content">
-        <Stack gap={4}>
+        <Flex gap={4}>
           <Surface variant="glass" radius="xl" padding="md" elevation="lg">
-            <Stack gap={3}>
-              <Stack direction="row" justify="between" align="center">
+            <Flex gap={3}>
+              <Flex direction="row" justify="between" align="center">
                 <Text weight="semibold" size="sm">Control</Text>
                 <Badge tone="brand" size="sm" dot>3 new</Badge>
-              </Stack>
+              </Flex>
 
-              <Stack gap={3}>
+              <Flex gap={3}>
                 {TOGGLES.map((toggle) => (
-                  <Stack direction="row" gap={3} align="center" key={toggle.id}>
+                  <Flex direction="row" gap={3} align="center" key={toggle.id}>
                     <span className="recipe__glyph" data-on={toggles[toggle.id] || undefined}>
                       {toggle.icon}
                     </span>
@@ -47,37 +47,37 @@ export function ControlCenterRecipe() {
                       checked={toggles[toggle.id]}
                       onCheckedChange={(next) => setToggles((current) => ({ ...current, [toggle.id]: next }))}
                     />
-                  </Stack>
+                  </Flex>
                 ))}
-              </Stack>
-            </Stack>
+              </Flex>
+            </Flex>
           </Surface>
 
           <Surface variant="glass" radius="xl" padding="md" elevation="lg">
-            <Stack gap={3}>
-              <Stack direction="row" justify="between" align="center">
-                <Stack direction="row" gap={2} align="center">
+            <Flex gap={3}>
+              <Flex direction="row" justify="between" align="center">
+                <Flex direction="row" gap={2} align="center">
                   <Bell size={15} />
                   <Text weight="semibold" size="sm">Notifications</Text>
-                </Stack>
+                </Flex>
                 <Button size="sm" variant="ghost" tone="neutral">Clear</Button>
-              </Stack>
+              </Flex>
 
               {NOTIFICATIONS.map((item) => (
-                <Stack direction="row" gap={3} align="start" key={item.id}>
+                <Flex direction="row" gap={3} align="start" key={item.id}>
                   <Avatar name={item.from} size="sm" hue={item.hue} />
-                  <Stack gap={0} className="recipe__grow">
-                    <Stack direction="row" justify="between" align="baseline" gap={3}>
+                  <Flex gap={0} className="recipe__grow">
+                    <Flex direction="row" justify="between" align="baseline" gap={3}>
                       <Text size="sm" weight="medium" as="span">{item.from}</Text>
                       <Text size="xs" tone="subtle" as="span">{item.time}</Text>
-                    </Stack>
+                    </Flex>
                     <Text size="sm" tone="muted">{item.text}</Text>
-                  </Stack>
-                </Stack>
+                  </Flex>
+                </Flex>
               ))}
-            </Stack>
+            </Flex>
           </Surface>
-        </Stack>
+        </Flex>
       </div>
     </div>
   );

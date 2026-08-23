@@ -11,7 +11,7 @@ export interface EmptyStateProps {
   className?: string;
 }
 
-export function EmptyState({ title, description, icon, actions, variant = 'first-run', className }: EmptyStateProps) {
+export function Empty({ title, description, icon, actions, variant = 'first-run', className }: EmptyStateProps) {
   return (
     <div className={cn('cb-empty', className)} data-variant={variant}>
       {icon ? <span className="cb-empty__icon">{icon}</span> : null}

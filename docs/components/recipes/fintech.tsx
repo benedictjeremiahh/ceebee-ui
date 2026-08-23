@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 import { ArrowDownLeft, ArrowUpRight, Plus, Split } from 'lucide-react';
-import { Button, Dialog, NumberInput, Field, Switch } from '@ceebee/ui/client';
+import { Button, Modal, InputNumber, Field, Switch } from '@ceebee/ui/client';
 import {
   Avatar,
   AvatarGroup,
   Badge,
   Sparkline,
-  Stack,
+  Flex,
   Surface,
   Text,
   Timeline,
@@ -27,40 +27,40 @@ export function FintechRecipe() {
 
   return (
     <div className="recipe recipe--fintech">
-      <Stack gap={4}>
+      <Flex gap={4}>
         <Surface variant="gradient" hue="violet" radius="xl" padding="lg" elevation="lg">
-          <Stack gap={4}>
-            <Stack direction="row" justify="between" align="start">
-              <Stack gap={1}>
+          <Flex gap={4}>
+            <Flex direction="row" justify="between" align="start">
+              <Flex gap={1}>
                 <Text size="xs" tone="muted">Total balance</Text>
                 <Text size="lg" weight="semibold" numeric className="recipe__balance">
                   {money.format(120_456_500)}
                 </Text>
-              </Stack>
+              </Flex>
               <Badge tone="success" size="sm" dot>+2.4%</Badge>
-            </Stack>
+            </Flex>
 
             <Sparkline values={BALANCE_TREND} filled hue="violet" width={260} height={44} label="Balance over ten weeks" />
 
-            <Stack direction="row" gap={2} wrap>
+            <Flex direction="row" gap={2} wrap>
               <Button size="sm" iconStart={<Plus size={15} />}>Top up</Button>
               <Button size="sm" variant="soft" iconStart={<Split size={15} />} onClick={() => setSplitOpen(true)}>
                 Split a bill
               </Button>
-            </Stack>
-          </Stack>
+            </Flex>
+          </Flex>
         </Surface>
 
         <Surface padding="md" radius="lg">
-          <Stack gap={3}>
-            <Stack direction="row" justify="between" align="center">
+          <Flex gap={3}>
+            <Flex direction="row" justify="between" align="center">
               <Text size="sm" weight="semibold">Shared with</Text>
               <AvatarGroup overflow={2}>
                 {people.slice(0, 3).map((name) => (
                   <Avatar key={name} name={name} size="sm" />
                 ))}
               </AvatarGroup>
-            </Stack>
+            </Flex>
             <Timeline
               entries={[
                 { time: '08:41', title: 'Grocery run', description: 'Split four ways', icon: <ArrowUpRight size={13} />, tone: 'danger' },
@@ -68,11 +68,11 @@ export function FintechRecipe() {
                 { time: 'Mon', title: 'Dinner at Kopi Nako', description: 'Chris paid, you owe 187,715', icon: <ArrowUpRight size={13} /> },
               ]}
             />
-          </Stack>
+          </Flex>
         </Surface>
-      </Stack>
+      </Flex>
 
-      <Dialog
+      <Modal
         open={splitOpen}
         onOpenChange={setSplitOpen}
         title="Split a bill"
@@ -84,19 +84,19 @@ export function FintechRecipe() {
           </>
         }
       >
-        <Stack gap={4}>
+        <Flex gap={4}>
           <Field label="Total" hint="What the bill came to.">
-            <NumberInput value={amount} onValueChange={setAmount} min={0} step={1000} suffix="IDR" />
+            <InputNumber value={amount} onValueChange={setAmount} min={0} step={1000} suffix="IDR" />
           </Field>
           <Switch justified label="Split evenly" description="Everyone pays the same share" checked={evenSplit} onCheckedChange={setEvenSplit} />
           <Surface variant="tinted" hue="violet" padding="md" radius="md">
-            <Stack direction="row" justify="between" align="center">
+            <Flex direction="row" justify="between" align="center">
               <Text size="sm" tone="muted">Each person</Text>
               <Text size="sm" weight="semibold" numeric as="span">{money.format(share)}</Text>
-            </Stack>
+            </Flex>
           </Surface>
-        </Stack>
-      </Dialog>
+        </Flex>
+      </Modal>
     </div>
   );
 }

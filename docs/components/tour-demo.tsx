@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Bell, Search, Settings } from 'lucide-react';
 import { Button, Coachmark, Switch, Tour, type SeenStore, type TourStep } from '@ceebee/ui/client';
-import { Stack, Surface, Text } from '@ceebee/ui';
+import { Flex, Surface, Text } from '@ceebee/ui';
 
 const STEPS: TourStep[] = [
   {
@@ -40,9 +40,9 @@ export function TourDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={4}>
+        <Flex gap={4}>
           <Surface padding="sm" radius="md">
-            <Stack direction="row" gap={3} align="center" justify="between">
+            <Flex direction="row" gap={3} align="center" justify="between">
               <Button id="demo-search" variant="ghost" tone="neutral" iconStart={<Search size={16} />}>
                 Search
               </Button>
@@ -52,10 +52,10 @@ export function TourDemo() {
               <Button id="demo-settings" variant="ghost" tone="neutral" iconStart={<Settings size={16} />}>
                 Settings
               </Button>
-            </Stack>
+            </Flex>
           </Surface>
 
-          <Stack direction="row" gap={3} align="center" wrap>
+          <Flex direction="row" gap={3} align="center" wrap>
             <Button size="sm" onClick={() => { setOutcome(null); setRunning(true); }}>
               Start tour
             </Button>
@@ -69,7 +69,7 @@ export function TourDemo() {
                 {outcome}
               </Text>
             ) : null}
-          </Stack>
+          </Flex>
 
           <Tour
             id="docs-demo"
@@ -80,7 +80,7 @@ export function TourDemo() {
             onFinish={() => setOutcome('Finished — with the store on, it will not run again this session.')}
             onSkip={() => setOutcome('Skipped — skipping counts as seen too.')}
           />
-        </Stack>
+        </Flex>
       </div>
     </div>
   );

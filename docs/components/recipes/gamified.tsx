@@ -9,8 +9,8 @@ import {
   Leaderboard,
   ProgressBar,
   ProgressRing,
-  Stack,
-  StatCard,
+  Flex,
+  Statistic,
   Surface,
   Text,
 } from '@ceebee/ui';
@@ -27,48 +27,48 @@ const LEADERS = [
 export function GamifiedRecipe() {
   return (
     <div className="recipe recipe--gamified">
-      <Stack gap={4}>
+      <Flex gap={4}>
         <Surface variant="gradient" hue="violet" radius="xl" padding="lg" elevation="md">
-          <Stack direction="row" justify="between" align="center" wrap gap={5}>
-            <Stack gap={1}>
+          <Flex direction="row" justify="between" align="center" wrap gap={5}>
+            <Flex gap={1}>
               <Text size="sm" tone="muted">Learning plan</Text>
               <Heading level={2} size="2xl">78% complete</Heading>
-              <Stack direction="row" gap={2} align="center">
+              <Flex direction="row" gap={2} align="center">
                 <Badge tone="warning" size="sm" dot>12-day streak</Badge>
                 <Badge tone="brand" size="sm">Level 7</Badge>
-              </Stack>
-            </Stack>
+              </Flex>
+            </Flex>
             <ProgressRing value={78} size={104} thickness={11} hue="violet" label="Course progress" />
-          </Stack>
+          </Flex>
         </Surface>
 
         <Grid minItemWidth="8.5rem" gap={3}>
-          <StatCard label="Streak" value="12" caption="days in a row" hue="amber" icon={<Flame size={16} />} />
-          <StatCard label="Modules" value="9/12" hue="teal" icon={<GraduationCap size={16} />} />
-          <StatCard label="Rank" value="#4" delta={{ value: '▲4', direction: 'up' }} hue="rose" icon={<Trophy size={16} />} />
+          <Statistic label="Streak" value="12" caption="days in a row" hue="amber" icon={<Flame size={16} />} />
+          <Statistic label="Modules" value="9/12" hue="teal" icon={<GraduationCap size={16} />} />
+          <Statistic label="Rank" value="#4" delta={{ value: '▲4', direction: 'up' }} hue="rose" icon={<Trophy size={16} />} />
         </Grid>
 
         <Surface padding="md" radius="lg">
-          <Stack gap={3}>
+          <Flex gap={3}>
             <Text size="sm" weight="semibold">This week</Text>
-            <Stack gap={2}>
+            <Flex gap={2}>
               <ProgressBar value={45} label="Foundations" size="sm" showValue />
               <ProgressBar value={80} tone="success" label="Data modelling" size="sm" showValue />
               <ProgressBar value={20} tone="warning" label="Security" size="sm" showValue />
-            </Stack>
-          </Stack>
+            </Flex>
+          </Flex>
         </Surface>
 
         <Surface padding="md" radius="lg">
-          <Stack gap={3}>
-            <Stack direction="row" justify="between" align="center">
+          <Flex gap={3}>
+            <Flex direction="row" justify="between" align="center">
               <Text size="sm" weight="semibold">Leaderboard</Text>
               <Button size="sm" variant="ghost" tone="neutral">This week</Button>
-            </Stack>
+            </Flex>
             <Leaderboard label="Weekly leaders" entries={LEADERS} />
-          </Stack>
+          </Flex>
         </Surface>
-      </Stack>
+      </Flex>
     </div>
   );
 }

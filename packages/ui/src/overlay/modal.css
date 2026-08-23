@@ -1,0 +1,54 @@
+.cb-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--cb-z-modal-backdrop);
+  background: var(--cb-scrim);
+  backdrop-filter: blur(2px);
+  transition: opacity var(--cb-duration-base) var(--cb-ease-standard);
+}
+.cb-modal__backdrop[data-starting-style],
+.cb-modal__backdrop[data-ending-style] { opacity: 0; }
+
+.cb-modal {
+  position: fixed;
+  z-index: var(--cb-z-modal);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-3);
+  box-sizing: border-box;
+  background: var(--cb-surface-raised);
+  color: var(--cb-fg);
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-lg);
+  box-shadow: var(--cb-shadow-lg);
+  padding: var(--cb-space-5);
+  width: calc(100vw - var(--cb-space-6));
+  max-height: calc(100dvh - var(--cb-space-6));
+  transition: opacity var(--cb-duration-base) var(--cb-ease-entrance),
+    transform var(--cb-duration-base) var(--cb-ease-entrance);
+}
+.cb-modal--sm { max-width: 24rem; }
+.cb-modal--md { max-width: 32rem; }
+.cb-modal--lg { max-width: 46rem; }
+
+.cb-modal--center { top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1); }
+.cb-modal--center[data-starting-style],
+.cb-modal--center[data-ending-style] { opacity: 0; transform: translate(-50%, -48%) scale(0.96); }
+
+.cb-modal--end { inset-inline-end: var(--cb-space-4); inset-block-end: var(--cb-space-4); transform: translateY(0); }
+.cb-modal--end[data-starting-style],
+.cb-modal--end[data-ending-style] { opacity: 0; transform: translateY(12px); }
+
+/* Reduced motion: the dialog still fades so its arrival is not invisible, but it stops moving. */
+@media (prefers-reduced-motion: reduce) {
+  .cb-modal { transition: opacity var(--cb-duration-fast) linear; }
+  .cb-modal--center[data-starting-style],
+  .cb-modal--center[data-ending-style] { transform: translate(-50%, -50%) scale(1); }
+  .cb-modal--end[data-starting-style],
+  .cb-modal--end[data-ending-style] { transform: translateY(0); }
+}
+
+.cb-modal__title { margin: 0; font-family: var(--cb-font-sans); font-size: var(--cb-text-lg); font-weight: var(--cb-weight-semibold); }
+.cb-modal__description { margin: 0; font-family: var(--cb-font-sans); font-size: var(--cb-text-sm); color: var(--cb-fg-muted); }
+.cb-modal__body { min-height: 0; overflow-y: auto; font-family: var(--cb-font-sans); font-size: var(--cb-text-sm); }
+.cb-modal__footer { flex: none; display: flex; justify-content: flex-end; gap: var(--cb-space-2); margin-top: var(--cb-space-2); }

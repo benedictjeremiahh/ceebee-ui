@@ -35,14 +35,19 @@ export type DropdownMenuProps = DropdownMenuBaseProps & (
 );
 
 /** Typeahead, roving focus, and dismissal are Base UI's; the surface and the rhythm are ours. */
-export function DropdownMenu({ trigger, items, sections, align = 'end', side = 'bottom', className }: DropdownMenuProps) {
+export function Dropdown({ trigger, items, sections, align = 'end', side = 'bottom', className }: DropdownMenuProps) {
   const groups: MenuSection[] = sections ?? [{ items }];
 
   return (
     <BaseMenu.Root>
       <BaseMenu.Trigger render={trigger} />
       <BaseMenu.Portal>
-        <BaseMenu.Positioner side={side} align={align} sideOffset={6}>
+        <BaseMenu.Positioner
+          side={side}
+          align={align}
+          sideOffset={6}
+          className="cb-menu-positioner"
+        >
           <BaseMenu.Popup className={cn('cb-menu', className)}>
             {groups.map((section, sectionIndex) => (
               <Fragment key={`section-${sectionIndex}`}>

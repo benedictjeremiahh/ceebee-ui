@@ -1,9 +1,9 @@
-import { Heading, Text, Stack } from '@ceebee/ui';
+import { Heading, Text, Flex } from '@ceebee/ui';
 import { AstraDashboard } from '../../../components/astra-dashboard';
 
 export default function AstraRecipePage() {
   return (
-    <Stack gap={5}>
+    <Flex gap={5}>
       <div>
         <Heading level={1}>Astra dashboard</Heading>
         <Text tone="muted">
@@ -14,6 +14,6 @@ export default function AstraRecipePage() {
         </Text>
       </div>
       <AstraDashboard />
-    </Stack>
+    </Flex>
   );
 }

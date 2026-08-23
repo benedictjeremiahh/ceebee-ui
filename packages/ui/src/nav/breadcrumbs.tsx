@@ -19,7 +19,7 @@ export interface BreadcrumbsProps {
  * Server-safe. The last crumb is the current page: it is text with `aria-current`, not a link,
  * because a link to where you already are is a dead end for keyboard and screen reader users.
  */
-export function Breadcrumbs({ items, maxItems = 4, className }: BreadcrumbsProps) {
+export function Breadcrumb({ items, maxItems = 4, className }: BreadcrumbsProps) {
   const collapsed =
     items.length > maxItems
       ? [items[0]!, { label: '…' } as Crumb, ...items.slice(items.length - (maxItems - 2))]

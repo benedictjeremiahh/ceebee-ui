@@ -1,6 +1,6 @@
 import { Demo } from '../../../components/demo';
 import { PropsTable, Guidance } from '../../../components/props-table';
-import { Skeleton, StatCard, Stack, Surface, Text } from '@ceebee/ui';
+import { Skeleton, Statistic, Flex, Surface, Text } from '@ceebee/ui';
 
 # Skeleton <span className="docs__label">Atom</span>
 
@@ -13,18 +13,18 @@ it, so the page does not jump when data lands.
 <Demo layout="block" code={`<Skeleton width="12rem" height="1rem" />
 <Skeleton.Text lines={3} />
 <Skeleton.Circle size="3rem" />`}>
-  <Stack gap={4}>
+  <Flex gap={4}>
     <Skeleton width="12rem" height="1rem" />
     <Skeleton.Text lines={3} />
     <Skeleton.Circle size="3rem" />
-  </Stack>
+  </Flex>
 </Demo>
 
 ## Composition skeletons
 
-<Demo code={`{loading ? <StatCard.Skeleton withVisual /> : <StatCard {...stat} />}`}>
-  <StatCard.Skeleton />
-  <StatCard.Skeleton withVisual />
+<Demo code={`{loading ? <Statistic.Skeleton withVisual /> : <Statistic {...stat} />}`}>
+  <Statistic.Skeleton />
+  <Statistic.Skeleton withVisual />
 </Demo>
 
 <Guidance

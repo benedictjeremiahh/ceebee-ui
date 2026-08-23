@@ -25,7 +25,7 @@ export interface DialogProps {
  * (ADR 0003). Enter and exit are CSS transitions driven by Base UI's own state attributes,
  * because Base UI owns this element's mount lifecycle — motion is used where we own it.
  */
-export function Dialog({
+export function Modal({
   open,
   defaultOpen,
   onOpenChange,
@@ -42,16 +42,16 @@ export function Dialog({
     <BaseDialog.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       {trigger ? <BaseDialog.Trigger render={trigger as never} /> : null}
       <BaseDialog.Portal>
-        <BaseDialog.Backdrop className="cb-dialog__backdrop" />
+        <BaseDialog.Backdrop className="cb-modal__backdrop" />
         <BaseDialog.Popup
-          className={cn('cb-dialog', `cb-dialog--${size}`, `cb-dialog--${placement}`, className)}
+          className={cn('cb-modal', `cb-modal--${size}`, `cb-modal--${placement}`, className)}
         >
-          <BaseDialog.Title className="cb-dialog__title">{title}</BaseDialog.Title>
+          <BaseDialog.Title className="cb-modal__title">{title}</BaseDialog.Title>
           {description ? (
-            <BaseDialog.Description className="cb-dialog__description">{description}</BaseDialog.Description>
+            <BaseDialog.Description className="cb-modal__description">{description}</BaseDialog.Description>
           ) : null}
-          {children ? <div className="cb-dialog__body">{children}</div> : null}
-          {footer ? <div className="cb-dialog__footer">{footer}</div> : null}
+          {children ? <div className="cb-modal__body">{children}</div> : null}
+          {footer ? <div className="cb-modal__footer">{footer}</div> : null}
         </BaseDialog.Popup>
       </BaseDialog.Portal>
     </BaseDialog.Root>

@@ -1,0 +1,42 @@
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Tag <span className="docs__label">Atom</span>
+
+A label you can do something to.
+
+[Badge](/feedback/badge) is the one you cannot, and its own note draws the line: a label that can
+be pressed or removed is a Tag and needs a control. That is the whole boundary — not the size and
+not the colour, but whether there is anything to press (ADR 0014). They share the look literally,
+the same `cb-badge` classes, so the two cannot drift apart.
+
+## Usage
+
+```tsx
+<Tag tone="brand">Indonesian</Tag>                        {/* a label; reach for Badge instead */}
+<Tag onClick={filterBy} pressed={on}>Japanese (41)</Tag>   {/* filters by itself */}
+<Tag onClose={remove}>Kebayoran Baru</Tag>                 {/* takes itself off */}
+<Tag render={<Link href="/places/12" />}>Charné Ribroom</Tag>
+```
+
+Pressing and removing are two props because they are two gestures. A tag that filters by its value
+and a tag that takes itself off a list are not the same thing, and one component that guessed which
+you meant would be wrong half the time.
+
+A tag with `onClose` is not itself a button — it holds one. A button inside a button is invalid, and
+the row would have two answers to one press.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'tone', type: 'Tone', default: "'neutral'", description: 'Semantic colour, as everywhere else.' },
+  { name: 'variant', type: "'soft' | 'solid' | 'outline'", default: "'soft'", description: "Badge's treatments, shared." },
+  { name: 'onClick / pressed', type: '() => void / boolean', description: 'Makes the tag a button and reports its state as aria-pressed.' },
+  { name: 'onClose', type: '() => void', description: 'Adds a remove control inside the tag.' },
+  { name: 'render', type: 'ReactElement', description: "A router's own Link, kept itself so navigation stays client-side." },
+  { name: 'icon', type: 'ReactNode', description: 'A glyph before the label.' },
+]} />
+
+<Guidance
+  do="Use Badge for a label that only says what something is — most of them are."
+  dont="Give a tag both onClick and onClose; two gestures on one small target is a mis-tap waiting to happen."
+/>

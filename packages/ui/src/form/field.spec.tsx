@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { Field } from './field.js';
-import { TextInput } from './text-input.js';
+import { Input } from './input.js';
 
 describe('Field', () => {
   it('gives the label a control to point at', () => {
     render(
       <Field label="Email">
-        <TextInput />
+        <Input />
       </Field>,
     );
     expect(screen.getByLabelText('Email')).toBeInTheDocument();
@@ -16,7 +16,7 @@ describe('Field', () => {
   it('describes the control with both hint and error', () => {
     render(
       <Field label="Email" hint="Work address" error="Already taken">
-        <TextInput />
+        <Input />
       </Field>,
     );
     const input = screen.getByLabelText('Email');
@@ -31,7 +31,7 @@ describe('Field', () => {
   it('marks the control invalid and announces the message', () => {
     render(
       <Field label="Email" error="Already taken">
-        <TextInput />
+        <Input />
       </Field>,
     );
     expect(screen.getByLabelText('Email')).toHaveAttribute('aria-invalid', 'true');
@@ -41,7 +41,7 @@ describe('Field', () => {
   it('can be invalid without a message', () => {
     render(
       <Field label="Email" error>
-        <TextInput />
+        <Input />
       </Field>,
     );
     expect(screen.getByLabelText('Email')).toHaveAttribute('aria-invalid', 'true');
@@ -51,14 +51,14 @@ describe('Field', () => {
   it('keeps a hidden label available to screen readers', () => {
     render(
       <Field label="Search" labelHidden>
-        <TextInput />
+        <Input />
       </Field>,
     );
     expect(screen.getByLabelText('Search')).toBeInTheDocument();
   });
 
   it('leaves a standalone input unwired rather than inventing ids', () => {
-    render(<TextInput aria-label="Loose" />);
+    render(<Input aria-label="Loose" />);
     expect(screen.getByLabelText('Loose')).not.toHaveAttribute('aria-describedby');
   });
 });

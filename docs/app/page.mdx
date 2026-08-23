@@ -1,6 +1,6 @@
 import { Demo } from '../components/demo';
 import { Guidance } from '../components/props-table';
-import { Surface, Stack, Text, StatCard, ProgressRing } from '@ceebee/ui';
+import { Surface, Flex, Text, Statistic, ProgressRing } from '@ceebee/ui';
 
 # @ceebee/ui
 
@@ -11,17 +11,17 @@ Published to npm and imported — never copied into a project, so a fix reaches 
 <Demo layout="block" code={`import '@ceebee/ui/styles.css';
 import '@ceebee/ui/skins/astra.css';        // optional Skin: rewrites brand tokens only
 
-import { Surface, StatCard, ProgressRing } from '@ceebee/ui';         // server-safe
-import { Button, Dialog, MotionProvider } from '@ceebee/ui/client';   // interactive`}>
-  <Stack direction="row" gap={4} wrap>
-    <StatCard label="Total balance" value="120,456.50" delta={{ value: '+2.4%', direction: 'up' }} hue="violet" />
-    <StatCard
+import { Surface, Statistic, ProgressRing } from '@ceebee/ui';         // server-safe
+import { Button, Modal, MotionProvider } from '@ceebee/ui/client';   // interactive`}>
+  <Flex direction="row" gap={4} wrap>
+    <Statistic label="Total balance" value="120,456.50" delta={{ value: '+2.4%', direction: 'up' }} hue="violet" />
+    <Statistic
       label="Task progress"
       value="84%"
       hue="blue"
       visual={<ProgressRing value={84} size={64} thickness={8} hue="blue" label="Task progress" />}
     />
-  </Stack>
+  </Flex>
 </Demo>
 
 ## The two entries
@@ -29,9 +29,9 @@ import { Button, Dialog, MotionProvider } from '@ceebee/ui/client';   // interac
 The package splits at the React Server Component boundary, and the split is deliberate: a
 content-heavy page can be built from `@ceebee/ui` alone and ship no animation runtime at all.
 
-- **`@ceebee/ui`** — server-safe. `Surface`, `Stack`, `Grid`, `Container`, `Text`, `Heading`,
-  `Skeleton`, `ProgressRing`, `StatCard`.
-- **`@ceebee/ui/client`** — carries `"use client"`. `Button`, `Field`, `TextInput`, `Dialog`,
+- **`@ceebee/ui`** — server-safe. `Surface`, `Flex`, `Grid`, `Container`, `Text`, `Heading`,
+  `Skeleton`, `ProgressRing`, `Statistic`.
+- **`@ceebee/ui/client`** — carries `"use client"`. `Button`, `Field`, `Input`, `Modal`,
   `ThemeProvider`, `MotionProvider`.
 
 <Guidance

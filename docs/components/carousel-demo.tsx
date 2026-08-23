@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Carousel } from '@ceebee/ui/client';
-import { Surface, Text, Heading, Stack } from '@ceebee/ui';
+import { Surface, Text, Heading, Flex } from '@ceebee/ui';
 import { Button } from '@ceebee/ui/client';
 
 const CARDS = [
@@ -19,15 +19,15 @@ export function CarouselDemo({ autoplay = false }: { autoplay?: boolean }) {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={4}>
-          <Stack direction="row" justify="between" align="center">
+        <Flex gap={4}>
+          <Flex direction="row" justify="between" align="center">
             <Text size="xs" tone="subtle">
               {autoplay ? 'Autoplay every 3s — hover or focus it and it stops' : 'Drag, arrows, dots, or arrow keys'}
             </Text>
             <Button size="sm" variant="outline" tone="neutral" onClick={() => setLoading((v) => !v)}>
               Toggle loading
             </Button>
-          </Stack>
+          </Flex>
 
           {loading ? (
             <Carousel.Skeleton slides={4} slideWidth="16rem" slideHeight="9rem" />
@@ -47,7 +47,7 @@ export function CarouselDemo({ autoplay = false }: { autoplay?: boolean }) {
               ))}
             </Carousel>
           )}
-        </Stack>
+        </Flex>
       </div>
     </div>
   );

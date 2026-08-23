@@ -10,7 +10,7 @@ export interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElemen
   invalid?: boolean;
 }
 
-export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function TextInput(
+export const Input = forwardRef<HTMLInputElement, TextInputProps>(function Input(
   { size = 'md', invalid, className, ...rest },
   ref,
 ) {

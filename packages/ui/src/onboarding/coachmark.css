@@ -2,7 +2,7 @@
    costs no extra element, and the shadow colour is the same token the dialog backdrop uses. */
 .cb-spotlight {
   position: fixed;
-  z-index: var(--cb-z-coachmark);
+  z-index: var(--cb-z-coachmark-spotlight);
   left: var(--cb-spotlight-x);
   top: var(--cb-spotlight-y);
   width: var(--cb-spotlight-w);
@@ -22,7 +22,7 @@
 
 /* The positioner is what the portal places, so the stacking order has to live here; a z-index
    on the popup alone loses to the spotlight's own layer. */
-.cb-coachmark__positioner { z-index: calc(var(--cb-z-coachmark) + 1); }
+.cb-coachmark__positioner { z-index: var(--cb-z-coachmark); }
 
 .cb-coachmark {
   box-sizing: border-box;

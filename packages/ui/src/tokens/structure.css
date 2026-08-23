@@ -45,8 +45,16 @@
 
   --cb-z-base: 0;
   --cb-z-sticky: 100;
-  --cb-z-overlay: 200;
-  --cb-z-popover: 300;
-  --cb-z-toast: 400;
-  --cb-z-coachmark: 500;
+  --cb-z-modal-backdrop: 200;
+  --cb-z-modal: 300;
+  --cb-z-dropdown: 400;
+  --cb-z-popover: 500;
+  --cb-z-tooltip: 600;
+  --cb-z-command-backdrop: 700;
+  --cb-z-command: 800;
+  --cb-z-toast: 900;
+  --cb-z-coachmark-spotlight: 1000;
+  --cb-z-coachmark: 1100;
+  /* Compatibility for consumers that used the earlier coarse overlay layer. */
+  --cb-z-overlay: var(--cb-z-modal-backdrop);
 }

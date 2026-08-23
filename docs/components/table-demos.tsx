@@ -4,13 +4,13 @@ import { useMemo, useState } from 'react';
 import { Copy, Inbox, MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
 import {
   Button,
-  DataTable,
-  DropdownMenu,
+  Table,
+  Dropdown,
   Pagination,
   type Column,
   type SortState,
 } from '@ceebee/ui/client';
-import { Avatar, Badge, EmptyState, Stack, Text } from '@ceebee/ui';
+import { Avatar, Badge, Empty, Flex, Text } from '@ceebee/ui';
 import { CodeBlock } from './code-block';
 
 interface Invoice {
@@ -54,10 +54,10 @@ export function TableDemo() {
       header: 'Customer',
       sortable: true,
       cell: (row) => (
-        <Stack direction="row" gap={2} align="center">
+        <Flex direction="row" gap={2} align="center">
           <Avatar name={row.customer} size="sm" />
           <Text size="sm" as="span">{row.customer}</Text>
-        </Stack>
+        </Flex>
       ),
     },
     {
@@ -79,7 +79,7 @@ export function TableDemo() {
       align: 'end',
       width: '2.75rem',
       cell: () => (
-        <DropdownMenu
+        <Dropdown
           trigger={<Button size="sm" variant="ghost" tone="neutral" iconStart={<MoreHorizontal size={16} />} aria-label="Row actions" />}
           items={[
             { label: 'Edit', icon: <Pencil size={14} />, shortcut: '⌘E' },
@@ -95,20 +95,20 @@ export function TableDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={4}>
-          <Stack direction="row" gap={2} wrap>
+        <Flex gap={4}>
+          <Flex direction="row" gap={2} wrap>
             <Button size="sm" variant="outline" tone="neutral" onClick={() => setLoading((v) => !v)}>
               Toggle loading
             </Button>
             <Button size="sm" variant="outline" tone="neutral" onClick={() => setEmpty((v) => !v)}>
               Toggle empty
             </Button>
-          </Stack>
+          </Flex>
 
           {loading ? (
-            <DataTable.Skeleton columns={6} rows={5} />
+            <Table.Skeleton columns={6} rows={5} />
           ) : (
-            <DataTable
+            <Table
               label="Invoices"
               columns={columns}
               rows={empty ? [] : rows}
@@ -116,7 +116,7 @@ export function TableDemo() {
               sort={sort}
               onSortChange={setSort}
               empty={
-                <EmptyState
+                <Empty
                   icon={<Inbox size={22} />}
                   title="No invoices yet"
                   description="They appear here once your first customer is billed."
@@ -127,18 +127,18 @@ export function TableDemo() {
           )}
 
           <Pagination page={page} pageSize={20} total={137} onPageChange={setPage} />
-        </Stack>
+        </Flex>
       </div>
       <CodeBlock bare code={`const [sort, setSort] = useState<SortState | null>({ column: 'issued', direction: 'desc' });
 
-<DataTable
+<Table
   label="Invoices"
   columns={columns}
   rows={rows}
   rowKey={(row) => row.id}
   sort={sort}
   onSortChange={setSort}
-  empty={<EmptyState title="No invoices yet" />}
+  empty={<Empty title="No invoices yet" />}
 />
 
 <Pagination page={page} pageSize={20} total={137} onPageChange={setPage} />`} />
@@ -151,11 +151,11 @@ export function PaginationDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={5}>
+        <Flex gap={5}>
           <Pagination page={page} pageSize={10} total={300} onPageChange={setPage} />
           <Pagination page={2} pageSize={10} total={45} onPageChange={() => {}} showSummary={false} />
           <Pagination page={1} pageSize={20} total={0} onPageChange={() => {}} />
-        </Stack>
+        </Flex>
       </div>
       <CodeBlock bare code={`<Pagination page={page} pageSize={10} total={300} onPageChange={setPage} />`} />
     </div>

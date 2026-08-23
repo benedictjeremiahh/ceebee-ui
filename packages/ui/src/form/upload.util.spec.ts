@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { describeAccept, matchesAccept, partitionFiles } from './file-drop.util.js';
+import { describeAccept, matchesAccept, partitionFiles } from './upload.util.js';
 
 // The size has to be real: File.size comes from the content, so a fixture that truncates it
 // silently makes every size assertion pass.

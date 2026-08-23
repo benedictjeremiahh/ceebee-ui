@@ -1,9 +1,9 @@
 import { Demo } from '../../../components/demo';
 import { PropsTable, Guidance } from '../../../components/props-table';
-import { Field, TextInput, Textarea } from '@ceebee/ui/client';
-import { Stack, Text } from '@ceebee/ui';
+import { Field, Input, Textarea } from '@ceebee/ui/client';
+import { Flex, Text } from '@ceebee/ui';
 
-# Field · TextInput <span className="docs__label">Atom</span>
+# Field · Input <span className="docs__label">Atom</span>
 
 `Field` owns the wiring that is most often silently wrong: the label pointing at the control, the
 hint and error being announced through `aria-describedby`, and `aria-invalid` matching the visible
@@ -12,16 +12,16 @@ error state. It owns nothing else — no validation, no form state.
 ## Usage
 
 <Demo layout="block" code={`<Field label="Work email" hint="We only use this for receipts.">
-  <TextInput type="email" name="email" placeholder="you@company.com" />
+  <Input type="email" name="email" placeholder="you@company.com" />
 </Field>`}>
-  <Stack gap={4}>
+  <Flex gap={4}>
     <Field label="Work email" hint="We only use this for receipts.">
-      <TextInput type="email" placeholder="you@company.com" />
+      <Input type="email" placeholder="you@company.com" />
     </Field>
     <Field label="Notes">
       <Textarea placeholder="Anything we should know?" />
     </Field>
-  </Stack>
+  </Flex>
 </Demo>
 
 ## Errors
@@ -30,10 +30,10 @@ A string renders the message and marks the control invalid. `error` as a bare `t
 invalid without a message — for the case where the message lives somewhere else on the page.
 
 <Demo layout="block" code={`<Field label="Work email" hint="We only use this for receipts." error="That address is already registered.">
-  <TextInput type="email" defaultValue="ada@company.com" />
+  <Input type="email" defaultValue="ada@company.com" />
 </Field>`}>
   <Field label="Work email" hint="We only use this for receipts." error="That address is already registered.">
-    <TextInput type="email" defaultValue="ada@company.com" />
+    <Input type="email" defaultValue="ada@company.com" />
   </Field>
 </Demo>
 
@@ -44,17 +44,17 @@ invalid without a message — for the case where the message lives somewhere els
 
 ## With a form library
 
-The library is deliberately neutral. Nothing below is an adapter; `TextInput` simply forwards its
+The library is deliberately neutral. Nothing below is an adapter; `Input` simply forwards its
 ref and props.
 
 <Demo layout="block" code={`// react-hook-form
 <Field label="Email" error={errors.email?.message}>
-  <TextInput {...register('email')} />
+  <Input {...register('email')} />
 </Field>
 
 // Next Server Action — no client form state at all
 <form action={createUser}>
-  <Field label="Email"><TextInput name="email" required /></Field>
+  <Field label="Email"><Input name="email" required /></Field>
 </form>`}>
   <Text tone="muted" size="sm">Same component, three different form stories.</Text>
 </Demo>
@@ -73,4 +73,4 @@ ref and props.
 
 - The error is rendered with `role="alert"`, so it is announced when it appears.
 - `aria-describedby` lists hint and error in reading order, not just the last one.
-- A `TextInput` used outside a `Field` stays unwired rather than inventing ids — pass `aria-label`.
+- A `Input` used outside a `Field` stays unwired rather than inventing ids — pass `aria-label`.

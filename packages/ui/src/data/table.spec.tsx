@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import { DataTable, type Column } from './table.js';
+import { Table, type Column } from './table.js';
 
 interface Row {
   id: string;
@@ -19,9 +19,9 @@ const COLUMNS: Array<Column<Row>> = [
   { key: 'amount', header: 'Amount', cell: (row) => row.amount, align: 'end' },
 ];
 
-describe('DataTable', () => {
+describe('Table', () => {
   it('renders a named table with a header row and one row per record', () => {
-    render(<DataTable label="Customers" columns={COLUMNS} rows={ROWS} rowKey={(row) => row.id} />);
+    render(<Table label="Customers" columns={COLUMNS} rows={ROWS} rowKey={(row) => row.id} />);
     expect(screen.getByRole('table', { name: 'Customers' })).toBeInTheDocument();
     expect(screen.getAllByRole('row')).toHaveLength(3);
   });
@@ -29,7 +29,7 @@ describe('DataTable', () => {
   it('exposes the sort state on the column header, not just in the icon', async () => {
     const onSortChange = vi.fn();
     const { rerender } = render(
-      <DataTable label="Customers" columns={COLUMNS} rows={ROWS} rowKey={(row) => row.id} onSortChange={onSortChange} />,
+      <Table label="Customers" columns={COLUMNS} rows={ROWS} rowKey={(row) => row.id} onSortChange={onSortChange} />,
     );
 
     expect(screen.getByRole('columnheader', { name: /Name/ })).toHaveAttribute('aria-sort', 'none');
@@ -37,7 +37,7 @@ describe('DataTable', () => {
     expect(onSortChange).toHaveBeenCalledWith({ column: 'name', direction: 'asc' });
 
     rerender(
-      <DataTable
+      <Table
         label="Customers"
         columns={COLUMNS}
         rows={ROWS}
@@ -51,21 +51,21 @@ describe('DataTable', () => {
 
   it('offers no sort control on a column that is not sortable', () => {
     render(
-      <DataTable label="Customers" columns={COLUMNS} rows={ROWS} rowKey={(row) => row.id} onSortChange={vi.fn()} />,
+      <Table label="Customers" columns={COLUMNS} rows={ROWS} rowKey={(row) => row.id} onSortChange={vi.fn()} />,
     );
     expect(screen.queryByRole('button', { name: /Amount/ })).toBeNull();
   });
 
   it('shows the empty slot instead of an empty table body', () => {
     render(
-      <DataTable label="Customers" columns={COLUMNS} rows={[]} rowKey={(row) => row.id} empty={<p>No customers yet</p>} />,
+      <Table label="Customers" columns={COLUMNS} rows={[]} rowKey={(row) => row.id} empty={<p>No customers yet</p>} />,
     );
     expect(screen.getByText('No customers yet')).toBeInTheDocument();
     expect(screen.queryByRole('table')).toBeNull();
   });
 
   it('hides the loading placeholder from assistive technology', () => {
-    const { container } = render(<DataTable.Skeleton columns={3} rows={4} />);
+    const { container } = render(<Table.Skeleton columns={3} rows={4} />);
     expect(container.firstElementChild).toHaveAttribute('aria-hidden', 'true');
   });
 });

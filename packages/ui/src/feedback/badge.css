@@ -6,11 +6,27 @@
   border-radius: var(--cb-radius-full);
   font-family: var(--cb-font-sans);
   font-weight: var(--cb-weight-medium);
+  /* The line box must not out-measure the height above. Left at its default a
+     word sits in an 18px box and a 12px glyph in a 22px one, so two badges in a
+     row ended up two pixels apart for a reason neither of them chose. */
+  line-height: 1;
   white-space: nowrap;
   border: var(--cb-border-width) solid transparent;
 }
-.cb-badge--sm { font-size: 0.6875rem; padding: 0.0625rem var(--cb-space-2); }
-.cb-badge--md { font-size: var(--cb-text-xs); padding: var(--cb-space-1) var(--cb-space-3); }
+/* A height, not just padding. Padding alone makes the height a function of the
+   content, so a badge carrying a glyph stands taller than the plain one beside
+   it — and a row of them then disagrees about its own size for a reason nobody
+   chose. One number per size, and the padding sits inside it. */
+.cb-badge--sm {
+  font-size: 0.6875rem;
+  min-height: 1.375rem;
+  padding: 0.0625rem var(--cb-space-2);
+}
+.cb-badge--md {
+  font-size: var(--cb-text-xs);
+  min-height: 1.75rem;
+  padding: var(--cb-space-1) var(--cb-space-3);
+}
 
 .cb-badge[data-tone="brand"] { --cb-badge-accent: var(--cb-tone-brand); }
 .cb-badge[data-tone="info"] { --cb-badge-accent: var(--cb-tone-info); }

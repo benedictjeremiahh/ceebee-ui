@@ -29,7 +29,7 @@ export interface DataTableProps<Row> {
   sort?: SortState | null;
   onSortChange?: (sort: SortState | null) => void;
   onRowClick?: (row: Row) => void;
-  /** Rendered in place of the body when there are no rows — an EmptyState, usually. */
+  /** Rendered in place of the body when there are no rows — an Empty, usually. */
   empty?: ReactNode;
   className?: string;
 }
@@ -38,7 +38,7 @@ export interface DataTableProps<Row> {
  * A table, not a grid: no virtualisation, no column resizing, no editing. It renders rows and
  * sorts by a column, and anything past that is a product feature rather than a design system one.
  */
-export function DataTable<Row>({
+export function Table<Row>({
   columns,
   rows,
   rowKey,
@@ -149,4 +149,4 @@ function DataTableSkeleton({ columns, rows = 5, className }: DataTableSkeletonPr
   );
 }
 
-DataTable.Skeleton = DataTableSkeleton;
+Table.Skeleton = DataTableSkeleton;

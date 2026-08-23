@@ -107,6 +107,24 @@ _Avoid_: Loader, placeholder, shimmer
 
 ### Boundaries
 
+**Dialog**:
+A modal interruption for a bounded decision or task. It is centred or corner-positioned; it is not
+navigation and never grows a Drawer placement.
+
+**Drawer**:
+A modal edge panel for navigation or a longer contextual task. It owns a separate public component
+and CSS namespace even though Base UI Dialog supplies its focus trap and dismissal semantics.
+
+**Popover**:
+An anchored, non-modal surface related to its trigger. Menu is the action-list contract built on
+anchored menu behaviour, not a Dialog or Drawer variant.
+
+**Stacking Ladder**:
+The semantic global order for raised interaction layers: page chrome, modal, anchored controls,
+informational overlays, command surfaces, notifications, then guided onboarding. Portalled anchored
+layers assign their rung to the Positioner that creates the stacking context, not to its Popup.
+_Avoid_: Arbitrary z-index, highest-number-wins
+
 **Server-safe primitive**:
 A component with no client-side behaviour, shipped without `"use client"` so a Next app keeps it as
 a Server Component — typography, layout, static Surface, Badge, Divider, Skeleton (ADR 0004).

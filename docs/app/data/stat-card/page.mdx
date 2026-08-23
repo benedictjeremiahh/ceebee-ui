@@ -1,25 +1,25 @@
 import { Demo } from '../../../components/demo';
 import { PropsTable, Guidance } from '../../../components/props-table';
-import { StatCard, ProgressRing, Grid, Text } from '@ceebee/ui';
+import { Statistic, ProgressRing, Grid, Text } from '@ceebee/ui';
 
-# StatCard <span className="docs__label">Composition</span>
+# Statistic <span className="docs__label">Composition</span>
 
 The tinted metric tile every dashboard on the reference board repeats. A Surface, a label, a value,
 an optional delta, and room for a Widget.
 
 ## Usage
 
-<Demo layout="block" code={`<StatCard
+<Demo layout="block" code={`<Statistic
   label="Total balance"
   value="120,456.50"
   delta={{ value: '+2.4%', direction: 'up' }}
   hue="violet"
 />`}>
   <Grid minItemWidth="15rem" gap={4}>
-    <StatCard label="Total balance" value="120,456.50" delta={{ value: '+2.4%', direction: 'up' }} hue="violet" />
-    <StatCard label="Expenses" value="1,124.10" delta={{ value: '-8.1%', direction: 'down' }} hue="rose" />
-    <StatCard label="Open tickets" value="34" delta={{ value: '0%', direction: 'flat' }} hue="amber" caption="Unchanged this week" />
-    <StatCard
+    <Statistic label="Total balance" value="120,456.50" delta={{ value: '+2.4%', direction: 'up' }} hue="violet" />
+    <Statistic label="Expenses" value="1,124.10" delta={{ value: '-8.1%', direction: 'down' }} hue="rose" />
+    <Statistic label="Open tickets" value="34" delta={{ value: '0%', direction: 'flat' }} hue="amber" caption="Unchanged this week" />
+    <Statistic
       label="Task progress"
       value="84%"
       hue="blue"
@@ -40,9 +40,9 @@ accidentally coloured to mean opposite things by two different authors.
 
 ## Loading
 
-<Demo code={`{loading ? <StatCard.Skeleton withVisual /> : <StatCard {...stat} />}`}>
-  <StatCard.Skeleton />
-  <StatCard.Skeleton withVisual />
+<Demo code={`{loading ? <Statistic.Skeleton withVisual /> : <Statistic {...stat} />}`}>
+  <Statistic.Skeleton />
+  <Statistic.Skeleton withVisual />
 </Demo>
 
 The Skeleton is built from the card's own surface, radius, and padding tokens — a test asserts they

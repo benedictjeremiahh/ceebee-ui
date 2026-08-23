@@ -4,13 +4,13 @@ import { useState } from 'react';
 import {
   Checkbox,
   Field,
-  NumberInput,
+  InputNumber,
   RadioGroup,
   Select,
   Switch,
-  TextInput,
+  Input,
 } from '@ceebee/ui/client';
-import { Stack, Surface, Text } from '@ceebee/ui';
+import { Flex, Surface, Text } from '@ceebee/ui';
 import { CodeBlock } from './code-block';
 
 const CURRENCIES = [
@@ -25,7 +25,7 @@ export function SelectDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={4}>
+        <Flex gap={4}>
           <Field label="Settlement currency" hint="Payouts convert at the daily rate.">
             <Select items={CURRENCIES} value={value} onValueChange={setValue} />
           </Field>
@@ -35,7 +35,7 @@ export function SelectDemo() {
           <Field label="With an error" error="This currency is not supported in your region.">
             <Select items={CURRENCIES} defaultValue="eur" />
           </Field>
-        </Stack>
+        </Flex>
       </div>
       <CodeBlock bare code={`<Field label="Settlement currency" hint="Payouts convert at the daily rate.">
   <Select
@@ -54,7 +54,7 @@ export function ChoiceDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={5}>
+        <Flex gap={5}>
           <Field label="Billing period">
             <RadioGroup
               value={plan}
@@ -67,7 +67,7 @@ export function ChoiceDemo() {
             />
           </Field>
 
-          <Stack gap={3}>
+          <Flex gap={3}>
             <Checkbox
               label="Email me receipts"
               description="One message per payment, nothing else."
@@ -79,10 +79,10 @@ export function ChoiceDemo() {
               onCheckedChange={setTerms}
             />
             <Checkbox label="Partially selected" indeterminate />
-          </Stack>
+          </Flex>
 
           <Surface padding="md" radius="md">
-            <Stack gap={3}>
+            <Flex gap={3}>
               <Switch
                 justified
                 label="Reduce motion"
@@ -90,9 +90,9 @@ export function ChoiceDemo() {
                 defaultChecked
               />
               <Switch justified label="Weekly digest" description="Sent every Monday morning." />
-            </Stack>
+            </Flex>
           </Surface>
-        </Stack>
+        </Flex>
       </div>
       <CodeBlock bare code={`<RadioGroup
   value={plan}
@@ -114,23 +114,23 @@ export function NumberDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={4}>
+        <Flex gap={4}>
           <Field label="Seats" hint="Between 1 and 10.">
-            <NumberInput value={seats} onValueChange={setSeats} min={1} max={10} />
+            <InputNumber value={seats} onValueChange={setSeats} min={1} max={10} />
           </Field>
           <Field label="Rate" hint="Steps of 0.25 — no floating point crumbs.">
-            <NumberInput defaultValue={1} step={0.25} min={0} suffix="×" />
+            <InputNumber defaultValue={1} step={0.25} min={0} suffix="×" />
           </Field>
           <Field label="Weight">
-            <NumberInput defaultValue={null} step={0.5} suffix="kg" placeholder="0" />
+            <InputNumber defaultValue={null} step={0.5} suffix="kg" placeholder="0" />
           </Field>
           <Text size="sm" tone="muted">
             Current value: <code>{seats === null ? 'null' : seats}</code>
           </Text>
-        </Stack>
+        </Flex>
       </div>
       <CodeBlock bare code={`<Field label="Seats" hint="Between 1 and 10.">
-  <NumberInput value={seats} onValueChange={setSeats} min={1} max={10} />
+  <InputNumber value={seats} onValueChange={setSeats} min={1} max={10} />
 </Field>`} />
     </div>
   );

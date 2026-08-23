@@ -1,23 +1,68 @@
 import { ComboboxDemo } from '../../../components/batch5-demos';
 import { PropsTable, Guidance } from '../../../components/props-table';
 
-# Combobox <span className="docs__label">Atom</span>
+# AutoComplete <span className="docs__label">Atom</span>
 
 A Select you can type into. Filtering, highlight, and keyboard behaviour are Base UI's.
+
+It holds the whole list by default and matches it in the browser. Past the point where
+shipping every row is the wrong trade, hand it `loadItems` instead and it asks for them
+one query at a time.
 
 ## Usage
 
 <ComboboxDemo />
 
 <Guidance
-  do="Reach for a Combobox past roughly a dozen options, where typing beats scanning."
-  dont="Use it for four options — a Select shows them all in one click, and a RadioGroup shows them without any."
+  do="Reach for a AutoComplete past about ten options, where typing beats scanning."
+  dont="Use it for four options — a Select shows them all in one click, and a segmented RadioGroup shows them without any."
+/>
+
+Select's page carries [the table for choosing between the three](/form/select), with the
+usability research the numbers come from. The short version: a dropdown is worth having
+between roughly five and ten options, and past that the advice is to replace it with a
+control you can type into — which is this one.
+
+## Asking somewhere else
+
+`loadItems` puts the AutoComplete in async mode. It is given the query and an `AbortSignal`,
+and it returns the rows to offer.
+
+```tsx
+<AutoComplete
+  placeholder="Search places"
+  loadItems={async (query, signal) => {
+    const res = await fetch(`/api/places?q=${encodeURIComponent(query)}`, { signal });
+    return (await res.json()).map((row) => ({ value: row.id, label: row.name }));
+  }}
+/>
+```
+
+Three things it does so every caller does not have to:
+
+- **Asks once for a burst of typing.** `loadDelay` is how long typing has to stop first.
+- **Ignores a stale reply.** A slow `a` landing after a fast `abc` cannot overwrite the
+  newer list, and the superseded request's signal is aborted.
+- **Stops matching in the browser.** Whatever answered the query already decided what
+  matches; matching the reply again drops rows whose label does not happen to spell the
+  query — a synonym, an id, an alias.
+
+The popup says which of the three states it is in: searching, failed, or nothing matched.
+They are different answers, and showing the last one during the wait is a wrong answer that
+arrives before the right one.
+
+<Guidance
+  do="Give loadItems when the list is too large to ship, or lives behind a search endpoint."
+  dont="Give both items and loadItems — loadItems wins, and the static list is then a lie."
 />
 
 ## Props
 
 <PropsTable rows={[
-  { name: 'items', type: 'ComboboxOption[]', description: 'value, label, and an optional description line.' },
+  { name: 'items', type: 'ComboboxOption[]', description: 'value, label, and an optional description line. Omit when loadItems is given.' },
+  { name: 'loadItems', type: '(query, signal) => Promise<ComboboxOption[]>', description: 'Asks somewhere else for the rows. Switches off browser-side matching.' },
+  { name: 'loadDelay', type: 'number', default: '250', description: 'How long typing has to stop before loadItems is asked.' },
+  { name: 'loadingMessage / errorMessage', type: 'ReactNode', description: 'What the popup says while a search is out, and when it failed.' },
   { name: 'value / defaultValue', type: 'string | null', description: 'Controlled or uncontrolled. null is "nothing chosen".' },
   { name: 'onValueChange', type: '(value: string | null) => void', description: 'Clearing reports null rather than an empty string.' },
   { name: 'emptyMessage', type: 'ReactNode', default: "'Nothing matched'", description: 'Shown when the query matches nothing — never an empty popup.' },

@@ -177,7 +177,7 @@ function Flyout({ label, items, children }: { label: ReactNode; items?: NavItem[
 }
 
 export interface TopBarProps {
-  /** Page title, or a Breadcrumbs trail. */
+  /** Page title, or a Breadcrumb trail. */
   title?: ReactNode;
   subtitle?: ReactNode;
   /** Search, filters — anything that belongs in the middle. */

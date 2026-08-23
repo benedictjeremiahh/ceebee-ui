@@ -1,21 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { CreditCard, FileText, GitBranch, LogOut, Plus, Rocket, Settings, Upload, UserPlus } from 'lucide-react';
+import { CreditCard, FileText, GitBranch, LogOut, Plus, Rocket, Settings, Upload as UploadGlyph, UserPlus } from 'lucide-react';
 import {
   Alert,
   Button,
   Checklist,
-  Combobox,
+  AutoComplete,
   CommandPalette,
-  DateInput,
+  DatePicker,
   Field,
-  TimeInput,
-  FileDrop,
+  TimePicker,
+  Upload,
   formatISO,
   type PaletteCommand,
 } from '@ceebee/ui/client';
-import { ProgressBar, Spinner, Stack, Surface, Text, Timeline } from '@ceebee/ui';
+import { ProgressBar, Spin, Flex, Surface, Text, Timeline } from '@ceebee/ui';
 import { CodeBlock } from './code-block';
 
 const COUNTRIES = [
@@ -34,19 +34,19 @@ export function ComboboxDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={4}>
+        <Flex gap={4}>
           <Field label="Country" hint="Type to narrow the list.">
-            <Combobox items={COUNTRIES} value={value} onValueChange={setValue} placeholder="Search countries…" />
+            <AutoComplete items={COUNTRIES} value={value} onValueChange={setValue} placeholder="Search countries…" />
           </Field>
           <Text size="sm" tone="muted">
             Selected: <code>{value ?? 'none'}</code>
           </Text>
-        </Stack>
+        </Flex>
       </div>
       <CodeBlock
         bare
         code={`<Field label="Country" hint="Type to narrow the list.">
-  <Combobox
+  <AutoComplete
     items={countries}
     value={value}
     onValueChange={setValue}
@@ -63,22 +63,22 @@ export function DateDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={4}>
+        <Flex gap={4}>
           <Field label="Invoice date" hint="Type 18/08/2026, or pick it.">
-            <DateInput value={date} onValueChange={setDate} />
+            <DatePicker value={date} onValueChange={setDate} />
           </Field>
           <Field label="Within this month only">
-            <DateInput defaultValue={null} min={new Date(2026, 7, 1)} max={new Date(2026, 7, 31)} />
+            <DatePicker defaultValue={null} min={new Date(2026, 7, 1)} max={new Date(2026, 7, 31)} />
           </Field>
           <Text size="sm" tone="muted">
             {/* formatISO, not toISOString: the latter shifts a local midnight into the previous
                 day for anyone east of UTC — the exact trap this library exists to avoid. */}
             Selected: <code>{date ? formatISO(date) : 'none'}</code>
           </Text>
-        </Stack>
+        </Flex>
       </div>
       <CodeBlock bare code={`<Field label="Invoice date">
-  <DateInput value={date} onValueChange={setDate} min={start} max={end} />
+  <DatePicker value={date} onValueChange={setDate} min={start} max={end} />
 </Field>`} />
     </div>
   );
@@ -89,22 +89,22 @@ export function TimeDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={4}>
+        <Flex gap={4}>
           <Field label="Start time" hint="Type 9, 0930, 9:30 or 9pm — or pick one.">
-            <TimeInput value={time} onValueChange={setTime} step={30} />
+            <TimePicker value={time} onValueChange={setTime} step={30} />
           </Field>
           <Field label="Office hours only">
-            <TimeInput defaultValue={null} min={{ hours: 8, minutes: 0 }} max={{ hours: 17, minutes: 0 }} step={15} />
+            <TimePicker defaultValue={null} min={{ hours: 8, minutes: 0 }} max={{ hours: 17, minutes: 0 }} step={15} />
           </Field>
           <Text size="sm" tone="muted">
             Selected: <code>{time ? `${String(time.hours).padStart(2, '0')}:${String(time.minutes).padStart(2, '0')}` : 'none'}</code>
           </Text>
-        </Stack>
+        </Flex>
       </div>
       <CodeBlock
         bare
         code={`<Field label="Start time" hint="Type 9, 0930, 9:30 or 9pm — or pick one.">
-  <TimeInput value={time} onValueChange={setTime} step={30} />
+  <TimePicker value={time} onValueChange={setTime} step={30} />
 </Field>`}
       />
     </div>
@@ -117,9 +117,9 @@ export function FileDropDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={3}>
+        <Flex gap={3}>
           <Field label="Attachments" hint="PDFs only, up to 2 MB each, three at most.">
-            <FileDrop
+            <Upload
               files={files}
               onFilesChange={setFiles}
               onReject={(rejections) => setRejected(rejections.map((r) => `${r.file.name} (${r.reason})`))}
@@ -133,9 +133,9 @@ export function FileDropDemo() {
               {rejected.join(', ')}
             </Alert>
           ) : null}
-        </Stack>
+        </Flex>
       </div>
-      <CodeBlock bare code={`<FileDrop
+      <CodeBlock bare code={`<Upload
   files={files}
   onFilesChange={setFiles}
   onReject={(rejections) => notify(rejections)}
@@ -202,29 +202,29 @@ export function ProgressDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={5}>
-          <Stack direction="row" gap={4} align="center">
-            <Spinner size="sm" />
-            <Spinner />
-            <Spinner size="lg" tone="neutral" />
-            <Spinner label="Loading invoices" />
-          </Stack>
+        <Flex gap={5}>
+          <Flex direction="row" gap={4} align="center">
+            <Spin size="sm" />
+            <Spin />
+            <Spin size="lg" tone="neutral" />
+            <Spin label="Loading invoices" />
+          </Flex>
 
           <ProgressBar value={value} label="Upload progress" showValue />
           <ProgressBar value={value} max={100} tone="success" size="sm" label="Disk used" />
           <ProgressBar label="Syncing" />
 
-          <Stack direction="row" gap={2}>
+          <Flex direction="row" gap={2}>
             <Button size="sm" variant="outline" tone="neutral" onClick={() => setValue((v) => Math.max(v - 15, 0))}>
               −15
             </Button>
             <Button size="sm" variant="outline" tone="neutral" onClick={() => setValue((v) => Math.min(v + 15, 100))}>
               +15
             </Button>
-          </Stack>
-        </Stack>
+          </Flex>
+        </Flex>
       </div>
-      <CodeBlock bare code={`<Spinner label="Loading invoices" />
+      <CodeBlock bare code={`<Spin label="Loading invoices" />
 
 <ProgressBar value={35} label="Upload progress" showValue />
 <ProgressBar label="Syncing" />   {/* no value — indeterminate */}`} />
@@ -267,7 +267,7 @@ export function ChecklistDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={4}>
+        <Flex gap={4}>
           <Checklist
             tasks={tasks.map((task) => ({
               ...task,
@@ -276,20 +276,20 @@ export function ChecklistDemo() {
                 setDone((current) => (current.includes(task.id) ? current.filter((id) => id !== task.id) : [...current, task.id])),
             }))}
             completeSlot={
-              <Stack gap={2}>
+              <Flex gap={2}>
                 <Text size="sm" weight="medium">
                   All set.
                 </Text>
                 <Button size="sm" variant="outline" tone="neutral" onClick={() => setDone([])}>
                   Reset the demo
                 </Button>
-              </Stack>
+              </Flex>
             }
           />
           <Text size="xs" tone="subtle">
             Click a task to toggle it — in a real product, the app decides what &quot;done&quot; means.
           </Text>
-        </Stack>
+        </Flex>
       </div>
       <CodeBlock bare code={`<Checklist
   tasks={tasks.map((task) => ({ ...task, done: completed.includes(task.id), onSelect: () => go(task) }))}

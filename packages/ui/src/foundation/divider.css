@@ -1,0 +1,35 @@
+.cb-divider {
+  border: 0;
+  border-top: var(--cb-border-width) solid var(--cb-border);
+  margin: var(--cb-space-4) 0;
+}
+
+.cb-divider--vertical {
+  display: inline-block;
+  align-self: stretch;
+  width: 0;
+  min-height: 1em;
+  margin: 0 var(--cb-space-3);
+  border-top: 0;
+  border-inline-start: var(--cb-border-width) solid var(--cb-border);
+}
+
+.cb-divider--labelled {
+  display: flex;
+  align-items: center;
+  gap: var(--cb-space-3);
+  border-top: 0;
+}
+.cb-divider--labelled::before,
+.cb-divider--labelled::after {
+  content: '';
+  flex: 1;
+  border-top: var(--cb-border-width) solid var(--cb-border);
+}
+.cb-divider__label {
+  flex: none;
+  font-family: var(--cb-font-sans);
+  font-size: var(--cb-text-xs);
+  font-weight: var(--cb-weight-semibold);
+  color: var(--cb-fg-muted);
+}

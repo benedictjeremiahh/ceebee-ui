@@ -14,15 +14,15 @@ import {
   Trash2,
   Users,
 } from 'lucide-react';
-import { Button, DropdownMenu, Sidebar, TopBar, TextInput } from '@ceebee/ui/client';
-import { Avatar, Badge, Breadcrumbs, Stack, Stepper, Surface, Text } from '@ceebee/ui';
+import { Button, Dropdown, Sidebar, TopBar, Input } from '@ceebee/ui/client';
+import { Avatar, Badge, Breadcrumb, Flex, Steps, Surface, Text } from '@ceebee/ui';
 import { CodeBlock } from './code-block';
 
 export function MenuDemo() {
   return (
     <div className="demo">
       <div className="demo__stage">
-        <DropdownMenu
+        <Dropdown
           trigger={<Button variant="outline" tone="neutral" iconStart={<MoreHorizontal size={16} />}>Actions</Button>}
           items={[
             { label: 'Rename', icon: <FileText size={14} />, shortcut: '⌘R' },
@@ -35,7 +35,7 @@ export function MenuDemo() {
           ]}
         />
       </div>
-      <CodeBlock bare code={`<DropdownMenu
+      <CodeBlock bare code={`<Dropdown
   trigger={<Button variant="outline">Actions</Button>}
   items={[
     { label: 'Rename', icon: <FileText size={14} />, shortcut: '⌘R' },
@@ -51,9 +51,9 @@ export function BreadcrumbsDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={4}>
-          <Breadcrumbs items={[{ label: 'Workspace', href: '#' }, { label: 'Billing', href: '#' }, { label: 'INV-1043' }]} />
-          <Breadcrumbs
+        <Flex gap={4}>
+          <Breadcrumb items={[{ label: 'Workspace', href: '#' }, { label: 'Billing', href: '#' }, { label: 'INV-1043' }]} />
+          <Breadcrumb
             items={[
               { label: 'Workspace', href: '#' },
               { label: 'Projects', href: '#' },
@@ -62,9 +62,9 @@ export function BreadcrumbsDemo() {
               { label: 'v2.4.0' },
             ]}
           />
-        </Stack>
+        </Flex>
       </div>
-      <CodeBlock bare code={`<Breadcrumbs items={[
+      <CodeBlock bare code={`<Breadcrumb items={[
   { label: 'Workspace', href: '/' },
   { label: 'Billing', href: '/billing' },
   { label: 'INV-1043' },
@@ -85,22 +85,22 @@ export function StepperDemo() {
   return (
     <div className="demo">
       <div className="demo__stage" data-layout="block">
-        <Stack gap={5}>
-          <Stepper steps={steps} current={current} />
-          <Stack direction="row" gap={2}>
+        <Flex gap={5}>
+          <Steps steps={steps} current={current} />
+          <Flex direction="row" gap={2}>
             <Button size="sm" variant="outline" tone="neutral" disabled={current === 0} onClick={() => setCurrent((c) => c - 1)}>
               Back
             </Button>
             <Button size="sm" disabled={current === steps.length - 1} onClick={() => setCurrent((c) => c + 1)}>
               Next
             </Button>
-          </Stack>
+          </Flex>
           <Surface padding="md" radius="md">
-            <Stepper orientation="vertical" current={2} steps={steps} />
+            <Steps orientation="vertical" current={2} steps={steps} />
           </Surface>
-        </Stack>
+        </Flex>
       </div>
-      <CodeBlock bare code={`<Stepper current={1} steps={[
+      <CodeBlock bare code={`<Steps current={1} steps={[
   { label: 'Account', description: 'Who is signing up' },
   { label: 'Workspace', description: 'Name and members' },
 ]} />`} />
@@ -148,19 +148,19 @@ export function ShellDemo() {
             collapsed={collapsed}
             onCollapsedChange={setCollapsed}
             header={
-              <Stack direction="row" gap={2} align="center">
+              <Flex direction="row" gap={2} align="center">
                 <span className="docs__mark" />
                 {collapsed ? null : <Text weight="semibold" as="span">Ceebee</Text>}
-              </Stack>
+              </Flex>
             }
             footer={
               collapsed ? (
                 <Avatar name="Sarah Chen" size="sm" />
               ) : (
-                <Stack direction="row" gap={2} align="center">
+                <Flex direction="row" gap={2} align="center">
                   <Avatar name="Sarah Chen" size="sm" status="online" />
                   <Text size="xs" tone="muted" as="span">Sarah Chen</Text>
-                </Stack>
+                </Flex>
               )
             }
           />
@@ -168,13 +168,13 @@ export function ShellDemo() {
           <div className="shell-demo__main">
             <TopBar
               sticky={false}
-              title={<Breadcrumbs items={[{ label: 'Workspace', href: '#' }, { label: active }]} />}
+              title={<Breadcrumb items={[{ label: 'Workspace', href: '#' }, { label: active }]} />}
               subtitle="Updated 4 minutes ago"
-              center={<TextInput placeholder="Search invoices…" aria-label="Search invoices" size="sm" />}
+              center={<Input placeholder="Search invoices…" aria-label="Search invoices" size="sm" />}
               actions={
                 <>
                   <Button variant="ghost" tone="neutral" size="sm" iconStart={<Bell size={16} />} aria-label="Notifications" />
-                  <DropdownMenu
+                  <Dropdown
                     trigger={<Button variant="ghost" tone="neutral" size="sm" iconStart={<Avatar name="Sarah Chen" size="sm" />} aria-label="Account" />}
                     items={[
                       { label: 'Profile', icon: <Users size={14} /> },
@@ -200,7 +200,7 @@ export function ShellDemo() {
   footer={<Avatar name={user.name} />}
 />
 
-<TopBar title={<Breadcrumbs items={trail} />} center={<Search />} actions={<Actions />} />`} />
+<TopBar title={<Breadcrumb items={trail} />} center={<Search />} actions={<Actions />} />`} />
     </div>
   );
 }

@@ -1,9 +1,9 @@
-import { Heading, Stack, Text } from '@ceebee/ui';
+import { Heading, Flex, Text } from '@ceebee/ui';
 import { ControlCenterRecipe } from '../../../components/recipes/control-center';
 
 export default function ControlCenterPage() {
   return (
-    <Stack gap={5}>
+    <Flex gap={5}>
       <div>
         <Heading level={1}>Glass control center</Heading>
         <Text tone="muted">
@@ -14,6 +14,6 @@ export default function ControlCenterPage() {
         </Text>
       </div>
       <ControlCenterRecipe />
-    </Stack>
+    </Flex>
   );
 }

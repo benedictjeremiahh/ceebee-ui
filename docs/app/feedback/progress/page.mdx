@@ -1,7 +1,7 @@
 import { ProgressDemo } from '../../../components/batch5-demos';
 import { PropsTable, Guidance } from '../../../components/props-table';
 
-# Spinner · ProgressBar <span className="docs__label">Atom</span>
+# Spin · ProgressBar <span className="docs__label">Atom</span>
 
 Both are server-safe: a CSS animation and a width, no state.
 
@@ -19,15 +19,15 @@ animation that loops forever is exactly what that preference is about. Both stay
 removing the feedback entirely would be worse than the movement.
 
 <Guidance
-  do="Prefer a Skeleton over a Spinner when you know the shape of what is loading."
+  do="Prefer a Skeleton over a Spin when you know the shape of what is loading."
   dont="Show a bare spinner with no label or nearby text; on its own it announces nothing."
 />
 
 ## Props
 
 <PropsTable rows={[
-  { name: 'Spinner label', type: 'string', description: 'Makes it a status region. Omit only when nearby text already says what is loading.' },
-  { name: 'Spinner size / tone', type: "'sm' | 'md' | 'lg' | Tone", description: 'Token sizes and semantic colour.' },
+  { name: 'Spin label', type: 'string', description: 'Makes it a status region. Omit only when nearby text already says what is loading.' },
+  { name: 'Spin size / tone', type: "'sm' | 'md' | 'lg' | Tone", description: 'Token sizes and semantic colour.' },
   { name: 'ProgressBar value / max', type: 'number', description: 'Omit value for indeterminate.' },
   { name: 'ProgressBar label', type: 'string', description: 'Required accessible name.' },
   { name: 'ProgressBar showValue', type: 'boolean', description: 'Prints the percentage after the track.' },

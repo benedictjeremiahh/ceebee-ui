@@ -1,0 +1,38 @@
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Rate <span className="docs__label">Atom</span>
+
+A score out of a few, set by pressing one of them.
+
+A radiogroup, not a row of buttons: exactly one of a small visible set is the definition of one, and
+it buys the arrow keys and the announced position for free.
+
+## Usage
+
+```tsx
+<Rate value={rating} onValueChange={setRating} label="Rating" />
+<Rate value={visit.rating} readOnly label="Rating" />
+```
+
+Two behaviours worth knowing, because both are decisions rather than defaults:
+
+- **Pressing the current score clears it.** Nought stars and one star are different answers, and
+  without this there is no way back to the first.
+- **Read-only is not a disabled radiogroup.** There is nothing to choose, so it is an image with a
+  label saying what it shows — which is also what a screen reader should hear.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'value', type: 'number', description: '0 means nothing chosen, which is not the same as the lowest score.' },
+  { name: 'onValueChange', type: '(value: number) => void', description: 'Receives the new score, or 0 when the current one is pressed again.' },
+  { name: 'count', type: 'number', default: '5', description: 'How many there are to choose from.' },
+  { name: 'size', type: 'number', default: '20', description: 'Star size in pixels — the one place a number is the honest unit.' },
+  { name: 'readOnly', type: 'boolean', description: 'Shows a score without offering to change it.' },
+  { name: 'label', type: 'string', description: 'Names the group when it is not inside a Field.' },
+]} />
+
+<Guidance
+  do="Give it a label — '3/5' on its own does not say what was rated."
+  dont="Use it for a value out of ten or more; past a handful this is a Slider, not a row to aim at."
+/>

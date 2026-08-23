@@ -1,0 +1,30 @@
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Divider <span className="docs__label">Atom</span>
+
+A rule between things.
+
+## Usage
+
+```tsx
+<Divider />
+<Divider>Or</Divider>
+<Divider orientation="vertical" />
+```
+
+An `<hr>` when it separates content, because that is what the element means and a screen reader
+announces it. With a label it becomes a `<div>` carrying the rule in its borders instead: an `<hr>`
+may not contain anything, and a separator that says which section is starting is worth more than
+the element. Either way it announces itself as a separator.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'children', type: 'ReactNode', description: 'A word or two sitting in the rule.' },
+  { name: 'orientation', type: "'horizontal' | 'vertical'", default: "'horizontal'", description: 'Vertical stretches to its flex row and takes side margins instead of block ones.' },
+]} />
+
+<Guidance
+  do="Use it between sections of one thing."
+  dont="Use it to separate cards that already have their own edges — two boundaries where there is one break."
+/>
