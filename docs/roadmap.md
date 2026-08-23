@@ -43,6 +43,9 @@ rename was the wrong tool. Listed so the gap list below is honest about its size
 | [Space](https://ant.design/components/space) / [Flex](https://ant.design/components/flex) | `Flex` |
 | [Layout](https://ant.design/components/layout) | `Sidebar` + `TopBar` |
 | [Dropdown](https://ant.design/components/dropdown) | `Dropdown` |
+| [Tag](https://ant.design/components/tag) | `Tag` — Badge's interactive sibling |
+| [Rate](https://ant.design/components/rate) | `Rate` |
+| [Divider](https://ant.design/components/divider) | `Divider` |
 
 ## Gaps a product has already had to fill
 
@@ -51,13 +54,10 @@ cost of not having them is already known.
 
 | Piece | Ant reference | What it is | Where it exists today |
 |---|---|---|---|
-| **Rate** | [Rate](https://ant.design/components/rate) | A row of stars that is a radiogroup, readable as well as settable | `components/StarRating.js` — already `role="radio"` per star |
-| **Tag** | [Tag](https://ant.design/components/tag) | A small label, sometimes pressable, in a tone | `.tag`, `.tag-cobalt`, `.tag-button` — used on nearly every card and row |
 | **Collapse** | [Collapse](https://ant.design/components/collapse) | A row that opens into an editor or detail, one at a time | Hand-rolled in `PinsSheet` and `BulkLogSheet`, each with its own chevron and `aria-expanded` |
 | **ConfirmModal** | [Modal.confirm](https://ant.design/components/modal) | A destructive question that names what is about to be lost. Ant's shape is `Modal.confirm`, not [Popconfirm](https://ant.design/components/popconfirm) — this asks in a modal, not a popover | `components/ConfirmSheet.tsx` |
 | **Image preview** | [Image.PreviewGroup](https://ant.design/components/image) | Full-screen viewer: zoom, swipe, next/previous, restore focus | `components/Lightbox.js` — 260 lines of it |
 | **Card** | [Card](https://ant.design/components/card) | `Surface` plus the header/body/actions arrangement every product rebuilds | `.card`, `.card-body`, `.card-actions` |
-| **Divider** | [Divider](https://ant.design/components/divider) | A rule between sections, optionally with a label | `AGENTS.md` lists it as server-safe; it was never built |
 
 ### Worth a decision rather than a build
 
@@ -67,8 +67,11 @@ stack, and because `title` does not exist on a phone. That is the same interacti
 `Tooltip` delivered differently — so under ADR 0014 it is not a second component, and the question
 is whether `Tooltip` should grow a layer mode or stay per-trigger. See `components/TooltipLayer.js`.
 
-**PhotoStrip.** A thumbnail rail with dots. `Carousel` may already cover it; worth comparing before
-building anything.
+**PhotoStrip — compared, and not a gap.** `Carousel` is embla-backed with slide widths, arrows and
+dots; `PhotoStrip` is native CSS scroll-snap with every slide mounted, measured at 21 image requests
+for a 119-card list rather than 595. It also carries three things a library component must not
+(ADR 0006): Google's photographer-credit requirement, the `=w360-h216-c` URL-suffix sizing contract,
+and dropping a dead photo on `onerror`. Closed.
 
 ## Gaps with no product asking yet
 

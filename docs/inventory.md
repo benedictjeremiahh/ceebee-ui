@@ -18,6 +18,7 @@ already had to write for itself — is in [roadmap.md](./roadmap.md).
 | Theme switching | — | css + client | S1 | `data-theme` + `prefers-color-scheme`; `ThemeProvider` only for the toggle |
 | MotionProvider | Atom | client | S1 | global scale / kill switch, reduced-motion seam |
 | Surface | Atom | server | S1 | `plain \| tinted \| glass \| gradient` × `tone` — carries the board look |
+| Divider | Atom | server | S5 — built | a bare `<hr>`, or `role="separator"` when it carries a label |
 | Stack / Grid / Container | Atom | server | S1 | layout only |
 | Text / Heading | Atom | server | S1 | type scale from tokens |
 
@@ -27,46 +28,48 @@ already had to write for itself — is in [roadmap.md](./roadmap.md).
 |---|---|---|---|
 | Field (label + hint + error wiring) | Atom | client | S1 |
 | Button | Atom | client | S1 |
-| TextInput / Textarea | Atom | client | S1 |
+| Input / Textarea | Atom | client | S1 |
 | Select | Atom | client | S2 — built |
 | Checkbox / Radio / Switch | Atom | client | S2 — built |
-| NumberInput | Atom | client | S2 — built |
-| DateInput | Composition | client | S3 — built |
-| TimeInput | Composition | client | S5 — built |
-| Combobox | Atom | client | S3 — built |
-| FileDrop | Composition | client | S4 — built |
+| Rate | Atom | client | S5 — built |
+| InputNumber | Atom | client | S2 — built |
+| DatePicker | Composition | client | S3 — built |
+| TimePicker | Composition | client | S5 — built |
+| AutoComplete | Atom | client | S3 — built |
+| Upload | Composition | client | S4 — built |
 
 ## feedback
 
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
 | Skeleton (`.Text` `.Circle` `.Rect`) | Atom | server | S1 |
-| Spinner / ProgressBar | Atom | server | S3 — built |
-| Badge / Tag | Atom | server | S2 — built |
+| Spin / ProgressBar | Atom | server | S3 — built |
+| Badge | Atom | server | S2 — built |
+| Tag | Atom | client | S5 — built |
 | Alert / Callout | Composition | client | S2 — built |
 | Toast | Composition | client | S3 — built |
-| EmptyState | Composition | server | S3 — built |
+| Empty | Composition | server | S3 — built |
 
 ## overlay
 
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
-| Dialog | Composition | client | S1 — built |
+| Modal | Composition | client | S1 — built |
 | Drawer | Composition | client | S1 — built |
 | Popover | Atom | client | S2 — built |
 | Tooltip | Atom | client | S2 — built |
-| DropdownMenu | Composition | client | S3 — built |
+| Dropdown | Composition | client | S3 — built |
 | CommandPalette | Composition | client | S4 — built |
 
 ## data
 
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
-| StatCard (+ `.Skeleton`) | Composition | server | S1 |
+| Statistic (+ `.Skeleton`) | Composition | server | S1 |
 | ProgressRing | Widget | server | S1 |
 | Donut | Widget | server | S2 — built |
 | Sparkline / BarMini | Widget | server | S2 — built |
-| DataTable (+ `.Skeleton`) | Composition | client | S3 — built |
+| Table (+ `.Skeleton`) | Composition | client | S3 — built |
 | Leaderboard (+ `.Skeleton`) | Composition | server | S3 — built |
 | Timeline (+ `.Skeleton`) | Composition | server | S4 — built |
 
@@ -76,9 +79,10 @@ already had to write for itself — is in [roadmap.md](./roadmap.md).
 |---|---|---|---|
 | Tabs | Composition | client | S2 — built |
 | Sidebar / TopBar | Composition | client | S3 — built |
-| Breadcrumbs | Atom | server | S3 — built |
+| Breadcrumb | Atom | server | S3 — built |
+| LinkButton | Atom | server | S5 — built |
 | Pagination | Composition | client | S3 — built |
-| Stepper | Composition | server | S4 — built |
+| Steps | Composition | server | S4 — built |
 
 ## media
 
