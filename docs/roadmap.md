@@ -4,7 +4,7 @@
 [Ant Design's component overview](https://ant.design/components/overview) — the breadth we are
 aiming at — and against the products already built on this library.
 
-Two sources feed it. The first is that comparison. The second is the pieces cee-bee-list has had to
+Two sources feed it. The first is that comparison. The second is the pieces ceebee-list has had to
 write for itself: a component a product invents is either genuinely product-specific or a gap in
 the library, and the difference is worth deciding rather than drifting into.
 
@@ -49,7 +49,7 @@ rename was the wrong tool. Listed so the gap list below is honest about its size
 
 ## Gaps a product has already had to fill
 
-The strongest candidates: cee-bee-list wrote each of these because the library had nothing, so the
+The strongest candidates: ceebee-list wrote each of these because the library had nothing, so the
 cost of not having them is already known.
 
 | Piece | Ant reference | What it is | Where it exists today |
@@ -61,7 +61,7 @@ cost of not having them is already known.
 
 ### Worth a decision rather than a build
 
-**A tooltip layer.** `Tooltip` wraps one trigger. cee-bee-list needed the opposite: one listener on
+**A tooltip layer.** `Tooltip` wraps one trigger. ceebee-list needed the opposite: one listener on
 the document and elements opting in with an attribute, because its tips sit on rows that clip and
 stack, and because `title` does not exist on a phone. That is the same interaction contract as
 `Tooltip` delivered differently — so under ADR 0014 it is not a second component, and the question

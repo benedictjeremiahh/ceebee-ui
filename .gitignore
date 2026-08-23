@@ -4,3 +4,5 @@ dist/
 .turbo/
 *.tsbuildinfo
 .DS_Store
+.vercel
+.env*
