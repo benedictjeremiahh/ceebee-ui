@@ -94,6 +94,12 @@ export function AutoComplete({
      input of a field that is, in fact, still set. */
   const [chosen, setChosen] = useState<ComboboxOption | null>(null);
 
+  /* Open is held here so the list can be closed by something other than a
+     click. See the note on `modal` below: the page lock it brings does not
+     apply on a touch device, and there the page can still scroll out from
+     under an open list. */
+  const [open, setOpen] = useState(false);
+
   const available = async ? loaded : (items ?? []);
 
   /* Base UI works in whole items, not in ids. Handing it a bare string makes the input show the
@@ -149,6 +155,31 @@ export function AutoComplete({
     inFlight.current?.abort();
   }, []);
 
+  /* The page scrolling closes the list.
+  
+     `modal` locks the page while the list is open, which settles this on a
+     pointer device — but on a touch device Base UI deliberately leaves the page
+     scrollable, matching how a native picker behaves there. So on a phone the
+     anchor can still slide away under whatever chrome is stuck to the top of
+     the page, and the popup, being a dropdown, is drawn over that chrome. There
+     is no z-index that fixes it: a dropdown opened FROM sticky chrome has to be
+     above it, and one whose anchor has scrolled under it must not be.
+  
+     Only the page's own scroll counts. `scroll` does not bubble, so this listens
+     in the capture phase and then checks what actually scrolled — the list
+     inside the popup is a scroller too, and scrolling it must not close it. */
+  useEffect(() => {
+    if (!open) return undefined;
+    const onScroll = (event: Event) => {
+      const target = event.target;
+      if (target === document || target === document.documentElement || target === document.body) {
+        setOpen(false);
+      }
+    };
+    window.addEventListener('scroll', onScroll, { capture: true, passive: true });
+    return () => window.removeEventListener('scroll', onScroll, { capture: true });
+  }, [open]);
+
   return (
     <BaseCombobox.Root
       items={available}
@@ -163,6 +194,21 @@ export function AutoComplete({
         setChosen(option);
         onValueChange?.(option?.value ?? null);
       }}
+      /* Modal, the way Select already is by default and this was not.
+      
+         The popup follows its anchor, and a page that scrolls takes the anchor
+         with it. Measured at 390px against the app's sticky masthead: 180px of
+         scroll put the field behind the header while the popup, at
+         z-index: dropdown, went on being drawn over it. Base UI marks the
+         anchor hidden only once it has left the viewport entirely, so there is
+         a whole band of scroll where the list floats over the page chrome.
+      
+         Locking the page while the list is open removes the situation instead
+         of styling around it, and makes the two controls that look identical in
+         a filter row behave identically too. */
+      modal
+      open={open}
+      onOpenChange={setOpen}
       isItemEqualToValue={(a: ComboboxOption, b: ComboboxOption) => a?.value === b?.value}
       itemToStringLabel={(item: ComboboxOption | string) => (typeof item === 'string' ? item : item.label)}
       disabled={disabled}
