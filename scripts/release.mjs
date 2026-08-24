@@ -59,6 +59,24 @@ function run(command, args, { capture = false } = {}) {
   });
 }
 
+/* npm's browser authentication needs a terminal to wait in.
+ *
+ * Run without one — from a script, from CI, from an agent — npm prints the URL
+ * and exits EOTP in the same breath, so the link is dead before anyone can open
+ * it. Under a pty it prints the URL and waits, which is the behaviour this whole
+ * script is built around.
+ *
+ * `script -q /dev/null <command>` is the BSD way to hand a child a pty; the
+ * Linux one takes its arguments the other way round. Only used when there is no
+ * terminal already, so a person running this by hand gets the plain command. */
+function publishCommand() {
+  const publish = ['pnpm', 'exec', 'changeset', 'publish'];
+  if (process.stdout.isTTY) return [publish[0], publish.slice(1)];
+  return platform === 'darwin'
+    ? ['script', ['-q', '/dev/null', ...publish]]
+    : ['script', ['-qfec', publish.join(' '), '/dev/null']];
+}
+
 function openInBrowser(url) {
   const opener = platform === 'darwin' ? 'open' : 'xdg-open';
   console.log(`\n  → opening ${url}\n    Click Authorize there; the publish carries on by itself.\n`);
@@ -111,7 +129,7 @@ if (DRY) {
 }
 
 step('Publishing to npm');
-await run('pnpm', ['exec', 'changeset', 'publish'], { capture: true });
+await run(...publishCommand(), { capture: true });
 
 step('Pushing');
 await run('git', ['push', '--follow-tags']);
