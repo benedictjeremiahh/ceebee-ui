@@ -12,7 +12,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "pnpm -r exec tsc --noEmit",
-    "release": "pnpm build && changeset publish"
+    "release": "node scripts/release.mjs",
+    "release:dry": "node scripts/release.mjs --dry"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.10",
