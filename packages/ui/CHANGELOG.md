@@ -1,5 +1,39 @@
 # @ceebee/ui
 
+## 0.6.0
+
+### Minor Changes
+
+- a090d13: Add the server-safe Card family with Meta, responsive Grid, loading, and matching Skeleton anatomy.
+- a090d13: Add Anchor, FloatButton, and Splitter with native navigation, action, and resizing contracts.
+- a090d13: Add Collapse with single and multiple disclosure modes, add composable modal confirmation and
+  matching Modal Skeleton coverage, and extend Image with grouped fullscreen preview, zoom, localized
+  controls, controlled state, and matching preview-grid Skeletons.
+- a090d13: Add a server-safe PageContainer frame with matching skeleton for ProLayout-style page composition.
+- a090d13: Add anchored `Popconfirm`, persistent `Notification`, inline `Calendar`, persistent navigation
+  `Menu`, and single/range `Slider` compositions with matching loading skeletons. Isolate
+  DatePicker's internal calendar CSS namespace from Calendar.
+- a090d13: Add TreeSelect, Cascader, semantic ColorPicker, and server-safe Listy components with matching skeletons.
+- a090d13: Add Masonry, Affix, Watermark, and BorderBeam coverage with documented motion and loading contracts.
+- a090d13: Add server-safe Space, Descriptions, and Result compositions with matching Skeletons.
+- a090d13: Add hierarchical Tree, inline Mentions, two-list Transfer, and server-safe QRCode coverage.
+
+### Patch Changes
+
+- a090d13: Guard every `:hover` rule behind `@media (hover: hover)`.
+
+  A touchscreen has no hover, so a browser applies `:hover` on tap and leaves it
+  applied until something else is touched. Every pressable surface in this
+  package — buttons, tags, tabs, table rows, calendar days, select options —
+  therefore stayed lit after a finger passed over it, and a scroll left a trail of
+  controls looking pressed. It was reported as "everything I scroll past gets
+  clicked", which is exactly what it looks like.
+
+  44 rules across 27 files. Where a selector list mixed `:hover` with
+  `:focus-visible` or `[data-active]`, only the hover half moved: keyboard focus
+  and keyboard selection are not hover, and both must keep working on a device
+  that cannot hover.
+
 ## 0.5.2
 
 ### Patch Changes
