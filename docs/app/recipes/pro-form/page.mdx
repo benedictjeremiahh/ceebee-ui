@@ -1,0 +1,23 @@
+import { CodeBlock } from '../../../components/code-block';
+
+# ProForm recipe
+
+**Ant Pro reference:** the `ProForm` family, including dependency, filter, step, modal, drawer, and
+schema forms.
+
+Use `Field` around Ceebee inputs, `Select`, `DatePicker`, `TreeSelect`, `Button`, `Modal`, and
+`Drawer`. Ceebee owns control and field accessibility; the application-owned form engine owns
+values, validation rules, submission, dependencies, persistence, and server errors.
+
+<CodeBlock code={`<form onSubmit={form.handleSubmit(saveProject)}>
+  <Field label="Project name" error={form.errors.name} required>
+    <Input {...form.register('name')} />
+  </Field>
+  <Field label="Owner" error={form.errors.owner}>
+    <TreeSelect label="Owner" nodes={ownerNodes} value={form.values.owner} onValueChange={form.setOwner} />
+  </Field>
+  <Button type="submit">Save project</Button>
+</form>`} />
+
+Non-goals: a form-state provider, JSON-schema renderer, request lifecycle, cross-field rule engine,
+login form, or modal/drawer submission abstraction.

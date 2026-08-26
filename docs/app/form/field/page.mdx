@@ -47,7 +47,11 @@ invalid without a message — for the case where the message lives somewhere els
 The library is deliberately neutral. Nothing below is an adapter; `Input` simply forwards its
 ref and props.
 
-<Demo layout="block" code={`// react-hook-form
+Neither of these can run on this page — one needs a form library, the other a server action — so
+they are written out rather than staged. It is the same component in both.
+
+```tsx
+// react-hook-form
 <Field label="Email" error={errors.email?.message}>
   <Input {...register('email')} />
 </Field>
@@ -55,9 +59,8 @@ ref and props.
 // Next Server Action — no client form state at all
 <form action={createUser}>
   <Field label="Email"><Input name="email" required /></Field>
-</form>`}>
-  <Text tone="muted" size="sm">Same component, three different form stories.</Text>
-</Demo>
+</form>
+```
 
 ## Props
 

@@ -39,8 +39,9 @@ describe('global stacking contract', () => {
       ['nav/shell.tsx', 'cb-sidebar__flyout-positioner'],
       ['form/select.tsx', 'cb-select__positioner'],
       ['form/autocomplete.tsx', 'cb-autocomplete__positioner'],
-      ['form/date-picker.tsx', 'cb-calendar__positioner'],
+      ['form/date-picker.tsx', 'cb-date-picker-calendar__positioner'],
       ['form/time-picker.tsx', 'cb-times__positioner'],
+      ['overlay/popconfirm/popconfirm.tsx', 'cb-popconfirm__positioner'],
       ['onboarding/coachmark.tsx', 'cb-coachmark__positioner'],
     ] as const;
 

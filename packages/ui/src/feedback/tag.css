@@ -16,7 +16,9 @@
   transition: border-color var(--cb-duration-fast) var(--cb-ease-standard),
     background-color var(--cb-duration-fast) var(--cb-ease-standard);
 }
-.cb-tag--pressable:hover { border-color: var(--cb-tone-brand); }
+@media (hover: hover) {
+  .cb-tag--pressable:hover { border-color: var(--cb-tone-brand); }
+}
 .cb-tag--pressable:focus-visible {
   outline: var(--cb-focus-width) solid var(--cb-tone-brand);
   outline-offset: var(--cb-focus-offset);
@@ -37,7 +39,9 @@
   opacity: 0.7;
   cursor: pointer;
 }
-.cb-tag__close:hover { opacity: 1; }
+@media (hover: hover) {
+  .cb-tag__close:hover { opacity: 1; }
+}
 .cb-tag__close:focus-visible {
   outline: var(--cb-focus-width) solid currentColor;
   outline-offset: 1px;

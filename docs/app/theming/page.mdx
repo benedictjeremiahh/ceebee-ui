@@ -12,7 +12,11 @@ Colour resolves in CSS, before React runs. A **Theme** is the light or dark rend
 `data-theme` on the document root wins in both directions; with no attribute the page follows
 `prefers-color-scheme`. `ThemeProvider` only writes that attribute — it never holds colour.
 
-<Demo layout="block" code={`import { ThemeProvider, useTheme } from '@ceebee/ui/client';
+The provider belongs at the root of an application, so it cannot be staged inside an example. The
+toggle at the top right of this page is this exact hook.
+
+```tsx
+import { ThemeProvider, useTheme } from '@ceebee/ui/client';
 
 export default function Layout({ children }) {
   return <ThemeProvider defaultChoice="system">{children}</ThemeProvider>;
@@ -21,9 +25,8 @@ export default function Layout({ children }) {
 function ThemeToggle() {
   const { choice, setChoice, resolved } = useTheme();
   return <Button onClick={() => setChoice(resolved === 'dark' ? 'light' : 'dark')}>{resolved}</Button>;
-}`}>
-  <Text tone="muted">Use the toggle at the top right of this page — it is this exact hook.</Text>
-</Demo>
+}
+```
 
 ## Writing a Skin
 

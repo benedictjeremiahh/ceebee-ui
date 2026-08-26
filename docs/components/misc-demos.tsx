@@ -2,7 +2,7 @@
 
 import { Image } from '@ceebee/ui/client';
 import { Grid, Leaderboard, Flex, Surface, Text } from '@ceebee/ui';
-import { CodeBlock } from './code-block';
+import { Demo } from './demo';
 
 const LEADERS = [
   { id: '1', name: 'Ada Putri', score: '2,480', detail: '12 modules', delta: { value: '▲2', direction: 'up' as const } },
@@ -14,20 +14,17 @@ const LEADERS = [
 
 export function LeaderboardDemo() {
   return (
-    <div className="demo">
-      <div className="demo__stage" data-layout="block">
-        <Surface padding="md" radius="lg">
-          <Leaderboard label="Weekly leaders" entries={LEADERS} />
-        </Surface>
-      </div>
-      <CodeBlock bare code={`<Leaderboard
+    <Demo layout="block" code={`<Leaderboard
   label="Weekly leaders"
   entries={[
     { id: '1', name: 'Ada Putri', score: '2,480', detail: '12 modules' },
     { id: '4', name: 'Benedict J', score: '1,840', you: true },
   ]}
-/>`} />
-    </div>
+/>`}>
+      <Surface padding="md" radius="lg">
+        <Leaderboard label="Weekly leaders" entries={LEADERS} />
+      </Surface>
+    </Demo>
   );
 }
 
@@ -46,30 +43,43 @@ const PHOTO =
 
 export function ImageDemo() {
   return (
-    <div className="demo">
-      <div className="demo__stage" data-layout="block">
-        <Grid minItemWidth="14rem" gap={4}>
-          <Flex gap={2}>
-            <Image src={PHOTO} alt="Abstract gradient" aspectRatio={4 / 3} blurDataUrl={BLUR} radius="lg" />
-            <Text size="xs" tone="subtle">with a blur placeholder</Text>
-          </Flex>
-          <Flex gap={2}>
-            <Image src={PHOTO} alt="Abstract gradient" aspectRatio={4 / 3} background="var(--cb-bg-subtle)" radius="lg" />
-            <Text size="xs" tone="subtle">flat background, no blur</Text>
-          </Flex>
-          <Flex gap={2}>
-            <Image src="/does-not-exist.png" alt="A photo that never loads" aspectRatio={4 / 3} blurDataUrl={BLUR} radius="lg" />
-            <Text size="xs" tone="subtle">broken source — the placeholder stays</Text>
-          </Flex>
-        </Grid>
-      </div>
-      <CodeBlock bare code={`<Image
+    <Demo layout="block" code={`<Image
   src={photo.url}
   alt="Abstract gradient"
   aspectRatio={4 / 3}
   blurDataUrl={photo.blur}
   radius="lg"
-/>`} />
-    </div>
+/>`}>
+      <Grid minItemWidth="14rem" gap={4}>
+        <Flex gap={2}>
+          <Image src={PHOTO} alt="Abstract gradient" aspectRatio={4 / 3} blurDataUrl={BLUR} radius="lg" />
+          <Text size="xs" tone="subtle">with a blur placeholder</Text>
+        </Flex>
+        <Flex gap={2}>
+          <Image src={PHOTO} alt="Abstract gradient" aspectRatio={4 / 3} background="var(--cb-bg-subtle)" radius="lg" />
+          <Text size="xs" tone="subtle">flat background, no blur</Text>
+        </Flex>
+        <Flex gap={2}>
+          <Image src="/does-not-exist.png" alt="A photo that never loads" aspectRatio={4 / 3} blurDataUrl={BLUR} radius="lg" />
+          <Text size="xs" tone="subtle">broken source — the placeholder stays</Text>
+        </Flex>
+      </Grid>
+    </Demo>
+  );
+}
+
+const PREVIEW_PHOTOS = [
+  { id: 'one', src: PHOTO, alt: 'Purple and teal abstract landscape', aspectRatio: 4 / 3 },
+  { id: 'two', src: PHOTO, alt: 'Second abstract landscape', aspectRatio: 4 / 3, caption: 'Alternate view' },
+];
+
+export function ImagePreviewDemo() {
+  return (
+    <Demo layout="block" code={`<Image.PreviewGroup
+  items={photos}
+  label="Site visit photos"
+/>`}>
+      <Image.PreviewGroup items={PREVIEW_PHOTOS} label="Abstract landscapes" />
+    </Demo>
   );
 }

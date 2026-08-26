@@ -115,24 +115,24 @@ export function DatePicker({
           side="bottom"
           align="start"
           sideOffset={6}
-          className="cb-calendar__positioner"
+          className="cb-date-picker-calendar__positioner"
         >
-          <BasePopover.Popup className="cb-calendar">
-            <div className="cb-calendar__head">
+          <BasePopover.Popup className="cb-date-picker-calendar">
+            <div className="cb-date-picker-calendar__head">
               <button
                 type="button"
-                className="cb-calendar__nav"
+                className="cb-date-picker-calendar__nav"
                 aria-label={labels.previousMonth}
                 onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1))}
               >
                 <ChevronLeft size={16} />
               </button>
-              <p className="cb-calendar__month" aria-live="polite">
+              <p className="cb-date-picker-calendar__month" aria-live="polite">
                 {cursor.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}
               </p>
               <button
                 type="button"
-                className="cb-calendar__nav"
+                className="cb-date-picker-calendar__nav"
                 aria-label={labels.nextMonth}
                 onClick={() => setCursor(new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1))}
               >
@@ -140,7 +140,7 @@ export function DatePicker({
               </button>
             </div>
 
-            <table className="cb-calendar__grid">
+            <table className="cb-date-picker-calendar__grid">
               <thead>
                 <tr>
                   {weekdays.map((day) => (
@@ -160,7 +160,7 @@ export function DatePicker({
                         <td key={cell.date.toISOString()}>
                           <button
                             type="button"
-                            className="cb-calendar__day"
+                            className="cb-date-picker-calendar__day"
                             data-outside={!cell.inMonth || undefined}
                             data-selected={selected || undefined}
                             data-today={isSameDay(cell.date, new Date()) || undefined}

@@ -1,0 +1,128 @@
+import { Demo } from '../../../components/demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+import { Affix, Surface, Text, Flex } from '@ceebee/ui';
+
+# Affix <span className="docs__label">Atom</span>
+
+`Affix` pins supplied content to an edge of the nearest scroll container using native CSS sticky
+positioning. It is a layout boundary, not a viewport overlay: the containing block and its overflow
+rules remain owned by the consuming application.
+
+## Usage
+
+Sticky only means anything inside something that scrolls, so every example here gives the stage its
+own scroll container. **Scroll the example** to see the affixed region hold its edge.
+
+<Demo
+  layout="block"
+  scroll
+  code={`<Affix edge="top" offset="sm">
+  <Surface padding="sm"><Text>Section controls</Text></Surface>
+</Affix>`}
+>
+  <Affix edge="top" offset="sm">
+    <Surface padding="sm"><Text>Section controls</Text></Surface>
+  </Affix>
+  <Flex gap={3}>
+    <Text tone="muted">Row one of the scrolling region.</Text>
+    <Text tone="muted">Row two.</Text>
+    <Text tone="muted">Row three.</Text>
+    <Text tone="muted">Row four.</Text>
+    <Text tone="muted">Row five.</Text>
+    <Text tone="muted">Row six.</Text>
+    <Text tone="muted">Row seven.</Text>
+    <Text tone="muted">Row eight — the controls above are still there.</Text>
+  </Flex>
+</Demo>
+
+## Edge
+
+`edge="bottom"` pins to the block end of the same scroll container, for a summary bar that should
+stay under a long list.
+
+<Demo
+  layout="block"
+  scroll
+  code={`<Affix edge="bottom" offset="sm">
+  <Surface padding="sm"><Text>3 selected · Export</Text></Surface>
+</Affix>`}
+>
+  <Flex gap={3}>
+    <Text tone="muted">Row one of the scrolling region.</Text>
+    <Text tone="muted">Row two.</Text>
+    <Text tone="muted">Row three.</Text>
+    <Text tone="muted">Row four.</Text>
+    <Text tone="muted">Row five.</Text>
+    <Text tone="muted">Row six.</Text>
+    <Text tone="muted">Row seven.</Text>
+    <Text tone="muted">Row eight.</Text>
+  </Flex>
+  <Affix edge="bottom" offset="sm">
+    <Surface padding="sm"><Text>3 selected · Export</Text></Surface>
+  </Affix>
+</Demo>
+
+## Offset
+
+The three offsets are spacing Tokens, not numbers: `sm`, `md`, and `lg` read `--cb-space-2`,
+`--cb-space-4`, and `--cb-space-6`.
+
+<Demo
+  layout="block"
+  scroll
+  code={`<Affix edge="top" offset="lg">
+  <Surface padding="sm"><Text>Held six spacing units from the edge</Text></Surface>
+</Affix>`}
+>
+  <Affix edge="top" offset="lg">
+    <Surface padding="sm"><Text>Held six spacing units from the edge</Text></Surface>
+  </Affix>
+  <Flex gap={3}>
+    <Text tone="muted">Row one.</Text>
+    <Text tone="muted">Row two.</Text>
+    <Text tone="muted">Row three.</Text>
+    <Text tone="muted">Row four.</Text>
+    <Text tone="muted">Row five.</Text>
+    <Text tone="muted">Row six.</Text>
+    <Text tone="muted">Row seven.</Text>
+    <Text tone="muted">Row eight.</Text>
+  </Flex>
+</Demo>
+
+## Anatomy
+
+Affix renders one sticky wrapper, `.cb-affix`, around the supplied content. The wrapper owns only
+the sticky edge, Token-based offset, and semantic stacking rung; the child content remains untouched
+inside it, including its own semantics and interactions.
+
+## Contract
+
+Affix has no role, tabindex, keyboard, focus, dismissal, portal, observer, callback, or gesture
+contract. Child semantics and interactions pass through unchanged. It also does not add overflow or
+focus clipping, so a child control remains usable while sticky.
+
+The nearest scroll container controls whether sticky positioning can take effect. An ancestor with
+an incompatible overflow or containment rule can change the boundary; fix that layout boundary in
+the consuming app rather than adding a callback or scroll state to Affix.
+
+Use `Affix` for content that follows a scroll container. Use `FloatButton` for a fixed viewport
+action, and keep scroll analytics in the application that owns the scroll state.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'edge', type: "'top' | 'bottom'", default: "'top'", description: 'Sticky edge within the nearest scroll container.' },
+  { name: 'offset', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Spacing Token used as the inset from the selected edge.' },
+  { name: 'children', type: 'ReactNode', default: '—', description: 'Content to keep in the sticky region.' },
+]} />
+
+## Tokens
+
+`offset="sm"`, `"md"`, and `"lg"` read `--cb-space-2`, `--cb-space-4`, and `--cb-space-6`.
+The sticky region uses the semantic `--cb-z-sticky` rung from the global stacking ladder. Affix
+does not accept a raw offset, z-index, or `className` escape hatch.
+
+<Guidance
+  do="Use Affix for a toolbar or section header that should remain visible within its scroll container."
+  dont="Use Affix as a fixed viewport action or to observe and report scrolling."
+/>

@@ -96,6 +96,7 @@
   }
 }
 
+.cb-radius--none { border-radius: var(--cb-radius-none); }
 .cb-radius--sm { border-radius: var(--cb-radius-sm); }
 .cb-radius--md { border-radius: var(--cb-radius-md); }
 .cb-radius--lg { border-radius: var(--cb-radius-lg); }

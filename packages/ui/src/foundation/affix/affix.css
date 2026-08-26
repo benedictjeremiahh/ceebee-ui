@@ -1,0 +1,12 @@
+.cb-affix {
+  position: sticky;
+  z-index: var(--cb-z-sticky);
+}
+
+.cb-affix--top {
+  inset-block-start: var(--cb-affix-offset);
+}
+
+.cb-affix--bottom {
+  inset-block-end: var(--cb-affix-offset);
+}

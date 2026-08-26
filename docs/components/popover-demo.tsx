@@ -3,7 +3,7 @@
 import { Info } from 'lucide-react';
 import { Button, Popover, Tooltip } from '@ceebee/ui/client';
 import { Flex, Text } from '@ceebee/ui';
-import { CodeBlock } from './code-block';
+import { Demo } from './demo';
 
 const CODE = `<Popover trigger={<Button variant="outline">Details</Button>} side="bottom">
   <Text weight="semibold">Billing period</Text>
@@ -18,26 +18,23 @@ const CODE = `<Popover trigger={<Button variant="outline">Details</Button>} side
 
 export function PopoverDemo() {
   return (
-    <div className="demo">
-      <div className="demo__stage">
-        <Popover trigger={<Button variant="outline" tone="neutral">Details</Button>}>
-          <Flex gap={2}>
-            <Text weight="semibold" size="sm">
-              Billing period
-            </Text>
-            <Text size="sm" tone="muted">
-              Charges run from the 1st to the last day of the month.
-            </Text>
-          </Flex>
-        </Popover>
+    <Demo code={CODE}>
+      <Popover trigger={<Button variant="outline" tone="neutral">Details</Button>}>
+        <Flex gap={2}>
+          <Text weight="semibold" size="sm">
+            Billing period
+          </Text>
+          <Text size="sm" tone="muted">
+            Charges run from the 1st to the last day of the month.
+          </Text>
+        </Flex>
+      </Popover>
 
-        <Tooltip label="This is a tooltip">
-          <Button variant="ghost" tone="neutral" iconStart={<Info size={16} />}>
-            Hover me
-          </Button>
-        </Tooltip>
-      </div>
-      <CodeBlock bare code={CODE} />
-    </div>
+      <Tooltip label="This is a tooltip">
+        <Button variant="ghost" tone="neutral" iconStart={<Info size={16} />}>
+          Hover me
+        </Button>
+      </Tooltip>
+    </Demo>
   );
 }

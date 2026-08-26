@@ -1,0 +1,149 @@
+import { Demo } from '../../../components/demo';
+import { TreeSelect, TreeSelectSkeleton, Field } from '@ceebee/ui/client';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# TreeSelect <span className="docs__label">Composition</span>
+
+A collapsed form control that chooses one injected Tree path. It is not `Tree`: Tree remains an
+inline hierarchical display. It is not Cascader: TreeSelect exposes one anchored Tree traversal,
+not a sequence of column pickers.
+
+## Usage
+
+<Demo
+  layout="block"
+  code={`<TreeSelect label="Owner" defaultValue="team/design" nodes={nodes} />`}
+>
+  <TreeSelect
+    label="Owner"
+    defaultValue="team/design"
+    nodes={[
+      {
+        key: 'team',
+        label: 'Teams',
+        children: [
+          { key: 'design', label: 'Design' },
+          { key: 'platform', label: 'Platform' },
+          { key: 'contractors', label: 'Contractors', disabled: true },
+        ],
+      },
+      {
+        key: 'people',
+        label: 'People',
+        children: [
+          { key: 'ada', label: 'Ada Putri' },
+          { key: 'rio', label: 'Rio Hakim' },
+        ],
+      },
+    ]}
+  />
+</Demo>
+
+## Interaction boundary
+
+- **Role:** one labelled button opens an anchored `tree`.
+- **Keyboard and focus:** Base UI owns trigger focus, outside dismissal, and focus return. Tree owns
+  roving hierarchy focus; selecting an enabled node closes the popup and returns to the trigger.
+- **State:** `value` / `defaultValue` own one recursive selected path; `open` / `defaultOpen` own popup state.
+- **Dismissal and positioning:** Base UI Popover owns Escape/outside dismissal and anchored placement.
+- **Data:** `nodes` is synchronous app-injected hierarchy; TreeSelect never fetches data.
+
+## Empty and placeholder
+
+`defaultValue={null}` starts with nothing chosen; `placeholder` is what the trigger says until
+something is.
+
+<Demo
+  layout="block"
+  code={`<TreeSelect label="Owner" defaultValue={null} placeholder="Choose an owner" nodes={nodes} />`}
+>
+  <TreeSelect
+    label="Owner"
+    defaultValue={null}
+    placeholder="Choose an owner"
+    nodes={[
+      { key: 'team', label: 'Teams', children: [{ key: 'design', label: 'Design' }] },
+      { key: 'people', label: 'People', children: [{ key: 'ada', label: 'Ada Putri' }] },
+    ]}
+  />
+</Demo>
+
+## Inside a Field
+
+<Demo
+  layout="block"
+  code={`<Field label="Owner" hint="Who is accountable for this project.">
+  <TreeSelect label="Owner" defaultValue="team/platform" nodes={nodes} />
+</Field>`}
+>
+  <Field label="Owner" hint="Who is accountable for this project.">
+    <TreeSelect
+      label="Owner"
+      defaultValue="team/platform"
+      nodes={[
+        {
+          key: 'team',
+          label: 'Teams',
+          children: [
+            { key: 'design', label: 'Design' },
+            { key: 'platform', label: 'Platform' },
+          ],
+        },
+      ]}
+    />
+  </Field>
+</Demo>
+
+## Disabled
+
+<Demo
+  layout="block"
+  code={`<TreeSelect label="Owner" defaultValue="team/design" nodes={nodes} disabled />`}
+>
+  <TreeSelect
+    label="Owner"
+    defaultValue="team/design"
+    disabled
+    nodes={[{ key: 'team', label: 'Teams', children: [{ key: 'design', label: 'Design' }] }]}
+  />
+</Demo>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'nodes', type: 'TreeNode[]', description: 'Injected Tree hierarchy; selected values use Tree’s encoded recursive paths.' },
+  { name: 'value / defaultValue', type: 'string | null', description: 'Controlled or initial selected path.' },
+  { name: 'onValueChange', type: '(path: string) => void', description: 'Reports an enabled selected path.' },
+  { name: 'open / defaultOpen', type: 'boolean', description: 'Controlled or initial popup visibility.' },
+  { name: 'onOpenChange', type: '(open: boolean) => void', description: 'Reports Base UI open-state requests.' },
+  { name: 'label', type: 'string', description: 'Required accessible trigger name.' },
+  { name: 'placeholder / name', type: 'string', description: 'Empty-value text and hidden form field name.' },
+  { name: 'disabled / motion', type: 'boolean', default: 'false / true', description: 'Disables selection or removes shell/popup transitions.' },
+]} />
+
+## Skeleton
+
+`TreeSelect.Skeleton` is noninteractive trigger geometry.
+
+<Demo layout="block" code={`<TreeSelectSkeleton />`}>
+  <TreeSelectSkeleton />
+</Demo>
+
+## Keyboard
+
+| Key | Behavior |
+|---|---|
+| `Enter` / `Space` | Opens the anchored Tree from the trigger, or selects the focused node. |
+| `Arrow Up` / `Arrow Down` | Moves Tree focus between visible nodes. |
+| `Arrow Right` / `Arrow Left` | Expands or collapses a branch, then moves between parent and child. |
+| `Home` / `End` | Moves to the first or last visible node. |
+| `Escape` | Dismisses the popup and returns focus to the trigger. |
+
+<Guidance do="Use TreeSelect when one form value comes from a hierarchy whose shape benefits from Tree traversal." dont="Use it for multi-select, async search, or step-by-step column navigation." />
+
+## Tokens
+
+TreeSelect reads `--cb-space-*`,
+`--cb-control-height-*`, `--cb-border*`, `--cb-radius-md`, `--cb-surface*`, `--cb-fg*`,
+`--cb-font-sans`, `--cb-text-sm`, `--cb-focus-*`, `--cb-shadow-md`, `--cb-duration-fast`,
+`--cb-ease-*`, and `--cb-z-dropdown`.

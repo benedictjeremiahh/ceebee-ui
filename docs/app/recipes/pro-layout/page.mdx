@@ -1,0 +1,26 @@
+import { CodeBlock } from '../../../components/code-block';
+
+# ProLayout recipe
+
+**Ant Pro reference:** `ProLayout` and `PageContainer`.
+
+Compose `Sidebar`, `TopBar`, `PageContainer`, and `Breadcrumb` for the visible shell. Ceebee
+owns their layout, navigation, and accessibility primitives; the application owns routes, current
+location, permissions, responsive information architecture, and page metadata.
+
+<CodeBlock code={`<Sidebar sections={navigationSections} header={<Brand />} />
+<main>
+  <TopBar title={<Breadcrumb items={crumbs} />} actions={<UserActions />} />
+  <PageContainer
+    breadcrumb={<Breadcrumb items={crumbs} />}
+    title={<Heading level={1}>Projects</Heading>}
+    extra={<CreateProjectButton />}
+  >
+    <ProjectContent />
+  </PageContainer>
+</main>`} />
+
+`PageContainer` owns only the reusable frame anatomy. Every injected region remains explicit, so
+route resolution, title policy, permissions, and action behavior stay visible in the app.
+
+Non-goals: route generation, auth-aware menus, page fetching, and responsive navigation policy.

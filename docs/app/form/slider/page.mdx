@@ -1,0 +1,85 @@
+import { Demo } from '../../../components/demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+import { Slider } from '@ceebee/ui/client';
+
+# Slider <span className="docs__label">Composition</span>
+
+`Slider` selects one continuous numeric value, or two bounded values when `range` is true. It is
+not a rating, an input field, or a group of actions.
+
+## Usage
+
+<Demo layout="block" code={`<Slider
+  label="Volume"
+  defaultValue={35}
+  min={0}
+  max={100}
+  onValueChange={setVolume}
+/>`}>
+  <Slider label="Volume" defaultValue={35} />
+</Demo>
+
+For a bounded interval, the same Slider contract gets two named thumbs:
+
+```tsx
+<Slider
+  range
+  label="Price"
+  defaultValue={[20, 80]}
+  minStepsBetweenValues={5}
+  onValueChange={setPriceRange}
+/>
+```
+
+## Anatomy
+
+Slider is a Base UI root containing one control, a track, an indicator, and one or two native
+range-input thumbs. Base UI owns arrow, Home, End, Page Up, Page Down, pointer, touch, collision,
+and form behaviour. Ceebee owns the Tokens and the value-only callbacks.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'label', type: 'string', default: '—', description: 'Required accessible name. Range thumbs are named Minimum {label} and Maximum {label}.' },
+  { name: 'value / defaultValue', type: 'number | readonly [number, number]', default: '0 / uncontrolled', description: 'Use a number normally, or exactly two ascending values with range.' },
+  { name: 'range', type: 'boolean', default: 'false', description: 'Enables the two-thumb interval contract.' },
+  { name: 'onValueChange', type: '(value) => void', default: '—', description: 'Receives the number or two-value tuple while interaction changes it.' },
+  { name: 'onValueCommitted', type: '(value) => void', default: '—', description: 'Receives the value after a keyboard, track, or drag interaction commits.' },
+  { name: 'min / max / step', type: 'number', default: '0 / 100 / 1', description: 'Finite numeric bounds and increment; min must be below max.' },
+  { name: 'largeStep', type: 'number', default: 'Base UI default', description: 'Page Up, Page Down, and Shift+Arrow increment.' },
+  { name: 'minStepsBetweenValues', type: 'number', default: '0', description: 'Minimum discrete gap between range thumbs.' },
+  { name: 'orientation', type: "'horizontal' | 'vertical'", default: "'horizontal'", description: 'Changes slider geometry, not its interaction contract.' },
+  { name: 'tone / size', type: 'Tone / Size', default: "'brand' / 'md'", description: 'Semantic colour and control-height Tokens.' },
+  { name: 'name', type: 'string', default: '—', description: 'Form field name. A range submits two values with the same name in thumb order.' },
+  { name: 'getAriaValueText', type: '(value, index) => string', default: '—', description: 'Supplies a spoken value with a unit or domain-specific format.' },
+  { name: 'motion', type: 'boolean', default: 'true', description: 'Removes thumb transitions when false; value and focus feedback remain visible.' },
+  { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables keyboard, pointer, and touch interaction.' },
+]} />
+
+## Keyboard and validation
+
+Tab focuses a thumb. Arrow keys move by `step`; Page Up/Page Down and Shift+Arrow move by
+`largeStep`; Home and End move to the applicable bound. In a range, thumbs cannot violate
+`minStepsBetweenValues`. Invalid min/max, steps, or supplied values throw at render time rather
+than silently produce an unreachable control.
+
+Use a real `label`; it is required because a position without a subject is not meaningful. Use
+`getAriaValueText` when the displayed number needs a spoken unit or format.
+
+When used inside `Field`, the Field label focuses the single thumb or the minimum thumb of a range.
+Both range thumbs retain explicit `Minimum {label}` and `Maximum {label}` names, and both receive
+the Field hint and error description. With `name="price"`, a range submits two values named `price`
+in minimum-to-maximum thumb order.
+
+<Guidance
+  do="Use Slider for a bounded value where direct manipulation makes the range understandable."
+  dont="Use Slider for exact free-form entry, a small rating, multiple independent actions, or a range with more than two values."
+/>
+
+## Skeleton and Tokens
+
+`Slider.Skeleton` matches the selected orientation and optional two-thumb geometry while content
+loads. Slider reads `--cb-tone-*`, `--cb-space-2`, `--cb-control-height-*`, `--cb-radius-full`,
+`--cb-border-width`, `--cb-fg*`, `--cb-bg-subtle`, `--cb-surface-raised`, `--cb-focus-*`,
+`--cb-shadow-*`, `--cb-duration-fast`, and `--cb-ease-standard`. The only transition is removed
+under reduced motion or `motion={false}`; static value geometry remains visible.

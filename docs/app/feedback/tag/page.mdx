@@ -1,3 +1,4 @@
+import { TagDemo, TagFilterDemo, TagRemovableDemo } from '../../../components/feedback-demos';
 import { PropsTable, Guidance } from '../../../components/props-table';
 
 # Tag <span className="docs__label">Atom</span>
@@ -11,25 +12,44 @@ the same `cb-badge` classes, so the two cannot drift apart.
 
 ## Usage
 
-```tsx
-<Tag tone="brand">Indonesian</Tag>                        {/* a label; reach for Badge instead */}
-<Tag onClick={filterBy} pressed={on}>Japanese (41)</Tag>   {/* filters by itself */}
-<Tag onClose={remove}>Kebayoran Baru</Tag>                 {/* takes itself off */}
-<Tag render={<Link href="/places/12" />}>Charné Ribroom</Tag>
-```
+<TagDemo />
+
+A Tag with neither `onClick` nor `onClose` is just a label — reach for Badge instead. It is shown
+here because the tones and variants below apply to all three shapes.
+
+## Pressable
+
+`onClick` makes the tag a button and reports its state as `aria-pressed`, which is what a filter
+chip is.
+
+<TagFilterDemo />
+
+## Removable
+
+`onClose` adds a labelled control inside the tag. A tag with `onClose` is not itself a button — it
+holds one. A button inside a button is invalid, and the row would have two answers to one press.
+
+<TagRemovableDemo />
 
 Pressing and removing are two props because they are two gestures. A tag that filters by its value
 and a tag that takes itself off a list are not the same thing, and one component that guessed which
 you meant would be wrong half the time.
 
-A tag with `onClose` is not itself a button — it holds one. A button inside a button is invalid, and
-the row would have two answers to one press.
+## As a link
+
+A router's own `Link` has to stay itself, or navigation stops being client-side. `render` takes it
+and keeps the tag's look.
+
+```tsx
+<Tag render={<Link href="/places/12" />}>Charné Ribroom</Tag>
+```
 
 ## Props
 
 <PropsTable rows={[
   { name: 'tone', type: 'Tone', default: "'neutral'", description: 'Semantic colour, as everywhere else.' },
   { name: 'variant', type: "'soft' | 'solid' | 'outline'", default: "'soft'", description: "Badge's treatments, shared." },
+  { name: 'size', type: "'sm' | 'md'", default: "'md'", description: 'Matches Badge; sm fits inside a table row.' },
   { name: 'onClick / pressed', type: '() => void / boolean', description: 'Makes the tag a button and reports its state as aria-pressed.' },
   { name: 'onClose', type: '() => void', description: 'Adds a remove control inside the tag.' },
   { name: 'render', type: 'ReactElement', description: "A router's own Link, kept itself so navigation stays client-side." },

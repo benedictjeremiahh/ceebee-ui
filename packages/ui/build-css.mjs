@@ -11,11 +11,20 @@ const TOKEN_ORDER = ['structure.css', 'skin.css', 'motion.css'];
 const GROUPS = ['foundation', 'form', 'feedback', 'overlay', 'data', 'media', 'nav', 'motion', 'onboarding', 'theme'];
 
 async function cssFilesIn(dir) {
-  const entries = await readdir(join(SRC, dir), { withFileTypes: true }).catch(() => []);
-  return entries
-    .filter((e) => e.isFile() && e.name.endsWith('.css'))
-    .map((e) => join(SRC, dir, e.name))
-    .sort();
+  const root = join(SRC, dir);
+  const files = [];
+
+  async function visit(current) {
+    const entries = await readdir(current, { withFileTypes: true }).catch(() => []);
+    for (const entry of entries) {
+      const path = join(current, entry.name);
+      if (entry.isDirectory()) await visit(path);
+      if (entry.isFile() && entry.name.endsWith('.css')) files.push(path);
+    }
+  }
+
+  await visit(root);
+  return files.sort();
 }
 
 const files = [

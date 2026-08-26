@@ -1,0 +1,15 @@
+.cb-tree-select__positioner { z-index: var(--cb-z-dropdown); }
+.cb-tree-select { display: inline-flex; align-items: center; justify-content: space-between; gap: var(--cb-space-2); width: 100%; min-height: var(--cb-control-height-md); padding: var(--cb-space-2) var(--cb-space-3); border: var(--cb-border-width) solid var(--cb-border-strong); border-radius: var(--cb-radius-md); background: var(--cb-surface); color: var(--cb-fg); font-family: var(--cb-font-sans); font-size: var(--cb-text-sm); text-align: start; transition: border-color var(--cb-duration-fast) var(--cb-ease-standard), box-shadow var(--cb-duration-fast) var(--cb-ease-standard); }
+@media (hover: hover) {
+  .cb-tree-select:hover:not(:disabled) { border-color: var(--cb-fg-subtle); }
+}
+.cb-tree-select:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: var(--cb-focus-offset); }
+.cb-tree-select[aria-invalid="true"] { border-color: var(--cb-tone-danger); }
+.cb-tree-select:disabled { color: var(--cb-fg-subtle); cursor: not-allowed; }
+.cb-tree-select__value { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cb-tree-select__placeholder, .cb-tree-select__icon { color: var(--cb-fg-subtle); }
+.cb-tree-select__icon { flex: none; }
+.cb-tree-select__popup { min-width: var(--anchor-width, var(--cb-control-height-lg)); max-width: var(--available-width, 100vw); max-height: min(calc(var(--cb-control-height-lg) * 7), var(--available-height)); overflow: auto; padding: var(--cb-space-2); border: var(--cb-border-width) solid var(--cb-border); border-radius: var(--cb-radius-md); background: var(--cb-surface-raised); box-shadow: var(--cb-shadow-md); transition: opacity var(--cb-duration-fast) var(--cb-ease-entrance), transform var(--cb-duration-fast) var(--cb-ease-entrance); }
+.cb-tree-select__popup[data-starting-style], .cb-tree-select__popup[data-ending-style] { opacity: 0; transform: translateY(var(--cb-space-1)); }
+.cb-tree-select--motionless, .cb-tree-select__popup--motionless { transition: none; }
+@media (prefers-reduced-motion: reduce) { .cb-tree-select, .cb-tree-select__popup { transition: none; } .cb-tree-select__popup[data-starting-style], .cb-tree-select__popup[data-ending-style] { transform: none; } }

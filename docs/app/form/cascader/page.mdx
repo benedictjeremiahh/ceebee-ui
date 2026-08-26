@@ -1,0 +1,79 @@
+import { Demo } from '../../../components/demo';
+import { Guidance, PropsTable } from '../../../components/props-table';
+import { Surface } from '@ceebee/ui';
+import { Cascader, CascaderSkeleton } from '@ceebee/ui/client';
+
+# Cascader <span className="docs__label">Composition</span>
+
+`Cascader` selects one leaf through a sequence of anchored hierarchy columns. It is neither a flat
+`Select` nor an inline `Tree`: each Right/Left move changes the active column, while one leaf path is
+the only public value.
+
+## Usage
+
+<Demo layout="block" code={`<Cascader
+  label="Location"
+  options={[
+    { key: 'asia', label: 'Asia', children: [
+      { key: 'id', label: 'Indonesia', children: [{ key: 'jkt', label: 'Jakarta' }] },
+    ] },
+  ]}
+  onValueChange={(path) => console.log(path)}
+/>`}>
+  <Surface padding="sm"><Cascader label="Location" options={[{ key: 'asia', label: 'Asia', children: [{ key: 'id', label: 'Indonesia', children: [{ key: 'jkt', label: 'Jakarta' }] }] }]} /></Surface>
+</Demo>
+
+Sibling `key` values must be unique at every hierarchy level. The selected path is the stable key
+array `['asia', 'id', 'jkt']`; labels are presentation only. Repeated local keys are valid in separate
+branches.
+
+## Interaction boundary
+
+- **Role:** a select-only combobox rendered by a native trigger button plus a named,
+  Base UI-dismissable dialog containing labelled option columns.
+- **Focus:** focus stays on the trigger. Up/Down changes the active enabled option in its column;
+  `aria-activedescendant` exposes that option to assistive technology. Right opens a child column,
+  Left returns, Enter selects an active leaf, and Escape closes.
+- **State:** `value` / `defaultValue` own exactly one leaf key path. Active navigation is private.
+- **Dismissal:** Escape and Base UI's outside-dismiss layer close the popup.
+- **Positioning:** Base UI anchors the popup below the trigger; its Positioner owns dropdown stacking.
+- **Data:** caller injects static hierarchical options. Cascader does not fetch, cache, or multi-select.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'label', type: 'string', description: 'Required accessible name for the select-only combobox.' },
+  { name: 'options', type: 'CascaderOption[]', description: 'Static nested options with unique sibling keys, labels, disabled state, and optional children.' },
+  { name: 'value / defaultValue', type: 'string[]', default: '— / []', description: 'Controlled or initial selected leaf path.' },
+  { name: 'onValueChange', type: '(path: string[]) => void', description: 'Reports an enabled leaf path after selection.' },
+  { name: 'placeholder', type: 'string', default: "'Select…'", description: 'Trigger text before a selected leaf exists.' },
+  { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables opening and path selection.' },
+  { name: 'motion', type: 'boolean', default: 'true', description: 'Removes trigger and popup transitions when false.' },
+]} />
+
+## Keyboard
+
+| Key | Result while open |
+|---|---|
+| Up / Down | Moves the active enabled option in the active column. |
+| Right | Opens the active option's child column. |
+| Left | Returns to the preceding column. |
+| Enter | Selects an active leaf. |
+| Escape | Dismisses the popup without changing the selected path. |
+
+## Loading
+
+`Cascader.Skeleton` preserves the trigger and menu-row geometry without a focusable control.
+
+<CascaderSkeleton rows={3} />
+
+## Tokens read
+
+`--cb-space-*`, `--cb-control-height-*`, `--cb-surface*`, `--cb-border*`, `--cb-radius-*`,
+`--cb-fg*`, `--cb-bg-subtle`, `--cb-font-sans`, `--cb-text-sm`, `--cb-focus-*`,
+`--cb-tone-brand`, `--cb-shadow-md`, `--cb-duration-fast`, `--cb-ease-*`, and `--cb-z-dropdown`.
+
+<Guidance
+  do="Use Cascader when a person chooses one item by progressively narrowing a stable hierarchy."
+  dont="Use Cascader for a flat choice, multiple paths, an inline hierarchy browser, or asynchronously loaded data."
+/>

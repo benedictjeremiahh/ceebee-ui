@@ -36,7 +36,9 @@
   transition: background-color var(--cb-duration-fast) var(--cb-ease-standard),
     opacity var(--cb-duration-fast) var(--cb-ease-standard);
 }
-.cb-carousel__arrow:hover:not(:disabled) { background: var(--cb-bg-subtle); }
+@media (hover: hover) {
+  .cb-carousel__arrow:hover:not(:disabled) { background: var(--cb-bg-subtle); }
+}
 .cb-carousel__arrow:disabled { opacity: 0.35; cursor: not-allowed; }
 .cb-carousel__arrow:focus-visible {
   outline: var(--cb-focus-width) solid var(--cb-tone-brand);

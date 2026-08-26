@@ -50,6 +50,8 @@
   cursor: pointer;
   transition: background-color var(--cb-duration-fast) var(--cb-ease-standard);
 }
-.cb-number__step:hover:not(:disabled) { background: var(--cb-bg-subtle); color: var(--cb-fg); }
+@media (hover: hover) {
+  .cb-number__step:hover:not(:disabled) { background: var(--cb-bg-subtle); color: var(--cb-fg); }
+}
 .cb-number__step:disabled { opacity: 0.35; cursor: not-allowed; }
 .cb-number__step:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: var(--cb-focus-offset-inset); }

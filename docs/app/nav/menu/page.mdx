@@ -1,0 +1,180 @@
+import { Demo } from '../../../components/demo';
+import { Menu, MenuSkeleton } from '@ceebee/ui/client';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Menu <span className="docs__label">Composition</span>
+
+Persistent navigation in document flow. It renders native links for destinations and disclosure
+buttons for nested branches. `Menu` is client-bound because it can own controlled or uncontrolled
+selection and branch-expansion state.
+
+## Usage
+
+`selectedPath` adds `aria-current="page"` to the matching entry. It is the encoded path of keys
+from the root (for example, `projects/active`), so equal local keys in different branches never
+collide. The consuming app supplies that path from its router; `defaultSelectedPath` leaves the
+menu uncontrolled.
+
+<Demo
+  layout="block"
+  code={`<Menu
+  selectedPath="projects/active"
+  defaultOpenKeys={['projects']}
+  items={[
+    { key: 'home', label: 'Home', href: '/home' },
+    {
+      key: 'projects',
+      label: 'Projects',
+      ariaLabel: 'Project sections',
+      children: [{ key: 'active', label: 'Active', href: '/projects/active' }],
+    },
+  ]}
+/>`}
+>
+  <Menu
+    defaultSelectedPath="projects/active"
+    defaultOpenKeys={['projects']}
+    aria-label="Menu example navigation"
+    items={[
+      { key: 'home', label: 'Home', href: '#home' },
+      {
+        key: 'projects',
+        label: 'Projects',
+        ariaLabel: 'Project sections',
+        children: [
+          { key: 'active', label: 'Active', href: '#projects-active' },
+          { key: 'archived', label: 'Archived', href: '#projects-archived' },
+        ],
+      },
+      { key: 'billing', label: 'Billing', href: '#billing' },
+    ]}
+  />
+</Demo>
+
+## Branches
+
+Branches expand independently, so more than one can be open at a time. A branch label may be any
+React node, which is why its disclosure control takes an explicit `ariaLabel`.
+
+<Demo
+  layout="block"
+  code={`<Menu defaultOpenKeys={['projects', 'settings']} items={items} />`}
+>
+  <Menu
+    defaultOpenKeys={['projects', 'settings']}
+    defaultSelectedPath="settings/members"
+    aria-label="Branch example navigation"
+    items={[
+      { key: 'home', label: 'Home', href: '#home' },
+      {
+        key: 'projects',
+        label: 'Projects',
+        ariaLabel: 'Project sections',
+        children: [
+          { key: 'active', label: 'Active', href: '#projects-active' },
+          { key: 'archived', label: 'Archived', href: '#projects-archived' },
+        ],
+      },
+      {
+        key: 'settings',
+        label: 'Settings',
+        ariaLabel: 'Settings sections',
+        children: [
+          { key: 'members', label: 'Members', href: '#settings-members' },
+          { key: 'billing', label: 'Billing', href: '#settings-billing' },
+          { key: 'audit', label: 'Audit log', href: '#settings-audit', disabled: true },
+        ],
+      },
+    ]}
+  />
+</Demo>
+
+## Size and tone
+
+Both change row geometry and the current-entry colour only; neither changes navigation behaviour.
+
+<Demo
+  layout="grid"
+  code={`<Menu size="sm" tone="brand" items={items} />
+<Menu size="lg" tone="success" items={items} />`}
+>
+  <Menu
+    size="sm"
+    tone="brand"
+    defaultSelectedPath="home"
+    aria-label="Small menu example"
+    items={[
+      { key: 'home', label: 'Home (sm · brand)', href: '#home' },
+      { key: 'billing', label: 'Billing', href: '#billing' },
+    ]}
+  />
+  <Menu
+    size="lg"
+    tone="success"
+    defaultSelectedPath="home"
+    aria-label="Large menu example"
+    items={[
+      { key: 'home', label: 'Home (lg · success)', href: '#home' },
+      { key: 'billing', label: 'Billing', href: '#billing' },
+    ]}
+  />
+</Demo>
+
+## Interaction boundary
+
+- **Role:** a navigation landmark containing a list of destinations and optional nested branches.
+- **Keyboard and focus:** every link and disclosure button remains in native Tab order. Enter follows
+  a link or toggles its focused branch button. There is no roving focus or typeahead.
+- **State:** `selectedPath` / `defaultSelectedPath` control the current destination; `openKeys` /
+  `defaultOpenKeys` control independently expanded branches.
+- **Dismissal:** none. The menu stays in the page layout; a branch only changes through its own
+  disclosure button or controlled state.
+- **Positioning:** no anchor, portal, or viewport collision logic.
+- **Gestures:** native link and button activation only.
+
+`Dropdown` is intentionally separate: it is an anchored, dismissible action menu with Base UI
+roving focus and typeahead. Use `Menu` when destinations should remain visible in a navigation
+region.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'items', type: 'PersistentMenuItem[]', description: 'Keyed native-link destinations, or branches with children and a required ariaLabel for their disclosure control.' },
+  { name: 'selectedPath / defaultSelectedPath', type: 'string', description: 'Controlled or initial current destination path.' },
+  { name: 'onSelectedPathChange', type: '(path: string) => void', description: 'Receives the selected recursive path.' },
+  { name: 'openKeys / defaultOpenKeys', type: 'string[]', description: 'Controlled or initial expanded branch key paths (for example, projects/settings).' },
+  { name: 'onOpenKeysChange', type: '(keys: string[]) => void', description: 'Receives expanded branch keys after a disclosure toggle.' },
+  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Row geometry only.' },
+  { name: 'tone', type: "'neutral' | 'brand' | 'success' | 'warning' | 'danger' | 'info'", default: "'brand'", description: 'Semantic current-entry tone only.' },
+  { name: 'motion', type: 'boolean', default: 'true', description: 'Disables chevron rotation without hiding expanded state.' },
+  { name: 'aria-label', type: 'string', default: "'Navigation'", description: 'Accessible name for the navigation landmark.' },
+]} />
+
+## Skeleton
+
+`Menu.Skeleton` accepts `items`, `size`, `tone`, and `aria-label`. It preserves the navigation
+landmark and row geometry while destinations are loading.
+
+<Demo layout="block" code={`<MenuSkeleton items={5} />`}>
+  <MenuSkeleton items={5} />
+</Demo>
+
+## Keyboard
+
+| Key | Result |
+| --- | --- |
+| `Tab` / `Shift+Tab` | Moves through visible links and disclosure buttons in document order. |
+| `Enter` | Follows the focused native link or expands/collapses the focused branch. |
+
+## Tokens
+
+`--cb-space-1`, `--cb-space-2`, `--cb-space-3`, `--cb-space-8`, `--cb-text-xs`,
+`--cb-text-sm`, `--cb-text-md`, `--cb-font-sans`, `--cb-weight-medium`, `--cb-radius-sm`,
+`--cb-border-width`, `--cb-border`, `--cb-bg-subtle`, `--cb-fg`, `--cb-fg-muted`,
+`--cb-fg-subtle`, `--cb-focus-width`, `--cb-focus-offset`, `--cb-control-height-sm`,
+`--cb-duration-fast`, `--cb-ease-standard`, and `--cb-tone-*`.
+
+<Guidance
+  do="Use Menu for a persistent set of page or section destinations."
+  dont="Use Menu for a contextual action list; use the anchored, dismissible Dropdown instead."
+/>

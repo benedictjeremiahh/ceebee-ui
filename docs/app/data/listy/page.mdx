@@ -1,0 +1,192 @@
+import { Demo } from '../../../components/demo';
+import { Listy, ListySkeleton, Flex, Text, Badge } from '@ceebee/ui';
+import { Guidance, PropsTable } from '../../../components/props-table';
+
+# Listy <span className="docs__label">Composition</span>
+
+`Listy` is a large, presentational native list in document flow. It renders caller-owned records;
+it does not fetch, search, select, edit, reorder, or virtualise application state.
+
+## Usage
+
+`renderItem` owns the row entirely — Listy contributes the list semantics and nothing about what a
+row looks like.
+
+<Demo
+  layout="block"
+  code={`<Listy
+  items={activities}
+  getKey={(activity) => activity.id}
+  renderItem={(activity) => <ActivityRow activity={activity} />}
+  aria-label="Recent activity"
+/>`}
+>
+  <Listy
+    items={[
+      { id: '1', who: 'Ada Putri', what: 'approved the release', when: '4m ago' },
+      { id: '2', who: 'Rio Hakim', what: 'commented on CB-142', when: '18m ago' },
+      { id: '3', who: 'Sarah Chen', what: 'closed two issues', when: '1h ago' },
+      { id: '4', who: 'Budi Santoso', what: 'opened a pull request', when: '3h ago' },
+    ]}
+    getKey={(activity) => activity.id}
+    renderItem={(activity) => (
+      <Flex direction="row" justify="between" align="baseline" gap={3}>
+        <Text size="sm">
+          {activity.who} {activity.what}
+        </Text>
+        <Text size="sm" tone="subtle">{activity.when}</Text>
+      </Flex>
+    )}
+    aria-label="Recent activity"
+  />
+</Demo>
+
+Every item key is unique and stable. Listy rejects ambiguous identities rather than silently
+reorder records.
+
+## Groups
+
+`getGroup` divides the list into labelled sections. Records for one group must be **contiguous** in
+the supplied order — Listy presents the order it is given and never sorts.
+
+<Demo
+  layout="block"
+  code={`<Listy
+  items={activities}
+  getKey={(activity) => activity.id}
+  getGroup={(activity) => ({ key: activity.day, label: activity.day })}
+  renderItem={(activity) => <ActivityRow activity={activity} />}
+  aria-label="Recent activity"
+/>`}
+>
+  <Listy
+    items={[
+      { id: '1', day: 'Today', who: 'Ada Putri', what: 'approved the release' },
+      { id: '2', day: 'Today', who: 'Rio Hakim', what: 'commented on CB-142' },
+      { id: '3', day: 'Yesterday', who: 'Sarah Chen', what: 'closed two issues' },
+      { id: '4', day: 'Yesterday', who: 'Budi Santoso', what: 'opened a pull request' },
+      { id: '5', day: 'Monday', who: 'Ada Putri', what: 'archived a workspace' },
+    ]}
+    getKey={(activity) => activity.id}
+    getGroup={(activity) => ({ key: activity.day, label: activity.day })}
+    renderItem={(activity) => (
+      <Text size="sm">
+        {activity.who} {activity.what}
+      </Text>
+    )}
+    aria-label="Recent activity by day"
+  />
+</Demo>
+
+## Sticky group headings
+
+`stickyGroupHeadings` keeps the current group title visible while its section scrolls. It needs a
+scroll container, which the example supplies.
+
+<Demo
+  layout="block"
+  scroll
+  code={`<Listy
+  items={activities}
+  getKey={(activity) => activity.id}
+  getGroup={(activity) => ({ key: activity.day, label: activity.day })}
+  renderItem={(activity) => <ActivityRow activity={activity} />}
+  stickyGroupHeadings
+  aria-label="Recent activity"
+/>`}
+>
+  <Listy
+    items={[
+      { id: '1', day: 'Today', what: 'Ada Putri approved the release' },
+      { id: '2', day: 'Today', what: 'Rio Hakim commented on CB-142' },
+      { id: '3', day: 'Today', what: 'Sarah Chen closed two issues' },
+      { id: '4', day: 'Yesterday', what: 'Budi Santoso opened a pull request' },
+      { id: '5', day: 'Yesterday', what: 'Ada Putri archived a workspace' },
+      { id: '6', day: 'Yesterday', what: 'Rio Hakim invited two people' },
+      { id: '7', day: 'Monday', what: 'Sarah Chen renamed the project' },
+      { id: '8', day: 'Monday', what: 'Budi Santoso restored a backup' },
+    ]}
+    getKey={(activity) => activity.id}
+    getGroup={(activity) => ({ key: activity.day, label: activity.day })}
+    renderItem={(activity) => <Text size="sm">{activity.what}</Text>}
+    stickyGroupHeadings
+    aria-label="Recent activity, sticky headings"
+  />
+</Demo>
+
+## Rich rows
+
+Because `renderItem` owns the row, anything composes inside it — including interactive content,
+which keeps its own contract.
+
+<Demo
+  layout="block"
+  code={`<Listy
+  items={releases}
+  getKey={(release) => release.version}
+  renderItem={(release) => (
+    <Flex direction="row" justify="between" align="center">
+      <Text weight="medium">{release.version}</Text>
+      <Badge tone={release.tone}>{release.status}</Badge>
+    </Flex>
+  )}
+  aria-label="Releases"
+/>`}
+>
+  <Listy
+    items={[
+      { version: '0.6.0', status: 'Published', tone: 'success' },
+      { version: '0.5.2', status: 'Published', tone: 'success' },
+      { version: '0.7.0', status: 'In review', tone: 'warning' },
+      { version: '0.4.9', status: 'Yanked', tone: 'danger' },
+    ]}
+    getKey={(release) => release.version}
+    renderItem={(release) => (
+      <Flex direction="row" justify="between" align="center" gap={3}>
+        <Text size="sm" weight="medium">{release.version}</Text>
+        <Badge tone={release.tone} size="sm">{release.status}</Badge>
+      </Flex>
+    )}
+    aria-label="Releases"
+  />
+</Demo>
+
+## Interaction boundary
+
+- **Role:** native `ul` / `li` content, optionally divided into contiguous labelled groups.
+- **Focus and keyboard:** none are owned. Interactive content, if any, belongs to `renderItem`.
+- **State:** none. Item identity, grouping, and content are injected by the caller.
+- **Performance:** `optimizeRendering` opts into browser-native `content-visibility: auto`; Listy never
+  assumes a row height or owns a virtual-scroll window.
+- **Non-goals:** ProList search, request loading, selection, expansion, card layouts, and editing stay
+  as app-owned compositions or Recipes.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'items', type: 'Item[]', description: 'Stable application-supplied records.' },
+  { name: 'getKey', type: '(item) => string', description: 'Required unique stable item identity.' },
+  { name: 'renderItem', type: '(item, index) => ReactNode', description: 'Required presentational list-item content.' },
+  { name: 'getGroup', type: '(item) => ListyGroup', description: 'Optional contiguous group identity and displayed label.' },
+  { name: 'stickyGroupHeadings', type: 'boolean', default: 'false', description: 'Keeps group labels visible within their scroll container.' },
+  { name: 'optimizeRendering', type: 'boolean', default: 'false', description: 'Uses browser-native off-screen paint containment only.' },
+  { name: 'aria-label', type: 'string', default: "'List'", description: 'Accessible name for the outer list.' },
+]} />
+
+## Skeleton
+
+`Listy.Skeleton` preserves list and optional group-heading geometry without interactive rows.
+
+<Demo layout="block" code={`<Listy.Skeleton items={5} grouped />`}>
+  <ListySkeleton items={5} grouped />
+</Demo>
+
+## Tokens
+
+`--cb-space-*`, `--cb-surface`, `--cb-fg*`, `--cb-font-sans`, `--cb-text-sm`,
+`--cb-weight-semibold`, and `--cb-control-height-md`.
+
+<Guidance
+  do="Use Listy for a long, app-supplied document-flow record list with explicit item rendering."
+  dont="Use Listy as a request-driven ProList workflow or a hidden virtual-scroll data store."
+/>

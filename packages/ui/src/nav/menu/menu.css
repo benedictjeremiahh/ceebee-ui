@@ -1,0 +1,92 @@
+.cb-persistent-menu {
+  --cb-persistent-menu-gap: var(--cb-space-1);
+  --cb-persistent-menu-padding: var(--cb-space-2);
+  --cb-persistent-menu-active: var(--cb-tone-brand);
+  display: block;
+  font-family: var(--cb-font-sans);
+  font-size: var(--cb-text-sm);
+}
+
+.cb-persistent-menu--sm {
+  --cb-persistent-menu-gap: var(--cb-space-1);
+  --cb-persistent-menu-padding: var(--cb-space-1);
+  font-size: var(--cb-text-xs);
+}
+
+.cb-persistent-menu--lg {
+  --cb-persistent-menu-gap: var(--cb-space-2);
+  --cb-persistent-menu-padding: var(--cb-space-3);
+  font-size: var(--cb-text-md);
+}
+
+.cb-persistent-menu--neutral { --cb-persistent-menu-active: var(--cb-fg); }
+.cb-persistent-menu--brand { --cb-persistent-menu-active: var(--cb-tone-brand); }
+.cb-persistent-menu--success { --cb-persistent-menu-active: var(--cb-tone-success); }
+.cb-persistent-menu--warning { --cb-persistent-menu-active: var(--cb-tone-warning); }
+.cb-persistent-menu--danger { --cb-persistent-menu-active: var(--cb-tone-danger); }
+.cb-persistent-menu--info { --cb-persistent-menu-active: var(--cb-tone-info); }
+
+.cb-persistent-menu__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-persistent-menu-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cb-persistent-menu__list--nested {
+  margin-inline-start: var(--cb-space-3);
+  padding-inline-start: var(--cb-space-3);
+  border-inline-start: var(--cb-border-width) solid var(--cb-border);
+}
+
+.cb-persistent-menu__row { display: flex; align-items: center; gap: var(--cb-space-1); }
+
+.cb-persistent-menu__entry,
+.cb-persistent-menu__branch-trigger {
+  display: inline-flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--cb-space-2);
+  min-width: 0;
+  padding: var(--cb-persistent-menu-padding);
+  border: none;
+  border-radius: var(--cb-radius-sm);
+  background: transparent;
+  color: var(--cb-fg-muted);
+  font: inherit;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .cb-persistent-menu__entry:hover,
+  .cb-persistent-menu__branch-trigger:hover { background: var(--cb-bg-subtle); color: var(--cb-fg); }
+}
+.cb-persistent-menu__entry[data-current] { background: var(--cb-bg-subtle); color: var(--cb-persistent-menu-active); font-weight: var(--cb-weight-medium); }
+.cb-persistent-menu__entry:focus-visible,
+.cb-persistent-menu__branch-trigger:focus-visible { outline: var(--cb-focus-width) solid var(--cb-persistent-menu-active); outline-offset: var(--cb-focus-offset); }
+.cb-persistent-menu__entry[data-disabled],
+.cb-persistent-menu__branch-trigger[data-disabled] { color: var(--cb-fg-subtle); cursor: not-allowed; }
+.cb-persistent-menu__icon { display: inline-flex; flex: none; }
+.cb-persistent-menu__label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.cb-persistent-menu__chevron { flex: none; transition: rotate var(--cb-duration-fast) var(--cb-ease-standard); }
+.cb-persistent-menu__chevron--expanded { display: none; }
+.cb-persistent-menu__branch-trigger[data-open] .cb-persistent-menu__chevron--collapsed { rotate: 90deg; }
+.cb-persistent-menu__branch { overflow: hidden; }
+.cb-persistent-menu--motion-off .cb-persistent-menu__chevron { transition: none; }
+.cb-persistent-menu--motion-off .cb-persistent-menu__branch-trigger[data-open] .cb-persistent-menu__chevron--collapsed { display: none; }
+.cb-persistent-menu--motion-off .cb-persistent-menu__branch-trigger[data-open] .cb-persistent-menu__chevron--expanded { display: block; }
+
+.cb-persistent-menu--skeleton .cb-persistent-menu__list { pointer-events: none; }
+.cb-persistent-menu__skeleton-line { display: block; width: calc(var(--cb-space-8) * 3); height: var(--cb-control-height-sm); }
+.cb-persistent-menu__skeleton-line--long { width: calc(var(--cb-space-8) * 4); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cb-persistent-menu__chevron { transition: none; }
+  .cb-persistent-menu__branch-trigger[data-open] .cb-persistent-menu__chevron--collapsed { display: none; }
+  .cb-persistent-menu__branch-trigger[data-open] .cb-persistent-menu__chevron--expanded { display: block; }
+}

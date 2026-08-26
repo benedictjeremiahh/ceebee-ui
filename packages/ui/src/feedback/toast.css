@@ -73,7 +73,9 @@
   cursor: pointer;
   transition: background-color var(--cb-duration-fast) var(--cb-ease-standard);
 }
-.cb-toast__action:hover { background: color-mix(in oklch, var(--cb-toast-accent) 26%, transparent); }
+@media (hover: hover) {
+  .cb-toast__action:hover { background: color-mix(in oklch, var(--cb-toast-accent) 26%, transparent); }
+}
 /* An action-less toast must not reserve the row it would have sat in. */
 .cb-toast:not(:has(.cb-toast__action)) { grid-template-areas: "icon content close"; }
 .cb-toast__close {
@@ -85,6 +87,8 @@
   padding: var(--cb-space-1);
   border-radius: var(--cb-radius-sm);
 }
-.cb-toast__close:hover { color: var(--cb-fg); }
+@media (hover: hover) {
+  .cb-toast__close:hover { color: var(--cb-fg); }
+}
 .cb-toast__close:focus-visible,
 .cb-toast__action:focus-visible { outline: var(--cb-focus-width) solid var(--cb-toast-accent); outline-offset: var(--cb-focus-offset); }

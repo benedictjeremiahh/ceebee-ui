@@ -22,7 +22,9 @@
 .cb-select--sm { height: var(--cb-control-height-sm); }
 .cb-select--md { height: var(--cb-control-height-md); }
 .cb-select--lg { height: var(--cb-control-height-lg); }
-.cb-select:hover:not(:disabled) { border-color: var(--cb-fg-subtle); }
+@media (hover: hover) {
+  .cb-select:hover:not(:disabled) { border-color: var(--cb-fg-subtle); }
+}
 .cb-select:focus-visible {
   outline: none;
   border-color: var(--cb-tone-brand);

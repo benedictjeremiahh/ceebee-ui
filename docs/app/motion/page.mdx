@@ -1,7 +1,8 @@
 import { Demo } from '../../components/demo';
 import { Guidance } from '../../components/props-table';
 import { PropsTable } from '../../components/props-table';
-import { Text } from '@ceebee/ui';
+import { Text, Surface } from '@ceebee/ui';
+import { Reveal, Stagger } from '@ceebee/ui/client';
 
 # Motion contract
 
@@ -23,7 +24,11 @@ Springs are named too — `snappy` for controls, `soft` for surfaces, `bouncy` f
 
 ## MotionProvider
 
-<Demo layout="block" code={`import { MotionProvider, useMotionSettings } from '@ceebee/ui/client';
+The provider wraps an application, so it is written out rather than staged. The footer under every
+example on this site reports what it currently resolves to.
+
+```tsx
+import { MotionProvider, useMotionSettings } from '@ceebee/ui/client';
 
 <MotionProvider scale={0.5}>       {/* everything at half speed */}
   <App />
@@ -32,11 +37,8 @@ Springs are named too — `snappy` for controls, `soft` for surfaces, `bouncy` f
 function Card() {
   const { enabled, duration, spring } = useMotionSettings();
   return <motion.div animate={{ opacity: 1 }} transition={spring('soft')} />;
-}`}>
-  <Text as="div" tone="muted">
-    The stage footer of every example on this site reports what the provider currently resolves to.
-  </Text>
-</Demo>
+}
+```
 
 <PropsTable rows={[
   { name: 'enabled', type: 'boolean', default: 'true', description: 'App-level off switch — a settings toggle, or a test.' },
@@ -62,17 +64,29 @@ provider.
 Two primitives for content that arrives rather than pops. Both collapse to a plain fade under
 reduced motion — the transform is what goes, not the feedback.
 
+`Reveal` animates one element on mount or on scroll into view. `Stagger` wraps each child in a
+Reveal with an increasing delay, so a list assembles instead of appearing all at once. Reload the
+page to watch them run again.
+
 <Demo layout="block" code={`<Reveal from="below" onView>
   <Statistic {...stat} />
-</Reveal>
+</Reveal>`}>
+  <Reveal from="below">
+    <Surface padding="md" radius="lg">
+      <Text>Arrived from below</Text>
+    </Surface>
+  </Reveal>
+</Demo>
 
-<Stagger step={0.06} onView>
+<Demo layout="block" code={`<Stagger step={0.06} onView>
   {items.map((item) => <Row key={item.id} {...item} />)}
 </Stagger>`}>
-  <Text as="div" tone="muted">
-    `Reveal` animates one element on mount or on scroll into view; `Stagger` wraps each child in a
-    Reveal with an increasing delay, so a list assembles instead of appearing all at once.
-  </Text>
+  <Stagger step={0.06}>
+    <Surface padding="sm" radius="md"><Text>Kebayoran Baru</Text></Surface>
+    <Surface padding="sm" radius="md"><Text>Menteng</Text></Surface>
+    <Surface padding="sm" radius="md"><Text>Senopati</Text></Surface>
+    <Surface padding="sm" radius="md"><Text>Cipete</Text></Surface>
+  </Stagger>
 </Demo>
 
 <PropsTable rows={[

@@ -1,0 +1,80 @@
+.cb-mentions {
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--cb-space-3);
+  background: var(--cb-surface);
+  border: var(--cb-border-width) solid var(--cb-border-strong);
+  border-radius: var(--cb-radius-md);
+  transition: border-color var(--cb-duration-fast) var(--cb-ease-standard), box-shadow var(--cb-duration-fast) var(--cb-ease-standard);
+}
+
+.cb-mentions:focus-within { border-color: var(--cb-tone-brand); box-shadow: 0 0 0 var(--cb-focus-width) color-mix(in oklch, var(--cb-tone-brand) 30%, transparent); }
+.cb-mentions[data-disabled] { color: var(--cb-fg-subtle); }
+.cb-mentions:has(.cb-mentions__textarea[aria-invalid="true"]) { border-color: var(--cb-tone-danger); }
+.cb-mentions__textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--cb-control-height-lg);
+  resize: vertical;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--cb-fg);
+  font-family: var(--cb-font-sans);
+  font-size: var(--cb-text-sm);
+  line-height: var(--cb-leading-normal);
+  outline: none;
+}
+
+.cb-mentions__textarea::placeholder { color: var(--cb-fg-subtle); }
+.cb-mentions__positioner { z-index: var(--cb-z-dropdown); }
+.cb-mentions__popup {
+  box-sizing: border-box;
+  min-width: var(--anchor-width, var(--cb-control-height-lg));
+  max-width: var(--available-width, 100vw);
+  max-height: min(calc(var(--cb-control-height-lg) * 6), var(--available-height, calc(var(--cb-control-height-lg) * 6)));
+  overflow-y: auto;
+  padding: var(--cb-space-1);
+  background: var(--cb-surface-raised);
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-md);
+  box-shadow: var(--cb-shadow-md);
+  font-family: var(--cb-font-sans);
+  transition: opacity var(--cb-duration-fast) var(--cb-ease-entrance), transform var(--cb-duration-fast) var(--cb-ease-entrance);
+}
+
+.cb-mentions__popup[data-starting-style],
+.cb-mentions__popup[data-ending-style] { opacity: 0; transform: translateY(var(--cb-space-1)); }
+.cb-mentions__list { display: grid; }
+.cb-mentions__option {
+  min-height: var(--cb-control-height-sm);
+  padding: var(--cb-space-2) var(--cb-space-3);
+  border: 0;
+  border-radius: var(--cb-radius-sm);
+  background: transparent;
+  color: var(--cb-fg);
+  font: inherit;
+  font-size: var(--cb-text-sm);
+  line-height: var(--cb-leading-tight);
+  text-align: start;
+  cursor: pointer;
+}
+
+/* Keyboard selection is not hover and must stay outside the query: it is how
+   somebody arrowing through the list sees where they are. */
+.cb-mentions__option[data-active] { background: var(--cb-bg-subtle); }
+@media (hover: hover) {
+  .cb-mentions__option:hover:not(:disabled) { background: var(--cb-bg-subtle); }
+}
+.cb-mentions__option:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: var(--cb-focus-offset-inset); }
+.cb-mentions__option:disabled { color: var(--cb-fg-subtle); cursor: not-allowed; }
+.cb-mentions--motionless,
+.cb-mentions__popup--motionless { transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cb-mentions,
+  .cb-mentions__popup { transition: opacity var(--cb-duration-fast) var(--cb-ease-entrance); }
+  .cb-mentions__popup[data-starting-style],
+  .cb-mentions__popup[data-ending-style] { transform: none; }
+}

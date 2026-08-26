@@ -1,0 +1,84 @@
+import { Demo } from '../../../components/demo';
+import { Guidance, PropsTable } from '../../../components/props-table';
+import { Card, Text } from '@ceebee/ui';
+import { BorderBeam } from '@ceebee/ui/client';
+
+# BorderBeam <span className="docs__label">Atom</span>
+
+`BorderBeam` is a decorative moving border around supplied content. It is an Atom, not a loading
+Composition: it adds no state, focus model, dismissal, anchoring, or gesture of its own.
+Because the CSS animation is part of the component contract, import it from the client entry
+(`@ceebee/ui/client`); it is a Client Component even though it has no event handlers or hooks.
+
+## Usage
+
+<Demo layout="block" code={`<BorderBeam tone="brand" size="md">
+  <Card>New workspace</Card>
+</BorderBeam>`}>
+  <BorderBeam tone="brand" size="md">
+    <Card title="New workspace">
+      <Text tone="muted">Invite the first two people and the beam has done its job.</Text>
+    </Card>
+  </BorderBeam>
+</Demo>
+
+## Tone
+
+<Demo layout="grid" code={`<BorderBeam tone="brand">…</BorderBeam>
+<BorderBeam tone="info">…</BorderBeam>
+<BorderBeam tone="success">…</BorderBeam>
+<BorderBeam tone="warning">…</BorderBeam>`}>
+  <BorderBeam tone="brand"><Card title="brand" /></BorderBeam>
+  <BorderBeam tone="info"><Card title="info" /></BorderBeam>
+  <BorderBeam tone="success"><Card title="success" /></BorderBeam>
+  <BorderBeam tone="warning"><Card title="warning" /></BorderBeam>
+</Demo>
+
+## Size
+
+Size is beam thickness and geometry; it does not change the content inside.
+
+<Demo layout="grid" code={`<BorderBeam size="sm">…</BorderBeam>
+<BorderBeam size="md">…</BorderBeam>
+<BorderBeam size="lg">…</BorderBeam>`}>
+  <BorderBeam size="sm"><Card title="sm" /></BorderBeam>
+  <BorderBeam size="md"><Card title="md" /></BorderBeam>
+  <BorderBeam size="lg"><Card title="lg" /></BorderBeam>
+</Demo>
+
+## Reduced motion
+
+`motion={false}` and `prefers-reduced-motion: reduce` both stop the movement and keep a visible
+static border. The state change never becomes invisible.
+
+<Demo layout="grid" code={`<BorderBeam motion={false}>…</BorderBeam>`}>
+  <BorderBeam tone="brand" motion={false}><Card title="motion={false}" /></BorderBeam>
+  <BorderBeam tone="brand"><Card title="motion on" /></BorderBeam>
+</Demo>
+
+## Anatomy
+
+The wrapper owns the `cb-border-beam` geometry. Its absolutely positioned beam is `aria-hidden` and
+`pointer-events: none`; the content remains the semantic and interactive surface.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'tone', type: "'neutral' | 'brand' | 'info' | 'success' | 'warning' | 'danger'", default: "'brand'", description: 'Semantic colour of the decorative beam.' },
+  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Beam thickness and geometry.' },
+  { name: 'motion', type: 'boolean', default: 'true', description: 'Disables movement while keeping a visible static beam.' },
+  { name: 'children', type: 'ReactNode', default: '—', description: 'Content whose semantics and interactions are preserved.' },
+]} />
+
+## Tokens
+
+The component reads semantic tone Tokens, `--cb-border-width`, radius Tokens, and the named
+`--cb-duration-deliberate` / `--cb-ease-standard` motion Tokens. It never accepts raw colours,
+durations, angles, or spacing. Animation changes only the conic-gradient angle; the border
+rectangle itself never rotates or leaves the content geometry. The overlay has no keyboard or focus
+behavior and cannot intercept pointer events.
+
+<Guidance
+  do="Use it to draw attention to a surface or call to action while keeping the underlying content responsible for interaction."
+  dont="Use it as a focus ring, status indicator, or loading placeholder; those have separate interaction and loading contracts."
+/>

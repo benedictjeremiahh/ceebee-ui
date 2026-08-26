@@ -40,21 +40,24 @@
   },
   "peerDependencies": {
     "@base-ui/react": "^1.7.0",
+    "embla-carousel-react": "^8.6.0",
     "lucide-react": ">=0.400.0",
     "motion": "^13.0.0",
     "react": ">=19",
-    "react-dom": ">=19",
-    "embla-carousel-react": "^8.6.0"
+    "react-dom": ">=19"
   },
   "devDependencies": {
     "@base-ui/react": "^1.7.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "embla-carousel-react": "^8.6.0",
     "motion": "^13.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tsup": "^8.3.5",
-    "typescript": "^5.7.2",
-    "embla-carousel-react": "^8.6.0"
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "uqr": "0.1.3"
   }
 }

@@ -11,7 +11,7 @@ import {
   type SortState,
 } from '@ceebee/ui/client';
 import { Avatar, Badge, Empty, Flex, Text } from '@ceebee/ui';
-import { CodeBlock } from './code-block';
+import { Demo } from './demo';
 
 interface Invoice {
   id: string;
@@ -93,43 +93,7 @@ export function TableDemo() {
   ];
 
   return (
-    <div className="demo">
-      <div className="demo__stage" data-layout="block">
-        <Flex gap={4}>
-          <Flex direction="row" gap={2} wrap>
-            <Button size="sm" variant="outline" tone="neutral" onClick={() => setLoading((v) => !v)}>
-              Toggle loading
-            </Button>
-            <Button size="sm" variant="outline" tone="neutral" onClick={() => setEmpty((v) => !v)}>
-              Toggle empty
-            </Button>
-          </Flex>
-
-          {loading ? (
-            <Table.Skeleton columns={6} rows={5} />
-          ) : (
-            <Table
-              label="Invoices"
-              columns={columns}
-              rows={empty ? [] : rows}
-              rowKey={(row) => row.id}
-              sort={sort}
-              onSortChange={setSort}
-              empty={
-                <Empty
-                  icon={<Inbox size={22} />}
-                  title="No invoices yet"
-                  description="They appear here once your first customer is billed."
-                  actions={<Button size="sm">Create an invoice</Button>}
-                />
-              }
-            />
-          )}
-
-          <Pagination page={page} pageSize={20} total={137} onPageChange={setPage} />
-        </Flex>
-      </div>
-      <CodeBlock bare code={`const [sort, setSort] = useState<SortState | null>({ column: 'issued', direction: 'desc' });
+    <Demo layout="block" code={`const [sort, setSort] = useState<SortState | null>({ column: 'issued', direction: 'desc' });
 
 <Table
   label="Invoices"
@@ -141,23 +105,53 @@ export function TableDemo() {
   empty={<Empty title="No invoices yet" />}
 />
 
-<Pagination page={page} pageSize={20} total={137} onPageChange={setPage} />`} />
-    </div>
+<Pagination page={page} pageSize={20} total={137} onPageChange={setPage} />`}>
+      <Flex gap={4}>
+        <Flex direction="row" gap={2} wrap>
+          <Button size="sm" variant="outline" tone="neutral" onClick={() => setLoading((v) => !v)}>
+            Toggle loading
+          </Button>
+          <Button size="sm" variant="outline" tone="neutral" onClick={() => setEmpty((v) => !v)}>
+            Toggle empty
+          </Button>
+        </Flex>
+
+        {loading ? (
+          <Table.Skeleton columns={6} rows={5} />
+        ) : (
+          <Table
+            label="Invoices"
+            columns={columns}
+            rows={empty ? [] : rows}
+            rowKey={(row) => row.id}
+            sort={sort}
+            onSortChange={setSort}
+            empty={
+              <Empty
+                icon={<Inbox size={22} />}
+                title="No invoices yet"
+                description="They appear here once your first customer is billed."
+                actions={<Button size="sm">Create an invoice</Button>}
+              />
+            }
+          />
+        )}
+
+        <Pagination page={page} pageSize={20} total={137} onPageChange={setPage} />
+      </Flex>
+    </Demo>
   );
 }
 
 export function PaginationDemo() {
   const [page, setPage] = useState(7);
   return (
-    <div className="demo">
-      <div className="demo__stage" data-layout="block">
-        <Flex gap={5}>
-          <Pagination page={page} pageSize={10} total={300} onPageChange={setPage} />
-          <Pagination page={2} pageSize={10} total={45} onPageChange={() => {}} showSummary={false} />
-          <Pagination page={1} pageSize={20} total={0} onPageChange={() => {}} />
-        </Flex>
-      </div>
-      <CodeBlock bare code={`<Pagination page={page} pageSize={10} total={300} onPageChange={setPage} />`} />
-    </div>
+    <Demo layout="block" code={`<Pagination page={page} pageSize={10} total={300} onPageChange={setPage} />`}>
+      <Flex gap={5}>
+        <Pagination page={page} pageSize={10} total={300} onPageChange={setPage} />
+        <Pagination page={2} pageSize={10} total={45} onPageChange={() => {}} showSummary={false} />
+        <Pagination page={1} pageSize={20} total={0} onPageChange={() => {}} />
+      </Flex>
+    </Demo>
   );
 }

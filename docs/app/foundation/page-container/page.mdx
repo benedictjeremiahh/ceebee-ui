@@ -1,0 +1,92 @@
+import { Demo } from '../../../components/demo';
+import { PageContainer, PageContainerSkeleton, Breadcrumb, Heading, Text, LinkButton } from '@ceebee/ui';
+import { Guidance, PropsTable } from '../../../components/props-table';
+
+# PageContainer <span className="docs__label">Composition</span>
+
+Server-safe page frame inside `Container`. It presents injected breadcrumb, title, subtitle, extra,
+tabs, and body regions; it does not know routes, data, auth, title levels, action behaviour, or tab state.
+
+## Usage
+
+Every region is injected. PageContainer chooses none of them — including the heading level, which
+belongs to the surrounding document.
+
+<Demo
+  layout="block"
+  code={`<PageContainer
+  breadcrumb={<Breadcrumb items={crumbs} />}
+  title={<Heading level={1}>Projects</Heading>}
+  subtitle="Current work across the workspace"
+  extra={<Button>Create project</Button>}
+>
+  <ProjectList />
+</PageContainer>`}
+>
+  <PageContainer
+    breadcrumb={<Breadcrumb items={[{ label: 'Workspace', href: '#workspace' }, { label: 'Projects' }]} />}
+    title={<Heading level={2}>Projects</Heading>}
+    subtitle="Current work across the workspace"
+    extra={<LinkButton href="#page-container-props" size="sm">Create project</LinkButton>}
+  >
+    <Text tone="muted">The body region is ordinary document flow; the application owns what is in it.</Text>
+  </PageContainer>
+</Demo>
+
+## Regions are optional
+
+A frame with only a title is still a frame. Omitted regions collapse rather than leaving a gap.
+
+<Demo
+  layout="block"
+  code={`<PageContainer title={<Heading level={1}>Billing</Heading>}>
+  <Invoices />
+</PageContainer>`}
+>
+  <PageContainer title={<Heading level={2}>Billing</Heading>}>
+    <Text tone="muted">No breadcrumb, no subtitle, no actions — nothing reserves space for them.</Text>
+  </PageContainer>
+</Demo>
+
+## Container size
+
+`containerSize` is the existing `Container` geometry; it changes the measure of the frame and
+nothing about its anatomy.
+
+<Demo
+  layout="block"
+  code={`<PageContainer containerSize="sm" title={<Heading level={1}>Settings</Heading>}>
+  <SettingsForm />
+</PageContainer>`}
+>
+  <PageContainer containerSize="sm" title={<Heading level={2}>Settings</Heading>} subtitle="A narrower measure for a reading-width page">
+    <Text tone="muted">containerSize="sm"</Text>
+  </PageContainer>
+</Demo>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'breadcrumb / title / subtitle / extra / tabs / children', type: 'ReactNode', description: 'Optional injected page regions.' },
+  { name: 'containerSize', type: "'sm' | 'md' | 'lg' | 'full'", default: "'lg'", description: 'Existing Container geometry.' },
+]} />
+
+## Skeleton
+
+`PageContainer.Skeleton` preserves the same page-frame anatomy without interactive descendants.
+Use `breadcrumb`, `subtitle`, `extra`, and `tabs` to mirror the visible regions; `lines` controls
+the placeholder body rows and `containerSize` matches the live frame.
+
+<Demo layout="block" code={`<PageContainer.Skeleton breadcrumb subtitle extra lines={4} />`}>
+  <PageContainerSkeleton breadcrumb subtitle extra lines={4} />
+</Demo>
+
+## Tokens
+
+`--cb-space-*`, `--cb-fg*`, `--cb-font-sans`, `--cb-text-*`, `--cb-weight-semibold`,
+`--cb-leading-normal`, `--cb-border-width`, `--cb-border`, and `--cb-control-height-*`.
+
+<Guidance
+  do="Pass the heading level and interactive children that belong to the surrounding application."
+  dont="Put routing, fetching, authorization, or page-level state inside PageContainer."
+/>

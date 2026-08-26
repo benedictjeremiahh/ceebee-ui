@@ -64,7 +64,9 @@
   flex: none; border: none; background: transparent; color: var(--cb-fg-subtle);
   cursor: pointer; border-radius: var(--cb-radius-sm); padding: var(--cb-space-1); height: fit-content;
 }
-.cb-alert__close:hover { color: var(--cb-fg); background: color-mix(in oklch, var(--cb-fg) 8%, transparent); }
+@media (hover: hover) {
+  .cb-alert__close:hover { color: var(--cb-fg); background: color-mix(in oklch, var(--cb-fg) 8%, transparent); }
+}
 .cb-alert__close:focus-visible { outline: var(--cb-focus-width) solid var(--cb-alert-accent); outline-offset: var(--cb-focus-offset); }
 
 .cb-empty {

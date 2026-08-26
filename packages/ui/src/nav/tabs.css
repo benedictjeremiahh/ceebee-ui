@@ -18,7 +18,9 @@
   transition: color var(--cb-duration-fast) var(--cb-ease-standard),
     background-color var(--cb-duration-fast) var(--cb-ease-standard);
 }
-.cb-tabs__tab:hover:not([data-disabled]) { color: var(--cb-fg); }
+@media (hover: hover) {
+  .cb-tabs__tab:hover:not([data-disabled]) { color: var(--cb-fg); }
+}
 .cb-tabs__tab[data-selected] { color: var(--cb-fg); }
 .cb-tabs__tab[data-disabled] { opacity: 0.45; cursor: not-allowed; }
 .cb-tabs__tab:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: var(--cb-focus-offset-inset); }

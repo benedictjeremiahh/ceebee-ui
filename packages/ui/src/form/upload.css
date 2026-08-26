@@ -26,7 +26,9 @@
   border-radius: var(--cb-radius-sm);
   padding: var(--cb-space-1) var(--cb-space-2);
 }
-.cb-filedrop__zone:hover .cb-filedrop__button { background: color-mix(in oklch, var(--cb-tone-brand) 12%, transparent); }
+@media (hover: hover) {
+  .cb-filedrop__zone:hover .cb-filedrop__button { background: color-mix(in oklch, var(--cb-tone-brand) 12%, transparent); }
+}
 /* The input is what receives focus, so the ring is drawn on the zone around it. */
 .cb-filedrop__zone:has(input:focus-visible) {
   outline: var(--cb-focus-width) solid var(--cb-tone-brand);
@@ -58,5 +60,7 @@
   padding: var(--cb-space-1);
   border-radius: var(--cb-radius-sm);
 }
-.cb-filedrop__remove:hover { color: var(--cb-tone-danger); background: color-mix(in oklch, var(--cb-tone-danger) 10%, transparent); }
+@media (hover: hover) {
+  .cb-filedrop__remove:hover { color: var(--cb-tone-danger); background: color-mix(in oklch, var(--cb-tone-danger) 10%, transparent); }
+}
 .cb-filedrop__remove:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-danger); outline-offset: var(--cb-focus-offset); }

@@ -1,3 +1,4 @@
+import { RateDemo, RateReadOnlyDemo, RateCountDemo } from '../../../components/form-demos';
 import { PropsTable, Guidance } from '../../../components/props-table';
 
 # Rate <span className="docs__label">Atom</span>
@@ -9,17 +10,21 @@ it buys the arrow keys and the announced position for free.
 
 ## Usage
 
-```tsx
-<Rate value={rating} onValueChange={setRating} label="Rating" />
-<Rate value={visit.rating} readOnly label="Rating" />
-```
+<RateDemo />
 
-Two behaviours worth knowing, because both are decisions rather than defaults:
+**Pressing the current score clears it.** Nought stars and one star are different answers, and
+without this there is no way back to the first.
 
-- **Pressing the current score clears it.** Nought stars and one star are different answers, and
-  without this there is no way back to the first.
-- **Read-only is not a disabled radiogroup.** There is nothing to choose, so it is an image with a
-  label saying what it shows — which is also what a screen reader should hear.
+## Read-only
+
+Read-only is not a disabled radiogroup. There is nothing to choose, so it is an image with a label
+saying what it shows — which is also what a screen reader should hear.
+
+<RateReadOnlyDemo />
+
+## Count and size
+
+<RateCountDemo />
 
 ## Props
 

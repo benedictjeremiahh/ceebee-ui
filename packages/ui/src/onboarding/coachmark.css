@@ -60,7 +60,9 @@
   border-radius: var(--cb-radius-sm);
   display: inline-flex;
 }
-.cb-coachmark__close:hover { color: var(--cb-fg); background: var(--cb-bg-subtle); }
+@media (hover: hover) {
+  .cb-coachmark__close:hover { color: var(--cb-fg); background: var(--cb-bg-subtle); }
+}
 .cb-coachmark__close:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: var(--cb-focus-offset); }
 
 .cb-coachmark__body { font-size: var(--cb-text-sm); color: var(--cb-fg-muted); line-height: var(--cb-leading-normal); }

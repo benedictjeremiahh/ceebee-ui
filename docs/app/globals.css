@@ -58,6 +58,28 @@ body { margin: 0; font-family: var(--cb-font-sans); }
 .demo { margin-block: var(--cb-space-4); border: var(--cb-border-width) solid var(--cb-border); border-radius: var(--cb-radius-lg); overflow: hidden; }
 .demo__stage { padding: var(--cb-space-6); background: var(--cb-bg-subtle); display: flex; flex-wrap: wrap; gap: var(--cb-space-4); align-items: center; }
 .demo__stage[data-layout="block"] { display: block; }
+.demo__stage[data-layout="grid"] { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); align-items: stretch; }
+
+/* A transform makes the stage the containing block for fixed children, so a viewport-anchored
+   example stays inside the frame it is being demonstrated in. */
+.demo__stage[data-contain] {
+  position: relative;
+  transform: translate(0);
+  min-height: 12rem;
+  align-items: flex-end;
+}
+
+/* Sticky needs a scroll container of its own, or there is nothing for it to stick to. The scroller
+   stays block flow on purpose: as a flex item a sticky child can only travel inside its own item
+   box, which is exactly its own height, so it would come unstuck the moment it was scrolled.
+   The block padding is a margin on the end children rather than padding on the scroller, so a
+   pinned child sits at the top of the scrollport instead of below a band of padding that content
+   is still visible through. */
+.demo__stage[data-scroll] { display: block; padding: 0; }
+.demo__scroller { max-height: 16rem; overflow: auto; padding-inline: var(--cb-space-6); display: block; }
+.demo__scroller > * + * { margin-block-start: var(--cb-space-4); }
+.demo__scroller > :first-child { margin-block-start: var(--cb-space-6); }
+.demo__scroller > :last-child { margin-block-end: var(--cb-space-6); }
 .code {
   margin-block: var(--cb-space-4);
   border: var(--cb-border-width) solid var(--cb-border);

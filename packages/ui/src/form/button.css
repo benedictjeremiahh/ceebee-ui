@@ -32,19 +32,27 @@
 .cb-button--lg { height: var(--cb-control-height-lg); padding-inline: var(--cb-space-5); font-size: var(--cb-text-md); }
 
 .cb-button--solid { background: var(--cb-button-accent); color: var(--cb-button-fg); }
-.cb-button--solid:hover:not(:disabled) { background: color-mix(in oklch, var(--cb-button-accent) 88%, black); }
+@media (hover: hover) {
+  .cb-button--solid:hover:not(:disabled) { background: color-mix(in oklch, var(--cb-button-accent) 88%, black); }
+}
 
 .cb-button--soft {
   background: color-mix(in oklch, var(--cb-button-accent) 14%, transparent);
   color: var(--cb-button-accent);
 }
-.cb-button--soft:hover:not(:disabled) { background: color-mix(in oklch, var(--cb-button-accent) 22%, transparent); }
+@media (hover: hover) {
+  .cb-button--soft:hover:not(:disabled) { background: color-mix(in oklch, var(--cb-button-accent) 22%, transparent); }
+}
 
 .cb-button--outline { border-color: var(--cb-border-strong); color: var(--cb-fg); background: transparent; }
-.cb-button--outline:hover:not(:disabled) { border-color: var(--cb-button-accent); color: var(--cb-button-accent); }
+@media (hover: hover) {
+  .cb-button--outline:hover:not(:disabled) { border-color: var(--cb-button-accent); color: var(--cb-button-accent); }
+}
 
 .cb-button--ghost { background: transparent; color: var(--cb-fg-muted); }
-.cb-button--ghost:hover:not(:disabled) { background: var(--cb-bg-subtle); color: var(--cb-fg); }
+@media (hover: hover) {
+  .cb-button--ghost:hover:not(:disabled) { background: var(--cb-bg-subtle); color: var(--cb-fg); }
+}
 
 /* Square, no text padding, no gap: the glyph sits on the centre of the control. */
 .cb-button--icon { padding-inline: 0; gap: 0; }

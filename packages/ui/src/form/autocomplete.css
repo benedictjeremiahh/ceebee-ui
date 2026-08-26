@@ -49,8 +49,10 @@
   color: var(--cb-fg-subtle);
   cursor: pointer;
 }
-.cb-autocomplete__clear:hover,
-.cb-autocomplete__trigger:hover { color: var(--cb-fg); background: var(--cb-bg-subtle); }
+@media (hover: hover) {
+  .cb-autocomplete__clear:hover,
+  .cb-autocomplete__trigger:hover { color: var(--cb-fg); background: var(--cb-bg-subtle); }
+}
 .cb-autocomplete__clear:focus-visible,
 .cb-autocomplete__trigger:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: var(--cb-focus-offset-inset); }
 

@@ -6,6 +6,13 @@ import { PropsTable, Guidance } from '../../../components/props-table';
 Transient confirmation, stacked in the corner. The provider renders its own viewport, because a
 provider without one fails silently: the toast is created and nothing ever appears.
 
+## Usage
+
+<ToastDemo />
+
+The action renders as a soft button rather than bare text: at rest, a text action's padding reads
+as a stray gap beside the title, and only hovering explains it.
+
 ## Setup
 
 ```tsx
@@ -15,13 +22,6 @@ export default function Layout({ children }) {
   return <ToastProvider timeout={5000}>{children}</ToastProvider>;
 }
 ```
-
-## Usage
-
-<ToastDemo />
-
-The action renders as a soft button rather than bare text: at rest, a text action's padding reads
-as a stray gap beside the title, and only hovering explains it.
 
 ## Errors do not disappear
 

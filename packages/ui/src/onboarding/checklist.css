@@ -28,7 +28,9 @@
   cursor: pointer;
 }
 .cb-checklist__task:disabled { cursor: default; }
-.cb-checklist__task:hover:not(:disabled) { background: var(--cb-bg-subtle); }
+@media (hover: hover) {
+  .cb-checklist__task:hover:not(:disabled) { background: var(--cb-bg-subtle); }
+}
 .cb-checklist__task:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: var(--cb-focus-offset-inset); }
 
 .cb-checklist__marker {

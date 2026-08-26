@@ -1,0 +1,135 @@
+import { Demo } from '../../../components/demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+import { Watermark, WatermarkSkeleton } from '@ceebee/ui/client';
+import { Surface, Heading, Text, Flex } from '@ceebee/ui';
+
+# Watermark <span className="docs__label">Composition</span>
+
+`Watermark` places repeated decorative marks over supplied content. It follows Ant Design's catalog
+name while keeping Ceebee's semantic tone API and token-driven geometry. It ships from the client
+entry because collision-safe SVG pattern IDs use React's SSR-stable `useId`; it owns no events.
+
+## Usage
+
+<Demo
+  layout="block"
+  code={`<Watermark content={['Internal', 'Ceebee']} tone="brand" density="md">
+  <ProjectBrief />
+</Watermark>`}
+>
+  <Watermark content={['Internal', 'Ceebee']} tone="brand" density="md">
+    <Surface padding="lg" radius="lg" bordered>
+      <Flex gap={2}>
+        <Heading level={3}>Quarterly planning</Heading>
+        <Text tone="muted">Only people inside the organisation should see this working document.</Text>
+      </Flex>
+    </Surface>
+  </Watermark>
+</Demo>
+
+## Tone
+
+The mark takes a semantic tone like everything else; it never takes a colour.
+
+<Demo
+  layout="grid"
+  code={`<Watermark content="Draft" tone="neutral">…</Watermark>
+<Watermark content="Internal" tone="brand">…</Watermark>
+<Watermark content="Reviewed" tone="success">…</Watermark>
+<Watermark content="Confidential" tone="danger">…</Watermark>`}
+>
+  <Watermark content="Draft" tone="neutral">
+    <Surface padding="md" radius="lg" bordered><Text>neutral</Text></Surface>
+  </Watermark>
+  <Watermark content="Internal" tone="brand">
+    <Surface padding="md" radius="lg" bordered><Text>brand</Text></Surface>
+  </Watermark>
+  <Watermark content="Reviewed" tone="success">
+    <Surface padding="md" radius="lg" bordered><Text>success</Text></Surface>
+  </Watermark>
+  <Watermark content="Confidential" tone="danger">
+    <Surface padding="md" radius="lg" bordered><Text>danger</Text></Surface>
+  </Watermark>
+</Demo>
+
+## Density
+
+The SVG tile fills the complete surface at every density; density changes the Token-backed tile
+geometry and type scale, not the coverage.
+
+<Demo
+  layout="grid"
+  code={`<Watermark content="Internal" density="sm">…</Watermark>
+<Watermark content="Internal" density="md">…</Watermark>
+<Watermark content="Internal" density="lg">…</Watermark>`}
+>
+  <Watermark content="Internal" density="sm" tone="info">
+    <Surface padding="md" radius="lg" bordered><Text>sm</Text></Surface>
+  </Watermark>
+  <Watermark content="Internal" density="md" tone="info">
+    <Surface padding="md" radius="lg" bordered><Text>md</Text></Surface>
+  </Watermark>
+  <Watermark content="Internal" density="lg" tone="info">
+    <Surface padding="md" radius="lg" bordered><Text>lg</Text></Surface>
+  </Watermark>
+</Demo>
+
+## Direction
+
+Direction changes the tile geometry and the flow of the marks. It does not rotate or re-order the
+wrapped content, which stays in its normal reading direction.
+
+<Demo
+  layout="grid"
+  code={`<Watermark content="Internal" direction="horizontal">…</Watermark>
+<Watermark content="Internal" direction="vertical">…</Watermark>`}
+>
+  <Watermark content="Internal" direction="horizontal" tone="brand">
+    <Surface padding="md" radius="lg" bordered><Text>horizontal</Text></Surface>
+  </Watermark>
+  <Watermark content="Internal" direction="vertical" tone="brand">
+    <Surface padding="md" radius="lg" bordered><Text>vertical</Text></Surface>
+  </Watermark>
+</Demo>
+
+## Boundary and accessibility
+
+Watermark renders in normal document flow. It owns no keyboard, focus, value,
+dismissal, anchoring, or gesture contract. The repeated mark layer is `aria-hidden` and
+`pointer-events: none`, so headings, links, buttons, and other child semantics remain the
+consumer's responsibility. Do not rely on the watermark as the only channel for important meaning.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'content', type: 'string | string[]', description: 'The mark text, or an ordered sequence repeated across the overlay.' },
+  { name: 'children', type: 'ReactNode', description: 'The supplied content surface; its semantics and interactions are preserved.' },
+  { name: 'tone', type: "'neutral' | 'brand' | 'info' | 'success' | 'warning' | 'danger'", default: "'neutral'", description: 'Semantic colour for the decorative marks.' },
+  { name: 'density', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Token-backed spacing and type scale for the repeated marks.' },
+  { name: 'direction', type: "'horizontal' | 'vertical'", default: "'horizontal'", description: 'Visual flow direction of the mark rows.' },
+]} />
+
+## Skeleton
+
+`Watermark.Skeleton` — or the `WatermarkSkeleton` export, which is the same component — preserves the marked content surface while wrapped content loads. Its props are
+`content`, `tone`, `density`, `direction`, and `lines`; `lines` controls the shared `Skeleton.Text`
+placeholder geometry and is not content state.
+
+<Demo
+  layout="block"
+  code={`<WatermarkSkeleton content="Private" lines={3} />`}
+>
+  <WatermarkSkeleton content="Private" lines={3} />
+</Demo>
+
+## Tokens
+
+The component reads semantic tone Tokens, foreground Tokens, font and line-height Tokens, spacing,
+tile geometry, and the skin's `--cb-tint-strength` Token. The Skeleton reads the shared Skeleton
+Tokens. It accepts no raw colour, angle, spacing, opacity, or sizing value. The SVG pattern paints
+the complete overlay rectangle, so coverage is independent of wrapper dimensions and content length.
+
+<Guidance
+  do="Use Watermark for a decorative provenance or confidentiality cue over content that remains readable and interactive."
+  dont="Use Watermark to communicate the only copy of a warning, or to intercept clicks; the mark layer is decorative and pointer-neutral."
+/>

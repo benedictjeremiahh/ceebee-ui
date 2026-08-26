@@ -1,0 +1,61 @@
+.cb-cascader {
+  display: inline-flex;
+  width: 100%;
+  min-height: var(--cb-control-height-md);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cb-space-2);
+  box-sizing: border-box;
+  padding-inline: var(--cb-space-3);
+  background: var(--cb-surface);
+  border: var(--cb-border-width) solid var(--cb-border-strong);
+  border-radius: var(--cb-radius-md);
+  color: var(--cb-fg);
+  font-family: var(--cb-font-sans);
+  font-size: var(--cb-text-sm);
+  text-align: start;
+  cursor: pointer;
+  transition: border-color var(--cb-duration-fast) var(--cb-ease-standard), box-shadow var(--cb-duration-fast) var(--cb-ease-standard);
+}
+
+@media (hover: hover) {
+  .cb-cascader:hover:not(:disabled) { border-color: var(--cb-fg-subtle); }
+}
+.cb-cascader:focus-visible { outline: none; border-color: var(--cb-tone-brand); box-shadow: 0 0 0 var(--cb-focus-width) color-mix(in oklch, var(--cb-tone-brand) 30%, transparent); }
+.cb-cascader[aria-invalid="true"] { border-color: var(--cb-tone-danger); }
+.cb-cascader:disabled { color: var(--cb-fg-subtle); cursor: not-allowed; }
+.cb-cascader__value { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cb-cascader__icon { flex: none; width: var(--cb-space-4); height: var(--cb-space-4); color: var(--cb-fg-subtle); transition: rotate var(--cb-duration-fast) var(--cb-ease-standard); }
+.cb-cascader[aria-expanded="true"] .cb-cascader__icon { rotate: 180deg; }
+.cb-cascader__positioner { z-index: var(--cb-z-dropdown); }
+.cb-cascader__popup {
+  max-width: var(--available-width, 100vw);
+  overflow-x: auto;
+  background: var(--cb-surface-raised);
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-md);
+  box-shadow: var(--cb-shadow-md);
+  font-family: var(--cb-font-sans);
+  transition: opacity var(--cb-duration-fast) var(--cb-ease-entrance), transform var(--cb-duration-fast) var(--cb-ease-entrance);
+}
+.cb-cascader__popup[data-starting-style], .cb-cascader__popup[data-ending-style] { opacity: 0; transform: translateY(var(--cb-space-1)); }
+.cb-cascader__columns { display: flex; }
+.cb-cascader__column { display: grid; min-width: calc(var(--cb-control-height-lg) * 4); max-height: calc(var(--cb-control-height-lg) * 6); overflow-y: auto; padding: var(--cb-space-1); border-inline-start: var(--cb-border-width) solid var(--cb-border); }
+.cb-cascader__column:first-child { border-inline-start: none; }
+.cb-cascader__option { display: flex; min-height: var(--cb-control-height-sm); align-items: center; justify-content: space-between; gap: var(--cb-space-3); padding: var(--cb-space-2) var(--cb-space-3); border: 0; border-radius: var(--cb-radius-sm); background: transparent; color: var(--cb-fg); font: inherit; font-size: var(--cb-text-sm); text-align: start; cursor: pointer; }
+.cb-cascader__option[data-active] { background: var(--cb-bg-subtle); }
+@media (hover: hover) {
+  .cb-cascader__option:hover:not(:disabled) { background: var(--cb-bg-subtle); }
+}
+.cb-cascader__option:disabled { color: var(--cb-fg-subtle); cursor: not-allowed; }
+.cb-cascader__option:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: var(--cb-focus-offset-inset); }
+.cb-cascader__option-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cb-cascader__option-icon { flex: none; width: var(--cb-space-4); height: var(--cb-space-4); }
+.cb-cascader--motionless, .cb-cascader--motionless .cb-cascader__icon, .cb-cascader__popup--motionless { transition: none; }
+.cb-cascader--skeleton { pointer-events: none; cursor: default; }
+.cb-cascader__skeleton-menu { display: grid; width: 100%; gap: var(--cb-space-1); }
+.cb-cascader__skeleton-label { inline-size: calc(var(--cb-space-8) * 2); block-size: var(--cb-text-sm); }
+@media (prefers-reduced-motion: reduce) {
+  .cb-cascader, .cb-cascader__icon, .cb-cascader__popup { transition: opacity var(--cb-duration-fast) var(--cb-ease-entrance); }
+  .cb-cascader__popup[data-starting-style], .cb-cascader__popup[data-ending-style] { transform: none; }
+}

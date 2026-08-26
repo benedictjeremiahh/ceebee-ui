@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Button, Select, Switch } from '@ceebee/ui/client';
 import { Flex, Text } from '@ceebee/ui';
-import { CodeBlock } from './code-block';
+import { Demo } from './demo';
 
 const VARIANTS = ['solid', 'soft', 'outline', 'ghost'] as const;
 const TONES = ['brand', 'neutral', 'info', 'success', 'warning', 'danger'] as const;
@@ -22,22 +22,11 @@ export function ButtonPlayground() {
   const code = `<Button variant="${variant}" tone="${tone}" size="${size}"${loading ? ' loading' : ''}>\n  Save changes\n</Button>`;
 
   return (
-    <div className="demo">
-      <div className="demo__stage">
-        <Button variant={variant} tone={tone} size={size} loading={loading}>
-          Save changes
-        </Button>
-      </div>
-
-      <div className="demo__knobs">
-        <Knob label="variant" value={variant} options={VARIANTS} onChange={setVariant} />
-        <Knob label="tone" value={tone} options={TONES} onChange={setTone} />
-        <Knob label="size" value={size} options={SIZES} onChange={setSize} />
-        <Switch label="loading" checked={loading} onCheckedChange={setLoading} />
-      </div>
-
-      <CodeBlock bare code={code} />
-    </div>
+    <Demo code={code}>
+      <Button variant={variant} tone={tone} size={size} loading={loading}>
+        Save changes
+      </Button>
+    </Demo>
   );
 }
 

@@ -1,0 +1,100 @@
+import { Demo } from '../../../components/demo';
+import { ColorPickerDemo } from '../../../components/form-demos';
+import { ColorPicker, ColorPickerSkeleton, Field } from '@ceebee/ui/client';
+import { Guidance, PropsTable } from '../../../components/props-table';
+
+# ColorPicker <span className="docs__label">Composition</span>
+
+`ColorPicker` selects named semantic Tone tokens only. It never accepts or emits arbitrary hex, RGB,
+or product palette values.
+
+## Usage
+
+<ColorPickerDemo />
+
+## Inside a Field
+
+`Field` supplies the label, hint, and error wiring; the trigger keeps its own accessible name so it
+is still usable on its own.
+
+<Demo layout="block" code={`<Field label="Accent tone" hint="Applies to badges and highlights.">
+  <ColorPicker label="Accent tone" defaultValue="success" />
+</Field>`}>
+  <Field label="Accent tone" hint="Applies to badges and highlights.">
+    <ColorPicker label="Accent tone" defaultValue="success" />
+  </Field>
+</Demo>
+
+## Restricted options
+
+`options` narrows the set. Tones must be unique and at least one must be enabled — the component
+throws rather than rendering a grid nothing can be picked from.
+
+<Demo layout="block" code={`<ColorPicker
+  label="Status tone"
+  defaultValue="success"
+  options={[
+    { tone: 'success', label: 'Success' },
+    { tone: 'warning', label: 'Warning' },
+    { tone: 'danger', label: 'Danger' },
+    { tone: 'info', label: 'Info', disabled: true },
+  ]}
+/>`}>
+  <ColorPicker
+    label="Status tone"
+    defaultValue="success"
+    options={[
+      { tone: 'success', label: 'Success' },
+      { tone: 'warning', label: 'Warning' },
+      { tone: 'danger', label: 'Danger' },
+      { tone: 'info', label: 'Info', disabled: true },
+    ]}
+  />
+</Demo>
+
+## Disabled
+
+<Demo layout="block" code={`<ColorPicker label="Accent tone" defaultValue="brand" disabled />`}>
+  <ColorPicker label="Accent tone" defaultValue="brand" disabled />
+</Demo>
+
+## Boundary
+
+The collapsed trigger opens an anchored 2D roving-focus grid. This differs from Select's
+one-dimensional typeahead list and RadioGroup's always-visible choices. Base UI owns anchoring,
+outside/Escape dismissal, and focus return.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'label', type: 'string', description: 'Required accessible trigger label.' },
+  { name: 'value / defaultValue', type: 'Tone', description: 'Controlled or initial semantic Tone.' },
+  { name: 'onValueChange', type: '(tone: Tone) => void', description: 'Reports a selected semantic Tone.' },
+  { name: 'open / defaultOpen', type: 'boolean', description: 'Controlled or initial popup visibility.' },
+  { name: 'onOpenChange', type: '(open: boolean) => void', description: 'Reports Base UI open and dismissal requests.' },
+  { name: 'options', type: 'ColorPickerOption[]', description: 'Unique named semantic Tone choices.' },
+  { name: 'name', type: 'string', description: 'Optional hidden form field name for the selected Tone.' },
+  { name: 'disabled / motion', type: 'boolean', description: 'Disables selection or removes popup motion.' },
+]} />
+
+## Skeleton
+
+<Demo layout="block" code={`<ColorPickerSkeleton />`}>
+  <ColorPickerSkeleton />
+</Demo>
+
+## Keyboard
+
+Arrow keys move the active grid cell; Enter or Space selects and dismisses; Escape dismisses.
+`ColorPicker.Skeleton` has no control or popup.
+
+## Tokens
+
+`--cb-tone-*`, `--cb-space-*`, `--cb-control-height-md`, `--cb-surface*`, `--cb-border*`,
+`--cb-radius-*`, `--cb-fg*`, `--cb-focus-*`, `--cb-shadow-md`, `--cb-duration-fast`,
+`--cb-ease-entrance`, and `--cb-z-dropdown`.
+
+<Guidance
+  do="Use ColorPicker when a person selects a semantic system Tone."
+  dont="Use ColorPicker to collect arbitrary brand colors or hexadecimal values."
+/>

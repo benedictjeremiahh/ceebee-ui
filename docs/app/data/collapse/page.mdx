@@ -1,0 +1,120 @@
+import { Demo } from '../../../components/demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+import { Text } from '@ceebee/ui';
+import { Collapse, CollapseSkeleton } from '@ceebee/ui/client';
+
+# Collapse <span className="docs__label">Composition</span>
+
+A disclosure group for revealing related sections in place. Collapse owns the heading buttons,
+expansion state, and associated panels; content inside each panel remains ordinary document flow.
+
+## Usage
+
+<Demo layout="block" code={`<Collapse
+  defaultValue="summary"
+  items={[
+    { key: 'summary', label: 'Summary', children: <Summary /> },
+    { key: 'activity', label: 'Recent activity', children: <Activity /> },
+    { key: 'access', label: 'Access', children: <Access />, disabled: true },
+  ]}
+/>`}>
+  <Collapse
+    defaultValue="summary"
+    items={[
+      { key: 'summary', label: 'Summary', children: <Text size="sm">This release is ready for review.</Text> },
+      { key: 'activity', label: 'Recent activity', children: <Text size="sm">Three checks passed today.</Text> },
+      { key: 'access', label: 'Access', children: <Text size="sm">Only owners can edit access.</Text>, disabled: true },
+    ]}
+  />
+</Demo>
+
+Base UI supplies the disclosure button semantics, `aria-expanded` / `aria-controls` association,
+and controlled or uncontrolled state. `headingLevel` lets the section headings fit their document
+context without changing the interaction.
+
+<Guidance
+  do="Use Collapse when readers benefit from scanning several section headings before opening details."
+  dont="Hide a required workflow step or an error behind a closed panel; disclosure must not make essential state easy to miss."
+/>
+
+## Interaction boundary
+
+- **Role:** a group of disclosure buttons, each controlling one labelled panel.
+- **Keyboard and focus:** native buttons enter the Tab order; Enter or Space toggles the focused
+  disclosure. Focus does not move when a panel opens or closes.
+- **State:** controlled with `value`, or uncontrolled with `defaultValue`. Single mode exposes one
+  key or `undefined`; multiple mode exposes an array of keys.
+- **Dismissal:** none. A panel changes only through its own disclosure button or controlled state.
+- **Positioning:** panels remain in document flow; there is no anchoring or portal.
+- **Gestures:** none beyond native button activation. Collapse adds no swipe or drag model.
+
+Single and multiple expansion share this interaction contract. `multiple` changes how many of the
+same disclosure panels may remain open; it is not a visual variant.
+
+## Multiple expansion
+
+<Demo layout="block" code={`<Collapse
+  multiple
+  defaultValue={['design', 'behaviour']}
+  expandIconPosition="end"
+  items={sections}
+/>`}>
+  <Collapse
+    multiple
+    defaultValue={['design', 'behaviour']}
+    expandIconPosition="end"
+    items={[
+      { key: 'design', label: 'Design', children: <Text size="sm">Tokens and Skins own visual treatment.</Text> },
+      { key: 'behaviour', label: 'Behaviour', children: <Text size="sm">Base UI owns disclosure behaviour.</Text> },
+      { key: 'product', label: 'Product knowledge', children: <Text size="sm">Consumers inject it at the edge.</Text> },
+    ]}
+  />
+</Demo>
+
+For controlled single mode, pass `value="summary"` and receive a key or `undefined` from
+`onValueChange`. With `multiple`, pass `value={['summary', 'activity']}` and receive an array.
+
+## Loading
+
+`Collapse.Skeleton` mirrors row size, borders, icon position, and optionally open panel bodies.
+
+<Demo layout="block" code={`<Collapse.Skeleton items={3} openItems={[0]} lines={2} />`}>
+  <CollapseSkeleton items={3} openItems={[0]} lines={2} />
+</Demo>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'items', type: 'CollapseItem[]', description: 'Keyed label, panel content, and optional disabled state.' },
+  { name: 'value / defaultValue', type: 'string | string[]', description: 'Controlled or initial uncontrolled expansion. Arrays belong to multiple mode.' },
+  { name: 'onValueChange', type: '(value) => void', description: 'Reports one key or undefined in single mode, and an array in multiple mode.' },
+  { name: 'multiple', type: 'boolean', default: 'false', description: 'Allows more than one disclosure panel to remain expanded.' },
+  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Token-based heading and panel spacing.' },
+  { name: 'bordered', type: 'boolean', default: 'true', description: 'Visual border treatment only.' },
+  { name: 'expandIconPosition', type: "'start' | 'end'", default: "'start'", description: 'Geometric icon placement only.' },
+  { name: 'headingLevel', type: '2 | 3 | 4 | 5 | 6', default: '3', description: 'Semantic heading level for every disclosure button.' },
+  { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables every disclosure; items can also be disabled individually.' },
+  { name: 'keepMounted', type: 'boolean', default: 'false', description: 'Keeps closed panel content mounted when local state must survive.' },
+  { name: 'hiddenUntilFound', type: 'boolean', default: 'false', description: 'Lets browser page search reveal matches in closed panels.' },
+  { name: 'motion', type: 'boolean', default: 'true', description: 'Disables height and icon transitions when false.' },
+]} />
+
+`Collapse.Skeleton` accepts `items`, `openItems`, `lines`, `size`, `bordered`, and
+`expandIconPosition`.
+
+## Keyboard
+
+| Key | Result |
+|---|---|
+| `Tab` / `Shift+Tab` | Moves through disclosure buttons and any focusable panel content in document order. |
+| `Enter` / `Space` | Opens or closes the focused panel. |
+
+Arrow keys do not move focus between headings. This follows the current disclosure guidance and
+keeps every heading button in normal document order.
+
+## Tokens read
+
+`--cb-space-*`, `--cb-radius-lg`, `--cb-border-width`, `--cb-border`, `--cb-surface-raised`,
+`--cb-bg-subtle`, `--cb-fg`, `--cb-fg-muted`, `--cb-font-sans`, `--cb-text-sm`,
+`--cb-weight-medium`, `--cb-leading-*`, `--cb-focus-*`, `--cb-tone-brand`,
+`--cb-duration-*`, `--cb-motion-scale`, and `--cb-ease-standard`.

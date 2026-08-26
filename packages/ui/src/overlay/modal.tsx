@@ -1,8 +1,19 @@
 'use client';
 
 import { Dialog as BaseDialog } from '@base-ui/react/dialog';
+import { AlertTriangle, CheckCircle2, Info, XCircle } from 'lucide-react';
 import type { ReactNode } from 'react';
-import { cn } from '../lib/cn.js';
+import { cn, type Tone } from '../lib/cn.js';
+import { ModalSkeleton } from './modal.skeleton.js';
+
+const CONFIRM_ICONS: Record<Tone, ReactNode> = {
+  neutral: <Info size={20} />,
+  brand: <Info size={20} />,
+  info: <Info size={20} />,
+  success: <CheckCircle2 size={20} />,
+  warning: <AlertTriangle size={20} />,
+  danger: <XCircle size={20} />,
+};
 
 export interface DialogProps {
   open?: boolean;
@@ -25,7 +36,7 @@ export interface DialogProps {
  * (ADR 0003). Enter and exit are CSS transitions driven by Base UI's own state attributes,
  * because Base UI owns this element's mount lifecycle — motion is used where we own it.
  */
-export function Modal({
+function ModalRoot({
   open,
   defaultOpen,
   onOpenChange,
@@ -57,5 +68,68 @@ export function Modal({
     </BaseDialog.Root>
   );
 }
+
+export interface ModalConfirmProps
+  extends Omit<DialogProps, 'children' | 'footer' | 'placement' | 'size'> {
+  /** Optional supporting content below the description. */
+  children?: ReactNode;
+  /** Action that dismisses without applying the decision. Rendered first. */
+  cancelAction?: ReactNode;
+  /** Action that applies the decision. Rendered last. */
+  confirmAction: ReactNode;
+  /** Semantic treatment for the confirmation icon and emphasis. */
+  tone?: Tone;
+  /** Replaces the semantic icon supplied by the consumer. */
+  icon?: ReactNode;
+}
+
+/**
+ * A composable counterpart to Ant's modal confirmation family. It intentionally reuses Modal's
+ * dialog contract: this is viewport-modal confirmation, never an anchored Popconfirm.
+ */
+export function ModalConfirm({
+  title,
+  description,
+  children,
+  cancelAction,
+  confirmAction,
+  tone = 'warning',
+  icon,
+  className,
+  ...rootProps
+}: ModalConfirmProps) {
+  return (
+    <ModalRoot
+      {...rootProps}
+      title={
+        <span className="cb-modal-confirm__heading">
+          {icon === null ? null : (
+            <span className="cb-modal-confirm__icon" data-tone={tone} aria-hidden="true">
+              {icon ?? CONFIRM_ICONS[tone]}
+            </span>
+          )}
+          <span>{title}</span>
+        </span>
+      }
+      description={description}
+      footer={
+        <>
+          {cancelAction}
+          {confirmAction}
+        </>
+      }
+      size="sm"
+      placement="center"
+      className={cn('cb-modal-confirm', className)}
+    >
+      {children}
+    </ModalRoot>
+  );
+}
+
+export const Modal = Object.assign(ModalRoot, {
+  Confirm: ModalConfirm,
+  Skeleton: ModalSkeleton,
+});
 
 export const DialogClose = BaseDialog.Close;

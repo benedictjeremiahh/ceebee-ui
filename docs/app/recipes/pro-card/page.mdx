@@ -1,0 +1,20 @@
+import { CodeBlock } from '../../../components/code-block';
+
+# ProCard recipe
+
+**Ant Pro reference:** `ProCard`, `StatisticCard`, and `CheckCard`.
+
+Use `Card`, `Card.Meta`, `Card.Grid`, `Statistic`, `RadioGroup`, and `Checkbox` as explicit
+compositions. Ceebee owns the card anatomy and each child control's interaction; the application
+owns which cards exist, their selected values, metrics, and actions.
+
+<CodeBlock code={`<Card title="Release health" extra={<LinkButton href="/releases">Open</LinkButton>}>
+  <Card.Grid minItemWidth="14rem">
+    <Statistic label="Passing checks" value={42} tone="success" />
+    <Statistic label="Open issues" value={3} tone="warning" />
+  </Card.Grid>
+  <RadioGroup value={selectedPlan} onValueChange={setSelectedPlan} items={plans} />
+</Card>`} />
+
+Non-goals: a schema-driven card DSL, request-backed statistics, implicit selection state, and
+clickable-card semantics that conflict with controls inside the card.

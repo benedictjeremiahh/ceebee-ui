@@ -1,0 +1,27 @@
+.cb-masonry {
+  column-count: var(--cb-masonry-columns);
+  column-gap: var(--cb-masonry-gap);
+}
+
+.cb-masonry__item {
+  break-inside: avoid;
+  margin-block-end: var(--cb-masonry-gap);
+}
+
+.cb-masonry__skeleton-item {
+  display: block;
+  width: 100%;
+  height: var(--cb-control-height-lg);
+}
+
+.cb-masonry__skeleton-item--0 { height: var(--cb-control-height-md); }
+.cb-masonry__skeleton-item--1 { height: var(--cb-control-height-lg); }
+.cb-masonry__skeleton-item--2 { height: var(--cb-control-height-sm); }
+
+@media (max-width: 900px) {
+  .cb-masonry { column-count: min(var(--cb-masonry-columns), 2); }
+}
+
+@media (max-width: 560px) {
+  .cb-masonry { column-count: 1; }
+}
