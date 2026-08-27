@@ -1,4 +1,4 @@
-/* Skin tokens: the default Ceebee skin. A Skin file rewrites only these (ADR 0002).
+/* Skin tokens: the default Ceebee skin. A Skin file rewrites only these.
    Light is defined on bare :root so no colour has its only definition inside a media query. */
 :root {
   --cb-hue-brand: 274;

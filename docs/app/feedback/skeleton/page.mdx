@@ -1,49 +1,23 @@
-import { Demo } from '../../../components/demo';
-import { PropsTable, Guidance } from '../../../components/props-table';
-import { Skeleton, Statistic, Flex, Surface, Text } from '@ceebee/ui';
+import { SkeletonShowcase } from '../../../components/feedback/skeleton/showcase';
+import { ApiReference } from '../../../components/api-reference';
 
-# Skeleton <span className="docs__label">Atom</span>
+# Skeleton
 
-Shapes for the free-form case, and a matching `.Skeleton` on every Composition. The second half is
-the point: a placeholder built from the same tokens as the real thing cannot drift out of sync with
-it, so the page does not jump when data lands.
+Provide a placeholder while you wait for content to load, or to visualize content that doesn't exist yet.
 
-## Shapes
+## When to use
 
-<Demo layout="block" code={`<Skeleton width="12rem" height="1rem" />
-<Skeleton.Text lines={3} />
-<Skeleton.Circle size="3rem" />`}>
-  <Flex gap={4}>
-    <Skeleton width="12rem" height="1rem" />
-    <Skeleton.Text lines={3} />
-    <Skeleton.Circle size="3rem" />
-  </Flex>
-</Demo>
+- When a resource needs long time to load.
+- When the component contains lots of information, such as List or Card.
+- Only works when loading data for the first time.
+- Could be replaced by Spin in any situation, but can provide a better user experience.
 
-## Composition skeletons
+## Examples
 
-<Demo code={`{loading ? <Statistic.Skeleton withVisual /> : <Statistic {...stat} />}`}>
-  <Statistic.Skeleton />
-  <Statistic.Skeleton withVisual />
-</Demo>
+<SkeletonShowcase />
 
-<Guidance
-  do="Reach for the Composition's own .Skeleton, so the placeholder keeps the real layout's size."
-  dont="Hand-assemble grey boxes that approximate the card — they will be wrong the first time the card changes."
-/>
+## API
 
-## Props
+`Skeleton`, `Skeleton.Avatar`, `Skeleton.Button`, `Skeleton.Input`, `Skeleton.Image`, and `Skeleton.Node` are exported from `@ceebee/ui/client`.
 
-<PropsTable rows={[
-  { name: 'width / height', type: 'string', default: "'100%' / '1rem'", description: 'Any CSS length. Prefer rem so it scales with type.' },
-  { name: 'radius', type: "'sm' | 'md' | 'lg' | 'full'", default: "'md'", description: 'Corner token.' },
-  { name: 'Skeleton.Text lines', type: 'number', default: '3', description: 'Line count; the last line is short, as real text is.' },
-  { name: 'Skeleton.Text lastLineWidth', type: 'string', default: "'62%'", description: 'Width of that last line.' },
-  { name: 'Skeleton.Circle size', type: 'string', default: "'2.5rem'", description: 'Diameter — for avatars and rings.' },
-]} />
-
-## Accessibility and motion
-
-Every shape is `aria-hidden`, so a screen reader hears the loading state from your live region
-rather than from a wall of empty boxes. The shimmer is CSS and stops under
-`prefers-reduced-motion` — the shapes stay, which is what communicates "loading".
+<ApiReference component="Skeleton" />

@@ -1,4 +1,4 @@
-/* Motion tokens. A component reads these; it never writes a duration (ADR 0004). */
+/* Motion tokens. A component reads these; it never writes a duration. */
 :root {
   --cb-duration-instant: 80ms;
   --cb-duration-fast: 140ms;

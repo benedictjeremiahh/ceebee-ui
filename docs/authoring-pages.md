@@ -6,6 +6,17 @@ the examples live on this particular page has been failed before they reach the 
 
 `pnpm check:docs` enforces the machine-checkable half of this. The rest is judgement.
 
+The shared docs chrome is also a visual contract. Sticky sidebar and topbar regions must be opaque,
+cover their complete rail from edge to edge, and reserve space from adjacent sticky content such as
+the page outline. Do not make a control sticky by styling only the control's intrinsic box: scrolling
+content will leak around it. The browser invariant suite checks these boundaries at a deep page and
+sidebar scroll position, so every component page inherits the same protection.
+
+For audited components, `docs/component-capabilities.json` is the completeness interface. A
+supported capability names its docs and public-interface test evidence; planned, replaced, and
+deliberately absent capabilities carry a rationale. `built` in the roadmap never overrides that
+evidence.
+
 ## The shape
 
 ```mdx
@@ -17,7 +28,7 @@ import { Thing } from '@ceebee/ui';
 
 One paragraph: what it is, and the nearest component it is not.
 
-## Usage            ← the canonical example, always first, always live
+## Usage            ← native Ceebee pages: canonical example first and live
 ## <each axis>      ← Variants, Tone, Size, States … one live example each
 ## Props            ← <PropsTable>
 ## Skeleton         ← live, if the component ships one
@@ -25,6 +36,10 @@ One paragraph: what it is, and the nearest component it is not.
 ## Tokens           ← what it reads
 <Guidance do dont />
 ```
+
+Components carried over from the catalog baseline follow its documented page structure instead: `When to use` first,
+then an `Examples` gallery containing the live cards in upstream order. Do not insert a duplicate,
+untitled canonical card above that gallery merely to satisfy the native page shape.
 
 Sections may be omitted. They may not be reordered: the checker reads
 `Playground → Usage → … → Props → Skeleton → Keyboard → Tokens` and rejects anything that arrives

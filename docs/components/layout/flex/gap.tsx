@@ -1,0 +1,31 @@
+'use client';
+
+import React from 'react';
+import { Button, Flex, Radio, Slider } from '@ceebee/ui/client';
+import type { FlexProps } from '@ceebee/ui/client';
+
+const App: React.FC = () => {
+  const [gapSize, setGapSize] = React.useState<FlexProps['gap']>('small');
+  const [customGapSize, setCustomGapSize] = React.useState<number>(0);
+  return (
+    <Flex gap="medium" vertical>
+      <Radio.Group value={gapSize} onChange={(e) => setGapSize(e.target.value)}>
+        {['small', 'medium', 'large', 'customize'].map((size) => (
+          <Radio key={size} value={size}>
+            {size}
+          </Radio>
+        ))}
+      </Radio.Group>
+      {gapSize === 'customize' && <Slider value={customGapSize} onChange={setCustomGapSize} />}
+      <Flex gap={gapSize !== 'customize' ? gapSize : customGapSize}>
+        <Button type="primary">Primary</Button>
+        <Button>Default</Button>
+        <Button type="dashed">Dashed</Button>
+        <Button type="link">Link</Button>
+      </Flex>
+    </Flex>
+  );
+};
+
+export default App;
+

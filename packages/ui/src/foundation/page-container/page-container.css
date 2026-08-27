@@ -13,3 +13,13 @@
 .cb-page-container__skeleton-extra { inline-size: calc(var(--cb-space-8) * 2); block-size: var(--cb-control-height-sm); }
 .cb-page-container__skeleton-tabs { inline-size: 100%; block-size: var(--cb-control-height-md); }
 @media (max-width: 40rem) { .cb-page-container__header { flex-direction: column; } }
+
+/* PageContainer is server-safe, so its skeleton draws its own placeholders rather than reaching for
+   Ant's Skeleton, which is a client component. */
+.cb-page-container--skeleton span {
+  display: block;
+  border-radius: var(--cb-radius-sm);
+  background: var(--cb-bg-subtle);
+}
+.cb-page-container__skeleton-line { inline-size: 100%; block-size: var(--cb-text-sm); margin-block-start: var(--cb-space-2); }
+.cb-page-container__skeleton-line:last-child { inline-size: 60%; }

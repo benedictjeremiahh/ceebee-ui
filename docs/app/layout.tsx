@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import { MotionProvider, ThemeProvider, ToastProvider } from '@ceebee/ui/client';
-import { Nav } from '../components/nav';
-import { Toolbar } from '../components/toolbar';
+import { DocsShell } from '../components/docs-shell';
 import '@ceebee/ui/styles.css';
 import './globals.css';
 
@@ -17,13 +16,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ThemeProvider>
           <MotionProvider>
             <ToastProvider>
-            <div className="docs">
-              <Nav />
-              <main className="docs__main">
-                <Toolbar />
-                {children}
-              </main>
-            </div>
+              <DocsShell>{children}</DocsShell>
             </ToastProvider>
           </MotionProvider>
         </ThemeProvider>

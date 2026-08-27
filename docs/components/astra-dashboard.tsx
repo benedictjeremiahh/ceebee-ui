@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { ArrowUpRight, CheckCircle2, Clock } from 'lucide-react';
-import { Grid, Heading, ProgressRing, Skeleton, Flex, Statistic, Surface, Text } from '@ceebee/ui';
-import { Button } from '@ceebee/ui/client';
+import { Flex, Grid, Heading, Surface, Text } from '@ceebee/ui';
+import { Button, Progress, Skeleton, Statistic } from '@ceebee/ui/client';
 
 const TASKS = [
   { name: 'Migrate billing webhooks', owner: 'Sarah Chen', due: 'Today', done: true },
@@ -20,7 +20,7 @@ export function AstraDashboard() {
         <Text size="sm" tone="subtle">
           {loading ? 'Loading state' : 'Loaded state'}
         </Text>
-        <Button size="sm" variant="outline" tone="neutral" onClick={() => setLoading((value) => !value)}>
+        <Button size="small" onClick={() => setLoading((value) => !value)}>
           Toggle loading
         </Button>
       </Flex>
@@ -39,19 +39,19 @@ export function AstraDashboard() {
             <Flex direction="row" gap={5} align="center">
               {loading ? (
                 <>
-                  <Skeleton.Circle size="5rem" />
-                  <Skeleton.Circle size="5rem" />
+                  <Skeleton.Avatar active size={80} shape="circle" />
+                  <Skeleton.Avatar active size={80} shape="circle" />
                 </>
               ) : (
                 <>
                   <Flex gap={1} align="center">
-                    <ProgressRing value={84} size={80} thickness={9} hue="violet" label="Task progress" />
+                    <Progress type="circle" percent={84} size={80} strokeWidth={11} strokeColor="var(--cb-decor-violet)" aria-label="Task progress" />
                     <Text size="xs" tone="subtle">
                       Tasks
                     </Text>
                   </Flex>
                   <Flex gap={1} align="center">
-                    <ProgressRing value={91} size={80} thickness={9} hue="blue" label="Team performance" />
+                    <Progress type="circle" percent={91} size={80} strokeWidth={11} strokeColor="var(--cb-decor-blue)" aria-label="Team performance" />
                     <Text size="xs" tone="subtle">
                       Team
                     </Text>
@@ -64,39 +64,37 @@ export function AstraDashboard() {
           <Grid minItemWidth="13rem" gap={4}>
             {loading ? (
               <>
-                <Statistic.Skeleton />
-                <Statistic.Skeleton />
-                <Statistic.Skeleton withVisual />
+                <Skeleton active paragraph={{ rows: 1 }} />
+                <Skeleton active paragraph={{ rows: 1 }} />
+                <Skeleton active paragraph={{ rows: 2 }} />
               </>
             ) : (
               <>
-                <Statistic
-                  label="Projects shipped"
-                  value="48"
-                  delta={{ value: '+6', direction: 'up' }}
-                  hue="teal"
-                  icon={<ArrowUpRight size={16} />}
-                />
-                <Statistic
-                  label="Hours logged"
-                  value="1,204"
-                  delta={{ value: '-3.2%', direction: 'down' }}
-                  hue="amber"
-                  caption="Fewer meetings this week"
-                  icon={<Clock size={16} />}
-                />
-                <Statistic
-                  label="Review queue"
-                  value="12"
-                  hue="blue"
-                  visual={
-                    <ProgressRing value={12} max={20} size={56} thickness={7} hue="blue" label="Review queue">
-                      <Text size="xs" tone="muted" numeric>
-                        /20
-                      </Text>
-                    </ProgressRing>
-                  }
-                />
+                <Surface variant="tinted" hue="teal" padding="md" radius="md">
+                  <Statistic title="Projects shipped" value={48} prefix={<ArrowUpRight size={16} />} suffix={<Text size="xs" tone="success">+6</Text>} />
+                </Surface>
+                <Surface variant="tinted" hue="amber" padding="md" radius="md">
+                  <Statistic title="Hours logged" value="1,204" prefix={<Clock size={16} />} suffix={<Text size="xs" tone="danger">-3.2%</Text>} />
+                  <Text size="xs" tone="subtle">Fewer meetings this week</Text>
+                </Surface>
+                <Surface variant="tinted" hue="blue" padding="md" radius="md">
+                  <Flex direction="row" justify="between" align="center">
+                    <Statistic title="Review queue" value={12} />
+                    <Progress
+                      type="circle"
+                      percent={(12 / 20) * 100}
+                      size={56}
+                      strokeWidth={12}
+                      strokeColor="var(--cb-decor-blue)"
+                      aria-label="Review queue"
+                      format={() => (
+                        <Text size="xs" tone="muted" numeric>
+                          /20
+                        </Text>
+                      )}
+                    />
+                  </Flex>
+                </Surface>
               </>
             )}
           </Grid>
@@ -107,9 +105,9 @@ export function AstraDashboard() {
               {loading
                 ? [0, 1, 2].map((row) => (
                     <Flex direction="row" gap={3} align="center" key={row}>
-                      <Skeleton.Circle size="1.25rem" />
-                      <Skeleton width="45%" height="0.875rem" />
-                      <Skeleton width="18%" height="0.75rem" />
+                      <Skeleton.Avatar active size={20} shape="circle" />
+                      <Skeleton.Input active size="small" style={{ inlineSize: '45%' }} />
+                      <Skeleton.Input active size="small" style={{ inlineSize: '18%' }} />
                     </Flex>
                   ))
                 : TASKS.map((task) => (

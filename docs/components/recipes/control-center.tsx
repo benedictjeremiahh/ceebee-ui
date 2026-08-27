@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { Bell, Moon, ShieldCheck, Volume2, Wifi } from 'lucide-react';
-import { Button, Switch } from '@ceebee/ui/client';
-import { Avatar, Badge, Flex, Surface, Text } from '@ceebee/ui';
 
+import { Flex, Surface, Text } from '@ceebee/ui';
+
+import { Avatar, Badge, Button, Switch } from '@ceebee/ui/client';
 const NOTIFICATIONS = [
   { id: 1, from: 'Sarah Chen', text: 'Left three comments on the pricing brief.', time: '2m', hue: 'violet' as const },
   { id: 2, from: 'Deploys', text: 'atlas-web shipped to production.', time: '18m', hue: 'teal' as const },
@@ -31,7 +32,7 @@ export function ControlCenterRecipe() {
             <Flex gap={3}>
               <Flex direction="row" justify="between" align="center">
                 <Text weight="semibold" size="sm">Control</Text>
-                <Badge tone="brand" size="sm" dot>3 new</Badge>
+                <Badge count="3 new" color="var(--cb-tone-brand)" />
               </Flex>
 
               <Flex gap={3}>
@@ -40,12 +41,14 @@ export function ControlCenterRecipe() {
                     <span className="recipe__glyph" data-on={toggles[toggle.id] || undefined}>
                       {toggle.icon}
                     </span>
+                    <Flex className="recipe__grow" gap={0}>
+                      <Text size="sm">{toggle.label}</Text>
+                      <Text size="xs" tone="subtle">{toggle.description}</Text>
+                    </Flex>
                     <Switch
-                      justified
-                      label={toggle.label}
-                      description={toggle.description}
+                      aria-label={toggle.label}
                       checked={toggles[toggle.id]}
-                      onCheckedChange={(next) => setToggles((current) => ({ ...current, [toggle.id]: next }))}
+                      onChange={(next: boolean) => setToggles((current) => ({ ...current, [toggle.id]: next }))}
                     />
                   </Flex>
                 ))}
@@ -60,12 +63,12 @@ export function ControlCenterRecipe() {
                   <Bell size={15} />
                   <Text weight="semibold" size="sm">Notifications</Text>
                 </Flex>
-                <Button size="sm" variant="ghost" tone="neutral">Clear</Button>
+                <Button size="small" type="text">Clear</Button>
               </Flex>
 
               {NOTIFICATIONS.map((item) => (
                 <Flex direction="row" gap={3} align="start" key={item.id}>
-                  <Avatar name={item.from} size="sm" hue={item.hue} />
+                  <Avatar size="small" style={{ backgroundColor: `var(--cb-decor-${item.hue})` }}>{item.from.slice(0, 1)}</Avatar>
                   <Flex gap={0} className="recipe__grow">
                     <Flex direction="row" justify="between" align="baseline" gap={3}>
                       <Text size="sm" weight="medium" as="span">{item.from}</Text>

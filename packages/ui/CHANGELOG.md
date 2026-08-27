@@ -102,7 +102,7 @@
 
 ### Minor Changes
 
-- c37a843: **Breaking: fifteen components are renamed to the names Ant Design uses (ADR 0016).**
+- c37a843: **Breaking: fifteen components are renamed to the names Ant Design uses.**
 
   The old names are gone, not deprecated. A consumer upgrading to this release has
   to rename its imports; nothing warns at runtime, the build simply stops finding

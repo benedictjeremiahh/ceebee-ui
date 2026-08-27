@@ -24,7 +24,7 @@ export interface SurfaceProps {
 
 /**
  * The panel every raised or tinted thing is built on. Glass and gradient live here as
- * variants rather than being baked into the brand (ADR 0002), so one Skin reproduces the
+ * variants rather than being baked into the brand, so one Skin reproduces the
  * reference board and another produces something sober without touching a component.
  */
 export function Surface({

@@ -1,32 +1,21 @@
-import { AlertDemo } from '../../../components/feedback-demos';
-import { PropsTable, Guidance } from '../../../components/props-table';
+import { AlertShowcase } from '../../../components/feedback/alert/showcase';
+import { ApiReference } from '../../../components/api-reference';
 
-# Alert <span className="docs__label">Composition</span>
+# Alert
 
-An inline message about the thing a person is looking at. For something that happened somewhere
-else, or that should not push the layout around, use a Toast.
+Display warning messages that require attention.
 
-## Usage
+## When to use
 
-<AlertDemo />
+- When you need to show alert messages to users.
+- When you need a persistent static container which is closable by user actions.
 
-## What it announces
+## Examples
 
-`danger` and `warning` render as `role="alert"` with `aria-live="assertive"`; the quieter tones are
-`role="status"` and polite. That distinction is deliberate — a success note that interrupts a screen
-reader mid-sentence is not help, it is noise.
+<AlertShowcase />
 
-<Guidance
-  do="Say what happened and what to do next: 'The bank declined the charge. Nothing has been billed.'"
-  dont="Use tone='danger' for emphasis on a message that is not an error — assistive technology takes it literally."
-/>
+## API
 
-## Props
+`Alert` and `Alert.ErrorBoundary` are exported from `@ceebee/ui/client`.
 
-<PropsTable rows={[
-  { name: 'tone', type: 'Tone', default: "'info'", description: 'Also decides the default icon and whether it interrupts.' },
-  { name: 'title', type: 'ReactNode', description: 'One line. The body carries the detail.' },
-  { name: 'icon', type: 'ReactNode | null', description: 'Overrides the tone icon; null removes it.' },
-  { name: 'actions', type: 'ReactNode', description: 'Buttons under the text. Keep to two.' },
-  { name: 'onDismiss', type: '() => void', description: 'Adds a labelled close button.' },
-]} />
+<ApiReference component="Alert" />

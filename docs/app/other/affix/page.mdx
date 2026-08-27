@@ -1,0 +1,25 @@
+import { AffixShowcase } from '../../../components/other/affix/showcase';
+import { ApiReference } from '../../../components/api-reference';
+
+# Affix
+
+Stick an element to the viewport.
+
+## When to use
+
+On longer web pages, it's helpful to stick component into the viewport. This is common for menus and actions.
+
+Please note that Affix should not cover other content on the page, especially when the size of the viewport is small.
+
+Notes for developers
+After version `5.10.0`, we rewrite Affix use FC, some methods of obtaining `ref` and calling internal instance methods will be invalid.
+
+## Examples
+
+<AffixShowcase />
+
+## API
+
+`Affix` are exported from `@ceebee/ui/client`.
+
+<ApiReference component="Affix" />

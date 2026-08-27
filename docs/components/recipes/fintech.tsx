@@ -2,17 +2,9 @@
 
 import { useState } from 'react';
 import { ArrowDownLeft, ArrowUpRight, Plus, Split } from 'lucide-react';
-import { Button, Modal, InputNumber, Field, Switch } from '@ceebee/ui/client';
-import {
-  Avatar,
-  AvatarGroup,
-  Badge,
-  Sparkline,
-  Flex,
-  Surface,
-  Text,
-  Timeline,
-} from '@ceebee/ui';
+
+import { Avatar, Badge, Button, Form, InputNumber, Modal, Switch, Timeline } from '@ceebee/ui/client';
+import { Flex, Sparkline, Surface, Text } from '@ceebee/ui';
 
 const BALANCE_TREND = [18, 22, 19, 26, 24, 31, 29, 36, 34, 41];
 const money = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 });
@@ -37,14 +29,14 @@ export function FintechRecipe() {
                   {money.format(120_456_500)}
                 </Text>
               </Flex>
-              <Badge tone="success" size="sm" dot>+2.4%</Badge>
+              <Badge count="+2.4%" color="var(--cb-tone-success)" />
             </Flex>
 
             <Sparkline values={BALANCE_TREND} filled hue="violet" width={260} height={44} label="Balance over ten weeks" />
 
             <Flex direction="row" gap={2} wrap>
-              <Button size="sm" iconStart={<Plus size={15} />}>Top up</Button>
-              <Button size="sm" variant="soft" iconStart={<Split size={15} />} onClick={() => setSplitOpen(true)}>
+              <Button size="small" type="primary" icon={<Plus size={15} />}>Top up</Button>
+              <Button size="small" variant="filled" color="primary" icon={<Split size={15} />} onClick={() => setSplitOpen(true)}>
                 Split a bill
               </Button>
             </Flex>
@@ -55,17 +47,18 @@ export function FintechRecipe() {
           <Flex gap={3}>
             <Flex direction="row" justify="between" align="center">
               <Text size="sm" weight="semibold">Shared with</Text>
-              <AvatarGroup overflow={2}>
+              <Avatar.Group max={{ count: 2 }}>
                 {people.slice(0, 3).map((name) => (
-                  <Avatar key={name} name={name} size="sm" />
+                  <Avatar key={name} size="small">{name.slice(0, 1)}</Avatar>
                 ))}
-              </AvatarGroup>
+              </Avatar.Group>
             </Flex>
             <Timeline
-              entries={[
-                { time: '08:41', title: 'Grocery run', description: 'Split four ways', icon: <ArrowUpRight size={13} />, tone: 'danger' },
-                { time: 'Yesterday', title: 'Salary', description: 'Monthly payout', icon: <ArrowDownLeft size={13} />, tone: 'success' },
-                { time: 'Mon', title: 'Dinner at Kopi Nako', description: 'Chris paid, you owe 187,715', icon: <ArrowUpRight size={13} /> },
+              mode="left"
+              items={[
+                { label: '08:41', color: 'var(--cb-tone-danger)', dot: <ArrowUpRight size={13} />, children: 'Grocery run — split four ways' },
+                { label: 'Yesterday', color: 'var(--cb-tone-success)', dot: <ArrowDownLeft size={13} />, children: 'Salary — monthly payout' },
+                { label: 'Mon', dot: <ArrowUpRight size={13} />, children: 'Dinner at Kopi Nako — Chris paid, you owe 187,715' },
               ]}
             />
           </Flex>
@@ -74,21 +67,24 @@ export function FintechRecipe() {
 
       <Modal
         open={splitOpen}
-        onOpenChange={setSplitOpen}
-        title="Split a bill"
-        description={`${people.length} people, ${evenSplit ? 'evenly' : 'by share'}`}
+        onCancel={() => setSplitOpen(false)}
+        title={`Split a bill · ${people.length} people, ${evenSplit ? 'evenly' : 'by share'}`}
         footer={
           <>
-            <Button variant="ghost" tone="neutral" onClick={() => setSplitOpen(false)}>Cancel</Button>
-            <Button onClick={() => setSplitOpen(false)}>Request {money.format(share)}</Button>
+            <Button type="text" onClick={() => setSplitOpen(false)}>Cancel</Button>
+            <Button type="primary" onClick={() => setSplitOpen(false)}>Request {money.format(share)}</Button>
           </>
         }
       >
         <Flex gap={4}>
-          <Field label="Total" hint="What the bill came to.">
-            <InputNumber value={amount} onValueChange={setAmount} min={0} step={1000} suffix="IDR" />
-          </Field>
-          <Switch justified label="Split evenly" description="Everyone pays the same share" checked={evenSplit} onCheckedChange={setEvenSplit} />
+          <Form layout="vertical">
+            <Form.Item label="Total" extra="What the bill came to.">
+              <InputNumber value={amount} onChange={(next) => setAmount(next ?? 0)} min={0} step={1000} suffix="IDR" style={{ width: '100%' }} />
+            </Form.Item>
+            <Form.Item label="Split evenly" extra="Everyone pays the same share">
+              <Switch checked={evenSplit} onChange={setEvenSplit} />
+            </Form.Item>
+          </Form>
           <Surface variant="tinted" hue="violet" padding="md" radius="md">
             <Flex direction="row" justify="between" align="center">
               <Text size="sm" tone="muted">Each person</Text>

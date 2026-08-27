@@ -113,6 +113,9 @@ if (pending.length) {
   await run('pnpm', ['exec', 'changeset', 'version']);
   const { version } = await import('../packages/ui/package.json', { with: { type: 'json' } })
     .then((module) => module.default);
+  /* The docs changelog is generated from CHANGELOG.md, which only exists in its new
+     shape after versioning — so regenerate it before the release commit is taken. */
+  await run('node', ['docs/changelog.mjs']);
   await run('git', ['add', '-A']);
   await run('git', ['commit', '-m', `Release ${version}`]);
   console.log(`  committed Release ${version}`);

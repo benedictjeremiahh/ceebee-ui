@@ -1,4 +1,4 @@
-/** Donut arithmetic, kept pure so the awkward inputs are asserted (ADR 0012). */
+/** Donut arithmetic, kept pure so the awkward inputs are asserted. */
 
 export interface DonutSlice {
   value: number;

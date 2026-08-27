@@ -1,4 +1,5 @@
-import { Heading, Flex, Text } from '@ceebee/ui';
+import { Flex, Heading, Text } from '@ceebee/ui';
+
 import { FintechRecipe } from '../../../components/recipes/fintech';
 
 export default function FintechPage() {

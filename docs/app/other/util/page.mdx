@@ -1,0 +1,40 @@
+# Util
+
+Utilities are used to assist development and provide some common utility methods.
+
+## When to use
+
+When you need a component's `ref` or prop types and the component does not expose them directly.
+
+## Examples
+
+There are no examples on this page: Util is type helpers, so there is nothing to render. What it
+offers is four type utilities, exported from `@ceebee/ui/client`.
+
+## API
+
+`GetRef<T>` reads the `ref` type of a component, which is what makes a ref usable on a component that
+does not publish its own ref type:
+
+```tsx
+import { Select } from '@ceebee/ui/client';
+import type { GetRef } from '@ceebee/ui/client';
+
+type SelectRefType = GetRef<typeof Select>; // BaseSelectRef
+```
+
+`GetProps<T>` reads a component's props, and also reads the value type out of a `React.Context`:
+
+```tsx
+import { Checkbox } from '@ceebee/ui/client';
+import type { GetProps } from '@ceebee/ui/client';
+
+type CheckboxGroupType = GetProps<typeof Checkbox.Group>;
+```
+
+It is not `React.ComponentProps`. React's utility also accepts intrinsic element names, which
+`GetProps` does not; in exchange `GetProps` reads a Context's value type and passes an existing props
+object through unchanged.
+
+`GetProp<T, K>` reads one prop and has `NonNullable` already applied, so an optional prop does not have
+to be unwrapped at every use. `GetProxyProps<T>` reads the props of a component behind a proxy.

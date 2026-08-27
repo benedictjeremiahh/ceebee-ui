@@ -46,8 +46,8 @@ import { LabelsProvider } from '@ceebee/ui/client';
 | Files | `chooseFiles`, `chooseFile`, `dropFilesHere`, `dropFileHere`, `removeFile(name)` |
 | Numbers | `increase`, `decrease` |
 | AutoComplete | `clear`, `open` |
+| Carousel and preview | `previousSlide`, `nextSlide`, `goToSlide(index)`, `next` |
 | Shell | `expandNavigation`, `collapseNavigation` |
-| Tour | `back`, `next`, `done`, `skip`, `progress(current, total)` |
 
 <Guidance
   do="Pass functions for anything with a number in it — word order differs between languages, and a template built from fragments cannot follow it."
@@ -62,5 +62,5 @@ import { LabelsProvider } from '@ceebee/ui/client';
   { name: 'DEFAULT_LABELS', type: 'Labels', description: 'The English defaults, exported so you can diff against them.' },
 ]} />
 
-A `Tour`'s own `labels` prop still wins over the provider, because one tour may speak differently
-from the rest of the product.
+A component's own `labels` prop still wins over the provider, because one surface may speak
+differently from the rest of the product.

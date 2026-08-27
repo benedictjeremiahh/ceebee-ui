@@ -1,0 +1,401 @@
+{
+  "schemaVersion": 1,
+  "components": [
+    {
+      "name": "DateRangePicker",
+      "tier": "Composition",
+      "completion": "partial",
+      "docsPage": "docs/app/form/date-range-picker/page.mdx",
+      "publicExports": {
+        "entry": "@ceebee/ui/client",
+        "names": ["DateRangePicker", "DateRangePickerSkeleton"]
+      },
+      "requiredSections": ["Usage", "Interaction boundary", "Props", "Skeleton", "Keyboard", "Tokens"],
+      "capabilities": [
+        {
+          "id": "two-endpoint-selection",
+          "decision": "supported",
+          "docsEvidence": ["one ordered start/end interval"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-range-picker/date-range-picker.spec.tsx", "contains": "one two-endpoint range contract" }]
+        },
+        {
+          "id": "typed-endpoints",
+          "decision": "supported",
+          "docsEvidence": ["two labelled text inputs"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-range-picker/date-range-picker.spec.tsx", "contains": "parses both typed endpoints" }]
+        },
+        {
+          "id": "ascending-normalization",
+          "decision": "supported",
+          "docsEvidence": ["normalizes them into ascending local dates"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-range-picker/date-range-picker.spec.tsx", "contains": "normalizes reverse endpoint selection" }]
+        },
+        {
+          "id": "inclusive-bounds",
+          "decision": "supported",
+          "docsEvidence": ["Inclusive bounds"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-range-picker/date-range-picker.spec.tsx", "contains": "inclusive bounds disabled" }]
+        },
+        {
+          "id": "loading-skeleton",
+          "decision": "supported",
+          "docsEvidence": ["`DateRangePicker.Skeleton`"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-range-picker/date-range-picker.spec.tsx", "contains": "noninteractive Skeleton" }]
+        },
+        {
+          "id": "reduced-motion",
+          "decision": "supported",
+          "docsEvidence": ["motion"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-range-picker/date-range-picker.spec.tsx", "contains": "motion is disabled" }]
+        },
+        {
+          "id": "preset-ranges",
+          "decision": "supported",
+          "docsEvidence": ["Preset ranges", "injected `presets`"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-range-picker/date-range-picker.spec.tsx", "contains": "commits injected preset ranges" }]
+        }
+      ]
+    },
+    {
+      "name": "Slider",
+      "tier": "Composition",
+      "completion": "partial",
+      "docsPage": "docs/app/form/slider/page.mdx",
+      "publicExports": {
+        "entry": "@ceebee/ui/client",
+        "names": ["Slider", "SliderSkeleton"]
+      },
+      "requiredSections": ["When to use", "Examples", "API", "Keyboard", "Skeleton and Tokens"],
+      "capabilities": [
+        {
+          "id": "single-value",
+          "decision": "supported",
+          "docsEvidence": ["approximate direct manipulation"],
+          "testEvidence": [{ "file": "packages/ui/src/form/slider/slider.spec.tsx", "contains": "stable accessible name, keyboard semantics" }]
+        },
+        {
+          "id": "bounded-range",
+          "decision": "supported",
+          "docsEvidence": ["range", "editable multi-handle ranges"],
+          "testEvidence": [{ "file": "packages/ui/src/form/slider/slider.spec.tsx", "contains": "ascending handle order" }]
+        },
+        {
+          "id": "vertical-orientation",
+          "decision": "supported",
+          "docsEvidence": ["orientation"],
+          "testEvidence": [{ "file": "packages/ui/src/form/slider/slider.spec.tsx", "contains": "vertical keyboard geometry" }]
+        },
+        {
+          "id": "field-wiring",
+          "decision": "supported",
+          "docsEvidence": ["visible Field label"],
+          "testEvidence": [{ "file": "packages/ui/src/form/slider/slider.spec.tsx", "contains": "wires a Field label" }]
+        },
+        {
+          "id": "loading-skeleton",
+          "decision": "supported",
+          "docsEvidence": ["`Slider.Skeleton`"],
+          "testEvidence": [{ "file": "packages/ui/src/form/slider/slider.spec.tsx", "contains": "requested noninteractive Skeleton geometry" }]
+        },
+        {
+          "id": "marks-and-graduated-track",
+          "decision": "supported",
+          "docsEvidence": ["marks", "step={null}"],
+          "testEvidence": [{ "file": "packages/ui/src/form/slider/slider.spec.tsx", "contains": "clickable landmarks without adding focus stops" }]
+        },
+        {
+          "id": "value-tooltip",
+          "decision": "supported",
+          "docsEvidence": ["tooltip formatting and visibility", "getPopupContainer"],
+          "testEvidence": [{ "file": "packages/ui/src/form/slider/slider.spec.tsx", "contains": "Ant tooltip formatting" }]
+        },
+        {
+          "id": "input-number-sync",
+          "decision": "replaced",
+          "rationale": "Controlled value composition with InputNumber keeps two existing interaction contracts distinct."
+        },
+        {
+          "id": "arbitrary-multiple-handles",
+          "decision": "supported",
+          "docsEvidence": ["arbitrary and editable handles", "minCount", "maxCount"],
+          "testEvidence": [{ "file": "packages/ui/src/form/slider/slider.spec.tsx", "contains": "arbitrary multiple handles" }]
+        }
+      ]
+    },
+    {
+      "name": "DatePicker",
+      "tier": "Composition",
+      "completion": "partial",
+      "docsPage": "docs/app/form/date-picker/page.mdx",
+      "publicExports": {
+        "entry": "@ceebee/ui/client",
+        "names": ["DatePicker", "DatePickerSkeleton"]
+      },
+      "requiredSections": ["When To Use", "Examples", "Ceebee compatibility props", "Skeleton", "Period keyboard map", "Tokens"],
+      "capabilities": [
+        {
+          "id": "calendar-day",
+          "decision": "supported",
+          "docsEvidence": ["select or input a date"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-picker.spec.tsx", "contains": "commits a calendar day" }]
+        },
+        {
+          "id": "month",
+          "decision": "supported",
+          "docsEvidence": ["MonthPicker"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-picker.spec.tsx", "contains": "commits a month" }]
+        },
+        {
+          "id": "typed-input",
+          "decision": "supported",
+          "docsEvidence": ["typed input"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-picker.spec.tsx", "contains": "parses typed date input" }]
+        },
+        {
+          "id": "inclusive-bounds",
+          "decision": "supported",
+          "docsEvidence": ["minDate", "maxDate"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-picker.spec.tsx", "contains": "month-granularity bounds" }]
+        },
+        {
+          "id": "loading-skeleton",
+          "decision": "supported",
+          "docsEvidence": ["`DatePicker.Skeleton`"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-picker.spec.tsx", "contains": "noninteractive Skeleton" }]
+        },
+        {
+          "id": "reduced-motion",
+          "decision": "supported",
+          "docsEvidence": ["motion"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-picker.spec.tsx", "contains": "removes field and popup transitions" }]
+        },
+        {
+          "id": "quarter-and-year",
+          "decision": "supported",
+          "docsEvidence": ["QuarterPicker", "YearPicker"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-picker.spec.tsx", "contains": "quarter and year modes" }]
+        },
+        {
+          "id": "week",
+          "decision": "supported",
+          "docsEvidence": ["WeekPicker"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-picker.spec.tsx", "contains": "commits the configured start of the chosen week" }]
+        },
+        {
+          "id": "date-range",
+          "decision": "supported",
+          "docsEvidence": ["RangePicker"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-picker.spec.tsx", "contains": "range" }]
+        },
+        {
+          "id": "date-and-time",
+          "decision": "supported",
+          "docsEvidence": ["TimePicker", "showTime"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-picker.spec.tsx", "contains": "time" }]
+        }
+      ]
+    },
+    {
+      "name": "TimePicker",
+      "tier": "Composition",
+      "completion": "complete",
+      "docsPage": "docs/app/form/time-picker/page.mdx",
+      "publicExports": {
+        "entry": "@ceebee/ui/client",
+        "names": ["TimePicker", "TimePickerSkeleton"]
+      },
+      "requiredSections": ["When To Use", "Examples", "API", "Legacy parsing utilities", "Skeleton", "Keyboard", "Tokens"],
+      "capabilities": [
+        {
+          "id": "typed-time",
+          "decision": "supported",
+          "docsEvidence": ["What the parsing accepts"],
+          "testEvidence": [{ "file": "packages/ui/src/form/date-picker.spec.tsx", "contains": "TimeValue facade" }]
+        },
+        {
+          "id": "offered-time-list",
+          "decision": "supported",
+          "docsEvidence": ["popup panel"],
+          "testEvidence": [{ "file": "tests/browser/library-invariants.spec.ts", "contains": "TimePicker matches Ant panel geometry" }]
+        },
+        {
+          "id": "loading-skeleton",
+          "decision": "supported",
+          "docsEvidence": ["`TimePicker.Skeleton`"],
+          "testEvidence": [{ "file": "packages/ui/src/form/time-picker.spec.tsx", "contains": "noninteractive Skeleton" }]
+        },
+        {
+          "id": "ant-source-parity",
+          "decision": "supported",
+          "docsEvidence": ["Ant Design 6.6.1", "RangePicker-specific"],
+          "testEvidence": [{ "file": "tests/browser/library-invariants.spec.ts", "contains": "column modes, range sizing, variants, and addon dismissal" }]
+        }
+      ]
+    },
+    {
+      "name": "Upload",
+      "tier": "Composition",
+      "completion": "partial",
+      "docsPage": "docs/app/form/upload/page.mdx",
+      "publicExports": {
+        "entry": "@ceebee/ui/client",
+        "names": ["Upload", "UploadSkeleton"]
+      },
+      "requiredSections": ["Usage", "Props", "Skeleton", "Keyboard", "Tokens"],
+      "capabilities": [
+        {
+          "id": "native-file-input",
+          "decision": "supported",
+          "docsEvidence": ["real file input"],
+          "testEvidence": [{ "file": "packages/ui/src/form/upload.spec.tsx", "contains": "public input contract" }]
+        },
+        {
+          "id": "reported-rejections",
+          "decision": "supported",
+          "docsEvidence": ["Rejections are reported"],
+          "testEvidence": [{ "file": "packages/ui/src/form/upload.spec.tsx", "contains": "accepted and rejected files" }]
+        },
+        {
+          "id": "loading-skeleton",
+          "decision": "supported",
+          "docsEvidence": ["`Upload.Skeleton`"],
+          "testEvidence": [{ "file": "packages/ui/src/form/upload.spec.tsx", "contains": "requested Skeleton rows" }]
+        }
+      ]
+    },
+    {
+      "name": "TreeSearchSelect",
+      "tier": "Composition",
+      "completion": "partial",
+      "docsPage": "docs/app/form/tree-search-select/page.mdx",
+      "publicExports": {
+        "entry": "@ceebee/ui/client",
+        "names": ["TreeSearchSelect", "TreeSearchSelectSkeleton"]
+      },
+      "requiredSections": ["Usage", "Interaction boundary", "Props", "Skeleton", "Keyboard", "Tokens"],
+      "capabilities": [
+        {
+          "id": "hierarchical-leaf-search",
+          "decision": "supported",
+          "docsEvidence": ["searches injected hierarchy paths", "ancestor breadcrumb"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-search-select/tree-search-select.spec.tsx", "contains": "preserving their hierarchy as a visible breadcrumb" }]
+        },
+        {
+          "id": "combobox-keyboard",
+          "decision": "supported",
+          "docsEvidence": ["query focus stays in the input"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-search-select/tree-search-select.spec.tsx", "contains": "commits one matching leaf path" }]
+        },
+        {
+          "id": "rich-label-search-text",
+          "decision": "supported",
+          "docsEvidence": ["getSearchText(node, path)"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-search-select/tree-search-select.spec.tsx", "contains": "rich labels through explicit search text" }]
+        },
+        {
+          "id": "announced-empty-state",
+          "decision": "supported",
+          "docsEvidence": ["emptyMessage` is announced"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-search-select/tree-search-select.spec.tsx", "contains": "announces an injected empty state" }]
+        },
+        {
+          "id": "loading-skeleton",
+          "decision": "supported",
+          "docsEvidence": ["`TreeSearchSelect.Skeleton`"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-search-select/tree-search-select.spec.tsx", "contains": "matching Skeleton" }]
+        }
+      ]
+    },
+    {
+      "name": "TreeSelect",
+      "tier": "Composition",
+      "completion": "partial",
+      "docsPage": "docs/app/form/tree-select/page.mdx",
+      "publicExports": {
+        "entry": "@ceebee/ui/client",
+        "names": ["TreeSelect", "TreeSelectSkeleton"]
+      },
+      "requiredSections": ["When to use", "Examples", "API", "Skeleton", "Keyboard", "Tokens"],
+      "capabilities": [
+        {
+          "id": "single-path-selection",
+          "decision": "supported",
+          "docsEvidence": ["selected tree value"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-select/tree-select.spec.tsx", "contains": "selects an enabled recursive path" }]
+        },
+        {
+          "id": "branch-expansion",
+          "decision": "supported",
+          "docsEvidence": ["Expands or collapses a branch"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-select/tree-select.spec.tsx", "contains": "expands a branch without selecting it" }]
+        },
+        {
+          "id": "controlled-state",
+          "decision": "supported",
+          "docsEvidence": ["defaultValue / value"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-select/tree-select.spec.tsx", "contains": "keeps controlled value and open state" }]
+        },
+        {
+          "id": "field-wiring",
+          "decision": "supported",
+          "docsEvidence": ["aria-required"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-select/tree-select.spec.tsx", "contains": "wires Field and disabled semantics" }]
+        },
+        {
+          "id": "loading-skeleton",
+          "decision": "supported",
+          "docsEvidence": ["TreeSelectSkeleton"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-select/tree-select.spec.tsx", "contains": "noninteractive Skeleton" }]
+        },
+        {
+          "id": "searchable-tree",
+          "decision": "supported",
+          "docsEvidence": ["showSearch", "filterTreeNode", "searchValue"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-select/tree-select.spec.tsx", "contains": "exact combobox/tree semantics" }]
+        },
+        {
+          "id": "multiple-selection",
+          "decision": "supported",
+          "docsEvidence": ["multiple", "maxCount", "tagRender"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-select/tree-select.spec.tsx", "contains": "keeps multiple selection open and enforces maxCount" }]
+        },
+        {
+          "id": "checkable-selection",
+          "decision": "supported",
+          "docsEvidence": ["Checkable", "showCheckedStrategy", "treeCheckStrictly"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-select/tree-select.spec.tsx", "contains": "supports checkable selection" }]
+        },
+        {
+          "id": "asynchronous-loading",
+          "decision": "supported",
+          "docsEvidence": ["loadData", "treeLoadedKeys"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-select/tree-select.spec.tsx", "contains": "loads injected async children" }]
+        },
+        {
+          "id": "tree-lines-and-leaf-icons",
+          "decision": "supported",
+          "docsEvidence": ["treeLine", "showLeafIcon"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-select/tree-select.spec.tsx", "contains": "line icons" }]
+        },
+        {
+          "id": "popup-placement",
+          "decision": "supported",
+          "docsEvidence": ["placement", "topLeft", "bottomRight"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-select/tree-select.spec.tsx", "contains": "ports placement" }]
+        },
+        {
+          "id": "variants-status-and-semantic-styling",
+          "decision": "supported",
+          "docsEvidence": ["variant", "status", "Semantic slots"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-select/tree-select.spec.tsx", "contains": "semantic slots" }]
+        },
+        {
+          "id": "imperative-methods",
+          "decision": "supported",
+          "docsEvidence": ["focus()", "blur()"],
+          "testEvidence": [{ "file": "packages/ui/src/form/tree-select/tree-select.spec.tsx", "contains": "exposes focus and blur methods" }]
+        }
+      ]
+    }
+  ]
+}

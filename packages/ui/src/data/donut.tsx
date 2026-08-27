@@ -15,7 +15,7 @@ export interface DonutProps {
 
 const DEFAULT_HUES: DecorHue[] = ['violet', 'blue', 'teal', 'green', 'amber', 'rose'];
 
-/** A proportion widget, not a chart: no axis, no scale, no tooltip (ADR 0007). */
+/** A proportion widget, not a chart: no axis, no scale, no tooltip. */
 export function Donut({ slices, size = 120, thickness = 16, hues = DEFAULT_HUES, children, label, className }: DonutProps) {
   const radius = (size - thickness) / 2;
   const circumference = 2 * Math.PI * radius;

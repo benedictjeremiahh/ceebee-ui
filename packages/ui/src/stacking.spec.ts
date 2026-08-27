@@ -32,17 +32,9 @@ describe('global stacking contract', () => {
   });
 
   it('assigns anchored layers to the Positioner that owns their stacking context', () => {
+    // Only the components this library still draws anchor their own layers; Ant owns the rest.
     const positioners = [
-      ['overlay/popover.tsx', 'cb-popover-positioner'],
-      ['overlay/popover.tsx', 'cb-tooltip-positioner'],
-      ['nav/menu.tsx', 'cb-menu-positioner'],
       ['nav/shell.tsx', 'cb-sidebar__flyout-positioner'],
-      ['form/select.tsx', 'cb-select__positioner'],
-      ['form/autocomplete.tsx', 'cb-autocomplete__positioner'],
-      ['form/date-picker.tsx', 'cb-date-picker-calendar__positioner'],
-      ['form/time-picker.tsx', 'cb-times__positioner'],
-      ['overlay/popconfirm/popconfirm.tsx', 'cb-popconfirm__positioner'],
-      ['onboarding/coachmark.tsx', 'cb-coachmark__positioner'],
     ] as const;
 
     for (const [file, className] of positioners) {

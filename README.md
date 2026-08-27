@@ -9,7 +9,6 @@ and imported.
 - [CONTEXT.md](./CONTEXT.md) — the vocabulary. Atom, Composition, Recipe, Token, Skin, Surface, Tone,
   Coachmark, Tour, Seen Store, Widget vs Chart.
 - [AGENTS.md](./AGENTS.md) — the authoring contract. Read before adding a component.
-- [docs/adr/](./docs/adr/) — why the shape is the shape.
 - [docs/inventory.md](./docs/inventory.md) — every planned component and where it sits in the build.
 
 ## Shape

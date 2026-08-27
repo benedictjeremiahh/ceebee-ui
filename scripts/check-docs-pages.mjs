@@ -13,6 +13,9 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const APP = join(ROOT, 'docs/app');
+const CAPABILITY_LEDGER = JSON.parse(
+  readFileSync(join(ROOT, 'docs/component-capabilities.json'), 'utf8'),
+);
 
 /** Pages that are not a component reference and so do not carry the component-page contract. */
 const NOT_A_COMPONENT_PAGE = new Set([
@@ -267,16 +270,23 @@ function check(path) {
     line: source.slice(0, match.index).split('\n').length,
   }));
 
-  // The page opens on the component running, not on prose about it. A page documenting two
-  // components (Flex · Grid, Heading · Text) names its first section after the first of them
-  // rather than "Usage", so this asks for the example, not for the word.
+  // Native Ceebee pages open on a canonical live example. Catalog pages follow the upstream
+  // information architecture instead: "When to use" explains the choice, then "Examples" starts
+  // the live gallery. Both keep the first meaningful interaction near the top without requiring a
+  // duplicate, untitled card above the upstream example set.
   if (headings.length > 0) {
     const first = headings[0];
     const opening = source.slice(first.index, headings[1]?.index ?? source.length);
     const opensLive =
       /<Demo[\s>]/.test(opening) || /<[A-Z][A-Za-z0-9]*(?:Demo|Playground|Showcase)\b/.test(opening);
-    if (!opensLive) {
-      report(first.line, `The page opens on "## ${first.title}" with no live example; lead with the component running.`);
+    const examples = headings.find((heading) => heading.title === 'Examples');
+    const examplesSection = examples
+      ? source.slice(examples.index, headings.find((heading) => heading.index > examples.index)?.index ?? source.length)
+      : '';
+    const examplesOpenLive =
+      /<Demo[\s>]/.test(examplesSection) || /<[A-Z][A-Za-z0-9]*(?:Demo|Playground|Showcase)\b/.test(examplesSection);
+    if (!opensLive && !examplesOpenLive) {
+      report(first.line, `The page opens on "## ${first.title}" with no live example and has no live Examples gallery.`);
     }
   }
   let rank = -1;
@@ -320,7 +330,88 @@ function checkHandRolledFrames() {
   return { id: 'docs/**/*.tsx', problems };
 }
 
-const results = [...mdxPages(APP).map(check), checkHandRolledFrames()].sort((a, b) =>
+/**
+ * A component is not complete because its page exists. The capability ledger records the public
+ * claim and the exact docs, tests, and exports that prove it. Planned and deliberately absent
+ * capabilities remain visible without pretending that they already ship.
+ */
+function checkCapabilityLedger() {
+  const problems = [];
+  const report = (message) => problems.push({ line: 1, message });
+  const decisions = new Set(['supported', 'planned', 'replaced', 'deliberately-absent']);
+  const names = new Set();
+
+  if (CAPABILITY_LEDGER.schemaVersion !== 1) report('Unsupported capability-ledger schema version.');
+
+  for (const component of CAPABILITY_LEDGER.components ?? []) {
+    if (names.has(component.name)) report(`Duplicate component ${component.name}.`);
+    names.add(component.name);
+
+    const docsPath = join(ROOT, component.docsPage);
+    let docs = '';
+    try {
+      docs = readFileSync(docsPath, 'utf8');
+    } catch {
+      report(`${component.name} points to missing docs page ${component.docsPage}.`);
+      continue;
+    }
+
+    if (!docs.includes(`# ${component.name} <span className="docs__label">${component.tier}</span>`)) {
+      report(`${component.name} tier does not match its docs title.`);
+    }
+
+    const entry = ENTRIES[component.publicExports?.entry];
+    if (!entry) report(`${component.name} names an unknown public entry ${component.publicExports?.entry}.`);
+    for (const name of component.publicExports?.names ?? []) {
+      if (entry && !entry.has(name)) report(`${component.name} claims missing public export ${name}.`);
+    }
+
+    for (const section of component.requiredSections ?? []) {
+      if (!docs.includes(`## ${section}`)) report(`${component.name} docs are missing required section "${section}".`);
+    }
+
+    const capabilityIds = new Set();
+    let hasPlannedCapability = false;
+    for (const capability of component.capabilities ?? []) {
+      const label = `${component.name}.${capability.id}`;
+      if (capabilityIds.has(capability.id)) report(`Duplicate capability ${label}.`);
+      capabilityIds.add(capability.id);
+      if (!decisions.has(capability.decision)) report(`${label} has unknown decision ${capability.decision}.`);
+
+      if (capability.decision === 'supported') {
+        if (!capability.docsEvidence?.length) report(`${label} has no docs evidence.`);
+        if (!capability.testEvidence?.length) report(`${label} has no public-interface test evidence.`);
+        for (const evidence of capability.docsEvidence ?? []) {
+          if (!docs.includes(evidence)) report(`${label} docs evidence is missing: ${evidence}`);
+        }
+        for (const evidence of capability.testEvidence ?? []) {
+          let test = '';
+          try {
+            test = readFileSync(join(ROOT, evidence.file), 'utf8');
+          } catch {
+            report(`${label} points to missing test file ${evidence.file}.`);
+            continue;
+          }
+          if (!test.includes(evidence.contains)) report(`${label} test evidence is missing: ${evidence.contains}`);
+        }
+      } else {
+        if (!capability.rationale?.trim()) report(`${label} needs a rationale for decision ${capability.decision}.`);
+        if (capability.decision === 'planned') hasPlannedCapability = true;
+      }
+    }
+
+    if (component.completion === 'complete' && hasPlannedCapability) {
+      report(`${component.name} is marked complete while planned capabilities remain.`);
+    }
+    if (!['complete', 'partial'].includes(component.completion)) {
+      report(`${component.name} has unknown completion ${component.completion}.`);
+    }
+  }
+
+  return { id: 'docs/component-capabilities.json', problems };
+}
+
+const results = [...mdxPages(APP).map(check), checkHandRolledFrames(), checkCapabilityLedger()].sort((a, b) =>
   a.id.localeCompare(b.id),
 );
 const failing = results.filter((result) => result.problems.length > 0);
@@ -332,7 +423,11 @@ for (const result of failing) {
 
 const total = failing.reduce((sum, result) => sum + result.problems.length, 0);
 if (total === 0) {
-  console.log(`All ${results.length} docs pages match the page contract.`);
+  const capabilities = CAPABILITY_LEDGER.components.flatMap((component) => component.capabilities);
+  const supported = capabilities.filter((capability) => capability.decision === 'supported').length;
+  const open = capabilities.filter((capability) => capability.decision === 'planned').length;
+  console.log(`All ${results.length - 1} docs pages match the page contract.`);
+  console.log(`Capability ledger proves ${supported} supported capabilities; ${open} remain explicitly planned.`);
   process.exit(0);
 }
 console.log(`\n${total} problem(s) across ${failing.length} of ${results.length} pages.`);

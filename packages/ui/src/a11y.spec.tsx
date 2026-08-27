@@ -1,34 +1,18 @@
 import { render } from '@testing-library/react';
 import axe from 'axe-core';
 import { describe, expect, it } from 'vitest';
-import { Alert } from './feedback/alert.js';
-import { Badge } from './feedback/badge.js';
-import { Breadcrumb } from './nav/breadcrumbs.js';
-import { Checkbox, RadioGroup, Switch } from './form/choice.js';
-import { Table, type Column } from './data/table.js';
-import { Empty } from './feedback/empty.js';
-import { Field } from './form/field.js';
+import { Donut } from './data/donut.js';
 import { Leaderboard } from './data/leaderboard.js';
-import { Pagination } from './data/pagination.js';
-import { ProgressBar, Spin } from './feedback/progress.js';
-import { ProgressRing } from './data/progress-ring.js';
-import { Steps } from './nav/stepper.js';
-import { Input } from './form/input.js';
-import { Timeline } from './data/timeline.js';
-
-interface Row {
-  id: string;
-  name: string;
-}
-
-const COLUMNS: Array<Column<Row>> = [
-  { key: 'name', header: 'Name', cell: (row) => row.name, sortable: true },
-];
+import { Sparkline } from './data/sparkline.js';
+import { Checklist } from './onboarding/checklist.js';
 
 /**
  * A real audit runs against a browser; this catches the rules that hold in jsdom — names,
  * roles, labels, list and table structure — so a regression in wiring fails the build rather
  * than waiting to be noticed on screen.
+ *
+ * Ant's components carry their own accessibility and Ant tests it; what is asserted here is what
+ * this library still draws itself.
  */
 async function violationsIn(ui: React.ReactElement): Promise<string[]> {
   const { container } = render(ui);
@@ -40,61 +24,23 @@ async function violationsIn(ui: React.ReactElement): Promise<string[]> {
 }
 
 describe('accessibility', () => {
-  it('form controls carry names and wiring', async () => {
+  it('the widgets this library still draws carry names and structure', async () => {
     expect(
       await violationsIn(
         <div>
-          <Field label="Email" hint="Work address" error="Already taken">
-            <Input />
-          </Field>
-          <Checkbox label="Email me receipts" description="One per payment" />
-          <Switch label="Reduce motion" />
-          <RadioGroup
-            label="Billing period"
-            options={[
-              { value: 'monthly', label: 'Monthly' },
-              { value: 'yearly', label: 'Yearly' },
+          <Leaderboard
+            label="Weekly leaders"
+            entries={[{ id: '1', name: 'Ada Putri', score: '10' }]}
+          />
+          <Donut label="Spend by category" slices={[{ label: 'Rent', value: 4 }, { label: 'Food', value: 6 }]} />
+          <Sparkline label="Sessions this week" values={[3, 5, 4, 8, 6, 9, 7]} />
+          <Checklist
+            title="Getting started"
+            tasks={[
+              { id: 'a', label: 'Create a workspace', done: true },
+              { id: 'b', label: 'Invite your team' },
             ]}
           />
-        </div>,
-      ),
-    ).toEqual([]);
-  });
-
-  it('data display keeps its structure', async () => {
-    expect(
-      await violationsIn(
-        <div>
-          <Table
-            label="People"
-            columns={COLUMNS}
-            rows={[{ id: '1', name: 'Ada Putri' }]}
-            rowKey={(row) => row.id}
-            sort={null}
-            onSortChange={() => {}}
-          />
-          <Pagination page={1} pageSize={10} total={40} onPageChange={() => {}} />
-          <Leaderboard label="Weekly leaders" entries={[{ id: '1', name: 'Ada Putri', score: '10' }]} />
-          <Timeline entries={[{ time: '09:00', title: 'Created' }]} />
-          <ProgressRing value={40} label="Task progress" />
-          <ProgressBar value={40} label="Upload" />
-          <Spin label="Loading" />
-        </div>,
-      ),
-    ).toEqual([]);
-  });
-
-  it('navigation and feedback announce themselves', async () => {
-    expect(
-      await violationsIn(
-        <div>
-          <Breadcrumb items={[{ label: 'Workspace', href: '#' }, { label: 'Billing' }]} />
-          <Steps current={1} steps={[{ label: 'Account' }, { label: 'Workspace' }]} />
-          <Alert tone="danger" title="Payment failed" onDismiss={() => {}} />
-          <Badge tone="success" dot>
-            Live
-          </Badge>
-          <Empty title="No invoices yet" description="They appear here once billed." />
         </div>,
       ),
     ).toEqual([]);

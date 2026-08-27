@@ -1,0 +1,16 @@
+'use client';
+
+import React from 'react';
+import { Flex, QRCode } from '@ceebee/ui/client';
+
+const value = 'https://ceebee.dev';
+
+const App: React.FC = () => (
+  <Flex gap="medium" wrap>
+    <QRCode value={value} status="loading" />
+    <QRCode value={value} status="expired" onRefresh={() => console.log('refresh')} />
+    <QRCode value={value} status="scanned" />
+  </Flex>
+);
+
+export default App;

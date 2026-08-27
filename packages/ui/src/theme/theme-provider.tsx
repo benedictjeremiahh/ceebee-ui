@@ -1,6 +1,8 @@
 'use client';
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
+import type { ThemeConfig } from 'antd';
+import { ThemeBridge } from './theme-bridge.js';
 
 export type ThemeChoice = 'light' | 'dark' | 'system';
 
@@ -15,7 +17,7 @@ const ThemeContext = createContext<ThemeState | null>(null);
 const STORAGE_KEY = 'cb-theme';
 
 /**
- * Colour itself comes from CSS, not from here (ADR 0002) — this only flips `data-theme`
+ * Colour itself comes from CSS, not from here — this only flips `data-theme`
  * on the document root, so the first paint is already correct without a blocking script
  * for anyone who never overrides the system setting.
  */
@@ -23,10 +25,13 @@ export function ThemeProvider({
   children,
   defaultChoice = 'system',
   persist = true,
+  antdTheme,
 }: {
   children: ReactNode;
   defaultChoice?: ThemeChoice;
   persist?: boolean;
+  /** Optional Ant token/component overrides applied after the active Ceebee Skin. */
+  antdTheme?: ThemeConfig;
 }) {
   const [choice, setChoiceState] = useState<ThemeChoice>(defaultChoice);
   const [systemDark, setSystemDark] = useState(false);
@@ -61,7 +66,11 @@ export function ThemeProvider({
 
   const resolved = choice === 'system' ? (systemDark ? 'dark' : 'light') : choice;
 
-  return <ThemeContext.Provider value={{ choice, setChoice, resolved }}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={{ choice, setChoice, resolved }}>
+      <ThemeBridge mode={resolved} theme={antdTheme}>{children}</ThemeBridge>
+    </ThemeContext.Provider>
+  );
 }
 
 export function useTheme(): ThemeState {

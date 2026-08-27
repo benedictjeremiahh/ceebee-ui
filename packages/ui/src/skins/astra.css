@@ -1,5 +1,5 @@
 /* The "Astra" skin: the violet-to-blue gradient dashboard look from the reference board.
-   A Skin rewrites skin tokens only — never structure, never a component rule (ADR 0002). */
+   A Skin rewrites skin tokens only — never structure, never a component rule. */
 :root {
   --cb-hue-brand: 278;
 

@@ -34,13 +34,8 @@ export interface Labels {
   decrease: string;
   expandNavigation: string;
   collapseNavigation: string;
-  /** Tour buttons. A Tour's own `labels` prop still wins over these. */
-  back: string;
+  /** Carousel and image-preview stepping. */
   next: string;
-  done: string;
-  skip: string;
-  /** Coachmark and Checklist progress, e.g. "2 of 5". */
-  progress: (current: number, total: number) => string;
 }
 
 export const DEFAULT_LABELS: Labels = {
@@ -68,11 +63,7 @@ export const DEFAULT_LABELS: Labels = {
   decrease: 'Decrease',
   expandNavigation: 'Expand navigation',
   collapseNavigation: 'Collapse navigation',
-  back: 'Back',
   next: 'Next',
-  done: 'Done',
-  skip: 'Skip',
-  progress: (current, total) => `${current} of ${total}`,
 };
 
 const LabelsContext = createContext<Labels>(DEFAULT_LABELS);

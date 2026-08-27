@@ -3,7 +3,7 @@
 import { Check, ChevronRight } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { cn } from '../lib/cn.js';
-import { ProgressBar } from '../feedback/progress.js';
+import { Progress } from 'antd';
 
 export interface ChecklistTask {
   id: string;
@@ -24,7 +24,7 @@ export interface ChecklistProps {
 /**
  * Getting-started tasks with progress. Which tasks are done is the app's knowledge, passed in —
  * the library does not track anyone's account state, the same rule the Seen Store follows
- * (ADR 0006).
+ *.
  */
 export function Checklist({ title = 'Get started', tasks, completeSlot, className }: ChecklistProps) {
   const done = tasks.filter((task) => task.done).length;
@@ -39,7 +39,12 @@ export function Checklist({ title = 'Get started', tasks, completeSlot, classNam
         </span>
       </header>
 
-      <ProgressBar value={done} max={Math.max(tasks.length, 1)} size="sm" label={`${done} of ${tasks.length} tasks done`} />
+      <Progress
+        percent={(done / Math.max(tasks.length, 1)) * 100}
+        size="small"
+        showInfo={false}
+        aria-label={`${done} of ${tasks.length} tasks done`}
+      />
 
       {complete && completeSlot ? (
         <div className="cb-checklist__complete">{completeSlot}</div>

@@ -1,26 +1,30 @@
 import { Demo } from '../components/demo';
 import { Guidance } from '../components/props-table';
-import { Surface, Flex, Text, Statistic, ProgressRing } from '@ceebee/ui';
+import { Surface, Flex, Text } from '@ceebee/ui';
+import { Progress, Statistic } from '@ceebee/ui/client';
 
 # @ceebee/ui
 
-Tokens, themed primitives, motion, and the onboarding pieces a plain component library leaves out.
-Published to npm and imported — never copied into a project, so a fix reaches every app on
-`pnpm up` ([ADR 0001](https://github.com/ceebee/ui)).
+A complete application toolkit: 73 documented components, a token layer that repaints all of them
+from one file, and the motion and onboarding pieces a plain component library leaves out. Published
+to npm and imported — never copied into a project, so a fix reaches every app on `pnpm up`.
 
 <Demo layout="block" code={`import '@ceebee/ui/styles.css';
 import '@ceebee/ui/skins/astra.css';        // optional Skin: rewrites brand tokens only
 
-import { Surface, Statistic, ProgressRing } from '@ceebee/ui';         // server-safe
-import { Button, Modal, MotionProvider } from '@ceebee/ui/client';   // interactive`}>
+import { Surface, Flex, Text } from '@ceebee/ui';        // server-safe
+import { MotionProvider } from '@ceebee/ui/client';      // interactive
+import { Button, Modal, Statistic } from '@ceebee/ui/client'; // interactive, themed`}>
   <Flex direction="row" gap={4} wrap>
-    <Statistic label="Total balance" value="120,456.50" delta={{ value: '+2.4%', direction: 'up' }} hue="violet" />
-    <Statistic
-      label="Task progress"
-      value="84%"
-      hue="blue"
-      visual={<ProgressRing value={84} size={64} thickness={8} hue="blue" label="Task progress" />}
-    />
+    <Surface variant="tinted" hue="violet" padding="md" radius="md">
+      <Statistic title="Total balance" value="120,456.50" suffix={<Text size="xs" tone="success">+2.4%</Text>} />
+    </Surface>
+    <Surface variant="tinted" hue="blue" padding="md" radius="md">
+      <Flex direction="row" gap={3} align="center">
+        <Statistic title="Task progress" value="84%" />
+        <Progress type="circle" percent={84} size={64} strokeWidth={12} strokeColor="var(--cb-decor-blue)" aria-label="Task progress" />
+      </Flex>
+    </Surface>
   </Flex>
 </Demo>
 
@@ -30,9 +34,10 @@ The package splits at the React Server Component boundary, and the split is deli
 content-heavy page can be built from `@ceebee/ui` alone and ship no animation runtime at all.
 
 - **`@ceebee/ui`** — server-safe. `Surface`, `Flex`, `Grid`, `Container`, `Text`, `Heading`,
-  `Skeleton`, `ProgressRing`, `Statistic`.
-- **`@ceebee/ui/client`** — carries `"use client"`. `Button`, `Field`, `Input`, `Modal`,
-  `ThemeProvider`, `MotionProvider`.
+  `PageContainer`, and the widgets: `Donut`, `Sparkline`, `BarMini`, `Leaderboard`.
+- **`@ceebee/ui/client`** — carries `"use client"`. The whole interactive catalogue — `Button`,
+  `Form`, `Input`, `Select`, `Table`, `Modal`, `Tabs`, and the rest — plus the app shell
+  (`Sidebar`, `TopBar`), `CommandPalette`, `Checklist`, and the providers.
 
 <Guidance
   do="Import from the server entry by default, and reach for /client only when the component actually needs to listen or animate."
@@ -43,9 +48,18 @@ content-heavy page can be built from `@ceebee/ui` alone and ship no animation ru
 
 Saying no is what keeps it small enough to maintain alone.
 
-- **No charting.** Widgets with no axis (`ProgressRing`, `Donut`, `Sparkline`) ship here; anything
+- **No charting.** Widgets with no axis (`Donut`, `Sparkline`) ship here; anything
   with an axis or a scale belongs to your app's charting library.
-- **No form engine.** `Field` owns label, hint, error, and the aria wiring between them. Validation
-  and form state stay with react-hook-form, TanStack Form, or Server Actions.
-- **No memory.** A `Tour` sequences Coachmarks; whether a person has already seen it is answered by
-  a Seen Store your app injects. The library never learns who your users are.
+- **No memory.** Whether a person has already completed an onboarding step is passed in by your app.
+  The library never learns who your users are.
+- **No second way to do the same thing.** Where a component already exists, there is exactly one of
+  it. Anything superseded is removed rather than kept as an alias.
+
+## Where to start
+
+- **[Tokens](/tokens)** — the values every component reads. Change these and the whole catalogue
+  changes with them.
+- **[Theming](/theming)** — light and dark, Skins, and how a brand gets applied in one file.
+- **[Button](/form/button)** — the smallest complete example of how a component page is laid out:
+  live demos, their source, and the full API table.
+- **[Changelog](/changelog)** — what changed, and what breaks when you upgrade.

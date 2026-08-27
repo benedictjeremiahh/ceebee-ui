@@ -3,7 +3,7 @@ import { PropsTable, Guidance } from '../../../components/props-table';
 
 # Checklist <span className="docs__label">Composition</span>
 
-Getting-started tasks with progress — the quieter half of onboarding, next to the Tour.
+Getting-started tasks with progress. Guided walkthroughs are `Tour`.
 
 ## Usage
 
@@ -11,7 +11,7 @@ Getting-started tasks with progress — the quieter half of onboarding, next to 
 
 ## It does not know what is done
 
-Which tasks are complete is passed in, exactly as a Tour's memory is. The library holds no account
+Which tasks are complete is passed in by the caller. The library holds no account
 state, because a checklist that decides for itself what "done" means is one that disagrees with
 your backend the first time someone completes a step on another device.
 

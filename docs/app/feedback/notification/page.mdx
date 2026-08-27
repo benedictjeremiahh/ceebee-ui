@@ -1,117 +1,24 @@
-import { Button } from '@ceebee/ui/client';
-import { Notification, Flex } from '@ceebee/ui';
-import { Demo } from '../../../components/demo';
-import { Guidance, PropsTable } from '../../../components/props-table';
+import { NotificationShowcase } from '../../../components/feedback/notification/showcase';
+import { ApiReference } from '../../../components/api-reference';
 
-# Notification <span className="docs__label">Composition</span>
+# Notification
 
-`Notification` is persistent, rich status feedback with a title, explanation, and composable
-actions. It stays in normal document flow: the application owns placement, history, and lifetime.
+Prompt notification message globally.
 
-## Usage
+## When to use
 
-<Demo
-  layout="block"
-  code={`<Notification
-  title="Import completed"
-  description="Twenty records are ready for review."
-  actions={<Button variant="outline" size="sm">View records</Button>}
-/>`}
->
-  <Notification
-    title="Import completed"
-    description="Twenty records are ready for review."
-    actions={<Button variant="outline" size="sm">View records</Button>}
-  />
-</Demo>
+To display a notification message at any of the four corners of the viewport. Typically it can be used in the following cases:
 
-## Tone
+- A notification with complex content.
+- A notification providing a feedback based on the user interaction. Or it may show some details about upcoming steps the user may have to follow.
+- A notification that is pushed by the application.
 
-Tone chooses the presentation, the default icon, and the announcement urgency together: `danger`
-announces as an alert, the quieter tones as a status.
+## Examples
 
-<Demo
-  layout="block"
-  code={`<Notification tone="info" title="Import completed" />
-<Notification tone="success" title="Backup verified" />
-<Notification tone="warning" title="Quota nearly used" />
-<Notification tone="danger" title="Sync failed" />`}
->
-  <Flex gap={3}>
-    <Notification tone="neutral" title="Export queued" description="It will start when the current job finishes." />
-    <Notification tone="info" title="Import completed" description="Twenty records are ready for review." />
-    <Notification tone="success" title="Backup verified" description="Every checksum matched the source." />
-    <Notification tone="warning" title="Quota nearly used" description="92% of this month's allowance is gone." />
-    <Notification tone="danger" title="Sync failed" description="The remote rejected the last three attempts." />
-  </Flex>
-</Demo>
+<NotificationShowcase />
 
-## Actions
+## API
 
-Actions are composed, not configured. A dismiss control is one of them: pass it through `actions`
-and remove the item from application state yourself.
+`notification` and `notification.useNotification` are exported from `@ceebee/ui/client`.
 
-<Demo
-  layout="block"
-  code={`<Notification
-  tone="danger"
-  title="Sync failed"
-  description="The remote rejected the last three attempts."
-  actions={
-    <>
-      <Button size="sm" tone="danger">Retry</Button>
-      <Button size="sm" variant="ghost" tone="neutral" onClick={dismiss}>Dismiss</Button>
-    </>
-  }
-/>`}
->
-  <Notification
-    tone="danger"
-    title="Sync failed"
-    description="The remote rejected the last three attempts."
-    actions={
-      <>
-        <Button size="sm" tone="danger">Retry</Button>
-        <Button size="sm" variant="ghost" tone="neutral">Dismiss</Button>
-      </>
-    }
-  />
-</Demo>
-
-## Boundary
-
-Notification is server-safe and owns no timer, queue, portal, fixed position, storage, or dismiss
-state. Supply action controls — including a dismiss control — through `actions`, then remove the item
-from app-owned state. `Toast` remains the transient provider-managed stack; `Alert` remains inline
-feedback tied to nearby content.
-
-## Props
-
-<PropsTable rows={[
-  { name: 'title', type: 'ReactNode', default: '—', description: 'Required concise status title.' },
-  { name: 'description', type: 'ReactNode', default: '—', description: 'Optional supporting detail.' },
-  { name: 'icon', type: 'ReactNode', default: 'Tone icon', description: 'Custom semantic icon; pass null to omit it.' },
-  { name: 'actions', type: 'ReactNode', default: '—', description: 'Composable app-owned controls.' },
-  { name: 'tone', type: "'neutral' | 'info' | 'success' | 'warning' | 'danger'", default: "'info'", description: 'Semantic presentation and announcement urgency.' },
-  { name: 'announce', type: 'boolean', default: 'true', description: 'Uses status semantics, or alert for danger; false is useful in notification history.' },
-]} />
-
-## Skeleton
-
-`Notification.Skeleton` accepts `lines` and `withActions`, preserving the same icon, copy, and
-action geometry without creating a live region or interactive control.
-
-<Demo layout="block" code={`<Notification.Skeleton withActions />`}>
-  <Notification.Skeleton withActions />
-</Demo>
-
-## Tokens
-
-The component reads surface, border, shadow, radius, spacing, typography, control-height, and
-semantic `--cb-tone-*` Tokens. It does not read the global stacking ladder because it does not
-position itself.
-
-<Guidance
-  do="Keep a durable operational result visible until the surrounding application resolves or removes it."
-  dont="Create a second timed toast queue or hide the only copy of important information after a timeout."
-/>
+<ApiReference component="Notification" />

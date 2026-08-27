@@ -1,19 +1,9 @@
 'use client';
 
 import { Flame, GraduationCap, Trophy } from 'lucide-react';
-import { Button } from '@ceebee/ui/client';
-import {
-  Badge,
-  Grid,
-  Heading,
-  Leaderboard,
-  ProgressBar,
-  ProgressRing,
-  Flex,
-  Statistic,
-  Surface,
-  Text,
-} from '@ceebee/ui';
+
+import { Badge, Button, Progress, Progress as ProgressBar, Statistic } from '@ceebee/ui/client';
+import { Flex, Grid, Heading, Leaderboard, Surface, Text } from '@ceebee/ui';
 
 const LEADERS = [
   { id: '1', name: 'Ada Putri', score: '2,480', detail: '12 modules', delta: { value: '▲2', direction: 'up' as const } },
@@ -34,27 +24,33 @@ export function GamifiedRecipe() {
               <Text size="sm" tone="muted">Learning plan</Text>
               <Heading level={2} size="2xl">78% complete</Heading>
               <Flex direction="row" gap={2} align="center">
-                <Badge tone="warning" size="sm" dot>12-day streak</Badge>
-                <Badge tone="brand" size="sm">Level 7</Badge>
+                <Badge count="12-day streak" color="var(--cb-tone-warning)" />
+                <Badge count="Level 7" color="var(--cb-tone-brand)" />
               </Flex>
             </Flex>
-            <ProgressRing value={78} size={104} thickness={11} hue="violet" label="Course progress" />
+            <Progress type="circle" percent={78} size={104} strokeWidth={11} strokeColor="var(--cb-decor-violet)" aria-label="Course progress" />
           </Flex>
         </Surface>
 
         <Grid minItemWidth="8.5rem" gap={3}>
-          <Statistic label="Streak" value="12" caption="days in a row" hue="amber" icon={<Flame size={16} />} />
-          <Statistic label="Modules" value="9/12" hue="teal" icon={<GraduationCap size={16} />} />
-          <Statistic label="Rank" value="#4" delta={{ value: '▲4', direction: 'up' }} hue="rose" icon={<Trophy size={16} />} />
+          <Surface variant="tinted" hue="amber" padding="md" radius="md">
+            <Statistic title="Streak" value={12} suffix={<Text size="xs" tone="subtle">days in a row</Text>} prefix={<Flame size={16} />} />
+          </Surface>
+          <Surface variant="tinted" hue="teal" padding="md" radius="md">
+            <Statistic title="Modules" value="9/12" prefix={<GraduationCap size={16} />} />
+          </Surface>
+          <Surface variant="tinted" hue="rose" padding="md" radius="md">
+            <Statistic title="Rank" value="#4" suffix={<Text size="xs" tone="success">▲4</Text>} prefix={<Trophy size={16} />} />
+          </Surface>
         </Grid>
 
         <Surface padding="md" radius="lg">
           <Flex gap={3}>
             <Text size="sm" weight="semibold">This week</Text>
             <Flex gap={2}>
-              <ProgressBar value={45} label="Foundations" size="sm" showValue />
-              <ProgressBar value={80} tone="success" label="Data modelling" size="sm" showValue />
-              <ProgressBar value={20} tone="warning" label="Security" size="sm" showValue />
+              <ProgressBar percent={45} size="small" aria-label="Foundations" />
+              <ProgressBar percent={80} size="small" strokeColor="var(--cb-tone-success)" aria-label="Data modelling" />
+              <ProgressBar percent={20} size="small" strokeColor="var(--cb-tone-warning)" aria-label="Security" />
             </Flex>
           </Flex>
         </Surface>
@@ -63,7 +59,7 @@ export function GamifiedRecipe() {
           <Flex gap={3}>
             <Flex direction="row" justify="between" align="center">
               <Text size="sm" weight="semibold">Leaderboard</Text>
-              <Button size="sm" variant="ghost" tone="neutral">This week</Button>
+              <Button size="small" type="text">This week</Button>
             </Flex>
             <Leaderboard label="Weekly leaders" entries={LEADERS} />
           </Flex>

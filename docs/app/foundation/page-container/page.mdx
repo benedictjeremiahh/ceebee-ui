@@ -1,5 +1,7 @@
 import { Demo } from '../../../components/demo';
-import { PageContainer, PageContainerSkeleton, Breadcrumb, Heading, Text, LinkButton } from '@ceebee/ui';
+import { PageContainer, PageContainerSkeleton, Heading, Text } from '@ceebee/ui';
+import { Breadcrumb, Button } from '@ceebee/ui/client';
+
 import { Guidance, PropsTable } from '../../../components/props-table';
 
 # PageContainer <span className="docs__label">Composition</span>
@@ -24,10 +26,10 @@ belongs to the surrounding document.
 </PageContainer>`}
 >
   <PageContainer
-    breadcrumb={<Breadcrumb items={[{ label: 'Workspace', href: '#workspace' }, { label: 'Projects' }]} />}
+    breadcrumb={<Breadcrumb items={[{ title: 'Workspace', href: '#workspace' }, { title: 'Projects' }]} />}
     title={<Heading level={2}>Projects</Heading>}
     subtitle="Current work across the workspace"
-    extra={<LinkButton href="#page-container-props" size="sm">Create project</LinkButton>}
+    extra={<Button href="#page-container-props" size="small">Create project</Button>}
   >
     <Text tone="muted">The body region is ordinary document flow; the application owns what is in it.</Text>
   </PageContainer>

@@ -1,139 +1,22 @@
-import { Demo } from '../../../components/demo';
-import { PropsTable, Guidance } from '../../../components/props-table';
-import { FloatButton } from '@ceebee/ui/client';
-import { Plus, Pencil, MessageCircle } from 'lucide-react';
+import { FloatButtonShowcase } from '../../../components/general-showcases';
+import { ApiReference } from '../../../components/api-reference';
+import { Guidance } from '../../../components/props-table';
 
-# FloatButton <span className="docs__label">Atom</span>
+# FloatButton
 
-`FloatButton` is one persistent native action fixed to a viewport corner. It is an action, not a
-link, menu, group, or scroll controller.
+A button that floats at the top of the page.
 
-## Usage
+## When to use
 
-Every example on this page is fixed to the stage rather than to the page, so the component sits
-where it would sit in an application without taking over the docs. In an application, provide the
-handler that owns the action.
+- For global functionality on the site.
+- For actions that must remain available wherever the user browses.
 
-<Demo
-  layout="block"
-  contain
-  code={`<FloatButton
-  label="Create project"
-  icon={<Plus />}
-  onClick={() => createProject()}
-/>`}
->
-  <FloatButton label="Create project" icon={<Plus />} />
-</Demo>
+## Examples
 
-## Label
+<FloatButtonShowcase />
 
-`label` is always the accessible name. `visibleLabel` also puts it on screen, which widens the
-button from a circle to a pill.
+## API
 
-<Demo
-  layout="block"
-  contain
-  code={`<FloatButton label="Create project" icon={<Plus />} />
-<FloatButton label="Create project" icon={<Plus />} visibleLabel />`}
->
-  <FloatButton label="Create project" icon={<Plus />} visibleLabel />
-</Demo>
+`FloatButton`, `FloatButton.Group`, `FloatButton.BackTop`, and their props are exported from `@ceebee/ui/client`.
 
-## Tone
-
-<Demo
-  layout="block"
-  contain
-  code={`<FloatButton label="New message" icon={<MessageCircle />} tone="brand" />
-<FloatButton label="New message" icon={<MessageCircle />} tone="neutral" />
-<FloatButton label="New message" icon={<MessageCircle />} tone="success" />
-<FloatButton label="New message" icon={<MessageCircle />} tone="danger" />`}
->
-  <FloatButton label="New message" icon={<MessageCircle />} tone="success" />
-</Demo>
-
-## Size
-
-<Demo
-  layout="block"
-  contain
-  code={`<FloatButton label="Edit" icon={<Pencil />} size="sm" />
-<FloatButton label="Edit" icon={<Pencil />} size="md" />
-<FloatButton label="Edit" icon={<Pencil />} size="lg" />`}
->
-  <FloatButton label="Edit" icon={<Pencil />} size="lg" />
-</Demo>
-
-## Placement
-
-Both corners are on the block end; the difference is the inline edge, so the component follows
-writing direction rather than a hard-coded left and right.
-
-<Demo
-  layout="block"
-  contain
-  code={`<FloatButton label="Create project" icon={<Plus />} placement="bottom-start" />
-<FloatButton label="Create project" icon={<Plus />} placement="bottom-end" />`}
->
-  <FloatButton label="Create project" icon={<Plus />} placement="bottom-start" />
-</Demo>
-
-## Disabled
-
-<Demo
-  layout="block"
-  contain
-  code={`<FloatButton label="Create project" icon={<Plus />} disabled />`}
->
-  <FloatButton label="Create project" icon={<Plus />} disabled />
-</Demo>
-
-## Anatomy
-
-FloatButton renders exactly one native `<button>` with the `.cb-float-button` namespace. `label`
-is its required accessible name and becomes visible only with `visibleLabel`. An icon-only button
-requires an `icon`; when `visibleLabel` is true, the icon is optional. An icon is decorative to
-assistive technology because the button already has a name.
-
-## Keyboard, focus, and stacking
-
-This is a client component because it accepts native event handlers. It keeps native button
-semantics: Tab reaches it, Enter and Space activate it, and disabled prevents activation. It owns
-no focus state, dismissal, portal, anchoring engine, or gesture model.
-
-It is `position: fixed`, uses `--cb-space-5` for logical viewport offsets, and sits at the
-`--cb-z-sticky` rung. It takes no raw offset, z-index, `className`, `href`, or ARIA role override.
-`label` always owns its accessible name: `aria-label` and `aria-labelledby` are not accepted.
-`style` is also not accepted, so raw positioning cannot replace the fixed Token contract.
-
-## Separate contracts
-
-`FloatButton` intentionally does not include Ant's `FloatButton.Group` or `BackTop` behaviour.
-A group adds action-disclosure and keyboard/focus decisions; scroll-to-top owns scroll observation
-and positioning. Both require separate public contracts when they are needed. For navigation, use
-`LinkButton`, which preserves native link behaviour.
-
-## Props
-
-<PropsTable rows={[
-  { name: 'label', type: 'string', default: '—', description: 'Required accessible name; also the visible text when visibleLabel is true.' },
-  { name: 'visibleLabel', type: 'true | false', default: 'false', description: 'When true, shows label and makes icon optional; otherwise icon is required.' },
-  { name: 'icon', type: 'ReactElement', default: '—', description: 'Required for icon-only use; optional when visibleLabel is true.' },
-  { name: 'tone', type: 'Tone', default: "'brand'", description: 'Semantic colour.' },
-  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Control-height Token.' },
-  { name: 'placement', type: "'bottom-start' | 'bottom-end'", default: "'bottom-end'", description: 'Viewport corner using logical inset Tokens.' },
-  { name: 'disabled', type: 'boolean', default: 'false', description: 'Uses native disabled-button behaviour.' },
-  { name: 'onClick', type: 'MouseEventHandler<HTMLButtonElement>', default: '—', description: 'Action owned by the consuming application.' },
-  { name: 'type', type: "'button' | 'submit' | 'reset'", default: "'button'", description: 'Native button form behaviour.' },
-]} />
-
-## Tokens
-
-FloatButton reads semantic tone Tokens, `--cb-control-height-*`, `--cb-space-2`,
-`--cb-space-4`, `--cb-space-5`, radius, focus, font, shadow, and `--cb-z-sticky` Tokens.
-
-<Guidance
-  do="Use one FloatButton for a primary viewport-level action such as creating a record."
-  dont="Turn it into navigation, a multi-action group, or an implicit scroll-to-top control."
-/>
+<ApiReference component="FloatButton" />

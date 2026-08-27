@@ -6,7 +6,7 @@ from (server-safe `@ceebee/ui` vs `@ceebee/ui/client`), and which slice builds i
 Everything planned here is now built and documented. The slice column records the order it was
 built in, which is worth keeping: it is the record of what turned out to be foundational.
 
-What is *not* here — the gaps measured against Ant Design's breadth, and the pieces a product has
+What is *not* here — the gaps measured against the catalog baseline, and the pieces a product has
 already had to write for itself — is in [roadmap.md](./roadmap.md).
 
 ## foundation
@@ -18,37 +18,26 @@ already had to write for itself — is in [roadmap.md](./roadmap.md).
 | Theme switching | — | css + client | S1 | `data-theme` + `prefers-color-scheme`; `ThemeProvider` only for the toggle |
 | MotionProvider | Atom | client | S1 | global scale / kill switch, reduced-motion seam |
 | Surface | Atom | server | S1 | `plain \| tinted \| glass \| gradient` × `tone` — carries the board look |
-| Divider | Atom | server | S5 — built | a bare `<hr>`, or `role="separator"` when it carries a label |
-| Stack / Grid / Container | Atom | server | S1 | layout only |
-| Space (+ `.Compact`, `.Skeleton`) | Composition | server | Ant coverage wave 2 — built | sibling spacing, separators, and adjacent-control geometry |
-| Masonry (+ `.Skeleton`) | Composition | server | Ant coverage wave 3 — built | ragged, responsive columns |
-| Affix | Atom | server | Ant coverage wave 3 — built | native sticky positioning on semantic z rung |
-| Splitter (+ `.Skeleton`) | Composition | client | Ant coverage wave 4 — built | pointer and keyboard pane resizing |
-| PageContainer (+ `.Skeleton`) | Composition | server | Pro Components coverage — built | stateless page frame with injected regions |
-| Text / Heading | Atom | server | S1 | type scale from tokens |
+| Divider | Atom | server | built | legacy server-safe separator remains available |
+| Stack / Grid / Container | Atom | server | built | legacy token-constrained layout primitives remain available |
+| Layout | Composition | client | built | complete Header/Sider/Content/Footer frame from `@ceebee/ui/client` |
+| Space (+ `.Compact`, `.Skeleton`) | Composition | server | built | legacy token-constrained Space and Skeleton remain available |
+| Masonry (+ `.Skeleton`) | Composition | server | built | legacy Masonry and Skeleton remain available |
+| Affix | Atom | server | built | native sticky positioning on semantic z rung |
+| Splitter (+ `.Skeleton`) | Composition | client | built | legacy two-pane Splitter and Skeleton remain available |
+| PageContainer (+ `.Skeleton`) | Composition | server | built | stateless page frame with injected regions |
+| Text / Heading | Atom | server | built | legacy server-safe typography remains available; the complete typography surface is exported from `@ceebee/ui/client` |
+| Icon | Atom | client | built | icons come from `@ant-design/icons`, themed through `ThemeProvider` |
 
 ## form
 
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
-| Field (label + hint + error wiring) | Atom | client | S1 |
-| Button | Atom | client | S1 |
-| FloatButton | Atom | client | Ant coverage wave 4 — built |
-| Input / Textarea | Atom | client | S1 |
-| Select | Atom | client | S2 — built |
-| Checkbox / Radio / Switch | Atom | client | S2 — built |
-| Rate | Atom | client | S5 — built |
-| InputNumber | Atom | client | S2 — built |
-| Slider (+ `.Skeleton`) | Composition | client | Ant coverage wave 5 — built |
-| Mentions (+ `.Skeleton`) | Composition | client | Ant coverage wave 6 — built |
-| Transfer (+ `.Skeleton`) | Composition | client | Ant coverage wave 6 — built |
-| TreeSelect (+ `.Skeleton`) | Composition | client | Ant coverage wave 7 — built |
-| Cascader (+ `.Skeleton`) | Composition | client | Ant coverage wave 7 — built |
-| ColorPicker (+ `.Skeleton`) | Composition | client | Ant coverage wave 7 — built |
-| DatePicker | Composition | client | S3 — built |
-| TimePicker | Composition | client | S5 — built |
-| AutoComplete | Atom | client | S3 — built |
-| Upload | Composition | client | S4 — built |
+| Button | Atom | server | S1 — built |
+| FloatButton (+ `.Group`, `.BackTop`) | Composition | client | built |
+
+The rest of this section was removed: every field component it held now ships from `@ceebee/ui/client`, and `Form.Item`
+replaced the `Field` wiring they shared.
 
 ## feedback
 
@@ -61,35 +50,34 @@ already had to write for itself — is in [roadmap.md](./roadmap.md).
 | Alert / Callout | Composition | client | S2 — built |
 | Toast | Composition | client | S3 — built |
 | Empty | Composition | server | S3 — built |
-| Result (+ `.Skeleton`) | Composition | server | Ant coverage wave 2 — built |
-| Notification (+ `.Skeleton`) | Composition | server | Ant coverage wave 5 — built |
-| Watermark (+ `.Skeleton`) | Composition | client | Ant coverage wave 3 — built |
+| Result (+ `.Skeleton`) | Composition | server | built |
+| Notification (+ `.Skeleton`) | Composition | server | built |
+| Watermark (+ `.Skeleton`) | Composition | client | built |
 
 ## overlay
 
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
-| Modal (+ `.Confirm`, `.Skeleton`) | Composition | client | S1 / Ant coverage wave 1 — built |
+| Modal (+ `.Confirm`, `.Skeleton`) | Composition | client | S1 — built |
 | Drawer | Composition | client | S1 — built |
 | Popover | Atom | client | S2 — built |
 | Tooltip | Atom | client | S2 — built |
-| Popconfirm (+ `.Skeleton`) | Composition | client | Ant coverage wave 5 — built |
-| Dropdown | Composition | client | S3 — built |
+| Popconfirm (+ `.Skeleton`) | Composition | client | built |
+| Dropdown | Composition | client | built |
 | CommandPalette | Composition | client | S4 — built |
 
 ## data
 
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
-| Card (+ `.Meta`, `.Grid`, `.Skeleton`) | Composition | server | Ant coverage wave 1 — built |
-| Collapse (+ `.Skeleton`) | Composition | client | Ant coverage wave 1 — built |
-| Descriptions (+ `.Item`, `.Skeleton`) | Composition | server | Ant coverage wave 2 — built |
-| Calendar (+ `.Skeleton`) | Composition | client | Ant coverage wave 5 — built |
-| QRCode | Atom | server | Ant coverage wave 6 — built |
-| Tree (+ `.Skeleton`) | Composition | client | Ant coverage wave 6 — built |
-| Listy (+ `.Skeleton`) | Composition | server | Ant coverage wave 7 — built |
+| Card (+ `.Meta`, `.Grid`, `.Skeleton`) | Composition | server | built |
+| Collapse (+ `.Skeleton`) | Composition | client | built |
+| Descriptions (+ `.Item`, `.Skeleton`) | Composition | server | built |
+| Calendar (+ `.Skeleton`) | Composition | client | built |
+| QRCode | Atom | server | built |
+| Tree (+ `.Skeleton`) | Composition | client | built |
+| Listy (+ `.Skeleton`) | Composition | server | built |
 | Statistic (+ `.Skeleton`) | Composition | server | S1 |
-| ProgressRing | Widget | server | S1 |
 | Donut | Widget | server | S2 — built |
 | Sparkline / BarMini | Widget | server | S2 — built |
 | Table (+ `.Skeleton`) | Composition | client | S3 — built |
@@ -100,14 +88,14 @@ already had to write for itself — is in [roadmap.md](./roadmap.md).
 
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
-| Tabs | Composition | client | S2 — built |
-| Menu (+ `.Skeleton`) | Composition | client | Ant coverage wave 5 — built |
+| Tabs | Composition | client | built |
+| Menu (+ `.Skeleton`) | Composition | client | built |
 | Sidebar / TopBar | Composition | client | S3 — built |
-| Breadcrumb | Atom | server | S3 — built |
-| Anchor (+ `.Skeleton`) | Composition | server | Ant coverage wave 4 — built |
+| Breadcrumb | Atom | server | built |
+| Anchor (+ `.Skeleton`) | Composition | server | built |
 | LinkButton | Atom | server | S5 — built |
-| Pagination | Composition | client | S3 — built |
-| Steps | Composition | server | S4 — built |
+| Pagination | Composition | client | built |
+| Steps | Composition | client | built |
 
 ## media
 
@@ -115,7 +103,7 @@ already had to write for itself — is in [roadmap.md](./roadmap.md).
 |---|---|---|---|
 | Carousel (Embla + Motion, `.Skeleton`) | Composition | client | S2 — built |
 | Avatar / AvatarGroup | Atom | server | S2 — built |
-| Image with blur-up (+ `.PreviewGroup`, both Skeletons) | Composition | client | S4 / Ant coverage wave 1 — built |
+| Image with blur-up (+ `.PreviewGroup`, both Skeletons) | Composition | client | S4 — built |
 
 ## motion
 
@@ -123,7 +111,7 @@ already had to write for itself — is in [roadmap.md](./roadmap.md).
 |---|---|---|---|
 | Motion tokens + presets | — | css | S1 |
 | Reveal / Stagger | Atom | client | S2 — built |
-| BorderBeam | Atom | client | Ant coverage wave 3 — built |
+| BorderBeam | Atom | client | built |
 | AnimatePresence wrappers (enter/exit) | Atom | client | S2 |
 | ScrollReveal | Composition | client | dropped — `Reveal`/`Stagger` take `onView`, which is the same thing with one fewer component |
 
@@ -131,9 +119,6 @@ already had to write for itself — is in [roadmap.md](./roadmap.md).
 
 | Piece | Label | Entry | Slice |
 |---|---|---|---|
-| Coachmark (bubble + spotlight) | Composition | client | S2 — built |
-| Tour (sequencing controller) | Composition | client | S2 — built |
-| Seen Store interface | — | client | S2 — built |
 | Checklist | Composition | client | S4 — built |
 
 ## Recipes (docs only, never shipped)
@@ -144,9 +129,3 @@ already had to write for itself — is in [roadmap.md](./roadmap.md).
 | Glass control center — notification panels | board | S3 — built |
 | Gamified mobile — progress rings, streaks, leaderboard | board | S3 — built |
 | Fintech mobile — balance card, split bill, transactions | board | S4 — built |
-| ProLayout mapping — shell/page frame with app-owned routing | Ant Pro Components | built |
-| ProCard mapping — Card and Statistic compositions | Ant Pro Components | built |
-| ProForm mapping — app-owned form engine with Ceebee fields | Ant Pro Components | built |
-| ProTable mapping — requests/editing/drag workflows around Table | Ant Pro Components | built |
-| ProList mapping — search/selection/edit workflows around Listy | Ant Pro Components | built |
-| ProDescriptions mapping — request/edit workflows around Descriptions | Ant Pro Components | built |

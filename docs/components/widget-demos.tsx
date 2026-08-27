@@ -1,6 +1,7 @@
 'use client';
 
-import { Donut, Sparkline, BarMini, Flex, Statistic, Text, Grid } from '@ceebee/ui';
+import { BarMini, Donut, Flex, Grid, Sparkline, Surface, Text } from '@ceebee/ui';
+import { Statistic } from '@ceebee/ui/client';
 import { Demo } from './demo';
 
 const REVENUE = [12, 18, 15, 22, 26, 21, 30, 28, 35];
@@ -51,20 +52,18 @@ export function SparklineDemo() {
         </Flex>
 
         <Grid minItemWidth="15rem" gap={4}>
-          <Statistic
-            label="Revenue"
-            value="35.2M"
-            delta={{ value: '+9.4%', direction: 'up' }}
-            hue="teal"
-            visual={<Sparkline values={REVENUE} filled hue="teal" width={96} height={36} label="Revenue trend" />}
-          />
-          <Statistic
-            label="Signups"
-            value="18"
-            delta={{ value: '+3', direction: 'up' }}
-            hue="violet"
-            visual={<BarMini values={SIGNUPS} hue="violet" width={96} height={36} label="Signups per day" />}
-          />
+          <Surface variant="tinted" hue="teal" padding="md" radius="md">
+            <Flex direction="row" justify="between" align="center">
+              <Statistic title="Revenue" value="35.2M" suffix={<Text size="xs" tone="success">+9.4%</Text>} />
+              <Sparkline values={REVENUE} filled hue="teal" width={96} height={36} label="Revenue trend" />
+            </Flex>
+          </Surface>
+          <Surface variant="tinted" hue="violet" padding="md" radius="md">
+            <Flex direction="row" justify="between" align="center">
+              <Statistic title="Signups" value="18" suffix={<Text size="xs" tone="success">+3</Text>} />
+              <BarMini values={SIGNUPS} hue="violet" width={96} height={36} label="Signups per day" />
+            </Flex>
+          </Surface>
         </Grid>
       </Flex>
     </Demo>

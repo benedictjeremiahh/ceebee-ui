@@ -1,4 +1,5 @@
-import { Heading, Flex, Text } from '@ceebee/ui';
+import { Flex, Heading, Text } from '@ceebee/ui';
+
 import { ControlCenterRecipe } from '../../../components/recipes/control-center';
 
 export default function ControlCenterPage() {

@@ -48,3 +48,35 @@
 .cb-leaderboard__delta[data-direction="down"] { color: var(--cb-tone-danger); }
 .cb-leaderboard__delta[data-direction="flat"] { color: var(--cb-fg-subtle); }
 .cb-leaderboard__score { font-size: var(--cb-text-sm); font-weight: var(--cb-weight-semibold); font-variant-numeric: tabular-nums; color: var(--cb-fg); }
+
+/* The row's own initials bubble. Leaderboard is server-safe, so it draws this itself rather than
+   reaching for Ant's Avatar, which is a client component. */
+.cb-leaderboard__avatar {
+  --cb-leaderboard-avatar-accent: var(--cb-decor-violet);
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: 1.75rem;
+  block-size: 1.75rem;
+  border-radius: var(--cb-radius-full);
+  background: color-mix(in oklch, var(--cb-leaderboard-avatar-accent) 22%, var(--cb-surface));
+  color: color-mix(in oklch, var(--cb-leaderboard-avatar-accent) 70%, var(--cb-fg));
+  font-weight: var(--cb-weight-semibold);
+  font-size: 0.625rem;
+}
+.cb-leaderboard__avatar[data-hue="violet"] { --cb-leaderboard-avatar-accent: var(--cb-decor-violet); }
+.cb-leaderboard__avatar[data-hue="blue"] { --cb-leaderboard-avatar-accent: var(--cb-decor-blue); }
+.cb-leaderboard__avatar[data-hue="teal"] { --cb-leaderboard-avatar-accent: var(--cb-decor-teal); }
+.cb-leaderboard__avatar[data-hue="green"] { --cb-leaderboard-avatar-accent: var(--cb-decor-green); }
+.cb-leaderboard__avatar[data-hue="amber"] { --cb-leaderboard-avatar-accent: var(--cb-decor-amber); }
+.cb-leaderboard__avatar[data-hue="rose"] { --cb-leaderboard-avatar-accent: var(--cb-decor-rose); }
+.cb-leaderboard__photo {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}

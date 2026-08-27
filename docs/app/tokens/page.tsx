@@ -1,4 +1,4 @@
-import { Heading, Flex, Surface, Text } from '@ceebee/ui';
+import { Flex, Heading, Surface, Text } from '@ceebee/ui';
 
 const COLOUR_TOKENS = [
   '--cb-bg',

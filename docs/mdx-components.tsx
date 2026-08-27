@@ -2,7 +2,7 @@ import type { MDXComponents } from 'mdx/types';
 import { Heading, Text } from '@ceebee/ui';
 import { MdxPre } from './components/mdx-pre';
 
-/** The docs are written with the library, so a bad type scale is visible to its author first (ADR 0010). */
+/** The docs are written with the library, so a bad type scale is visible to its author first. */
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h1: ({ children }) => <Heading level={1}>{children}</Heading>,

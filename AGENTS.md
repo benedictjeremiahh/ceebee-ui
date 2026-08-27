@@ -1,42 +1,44 @@
 # Authoring contract for @ceebee/ui
 
 Read before adding or changing a component. These rules exist so a new component looks like the rest
-without invention, and so nothing has to be re-litigated per component. The reasoning is in
-[docs/adr/](./docs/adr/); the vocabulary is in [CONTEXT.md](./CONTEXT.md).
+without invention, and so nothing has to be re-litigated per component. The vocabulary is in [CONTEXT.md](./CONTEXT.md).
 
 ## Hard rules
 
 1. **No raw values.** Colour, spacing, radius, duration, and easing come from Tokens. Never a hex,
-   never `200ms`, never `padding: 13px`. A component takes a **Tone**, not a colour (ADR 0002).
+   never `200ms`, never `padding: 13px`. A component takes a **Tone**, not a colour.
 2. **Pick a side of the client boundary, once.** A component is server-safe or it is client. Server-
    safe means: no hooks, no event handlers, no `motion`. It exports from `src/index.ts`; client
-   components export from `src/client.ts` and carry `"use client"` (ADR 0004).
-3. **Behaviour comes from Base UI.** Overlays, focus management, dismiss layers, and anchoring are
-   Base UI's job. Do not hand-roll a focus trap (ADR 0003).
+   components export from `src/client.ts` and carry `"use client"`.
+3. **Prefer the vendored runtime.** Components available in the pinned upstream runtime are exported
+   from `@ceebee/ui/client`; upstream owns their API, DOM, interaction, accessibility, motion, and
+   geometry. Ceebee owns their ThemeProvider Skin bridge and package seam. Explicit exceptions retain
+   their recorded Ceebee or external substrate.
 4. **Every Composition ships `X.Skeleton`.** Built from the same Tokens as `X`. A Composition without
-   one is unfinished (ADR 0009).
+   one is unfinished.
 5. **Every animation has a reduced-motion rendering.** Transform drops, opacity stays. Never leave a
-   state change invisible under reduced motion (ADR 0004).
+   state change invisible under reduced motion.
 6. **Folder is the job, not the tier.** `form/`, `data/`, `feedback/`, `overlay/`, `nav/`, `media/`,
-   `motion/`, `onboarding/`. Atom and Composition are docs labels (ADR 0005).
+   `motion/`, `onboarding/`. Atom and Composition are docs labels.
 7. **No product knowledge.** No fetching, no storage, no auth, no user. Anything the library needs to
-   know about the outside world arrives as an injected adapter (ADR 0006).
+   know about the outside world arrives as an injected adapter.
 8. **Test what can be wrong.** Logic, sequencing, a11y wiring, reduced motion — yes. CSS values —
-   no (ADR 0012).
+   no.
 9. **One interaction contract, one component.** For every existing or proposed component, compare
    semantic role, keyboard/focus model, state/value ownership, dismissal, anchoring/layout, and
    gesture model. A material difference in any of them requires a separate public component, props,
    tests, docs, and `cb-` CSS namespace. `variant`, `size`, `tone`, and `placement` may change visual
-   treatment or geometry only; they must not switch the interaction contract. Shared Base UI
-   behaviour and internal utilities are encouraged, but a generic public component is not (ADR 0014).
-10. **Name it what Ant Design names it.** Where a component does the same job as one in Ant, it
-    takes Ant's name, and the `cb-` namespace and the file travel with it. Where Ant's is a compound
-    (`Radio.Group`, `Typography.Text`) or would collide two components into one name, it keeps its
-    own — that is a structural difference, not a naming one (ADR 0016).
+   treatment or geometry only; they must not switch the interaction contract. Shared upstream
+   behaviour and internal utilities are encouraged, but a generic public component is not.
+10. **Record every substrate.** `docs/component-sources.json` names each component's substrate and,
+    for a vendored runtime, pins the upstream package, version and commit — that record is what keeps
+    `THIRD_PARTY_NOTICES.md` honest, so preserve it and record explicit exceptions. The upstream
+    documented surface is the compatibility gate; Ceebee owns Skins, the token bridge, and additive
+    package extensions (ADRs 0016 and 0019).
 11. **Use the semantic stacking ladder.** Global layers use only the `--cb-z-*` Tokens in their
-    documented order. For a portalled anchored overlay, the Base UI `Positioner` owns `z-index`;
-    never put it on `Popup`. Raw `z-index` is allowed only for local children inside one component's
-    stacking context (ADR 0015).
+    documented order. A portalled overlay assigns its rung to the positioning root that creates the
+    stacking context through the selected substrate's documented API. Raw `z-index` is allowed only
+    for local children inside one component's stacking context.
 
 ## Component-boundary check
 

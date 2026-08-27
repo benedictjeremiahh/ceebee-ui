@@ -1,0 +1,26 @@
+import { IconShowcase } from '../../../components/general-showcases';
+import { ApiReference } from '../../../components/api-reference';
+import { Guidance } from '../../../components/props-table';
+
+# Icon
+
+Semantic vector graphics.
+
+## How to use
+
+Icons come from `@ant-design/icons@6.x`, a pinned peer of this library. Import icon components from
+`@ant-design/icons`; they inherit the current text colour and therefore the active Skin.
+
+## Examples
+
+<IconShowcase />
+
+## API
+
+Common icons accept standard SVG attributes plus `spin`, `rotate`, `twoToneColor`, `component`, and
+`style`. `createFromIconfontCN` creates icon components backed by one or more iconfont resources.
+
+<ApiReference component="Icon" />
+
+
+<Guidance do="Choose icons by meaning and provide an accessible label for icon-only actions." dont="Use a decorative icon as the only explanation for an unfamiliar operation." />

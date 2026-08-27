@@ -1,0 +1,1340 @@
+{
+  "antDesignBaseline": {
+    "version": "6.6.1",
+    "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+  },
+  "components": {
+    "Button": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/button/button.tsx",
+        "components/button/IconWrapper.tsx",
+        "components/button/LoadingIcon.tsx",
+        "components/button/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/form/button.tsx",
+      "demoPath": "docs/components/general/button",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Button"
+    },
+    "FloatButton": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/float-button/FloatButton.tsx",
+        "components/float-button/FloatButtonGroup.tsx",
+        "components/float-button/BackTop.tsx",
+        "components/float-button/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/form/float-button/float-button.tsx",
+      "demoPath": "docs/components/general/float-button",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#FloatButton"
+    },
+    "Typography": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/typography/index.tsx",
+        "components/typography/Base/index.tsx",
+        "components/typography/Typography.tsx",
+        "components/typography/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/foundation/text.tsx",
+      "demoPath": "docs/components/general/typography",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Typography"
+    },
+    "Icon": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/icon/index.tsx"
+      ],
+      "runtime": {
+        "package": "@ant-design/icons",
+        "version": "6.3.2",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/general/icon",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Icon"
+    },
+    "Divider": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/divider/index.tsx",
+        "components/divider/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/foundation/divider.tsx",
+      "demoPath": "docs/components/layout/divider",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Divider"
+    },
+    "Flex": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/flex/index.tsx",
+        "components/flex/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/foundation/layout.tsx",
+      "demoPath": "docs/components/layout/flex",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Flex"
+    },
+    "Grid": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/grid/index.tsx",
+        "components/grid/row.tsx",
+        "components/grid/col.tsx",
+        "components/grid/hooks/useBreakpoint.tsx",
+        "components/grid/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/foundation/layout.tsx",
+      "demoPath": "docs/components/layout/grid",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Grid"
+    },
+    "Layout": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/layout/layout.tsx",
+        "components/layout/Sider.tsx",
+        "components/layout/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/nav/shell.tsx",
+      "demoPath": "docs/components/layout/layout",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Layout"
+    },
+    "Masonry": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/masonry/index.tsx",
+        "components/masonry/Masonry.tsx",
+        "components/masonry/MasonryItem.tsx",
+        "components/masonry/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/foundation/masonry/masonry.tsx",
+      "demoPath": "docs/components/layout/masonry",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Masonry"
+    },
+    "Space": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/space/index.tsx",
+        "components/space/Compact.tsx",
+        "components/space/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/foundation/space/space.tsx",
+      "demoPath": "docs/components/layout/space",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Space"
+    },
+    "Splitter": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/splitter/index.tsx",
+        "components/splitter/Splitter.tsx",
+        "components/splitter/Panel.tsx",
+        "components/splitter/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/foundation/splitter/splitter.tsx",
+      "demoPath": "docs/components/layout/splitter",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Splitter"
+    },
+    "Slider": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/slider/index.tsx",
+        "components/slider/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/slider",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Slider"
+    },
+    "TreeSelect": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/tree-select/index.tsx",
+        "components/tree-select/style/index.ts",
+        "components/tree/utils/iconUtil.tsx"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/tree-select",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#TreeSelect"
+    },
+    "DatePicker": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/date-picker/index.tsx",
+        "components/date-picker/generatePicker/index.tsx",
+        "components/date-picker/generatePicker/generateSinglePicker.tsx",
+        "components/date-picker/generatePicker/generateRangePicker.tsx",
+        "components/date-picker/style/index.ts",
+        "components/date-picker/style/multiple.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/date-picker",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#DatePicker"
+    },
+    "TimePicker": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/time-picker/index.tsx",
+        "components/date-picker/generatePicker/generateSinglePicker.tsx",
+        "components/date-picker/generatePicker/generateRangePicker.tsx",
+        "components/date-picker/style/index.ts",
+        "components/date-picker/style/panel.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/time-picker",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#TimePicker"
+    },
+    "Switch": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/switch/index.tsx",
+        "components/switch/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/switch",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Switch"
+    },
+    "Checkbox": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/checkbox/Checkbox.tsx",
+        "components/checkbox/Group.tsx",
+        "components/checkbox/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/checkbox",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Checkbox"
+    },
+    "InputNumber": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/input-number/index.tsx",
+        "components/input-number/style/index.ts",
+        "components/input-number/style/token.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/input-number",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#InputNumber"
+    },
+    "Radio": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/radio/radio.tsx",
+        "components/radio/group.tsx",
+        "components/radio/interface.ts",
+        "components/radio/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/radio",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Radio"
+    },
+    "Rate": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/rate/index.tsx",
+        "components/rate/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/rate",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Rate"
+    },
+    "Dropdown": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/dropdown/dropdown.tsx",
+        "components/dropdown/dropdown-button.tsx",
+        "components/dropdown/style/index.ts",
+        "components/dropdown/style/status.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/nav/menu.tsx",
+      "demoPath": "docs/components/navigation/dropdown",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Dropdown"
+    },
+    "Menu": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/menu/index.tsx",
+        "components/menu/menu.tsx",
+        "components/menu/style/index.ts",
+        "components/menu/style/theme.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/nav/menu/ant-menu.tsx",
+      "demoPath": "docs/components/navigation/menu",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Menu"
+    },
+    "Pagination": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/pagination/Pagination.tsx",
+        "components/pagination/useShowSizeChanger.ts",
+        "components/pagination/style/index.ts",
+        "components/pagination/style/bordered.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/data/pagination.tsx",
+      "demoPath": "docs/components/navigation/pagination",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Pagination"
+    },
+    "Steps": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/steps/index.tsx",
+        "components/steps/useDisplaySteps.ts",
+        "components/steps/ProgressIcon.tsx",
+        "components/steps/PanelArrow.tsx",
+        "components/steps/style/index.ts",
+        "components/steps/style/inline.ts",
+        "components/steps/style/nav.ts",
+        "components/steps/style/panel.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/nav/steps.tsx",
+      "demoPath": "docs/components/navigation/steps",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Steps"
+    },
+    "Breadcrumb": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/breadcrumb/Breadcrumb.tsx",
+        "components/breadcrumb/BreadcrumbItem.tsx",
+        "components/breadcrumb/BreadcrumbSeparator.tsx",
+        "components/breadcrumb/useItemRender.tsx",
+        "components/breadcrumb/useItems.ts",
+        "components/breadcrumb/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/nav/breadcrumbs.tsx",
+      "demoPath": "docs/components/navigation/breadcrumb",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Breadcrumb"
+    },
+    "Tabs": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/tabs/index.tsx",
+        "components/tabs/style/index.ts",
+        "components/tabs/style/motion.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/nav/tabs.tsx",
+      "demoPath": "docs/components/navigation/tabs",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Tabs"
+    },
+    "Anchor": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/anchor/Anchor.tsx",
+        "components/anchor/AnchorLink.tsx",
+        "components/anchor/style/index.ts",
+        "components/_util/scrollTo.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "legacyAdapter": "packages/ui/src/nav/anchor/ant-anchor.tsx",
+      "demoPath": "docs/components/navigation/anchor",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Anchor"
+    },
+    "AutoComplete": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/auto-complete/AutoComplete.tsx",
+        "components/auto-complete/index.tsx"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/auto-complete",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#AutoComplete"
+    },
+    "Cascader": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/cascader/index.tsx",
+        "components/cascader/Panel.tsx",
+        "components/cascader/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/cascader",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Cascader"
+    },
+    "ColorPicker": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/color-picker/ColorPicker.tsx",
+        "components/color-picker/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/color-picker",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#ColorPicker"
+    },
+    "Form": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/form/Form.tsx",
+        "components/form/FormItem/index.tsx",
+        "components/form/FormList.tsx",
+        "components/form/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/form",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Form"
+    },
+    "Transfer": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/transfer/index.tsx",
+        "components/transfer/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/transfer",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Transfer"
+    },
+    "Mentions": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/mentions/index.tsx",
+        "components/mentions/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/mentions",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Mentions"
+    },
+    "Input": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/input/index.tsx",
+        "components/input/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/input",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Input"
+    },
+    "Upload": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/upload/index.tsx",
+        "components/upload/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/upload",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Upload"
+    },
+    "Select": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/select/index.tsx",
+        "components/select/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-entry/select",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Select"
+    },
+    "Avatar": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/avatar/index.tsx",
+        "components/avatar/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/avatar",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Avatar",
+      "legacyAdapter": "packages/ui/src/media/avatar.tsx"
+    },
+    "Badge": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/badge/index.tsx",
+        "components/badge/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/badge",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Badge",
+      "legacyAdapter": "packages/ui/src/feedback/badge.tsx"
+    },
+    "Calendar": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/calendar/index.tsx",
+        "components/calendar/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/calendar",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Calendar",
+      "legacyAdapter": "packages/ui/src/data/calendar/calendar.tsx"
+    },
+    "Card": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/card/index.tsx",
+        "components/card/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/card",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Card",
+      "legacyAdapter": "packages/ui/src/data/card/card.tsx"
+    },
+    "Carousel": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/carousel/index.tsx",
+        "components/carousel/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/carousel",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Carousel",
+      "legacyAdapter": "packages/ui/src/media/carousel.tsx"
+    },
+    "Collapse": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/collapse/index.tsx",
+        "components/collapse/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/collapse",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Collapse",
+      "legacyAdapter": "packages/ui/src/data/collapse/collapse.tsx"
+    },
+    "Descriptions": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/descriptions/index.tsx",
+        "components/descriptions/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/descriptions",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Descriptions",
+      "legacyAdapter": "packages/ui/src/data/descriptions/descriptions.tsx"
+    },
+    "Empty": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/empty/index.tsx",
+        "components/empty/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/empty",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Empty",
+      "legacyAdapter": "packages/ui/src/feedback/empty.tsx"
+    },
+    "Image": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/image/index.tsx",
+        "components/image/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/image",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Image",
+      "legacyAdapter": "packages/ui/src/media/image.tsx"
+    },
+    "List": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/list/index.tsx",
+        "components/list/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/list",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#List",
+      "legacyAdapter": "packages/ui/src/data/listy/listy.tsx"
+    },
+    "Listy": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/listy/index.tsx",
+        "components/listy/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/listy",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Listy",
+      "legacyAdapter": "packages/ui/src/data/listy/listy.tsx"
+    },
+    "Popover": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/popover/index.tsx",
+        "components/popover/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/popover",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Popover",
+      "legacyAdapter": "packages/ui/src/overlay/popover.tsx"
+    },
+    "QRCode": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/qr-code/index.tsx",
+        "components/qr-code/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/qr-code",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#QRCode",
+      "legacyAdapter": "packages/ui/src/data/qr-code/qr-code.tsx"
+    },
+    "Segmented": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/segmented/index.tsx",
+        "components/segmented/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/segmented",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Segmented"
+    },
+    "Statistic": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/statistic/index.tsx",
+        "components/statistic/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/statistic",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Statistic",
+      "legacyAdapter": "packages/ui/src/data/statistic.tsx"
+    },
+    "Table": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/table/index.tsx",
+        "components/table/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/table",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Table",
+      "legacyAdapter": "packages/ui/src/data/table.tsx"
+    },
+    "Tag": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/tag/index.tsx",
+        "components/tag/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/tag",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Tag",
+      "legacyAdapter": "packages/ui/src/feedback/tag.tsx"
+    },
+    "Timeline": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/timeline/index.tsx",
+        "components/timeline/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/timeline",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Timeline",
+      "legacyAdapter": "packages/ui/src/data/timeline.tsx"
+    },
+    "Tooltip": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/tooltip/index.tsx",
+        "components/tooltip/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/tooltip",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Tooltip",
+      "legacyAdapter": "packages/ui/src/overlay/popover.tsx"
+    },
+    "Tour": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/tour/index.tsx",
+        "components/tour/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/tour",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Tour"
+    },
+    "Tree": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/tree/index.tsx",
+        "components/tree/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/data-display/tree",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Tree",
+      "legacyAdapter": "packages/ui/src/data/tree/tree.tsx"
+    },
+    "Alert": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/alert/index.tsx",
+        "components/alert/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/feedback/alert",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Alert",
+      "legacyAdapter": "packages/ui/src/feedback/alert.tsx"
+    },
+    "Drawer": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/drawer/index.tsx",
+        "components/drawer/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/feedback/drawer",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Drawer",
+      "legacyAdapter": "packages/ui/src/overlay/drawer.tsx"
+    },
+    "Message": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/message/index.tsx",
+        "components/message/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/feedback/message",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Message",
+      "legacyAdapter": "packages/ui/src/feedback/toast.tsx"
+    },
+    "Modal": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/modal/index.tsx",
+        "components/modal/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/feedback/modal",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Modal",
+      "legacyAdapter": "packages/ui/src/overlay/modal.tsx"
+    },
+    "Notification": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/notification/index.tsx",
+        "components/notification/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/feedback/notification",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Notification",
+      "legacyAdapter": "packages/ui/src/feedback/notification/notification.tsx"
+    },
+    "Popconfirm": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/popconfirm/index.tsx",
+        "components/popconfirm/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/feedback/popconfirm",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Popconfirm",
+      "legacyAdapter": "packages/ui/src/overlay/popconfirm/popconfirm.tsx"
+    },
+    "Progress": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/progress/index.tsx",
+        "components/progress/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/feedback/progress",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Progress",
+      "legacyAdapter": "packages/ui/src/feedback/progress.tsx"
+    },
+    "Result": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/result/index.tsx",
+        "components/result/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/feedback/result",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Result",
+      "legacyAdapter": "packages/ui/src/feedback/result/result.tsx"
+    },
+    "Skeleton": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/skeleton/index.tsx",
+        "components/skeleton/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/feedback/skeleton",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Skeleton",
+      "legacyAdapter": "packages/ui/src/feedback/skeleton.tsx"
+    },
+    "Spin": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/spin/index.tsx",
+        "components/spin/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/feedback/spin",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Spin",
+      "legacyAdapter": "packages/ui/src/feedback/progress.tsx"
+    },
+    "Watermark": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/watermark/index.tsx",
+        "components/watermark/style/index.ts"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/feedback/watermark",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Watermark",
+      "legacyAdapter": "packages/ui/src/feedback/watermark/watermark.tsx"
+    },
+    "Affix": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/affix/index.tsx"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/other/affix",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Affix",
+      "legacyAdapter": "packages/ui/src/foundation/affix/affix.tsx"
+    },
+    "App": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/app/index.tsx"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/other/app",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#App"
+    },
+    "BorderBeam": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/border-beam/index.tsx"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/other/border-beam",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#BorderBeam",
+      "legacyAdapter": "packages/ui/src/motion/border-beam/border-beam.tsx"
+    },
+    "ConfigProvider": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/config-provider/index.tsx"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "demoPath": "docs/components/other/config-provider",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#ConfigProvider"
+    },
+    "Util": {
+      "strategy": "antd-runtime",
+      "antSource": [
+        "components/_util/index.tsx"
+      ],
+      "runtime": {
+        "package": "antd",
+        "version": "6.6.1",
+        "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
+      },
+      "license": "MIT",
+      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "parityGaps": [],
+      "proof": "docs/parity.generated.json#Util"
+    }
+  }
+}

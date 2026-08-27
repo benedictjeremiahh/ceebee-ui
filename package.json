@@ -11,22 +11,26 @@
     "dev": "pnpm --filter @ceebee/docs dev",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:browser": "playwright test",
     "typecheck": "pnpm -r exec tsc --noEmit",
     "check:delegation-harness": "node scripts/check-delegation-harness.mjs",
     "release": "node scripts/release.mjs",
     "release:dry": "node scripts/release.mjs --dry",
-    "check:docs": "node scripts/check-docs-pages.mjs"
+    "check:docs": "node scripts/check-docs-pages.mjs",
+    "sync:parity": "node scripts/sync-parity.mjs",
+    "check:parity": "node scripts/check-parity.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.10",
+    "@playwright/test": "1.60.0",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "axe-core": "^4.10.2",
     "jsdom": "^25.0.1",
     "typescript": "^5.7.2",
-    "vitest": "^2.1.8",
-    "axe-core": "^4.10.2"
+    "vitest": "^2.1.8"
   }
 }

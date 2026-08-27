@@ -1,7 +1,7 @@
 'use client';
 
+import { Flex, Grid, Leaderboard, Surface, Text } from '@ceebee/ui';
 import { Image } from '@ceebee/ui/client';
-import { Grid, Leaderboard, Flex, Surface, Text } from '@ceebee/ui';
 import { Demo } from './demo';
 
 const LEADERS = [
@@ -52,15 +52,15 @@ export function ImageDemo() {
 />`}>
       <Grid minItemWidth="14rem" gap={4}>
         <Flex gap={2}>
-          <Image src={PHOTO} alt="Abstract gradient" aspectRatio={4 / 3} blurDataUrl={BLUR} radius="lg" />
+          <Image src={PHOTO} alt="Abstract gradient" placeholder={<img src={BLUR} alt="" />} style={{ borderRadius: 'var(--cb-radius-lg)' }} />
           <Text size="xs" tone="subtle">with a blur placeholder</Text>
         </Flex>
         <Flex gap={2}>
-          <Image src={PHOTO} alt="Abstract gradient" aspectRatio={4 / 3} background="var(--cb-bg-subtle)" radius="lg" />
+          <Image src={PHOTO} alt="Abstract gradient" style={{ background: 'var(--cb-bg-subtle)', borderRadius: 'var(--cb-radius-lg)' }} />
           <Text size="xs" tone="subtle">flat background, no blur</Text>
         </Flex>
         <Flex gap={2}>
-          <Image src="/does-not-exist.png" alt="A photo that never loads" aspectRatio={4 / 3} blurDataUrl={BLUR} radius="lg" />
+          <Image src="/does-not-exist.png" alt="A photo that never loads" fallback={BLUR} style={{ borderRadius: 'var(--cb-radius-lg)' }} />
           <Text size="xs" tone="subtle">broken source — the placeholder stays</Text>
         </Flex>
       </Grid>
@@ -79,7 +79,11 @@ export function ImagePreviewDemo() {
   items={photos}
   label="Site visit photos"
 />`}>
-      <Image.PreviewGroup items={PREVIEW_PHOTOS} label="Abstract landscapes" />
+      <Image.PreviewGroup>
+        {PREVIEW_PHOTOS.map((photo) => (
+          <Image key={photo.id} src={photo.src} alt={photo.alt} width={200} />
+        ))}
+      </Image.PreviewGroup>
     </Demo>
   );
 }

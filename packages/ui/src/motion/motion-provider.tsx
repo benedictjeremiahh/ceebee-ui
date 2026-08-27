@@ -37,7 +37,7 @@ export interface MotionProviderProps {
 
 /**
  * The one place animation is scaled or switched off, and the seam that honours
- * `prefers-reduced-motion` (ADR 0004). Reduced motion means transforms drop and opacity
+ * `prefers-reduced-motion`. Reduced motion means transforms drop and opacity
  * stays; it never means a state change happens invisibly.
  */
 export function MotionProvider({ children, enabled = true, scale = 1 }: MotionProviderProps) {

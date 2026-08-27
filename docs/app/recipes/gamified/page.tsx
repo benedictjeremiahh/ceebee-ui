@@ -1,4 +1,5 @@
-import { Heading, Flex, Text } from '@ceebee/ui';
+import { Flex, Heading, Text } from '@ceebee/ui';
+
 import { GamifiedRecipe } from '../../../components/recipes/gamified';
 
 export default function GamifiedPage() {

@@ -1,7 +1,8 @@
 'use client';
 
 import { Moon, Sun, Waves } from 'lucide-react';
-import { Button, useTheme } from '@ceebee/ui/client';
+import { Button } from '@ceebee/ui/client';
+import { useTheme } from '@ceebee/ui/client';
 import { useEffect, useState } from 'react';
 
 const SKINS = ['default', 'astra', 'clarity'] as const;
@@ -31,10 +32,9 @@ export function Toolbar() {
   return (
     <div className="docs__toolbar">
       <Button
-        variant="ghost"
-        size="sm"
-        tone="neutral"
-        iconStart={<Waves size={16} />}
+        type="text"
+        size="small"
+        icon={<Waves size={16} />}
         onClick={() => {
           const next = SKINS[(SKINS.indexOf(skin) + 1) % SKINS.length];
           setSkin(next ?? 'default');
@@ -43,10 +43,8 @@ export function Toolbar() {
         {SKIN_LABELS[skin]}
       </Button>
       <Button
-        variant="outline"
-        size="sm"
-        tone="neutral"
-        iconStart={resolved === 'dark' ? <Moon size={16} /> : <Sun size={16} />}
+        size="small"
+        icon={resolved === 'dark' ? <Moon size={16} /> : <Sun size={16} />}
         onClick={() => setChoice(choice === 'dark' ? 'light' : 'dark')}
       >
         {resolved === 'dark' ? 'Dark' : 'Light'}

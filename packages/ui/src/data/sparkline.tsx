@@ -15,7 +15,7 @@ export interface SparklineProps {
   className?: string;
 }
 
-/** Trend at a glance. No axis, no scale, so it is a Widget rather than a Chart (ADR 0007). */
+/** Trend at a glance. No axis, no scale, so it is a Widget rather than a Chart. */
 export function Sparkline({
   values,
   width = 120,

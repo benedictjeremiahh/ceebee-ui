@@ -1,132 +1,20 @@
-import { Demo } from '../../../components/demo';
-import { Result, LinkButton, Text } from '@ceebee/ui';
-import { Button } from '@ceebee/ui/client';
-import { PropsTable, Guidance } from '../../../components/props-table';
+import { ResultShowcase } from '../../../components/feedback/result/showcase';
+import { ApiReference } from '../../../components/api-reference';
 
-# Result <span className="docs__label">Composition</span>
+# Result
 
-`Result` is the presentational end state of a flow: a status visual, title, optional description,
-optional actions, and optional supporting content. It follows Ant Design's catalog name while
-keeping Ceebee's semantic-tone API and server-safe boundary.
+Used to feedback the processing results of a series of operations.
 
-## Usage
+## When to use
 
-<Demo
-  layout="block"
-  code={`<Result
-  status="success"
-  title="Payment complete"
-  description="Your receipt is ready to download."
-  extra={<Button>Download receipt</Button>}
->
-  Reference: CB-2026-0042
-</Result>`}
->
-  <Result
-    status="success"
-    title="Payment complete"
-    description="Your receipt is ready to download."
-    extra={<Button size="sm">Download receipt</Button>}
-  >
-    <Text tone="muted" size="sm">Reference: CB-2026-0042</Text>
-  </Result>
-</Demo>
+Use when important operations need to inform the user to process the results and the feedback is more complicated.
 
-## Status
+## Examples
 
-`status` maps a flow's end state to a semantic tone and the matching status visual. The four
-outcome statuses cover a flow that finished; the three HTTP statuses cover a page that could not be
-reached.
+<ResultShowcase />
 
-<Demo
-  layout="block"
-  code={`<Result status="success" title="Payment complete" />
-<Result status="info" title="Nothing to review" />
-<Result status="warning" title="Saved with warnings" />
-<Result status="error" title="The transfer failed" />`}
->
-  <Result status="success" title="Payment complete" description="Your receipt is ready to download." />
-  <Result status="info" title="Nothing to review" description="Every request in this queue has been handled." />
-  <Result status="warning" title="Saved with warnings" description="Two rows were imported without a category." />
-  <Result status="error" title="The transfer failed" description="The account was closed before the transfer ran." />
-</Demo>
+## API
 
-<Demo
-  layout="block"
-  code={`<Result status="404" title="Page not found" />
-<Result status="403" title="You do not have access" />
-<Result status="500" title="Something went wrong" />`}
->
-  <Result status="404" title="Page not found" description="The link may be out of date." />
-  <Result status="403" title="You do not have access" description="Ask a workspace owner for an invitation." />
-  <Result status="500" title="Something went wrong" description="The error has been recorded; try again in a moment." />
-</Demo>
+`Result` are exported from `@ceebee/ui/client`.
 
-## Actions
-
-`extra` is an action region, not a button slot. Controls passed through it keep their own keyboard
-and focus behaviour, which is why a link stays a link.
-
-<Demo
-  layout="block"
-  code={`<Result
-  status="403"
-  title="You do not have access"
-  extra={
-    <>
-      <Button size="sm">Request access</Button>
-      <LinkButton href="/" size="sm" variant="ghost" tone="neutral">Back to overview</LinkButton>
-    </>
-  }
-/>`}
->
-  <Result
-    status="403"
-    title="You do not have access"
-    description="Ask a workspace owner for an invitation."
-    extra={
-      <>
-        <Button size="sm">Request access</Button>
-        <LinkButton href="#result-props" size="sm" variant="ghost" tone="neutral">Back to overview</LinkButton>
-      </>
-    }
-  />
-</Demo>
-
-## Boundary
-
-Result has no keyboard, focus, dismissal, anchoring, or gesture contract of its own. It renders in
-normal document flow and does not create a landmark or heading. Any controls passed through `extra`
-or `children` retain their own contracts.
-It does not fetch, persist, or infer product state.
-
-## Props
-
-<PropsTable rows={[
-  { name: 'title', type: 'ReactNode', description: 'The end-state title; choose the heading level in the surrounding page.' },
-  { name: 'description', type: 'ReactNode', description: 'Optional explanation or next-step guidance.' },
-  { name: 'status', type: "'success' | 'info' | 'warning' | 'error' | '404' | '403' | '500'", default: "'info'", description: 'Maps a flow status to a Ceebee semantic tone.' },
-  { name: 'icon', type: 'ReactNode', description: 'Optional visual replacement; it is decorative and should not carry the result meaning alone.' },
-  { name: 'extra', type: 'ReactNode', description: 'Optional action region; controls keep their own keyboard and focus behaviour.' },
-  { name: 'children', type: 'ReactNode', description: 'Optional supporting content below the action region.' },
-]} />
-
-## Skeleton
-
-Use `Result.Skeleton` while the end state is loading. It preserves the icon, title, description, and
-action geometry so the completed Result does not shift the page.
-
-<Demo layout="block" code={`<Result.Skeleton />`}>
-  <Result.Skeleton />
-</Demo>
-
-## Tokens
-
-The component reads the semantic tone Tokens, foreground Tokens, font and line-height Tokens,
-spacing Tokens, and radius Tokens. The Skeleton reads the shared Skeleton Tokens. No consumer colour,
-spacing, radius, or motion value is accepted as a raw prop.
-
-<Guidance
-  do="Use Result when a flow has reached a meaningful end state and the surrounding page still owns navigation."
-  dont="Use Result as a dismissible alert or make the whole presentation a button; pass actions that own their own interaction contract."
-/>
+<ApiReference component="Result" />

@@ -1,34 +1,23 @@
-import { ProgressDemo } from '../../../components/batch5-demos';
-import { PropsTable, Guidance } from '../../../components/props-table';
+import { ProgressShowcase } from '../../../components/feedback/progress/showcase';
+import { ApiReference } from '../../../components/api-reference';
 
-# Spin · ProgressBar <span className="docs__label">Atom</span>
+# Progress
 
-Both are server-safe: a CSS animation and a width, no state.
+Display the current progress of the operation.
 
-## Usage
+## When to use
 
-<ProgressDemo />
+If it will take a long time to complete an operation, you can use `Progress` to show the current progress and status.
 
-## Determinate or not
+- When an operation will interrupt the current interface, or it needs to run in the background for more than 2 seconds.
+- When you need to display the completion percentage of an operation.
 
-A `ProgressBar` without a `value` is indeterminate — "something is happening, duration unknown".
-With a value it exposes `aria-valuenow`, so the percentage is announced rather than merely drawn.
+## Examples
 
-Under reduced motion the spinner stops turning and the indeterminate bar stops sliding: an
-animation that loops forever is exactly what that preference is about. Both stay visible, because
-removing the feedback entirely would be worse than the movement.
+<ProgressShowcase />
 
-<Guidance
-  do="Prefer a Skeleton over a Spin when you know the shape of what is loading."
-  dont="Show a bare spinner with no label or nearby text; on its own it announces nothing."
-/>
+## API
 
-## Props
+`Progress` are exported from `@ceebee/ui/client`.
 
-<PropsTable rows={[
-  { name: 'Spin label', type: 'string', description: 'Makes it a status region. Omit only when nearby text already says what is loading.' },
-  { name: 'Spin size / tone', type: "'sm' | 'md' | 'lg' | Tone", description: 'Token sizes and semantic colour.' },
-  { name: 'ProgressBar value / max', type: 'number', description: 'Omit value for indeterminate.' },
-  { name: 'ProgressBar label', type: 'string', description: 'Required accessible name.' },
-  { name: 'ProgressBar showValue', type: 'boolean', description: 'Prints the percentage after the track.' },
-]} />
+<ApiReference component="Progress" />

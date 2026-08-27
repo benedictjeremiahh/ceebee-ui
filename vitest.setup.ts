@@ -58,3 +58,19 @@ if (!('PointerEvent' in globalThis)) {
   }
   globalThis.PointerEvent = JsdomPointerEvent as unknown as typeof PointerEvent;
 }
+
+// jsdom also omits pointer capture, which draggable Base UI controls use after pointerdown.
+if (!('setPointerCapture' in HTMLElement.prototype)) {
+  const capturedPointers = new WeakMap<HTMLElement, Set<number>>();
+  HTMLElement.prototype.setPointerCapture = function setPointerCapture(pointerId) {
+    const pointers = capturedPointers.get(this) ?? new Set<number>();
+    pointers.add(pointerId);
+    capturedPointers.set(this, pointers);
+  };
+  HTMLElement.prototype.releasePointerCapture = function releasePointerCapture(pointerId) {
+    capturedPointers.get(this)?.delete(pointerId);
+  };
+  HTMLElement.prototype.hasPointerCapture = function hasPointerCapture(pointerId) {
+    return capturedPointers.get(this)?.has(pointerId) ?? false;
+  };
+}

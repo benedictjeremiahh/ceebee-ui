@@ -1,6 +1,6 @@
 // Concatenates the library's CSS into one stylesheet in a deterministic order:
 // tokens first (they define every custom property), then components.
-// Components are plain `cb-`-prefixed CSS, so no scoping step exists (ADR 0002).
+// Components are plain `cb-`-prefixed CSS, so no scoping step exists.
 import { readdir, readFile, writeFile, mkdir, copyFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
