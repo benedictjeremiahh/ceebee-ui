@@ -46,8 +46,9 @@ is obvious. If UPGRADING.md is wrong about something, it surfaces there and not 
 `Badge` changed meaning. Ceebee's was a chip that wrapped content; the runtime's is a count overlay
 that draws a dot in a corner. Same name, same import, types still pass. The page just renders wrong.
 
-Every `<Badge>` that wraps text is now `<Tag>`. There are 43 in `ceebee-list`, 12 across the other
-three. Grep for them by hand — `tsc` will not help, and neither will the tests.
+Every `<Badge>` that wraps text is now `<Tag>`. There are 39 in all: 33 in `ceebee-list`, 3 in
+`ceebee-price-reference`, 2 in `ceebee-home`, 1 in `ceebee-monitor`. Grep for them by hand — `tsc`
+will not help, and neither will the tests.
 
 ## Everything else is in UPGRADING.md
 
