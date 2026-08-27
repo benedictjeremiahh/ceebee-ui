@@ -10,13 +10,18 @@ export { ThemeBridge } from './theme/theme-bridge.js';
 export type { ThemeBridgeProps } from './theme/theme-bridge.js';
 
 /**
- * Ant publishes its locales as subpath modules rather than from its main entry, and consumers reach
- * them only through this entry.
+ * The runtime publishes its locales as subpath modules rather than from its main entry, and
+ * consumers reach them only through this entry.
+ *
+ * The `.js` is load-bearing. That package has no `exports` map, so an extensionless subpath resolves
+ * only under a bundler; under plain Node ESM it throws ERR_MODULE_NOT_FOUND and takes this whole
+ * entry with it. These four specifiers are the CommonJS files, which Node ESM loads through interop.
+ * The `es/` twins look tidier and do not resolve — their own imports are extensionless too.
  */
-export { default as enUSLocale } from 'antd/locale/en_US';
-export { default as enUSDatePickerLocale } from 'antd/es/date-picker/locale/en_US';
-export { default as idIDLocale } from 'antd/locale/id_ID';
-export { default as zhCNLocale } from 'antd/locale/zh_CN';
+export { default as enUSLocale } from 'antd/locale/en_US.js';
+export { default as enUSDatePickerLocale } from 'antd/lib/date-picker/locale/en_US.js';
+export { default as idIDLocale } from 'antd/locale/id_ID.js';
+export { default as zhCNLocale } from 'antd/locale/zh_CN.js';
 export { LabelsProvider, useLabels, DEFAULT_LABELS } from './lib/labels.js';
 export type { Labels, LabelsProviderProps } from './lib/labels.js';
 

@@ -365,7 +365,7 @@ test('demos render inline unless upstream isolates them', async ({ page }) => {
   }
 
   await page.goto('/form/float-button');
-  const floatCards = page.locator('.docs__general-float .docs__demo');
+  const floatCards = page.locator('.docs__general-float-button .docs__demo');
   await expect(floatCards.first()).toBeVisible();
   expect(await floatCards.locator('iframe').count()).toBe(14);
 });

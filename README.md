@@ -9,6 +9,7 @@ and imported.
 - [CONTEXT.md](./CONTEXT.md) — the vocabulary. Atom, Composition, Recipe, Token, Skin, Surface, Tone,
   Coachmark, Tour, Seen Store, Widget vs Chart.
 - [AGENTS.md](./AGENTS.md) — the authoring contract. Read before adding a component.
+- [UPGRADING.md](./UPGRADING.md) — moving a consuming app to 1.0.
 - [docs/inventory.md](./docs/inventory.md) — every planned component and where it sits in the build.
 
 ## Shape

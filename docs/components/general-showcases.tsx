@@ -1,8 +1,6 @@
 'use client';
 
-import { useEffect, useState, type ComponentType } from 'react';
-import { App } from '@ceebee/ui/client';
-import { ExampleGrid, Demo } from './demo';
+import { Showcase, type OfficialDemo } from './showcase-frame';
 
 import ButtonBasic from './general/button/basic';
 import ButtonBlock from './general/button/block';
@@ -56,26 +54,6 @@ import { sources as buttonSources } from './general/button/sources.generated';
 import { sources as floatButtonSources } from './general/float-button/sources.generated';
 import { sources as iconSources } from './general/icon/sources.generated';
 import { sources as typographySources } from './general/typography/sources.generated';
-
-/**
- * The vendored demo files themselves. A source pane has to show the code that is running, and these
- * demos are copied into this repository rather than generated, so the listing is the file itself.
- */
-const sourcesByComponent: Record<string, Record<string, string>> = {
-  'button': buttonSources,
-  'float-button': floatButtonSources,
-  'icon': iconSources,
-  'typography': typographySources,
-};
-
-interface OfficialDemo {
-  file: string;
-  title: string;
-  description: string;
-  Component: ComponentType;
-  /** Frame height when the upstream documentation marks the demo `iframe`. */
-  iframe?: number;
-}
 
 const buttonDemos: OfficialDemo[] = [
   { file: 'basic', title: 'Syntactic sugar', description: 'Use the preset primary, default, dashed, text, and link button styles through the type syntactic sugar.', Component: ButtonBasic },
@@ -133,51 +111,18 @@ const iconDemos: OfficialDemo[] = [
   { file: 'scriptUrl', title: 'Multiple resources from iconfont.cn', description: 'Compose multiple iconfont resources in array order.', Component: IconScriptUrl },
 ];
 
-function Showcase({ component, demos, contain = false }: { component: string; demos: OfficialDemo[]; contain?: boolean }) {
-  const examples = demos.map(({ file, title, description, Component, iframe }) => (
-    <Demo
-      key={file}
-      title={title}
-      description={description}
-      code={sourcesByComponent[component]?.[file] ?? ''}
-      layout="block"
-      contain={contain && !iframe}
-      iframeSrc={iframe ? `/internal/demo/${component}/${file}` : undefined}
-      iframeHeight={iframe}
-    >
-      {iframe ? null : <ClientOnly Component={Component} />}
-    </Demo>
-  ));
-  return (
-    // Every demo renders inside <App>, whose element carries the theme hash and CSS-variable classes
-    // the runtime's reset is scoped to. Without it a bare demo anchor loses its link colour and
-    // pointer cursor and falls back to the browser default.
-    <App className="docs__app-frame">
-      {component === 'button' || component === 'float-button'
-        ? <ExampleGrid>{examples}</ExampleGrid>
-        : <div className="docs__example-stack">{examples}</div>}
-    </App>
-  );
-}
-
-function ClientOnly({ Component }: { Component: ComponentType }) {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  return mounted ? <Component /> : null;
-}
-
 export function ButtonShowcase() {
-  return <div className="docs__general-examples"><Showcase component="button" demos={buttonDemos} /></div>;
+  return <Showcase section="general" component="button" demos={buttonDemos} sources={buttonSources} cols={2} />;
 }
 
 export function FloatButtonShowcase() {
-  return <div className="docs__general-examples docs__general-float"><Showcase component="float-button" demos={floatButtonDemos} contain /></div>;
+  return <Showcase section="general" component="float-button" demos={floatButtonDemos} sources={floatButtonSources} cols={2} />;
 }
 
 export function TypographyShowcase() {
-  return <div className="docs__general-examples"><Showcase component="typography" demos={typographyDemos} /></div>;
+  return <Showcase section="general" component="typography" demos={typographyDemos} sources={typographySources} />;
 }
 
 export function IconShowcase() {
-  return <div className="docs__general-examples"><Showcase component="icon" demos={iconDemos} /></div>;
+  return <Showcase section="general" component="icon" demos={iconDemos} sources={iconSources} />;
 }
