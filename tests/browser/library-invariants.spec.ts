@@ -296,6 +296,80 @@ function luminance(color: string): number {
   return (0.2126 * red + 0.7152 * green + 0.0722 * blue) / 255;
 }
 
+/** Contrast between two computed colours, for asserting that one reads against the other. */
+function contrast(a: string, b: string): number {
+  const [lighter, darker] = [luminance(a), luminance(b)].sort((x, y) => y - x) as [number, number];
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+/**
+ * The runtime derives the Slider's filled track, handle, and active dot from one palette step off
+ * the primary seed. That step lands close to white for a seed as light as Ceebee's brand, which
+ * leaves a filled track indistinguishable from its rail — the control reads as disabled. The bridge
+ * overrides those tokens from Ceebee's own ramp, and this holds that override in place.
+ */
+for (const mode of ['light', 'dark'] as const) {
+  test(`Slider's filled track separates from its rail in ${mode}`, async ({ page }) => {
+    await page.addInitScript((choice) => window.localStorage.setItem('cb-theme', choice), mode);
+    await page.goto('/data-entry/slider');
+    await page.evaluate((choice) => document.documentElement.setAttribute('data-theme', choice), mode);
+
+    const slider = page.locator('.ant-slider').first();
+    await expect(slider).toBeVisible();
+
+    const read = (selector: string) =>
+      slider.locator(selector).first().evaluate((element) => getComputedStyle(element).backgroundColor);
+    await expect.poll(async () => contrast(await read('.ant-slider-track'), await read('.ant-slider-rail')))
+      .toBeGreaterThan(1.35);
+  });
+}
+
+/**
+ * A ghost button is transparent with inverted content, so it is invisible on a light stage. Upstream
+ * gives those demos a fixed mid-tone backdrop through `site-button-ghost-wrapper`; the demos were
+ * vendored but that rule was not, and the buttons vanished until hover.
+ */
+test('ghost button demos sit on a backdrop their content reads against', async ({ page }) => {
+  await page.goto('/form/button');
+
+  const wrappers = page.locator('.demo__stage .site-button-ghost-wrapper');
+  await expect(wrappers.first()).toBeVisible();
+  expect(await wrappers.count()).toBeGreaterThanOrEqual(2);
+
+  const backdrop = await wrappers.first().evaluate((element) => getComputedStyle(element).backgroundColor);
+  const stage = await wrappers.first().evaluate((element) =>
+    getComputedStyle(element.closest('.demo__stage')!).backgroundColor);
+
+  // The regression is the missing rule, which leaves the wrapper transparent against its stage.
+  // How much contrast any single ghost button then has is the runtime's own styling — the Disabled
+  // demo uses this same wrapper and its buttons are deliberately faint.
+  expect(backdrop).not.toBe(stage);
+  expect(luminance(backdrop)).toBeGreaterThan(0.25);
+  expect(luminance(backdrop)).toBeLessThan(0.9);
+  expect(luminance(backdrop)).toBeLessThan(luminance(stage));
+});
+
+/**
+ * Upstream marks a demo `iframe` when it measures the viewport. Marking one that is not sends the
+ * card at an isolated route that was never generated, and it renders an empty frame. Button has no
+ * such demo; FloatButton's are all of them.
+ */
+test('demos render inline unless upstream isolates them', async ({ page }) => {
+  await page.goto('/form/button');
+  const buttonCards = page.locator('.docs__general-examples .docs__demo');
+  await expect(buttonCards.first()).toBeVisible();
+  expect(await buttonCards.count()).toBe(15);
+  expect(await buttonCards.locator('iframe').count()).toBe(0);
+  for (let index = 0; index < 15; index += 1) {
+    await expect(buttonCards.nth(index).locator('.demo__stage .ant-btn').first()).toBeVisible();
+  }
+
+  await page.goto('/form/float-button');
+  const floatCards = page.locator('.docs__general-float .docs__demo');
+  await expect(floatCards.first()).toBeVisible();
+  expect(await floatCards.locator('iframe').count()).toBe(14);
+});
+
 test('Other docs match the documented card geometry, coverage, and primary interactions', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
 

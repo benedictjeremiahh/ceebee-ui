@@ -78,7 +78,7 @@ interface OfficialDemo {
 }
 
 const buttonDemos: OfficialDemo[] = [
-  { file: 'basic', title: 'Syntactic sugar', description: 'Use the preset primary, default, dashed, text, and link button styles through the type syntactic sugar.', Component: ButtonBasic, iframe: 360 },
+  { file: 'basic', title: 'Syntactic sugar', description: 'Use the preset primary, default, dashed, text, and link button styles through the type syntactic sugar.', Component: ButtonBasic },
   { file: 'color-variant', title: 'Color & Variant', description: 'Set color and variant together to derive the supported button treatments.', Component: ButtonColorVariant },
   { file: 'icon', title: 'Icon', description: 'Add an icon with the icon property.', Component: ButtonIcon },
   { file: 'icon-placement', title: 'Icon Placement', description: 'Set iconPlacement to start or end.', Component: ButtonIconPlacement },
@@ -92,7 +92,7 @@ const buttonDemos: OfficialDemo[] = [
   { file: 'linear-gradient', title: 'Gradient Button', description: 'Buttons with a gradient background.', Component: ButtonGradient },
   { file: 'wave', title: 'Custom Wave', description: 'Customize the interaction wave with HappyProvider.', Component: ButtonWave },
   { file: 'custom-disabled-bg', title: 'Custom disabled backgroundColor', description: 'Customize disabled default and dashed button backgrounds.', Component: ButtonCustomDisabled },
-  { file: 'style-class', title: 'Custom semantic dom styling', description: 'Customize semantic slots with classNames and styles.', Component: ButtonSemantic, iframe: 360 },
+  { file: 'style-class', title: 'Custom semantic dom styling', description: 'Customize semantic slots with classNames and styles.', Component: ButtonSemantic },
 ];
 
 const floatButtonDemos: OfficialDemo[] = [

@@ -123,6 +123,14 @@ shipped with each change.
   Attribution is unchanged: `THIRD_PARTY_NOTICES.md` retains every upstream copyright notice, and
   `docs/component-sources.json` still records each component's lineage.
 
+  ### Slider reads its filled track from Ceebee's ramp
+
+  The runtime derives a Slider's filled track, handle, and active dot from one palette step off the
+  primary seed. That step lands close to white for a seed as light as Ceebee's brand, so a filled
+  track was indistinguishable from its rail and the control read as disabled. `ThemeBridge` now sets
+  `trackBg`, `trackHoverBg`, `handleColor`, and `dotActiveBorderColor` from `--cb-brand-300` and
+  `--cb-brand-400`, which follow the active Skin and colour scheme like every other bridged token.
+
 ## 0.6.0
 
 ### Minor Changes

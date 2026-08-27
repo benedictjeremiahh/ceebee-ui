@@ -16,7 +16,7 @@ const SKIN_LINK_ID = 'cb-skin';
  * interaction, accessibility, and derived tokens; Ceebee owns the active Skin and colour mode.
  */
 export function ThemeBridge({ children, mode, theme }: ThemeBridgeProps) {
-  const [skinToken, setSkinToken] = useState<NonNullable<ThemeConfig['token']>>({});
+  const [skinToken, setSkinToken] = useState<CeebeeTheme>({ token: {}, components: {} });
 
   const refresh = useCallback(() => {
     setSkinToken(readCeebeeThemeToken(document.documentElement));
@@ -54,7 +54,8 @@ export function ThemeBridge({ children, mode, theme }: ThemeBridgeProps) {
     ...theme,
     algorithm: theme?.algorithm ?? (mode === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm),
     cssVar: theme?.cssVar ?? { prefix: 'cb-ant' },
-    token: { ...skinToken, ...theme?.token },
+    token: { ...skinToken.token, ...theme?.token },
+    components: mergeComponents(skinToken.components, theme?.components),
   }), [mode, skinToken, theme]);
 
   // Ant's static methods — `Modal.confirm`, `message.info`, `notification.open` — render into their
@@ -70,7 +71,24 @@ export function ThemeBridge({ children, mode, theme }: ThemeBridgeProps) {
   return <ConfigProvider theme={mergedTheme}>{children}</ConfigProvider>;
 }
 
-export function readCeebeeThemeToken(root: HTMLElement): NonNullable<ThemeConfig['token']> {
+export interface CeebeeTheme {
+  token: NonNullable<ThemeConfig['token']>;
+  components: NonNullable<ThemeConfig['components']>;
+}
+
+function mergeComponents(
+  base: NonNullable<ThemeConfig['components']>,
+  override: ThemeConfig['components'],
+): NonNullable<ThemeConfig['components']> {
+  if (!override) return base;
+  const merged: Record<string, unknown> = { ...base };
+  for (const [name, tokens] of Object.entries(override)) {
+    merged[name] = { ...(merged[name] as object | undefined), ...tokens };
+  }
+  return merged as NonNullable<ThemeConfig['components']>;
+}
+
+export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
   const probe = document.createElement('span');
   probe.style.position = 'fixed';
   probe.style.pointerEvents = 'none';
@@ -108,8 +126,30 @@ export function readCeebeeThemeToken(root: HTMLElement): NonNullable<ThemeConfig
     boxShadowSecondary: 'var(--cb-shadow-sm)',
   };
 
+  /* Ant derives the Slider's filled track, handle, and active dot from `colorPrimaryBorder`, which
+     its palette generator produces from the primary seed. That step lands close to white for a seed
+     as light as Ceebee's brand, so a filled track stops reading as filled and the control looks
+     disabled. Ceebee's own brand ramp already has the step Ant is reaching for, so the Slider reads
+     it directly. */
+  const components: NonNullable<ThemeConfig['components']> = {};
+  const trackBg = color('--cb-brand-300');
+  const trackHoverBg = color('--cb-brand-400');
+  if (trackBg && trackHoverBg) {
+    components.Slider = {
+      trackBg,
+      trackHoverBg,
+      handleColor: trackBg,
+      dotActiveBorderColor: trackBg,
+    };
+  }
+
   probe.remove();
-  return Object.fromEntries(Object.entries(tokens).filter(([, value]) => value !== undefined)) as NonNullable<ThemeConfig['token']>;
+  return {
+    token: Object.fromEntries(
+      Object.entries(tokens).filter(([, value]) => value !== undefined),
+    ) as NonNullable<ThemeConfig['token']>,
+    components,
+  };
 }
 
 function resolveCssLength(probe: HTMLElement, name: string): number | undefined {

@@ -211,6 +211,17 @@ body { margin: 0; font-family: var(--cb-font-sans); }
    readable edge against a white one, and a few flush against the stage with no padding at all. */
 .demo__stage[data-background="grey"] { background: var(--cb-bg-subtle); }
 .demo__stage[data-compact] { padding: 0; }
+
+/* A ghost button is transparent with inverted content, made for a coloured surface. Upstream's
+   documentation gives those demos a fixed mid-tone backdrop through this class; without it the
+   buttons are invisible on a light stage until hover. The tone is deliberately the same in light
+   and dark, because it is the surface the demo is demonstrating against. */
+.demo__stage .site-button-ghost-wrapper {
+  --docs-ghost-backdrop: oklch(0.79 0.012 200);
+  padding: var(--cb-space-4);
+  border-radius: var(--cb-radius-sm);
+  background: var(--docs-ghost-backdrop);
+}
 .demo__stage[data-layout="grid"] { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); align-items: stretch; }
 .demo__stage[data-iframe] { display: block; padding: 0; overflow: hidden; }
 .demo__browser-frame { inline-size: 100%; background: var(--cb-surface); }
