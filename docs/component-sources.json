@@ -1335,6 +1335,21 @@
       "adapter": "packages/ui/src/theme/theme-bridge.tsx",
       "parityGaps": [],
       "proof": "docs/parity.generated.json#Util"
+    },
+    "StickerGroup": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/sticker-group/sticker-group.tsx",
+        "packages/ui/src/data/sticker-group/sticker-group.skeleton.tsx",
+        "packages/ui/src/data/sticker-group/sticker-group.css"
+      ],
+      "demoPath": "docs/app/data-display/sticker-group",
+      "interactionContract": "controlled removable-value list with native button focus and settle/peel layout motion",
+      "substrate": [
+        "react",
+        "motion",
+        "lucide-react"
+      ]
     }
   }
 }

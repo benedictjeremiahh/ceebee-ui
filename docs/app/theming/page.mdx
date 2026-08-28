@@ -33,13 +33,15 @@ function ThemeToggle() {
 A Skin rewrites skin tokens only. It never touches structure tokens and never writes a component
 rule; if a Skin needs a rule, the component is missing a token.
 
-The optional `clarity.css` Skin is the content-first glass direction for CeeBee products. Load it
-after `styles.css`; it tunes both regular and clear materials while preserving the same component
-API and accessibility fallbacks.
+The optional Skins include `clarity.css` for content-first glass and `moodboard.css` for the warm,
+taped-paper direction first shaped for Ceebee List. Load one after `styles.css`; the component API
+and accessibility fallbacks remain unchanged. The selector in this page's toolbar previews the same
+files consumers import.
 
 ```tsx
 import '@ceebee/ui/styles.css';
 import '@ceebee/ui/skins/clarity.css';
+// or: import '@ceebee/ui/skins/moodboard.css';
 ```
 
 <Demo layout="block" code={`/* skins/astra.css — the violet-gradient dashboard look */

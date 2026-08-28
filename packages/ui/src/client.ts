@@ -46,3 +46,6 @@ export type { SidebarProps, TopBarProps, NavItem, NavSection } from './nav/shell
 
 export { Reveal, Stagger } from './motion/reveal.js';
 export type { RevealProps, StaggerProps } from './motion/reveal.js';
+
+export { StickerGroup } from './data/sticker-group/index.js';
+export type { StickerGroupProps, StickerGroupSkeletonProps, StickerItem } from './data/sticker-group/index.js';

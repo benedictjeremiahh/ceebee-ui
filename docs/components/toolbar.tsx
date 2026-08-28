@@ -1,16 +1,16 @@
 'use client';
 
-import { Moon, Sun, Waves } from 'lucide-react';
-import { Button } from '@ceebee/ui/client';
-import { useTheme } from '@ceebee/ui/client';
+import { Moon, Sun } from 'lucide-react';
+import { Button, Select, useTheme } from '@ceebee/ui/client';
 import { useEffect, useState } from 'react';
 
-const SKINS = ['default', 'astra', 'clarity'] as const;
+const SKINS = ['default', 'astra', 'clarity', 'moodboard'] as const;
 type Skin = (typeof SKINS)[number];
 const SKIN_LABELS: Record<Skin, string> = {
   default: 'Default skin',
   astra: 'Astra skin',
   clarity: 'Clarity skin',
+  moodboard: 'Moodboard · Ceebee List',
 };
 
 /** Also a live demo of the two providers: the toggles below drive the whole page. */
@@ -31,17 +31,14 @@ export function Toolbar() {
 
   return (
     <div className="docs__toolbar">
-      <Button
-        type="text"
+      <Select<Skin>
+        aria-label="Preview skin"
+        className="docs__skin-select"
+        onChange={setSkin}
+        options={SKINS.map((value) => ({ value, label: SKIN_LABELS[value] }))}
         size="small"
-        icon={<Waves size={16} />}
-        onClick={() => {
-          const next = SKINS[(SKINS.indexOf(skin) + 1) % SKINS.length];
-          setSkin(next ?? 'default');
-        }}
-      >
-        {SKIN_LABELS[skin]}
-      </Button>
+        value={skin}
+      />
       <Button
         size="small"
         icon={resolved === 'dark' ? <Moon size={16} /> : <Sun size={16} />}

@@ -1,0 +1,46 @@
+import { StickerGroupDemo } from '../../../components/sticker-group-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# StickerGroup <span className="docs__label">Composition</span>
+
+A controlled row of removable values. New stickers settle into the row; removed stickers peel
+away and the remaining row closes the gap. It is the reusable motion contract behind Ceebee List's
+active-filter stickers, without knowing what a filter or place is.
+
+## Usage
+
+<StickerGroupDemo />
+
+## Interaction contract
+
+Each sticker is one native button inside a list. Tab follows document order; Enter or Space removes
+that item. State stays with the caller, there is no outside or Escape dismissal, the group remains
+in document flow, and it has no drag gesture. This is intentionally separate from `Tag`: the entire
+sticker is the removal control and the collection owns exit and reflow choreography.
+
+Under reduced motion or `motion={false}`, transform and layout travel drop. The controlled result
+still renders immediately, so removal never depends on animation.
+
+<Guidance
+  do="Use stickers for a small, already-selected set where pressing the item clearly means remove."
+  dont="Use StickerGroup as a choice picker or sortable list; Select, Checkbox, or a drag-and-drop composition owns those interactions."
+/>
+
+## Loading
+
+`StickerGroup.Skeleton` keeps the same wrapping row and control height while values load.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'items', type: 'StickerItem[]', description: 'Controlled items with id, label, optional ariaLabel, and decorative hue.' },
+  { name: 'onDismiss', type: '(id: string) => void', description: 'Requests removal; the caller updates items.' },
+  { name: 'label', type: 'string', description: 'Accessible name for the collection when no surrounding heading names it.' },
+  { name: 'getDismissLabel', type: '(item) => string', description: 'Localised accessible button name.' },
+  { name: 'motion', type: 'boolean', default: 'true', description: 'Disables settle, peel, and layout travel while preserving the state change.' },
+]}/>
+
+## Tokens read
+
+`--cb-paper-*`, `--cb-decor-*`, `--cb-sticker-*`, `--cb-tilt-*`, `--cb-space-*`,
+`--cb-radius-*`, `--cb-control-height-*`, `--cb-focus-*`, and MotionProvider's spring presets.

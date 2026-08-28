@@ -17,6 +17,11 @@
   --cb-radius-xl: 1.75rem;
   --cb-radius-full: 999px;
 
+  /* Small decorative rotations shared by paper and sticker materials. */
+  --cb-tilt-left: -1.5deg;
+  --cb-tilt-none: 0deg;
+  --cb-tilt-right: 1.5deg;
+
   --cb-text-xs: 0.75rem;
   --cb-text-sm: 0.875rem;
   --cb-text-md: 1rem;
@@ -35,6 +40,12 @@
   --cb-control-height-sm: 2rem;
   --cb-control-height-md: 2.5rem;
   --cb-control-height-lg: 3rem;
+
+  --cb-sticker-enter-y: var(--cb-space-3);
+  --cb-sticker-exit-x: var(--cb-space-6);
+  --cb-sticker-enter-scale: 0.94;
+  --cb-sticker-exit-scale: 0.9;
+  --cb-sticker-exit-rotate: 8deg;
 
   --cb-border-width: 1px;
   --cb-focus-width: 2px;

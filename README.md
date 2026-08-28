@@ -55,7 +55,7 @@ pnpm add @ceebee/ui
 
 ```tsx
 import '@ceebee/ui/styles.css';
-import '@ceebee/ui/skins/astra.css';   // optional: a Skin rewrites brand tokens only
+import '@ceebee/ui/skins/moodboard.css'; // optional: select one Skin after the base stylesheet
 
 import { Surface, StatCard, ProgressRing, Skeleton } from '@ceebee/ui';   // server-safe
 import { Button, Field, TextInput, Dialog } from '@ceebee/ui/client';     // interactive

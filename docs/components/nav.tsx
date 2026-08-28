@@ -125,6 +125,7 @@ const GROUPS: Group[] = [
       { href: '/data-display/popover', label: 'Popover' },
       { href: '/data-display/qr-code', label: 'QRCode' },
       { href: '/data-display/segmented', label: 'Segmented' },
+      { href: '/data-display/sticker-group', label: 'StickerGroup' },
       { href: '/data-display/statistic', label: 'Statistic' },
       { href: '/data-display/table', label: 'Table' },
       { href: '/data-display/tag', label: 'Tag' },

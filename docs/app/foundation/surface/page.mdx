@@ -24,7 +24,19 @@ A Surface is a box with four independent decisions: **variant** (how it is fille
   <Surface variant="glass" padding="md"><Text size="sm">glass · regular</Text></Surface>
   <Surface variant="glass" glassStyle="clear" padding="md"><Text size="sm">glass · clear</Text></Surface>
   <Surface variant="gradient" hue="blue" padding="md"><Text size="sm">gradient · blue</Text></Surface>
+  <Surface variant="paper" paperTilt="right" padding="md"><Text size="sm">paper · taped</Text></Surface>
 </Demo>
+
+## Paper as a material
+
+`paper` is the static taped-note material: the active Skin owns its paper, ink, edge, tape, and
+shadow Tokens; `paperTilt` only changes decorative geometry. It remains a non-interactive Surface,
+so it does not lift on hover or imply that the whole panel is clickable.
+
+<Guidance
+  do="Use paper for a small note or moodboard artifact whose visual treatment supports the page hierarchy."
+  dont="Add hover lift to a non-interactive paper Surface; put a real control inside when something is actionable."
+/>
 
 ## Tone versus hue
 
@@ -76,8 +88,9 @@ requests reduced transparency or increased contrast.
 ## Props
 
 <PropsTable rows={[
-  { name: 'variant', type: "'plain' | 'tinted' | 'glass' | 'gradient'", default: "'plain'", description: 'How the panel is filled. Glass blurs what is behind it, so it needs something behind it.' },
+  { name: 'variant', type: "'plain' | 'tinted' | 'glass' | 'gradient' | 'paper'", default: "'plain'", description: 'How the panel is filled. Glass blurs what is behind it; paper adds a taped-note material.' },
   { name: 'glassStyle', type: "'regular' | 'clear'", default: "'regular'", description: 'Glass density. Clear is reserved for compact, bold controls over visually rich content.' },
+  { name: 'paperTilt', type: "'left' | 'none' | 'right'", default: "'none'", description: 'Decorative rotation for paper only.' },
   { name: 'tone', type: "'neutral' | 'brand' | 'info' | 'success' | 'warning' | 'danger'", default: "'neutral'", description: 'Semantic colour for tinted and gradient.' },
   { name: 'hue', type: "'violet' | 'blue' | 'teal' | 'green' | 'amber' | 'rose'", description: 'Decorative colour. Wins over tone when both are given.' },
   { name: 'elevation', type: "'none' | 'sm' | 'md' | 'lg'", default: "'sm'", description: 'Shadow step.' },
@@ -89,5 +102,5 @@ requests reduced transparency or increased contrast.
 
 ## Tokens read
 
-`--cb-surface`, `--cb-border`, `--cb-tint-strength`, `--cb-glass-*`, `--cb-gradient-angle`,
+`--cb-surface`, `--cb-border`, `--cb-tint-strength`, `--cb-glass-*`, `--cb-paper-*`, `--cb-gradient-angle`,
 `--cb-shadow-*`, `--cb-radius-*`, `--cb-space-*`.

@@ -20,3 +20,14 @@ describe('Surface glass material', () => {
     expect(container.firstElementChild).not.toHaveAttribute('data-glass-style');
   });
 });
+
+describe('Surface paper material', () => {
+  it('exposes decorative tilt only for paper', () => {
+    const { container, rerender } = render(<Surface variant="paper" paperTilt="right">Notes</Surface>);
+
+    expect(container.firstElementChild).toHaveAttribute('data-paper-tilt', 'right');
+
+    rerender(<Surface variant="plain" paperTilt="right">Notes</Surface>);
+    expect(container.firstElementChild).not.toHaveAttribute('data-paper-tilt');
+  });
+});

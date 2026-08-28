@@ -14,10 +14,10 @@ already had to write for itself — is in [roadmap.md](./roadmap.md).
 | Piece | Label | Entry | Slice | Notes |
 |---|---|---|---|---|
 | Tokens (structure) | — | css | S1 | spacing, radius, density, z, motion timing |
-| Tokens (skin) | — | css | S1 | colour ramps, elevation, font; `skins/astra.css` reproduces the board |
+| Tokens (skin) | — | css | S1 | colour ramps, elevation, font; optional Astra, Clarity, and Moodboard Skins |
 | Theme switching | — | css + client | S1 | `data-theme` + `prefers-color-scheme`; `ThemeProvider` only for the toggle |
 | MotionProvider | Atom | client | S1 | global scale / kill switch, reduced-motion seam |
-| Surface | Atom | server | S1 | `plain \| tinted \| glass \| gradient` × `tone` — carries the board look |
+| Surface | Atom | server | S1 | `plain \| tinted \| glass \| gradient \| paper` × `tone` — carries material choices |
 | Divider | Atom | server | built | legacy server-safe separator remains available |
 | Stack / Grid / Container | Atom | server | built | legacy token-constrained layout primitives remain available |
 | Layout | Composition | client | built | complete Header/Sider/Content/Footer frame from `@ceebee/ui/client` |
@@ -83,6 +83,7 @@ replaced the `Field` wiring they shared.
 | Table (+ `.Skeleton`) | Composition | client | S3 — built |
 | Leaderboard (+ `.Skeleton`) | Composition | server | S3 — built |
 | Timeline (+ `.Skeleton`) | Composition | server | S4 — built |
+| StickerGroup (+ `.Skeleton`) | Composition | client | built — controlled removal with settle, peel, and layout motion |
 
 ## nav
 

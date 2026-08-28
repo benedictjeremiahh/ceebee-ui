@@ -6,7 +6,7 @@ import type { UiManifest } from './ui-manifest';
 const manifest: UiManifest = {
   name: '@ceebee/ui',
   version: '0.4.1',
-  skins: ['astra', 'clarity'],
+  skins: ['astra', 'clarity', 'moodboard'],
   exports: { server: 28, client: 74 },
 };
 
@@ -42,7 +42,7 @@ describe('docs health report', () => {
     );
     expect(metrics.package_version).toBe('0.4.1');
     expect(metrics.exported_components).toBe(102);
-    expect(metrics.available_skins).toBe(2);
+    expect(metrics.available_skins).toBe(3);
   });
 
   it('describes the package the docs were actually built against', () => {

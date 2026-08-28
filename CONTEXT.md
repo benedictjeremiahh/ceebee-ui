@@ -51,7 +51,7 @@ _Avoid_: Mode, colour scheme
 
 **Surface**:
 The component every raised or tinted panel is built on. Its `variant` (`plain`, `tinted`, `glass`,
-`gradient`) is what carries the Pinterest-board look, so glass and gradient are opt-in choices
+`gradient`, `paper`) carries the material choice, so glass, gradient, and taped paper are opt-in
 rather than a baked-in identity.
 _Avoid_: Panel, container, box
 
@@ -74,6 +74,12 @@ feedback at all".
 **Reduced Motion**:
 The user's stated preference for less animation, treated as a hard requirement rather than a nicety.
 Every animated component has a defined reduced-motion rendering.
+
+**StickerGroup**:
+A controlled in-flow list of removable values where each whole sticker is one native button. It
+owns settle-in, peel-away, and layout-close motion, but no filter knowledge, selection, sorting,
+outside dismissal, or product state.
+_Avoid_: Decorative Tag list, filter bar, sortable stickers
 
 ### Onboarding
 
