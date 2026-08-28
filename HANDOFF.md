@@ -5,51 +5,19 @@ Delete this file when the four apps are on 1.0.1. It is execution state, not doc
 
 ## Where things stand
 
-`@ceebee/ui@1.0.1` is published and the docs are live at https://ui.ceebee.biz.id.
-Nothing has been migrated yet. All four apps are still on their old versions and still build,
-because npm ranges do not cross a major on their own.
+All four consumers are on `@ceebee/ui@1.0.1`.
 
-| App | State | Left |
-| --- | --- | --- |
-| `ceebee-home` | **done**, 1.0.1, committed at `780ae06` | — |
-| `ceebee-price-reference` | **done**, 1.0.1, committed at `e6a0a48` (`git init` first, baseline at `54b6175`) | — |
-| `ceebee-list` | **in progress**, on 1.0.1, five commits through `c6295f4` | 71 typecheck errors |
-| `ceebee-monitor` | not started — its 34 uncommitted files stay uncommitted by the owner's call; upgrade on top and leave it dirty | 7 symbols, 2 props |
-
-Counts are from a scan of each working tree against 1.0.1's real export surface — runtime exports
-plus the type surface, so type-only imports are not miscounted as breaks. Re-measure rather than
-trust these if the apps have moved on.
-
-## Before touching anything
-
-**`ceebee-price-reference` has no git.** `git init` and commit it first. This migration is a large
-mechanical rename; without version control a bad `sed` is unrecoverable. Do not start here despite
-it being the smallest.
-
-**`ceebee-monitor` has 34 uncommitted files**, including `app/page.tsx` and `components/monitor.tsx`
-— both files the upgrade has to touch. Commit or stash that work first, or the upgrade diff and
-whatever is in progress become one indistinguishable change.
-
-## Order
-
-`ceebee-home` and `ceebee-price-reference` are done. `ceebee-list` is the one in flight.
-
-What is left in `ceebee-list`, by count:
-
-| Remaining | Count |
+| App | State |
 | --- | --- |
-| `Field` → `Form.Item` | 10 |
-| handlers now taking an event, not a value | 12 |
-| `Select` / `AutoComplete` prop shapes | 9 |
-| `Coachmark` → `Tour`, and its `ActionType` / `AlignType` | 8 |
-| `Input` ref is `Ref<InputRef>`, not `Ref<HTMLInputElement>` | 4 |
-| `Input` / `Select` `variant`, and `SizeType` | 8 |
-| `Textarea` → `Input.TextArea` | 3 |
+| `ceebee-home` | done — uses the library's `Tag`, with `ThemeProvider` in the root layout |
+| `ceebee-price-reference` | done — left on a local pill by request; `git init`'d, baseline at `54b6175` |
+| `ceebee-list` | done — 286 typecheck errors to zero, build passes, `ThemeBridge` under its own provider |
+| `ceebee-monitor` | done — `ThemeProvider` added; **left uncommitted on purpose**, alongside its owner's in-flight work |
 
-Done there so far, one commit each: Button (165 sites), the theme bridge and Alert, Modal, Badge →
-Tag, LinkButton and the two server-only routes.
+`ceebee-monitor` is the only one with nothing committed. That was decided, not forgotten: its tree
+already held 34 files of an unrelated redesign, and separating the two is the owner's call.
 
-`ceebee-monitor` is last and its tree stays dirty — that was decided deliberately, not overlooked.
+Nothing is pushed. Every app is committed locally except monitor.
 
 ## The one that has no compiler behind it
 
