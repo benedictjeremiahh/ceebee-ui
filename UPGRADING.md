@@ -25,6 +25,33 @@ The chip is now `Tag`:
 
 Keep `Badge` only where you actually wanted a count or a dot on a corner.
 
+`Tag` is a client component, and like every component the runtime supplies it renders unthemed
+unless a `ThemeProvider` sits above it. In an app that already mounts one, the swap above is the
+whole story.
+
+In an app that does not — one rendered entirely on the server, with no client runtime from this
+library — taking `Tag` means adding a client boundary *and* a provider in the root layout. For a few
+decorative pills that is a bad trade. Build the pill locally from tokens instead:
+
+```tsx
+<span className="chip chip--brand">{label}</span>
+```
+
+```css
+.chip {
+  display: inline-flex; align-items: center; gap: var(--cb-space-2);
+  padding: var(--cb-space-1) var(--cb-space-3);
+  border-radius: var(--cb-radius-full);
+  font-size: var(--cb-text-xs); font-weight: var(--cb-weight-semibold);
+}
+.chip--brand {
+  background: color-mix(in oklch, var(--cb-tone-brand) 14%, transparent);
+  color: var(--cb-tone-brand);
+}
+```
+
+`ceebee-home` went this way. Check for a `ThemeProvider` before you reach for `Tag`.
+
 ## Removed symbols
 
 Each has a direct replacement. Both entries export from the same names, so only the specifier and

@@ -12,7 +12,7 @@ because npm ranges do not cross a major on their own.
 | App | Declared | Git | Symbol sites | Prop sites |
 | --- | --- | --- | --- | --- |
 | `ceebee-price-reference` | `^0.3.0` | **not a repo** | 1 | 7 |
-| `ceebee-home` | `0.3.0` | clean at `c3a2083` | 2 | 5 |
+| `ceebee-home` | **done — 1.0.1** | `780ae06` | — | — |
 | `ceebee-monitor` | `^0.3.3` | **34 files uncommitted** at `3d154e2` | 7 | 2 |
 | `ceebee-list` | `^0.6.0` | clean at `9157d08` | 23 | 237 |
 
@@ -32,7 +32,8 @@ whatever is in progress become one indistinguishable change.
 
 ## Order
 
-1. `ceebee-home` — clean tree, 7 sites total. The rehearsal.
+1. ~~`ceebee-home`~~ — done. It earned its place: it has no `ThemeProvider`, so `Badge → Tag` would
+   have added a client boundary to a server-only page. UPGRADING.md now covers that case.
 2. `ceebee-price-reference` — after `git init`.
 3. `ceebee-monitor` — after its tree is clean.
 4. `ceebee-list` — 260 sites. Everything the first three teach you gets used here.
