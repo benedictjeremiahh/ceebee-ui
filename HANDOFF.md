@@ -9,12 +9,12 @@ Delete this file when the four apps are on 1.0.1. It is execution state, not doc
 Nothing has been migrated yet. All four apps are still on their old versions and still build,
 because npm ranges do not cross a major on their own.
 
-| App | Declared | Git | Symbol sites | Prop sites |
-| --- | --- | --- | --- | --- |
-| `ceebee-price-reference` | `^0.3.0` | **not a repo** | 1 | 7 |
-| `ceebee-home` | **done — 1.0.1** | `780ae06` | — | — |
-| `ceebee-monitor` | `^0.3.3` | **34 files uncommitted** at `3d154e2` | 7 | 2 |
-| `ceebee-list` | `^0.6.0` | clean at `9157d08` | 23 | 237 |
+| App | State | Left |
+| --- | --- | --- |
+| `ceebee-home` | **done**, 1.0.1, committed at `780ae06` | — |
+| `ceebee-price-reference` | **done**, 1.0.1, committed at `e6a0a48` (`git init` first, baseline at `54b6175`) | — |
+| `ceebee-list` | **in progress**, on 1.0.1, five commits through `c6295f4` | 71 typecheck errors |
+| `ceebee-monitor` | not started — its 34 uncommitted files stay uncommitted by the owner's call; upgrade on top and leave it dirty | 7 symbols, 2 props |
 
 Counts are from a scan of each working tree against 1.0.1's real export surface — runtime exports
 plus the type surface, so type-only imports are not miscounted as breaks. Re-measure rather than
@@ -32,15 +32,24 @@ whatever is in progress become one indistinguishable change.
 
 ## Order
 
-1. ~~`ceebee-home`~~ — done. It earned its place: it has no `ThemeProvider`, so `Badge → Tag` would
-   have added a client boundary to a server-only page. UPGRADING.md now covers that case.
-2. `ceebee-price-reference` — after `git init`.
-3. `ceebee-monitor` — after its tree is clean.
-4. `ceebee-list` — 260 sites. Everything the first three teach you gets used here.
+`ceebee-home` and `ceebee-price-reference` are done. `ceebee-list` is the one in flight.
 
-The point of the order is that the three small apps are the same migration at a size where a mistake
-is obvious. If UPGRADING.md is wrong about something, it surfaces there and not after a day in
-`ceebee-list`.
+What is left in `ceebee-list`, by count:
+
+| Remaining | Count |
+| --- | --- |
+| `Field` → `Form.Item` | 10 |
+| handlers now taking an event, not a value | 12 |
+| `Select` / `AutoComplete` prop shapes | 9 |
+| `Coachmark` → `Tour`, and its `ActionType` / `AlignType` | 8 |
+| `Input` ref is `Ref<InputRef>`, not `Ref<HTMLInputElement>` | 4 |
+| `Input` / `Select` `variant`, and `SizeType` | 8 |
+| `Textarea` → `Input.TextArea` | 3 |
+
+Done there so far, one commit each: Button (165 sites), the theme bridge and Alert, Modal, Badge →
+Tag, LinkButton and the two server-only routes.
+
+`ceebee-monitor` is last and its tree stays dirty — that was decided deliberately, not overlooked.
 
 ## The one that has no compiler behind it
 
