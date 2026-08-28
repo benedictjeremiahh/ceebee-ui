@@ -7,7 +7,39 @@ and the rest is a short list of symbols with named replacements.
 
 Read the silent one first. Everything below it is a lookup table.
 
-## Read this first: `Badge` changed meaning
+## Read this first: the runtime needs a theme bridge
+
+Before 1.0, the components behind `@ceebee/ui/client` were Ceebee's own and read the CSS tokens
+directly. Nothing had to be wired for a Skin to reach them. They are now the pinned runtime, which
+carries a theme of its own — and without a bridge it paints every control in its default blue, with
+its own radii and control heights. The Skin still applies to your page and to nothing inside it.
+
+Nothing errors. It compiles, it renders, it just looks like a different product.
+
+If your app has no provider from this library, add one:
+
+```tsx
+import { ThemeProvider } from '@ceebee/ui/client';
+```
+
+If it already owns its own colour scheme — its own `ThemeProvider` writing `data-theme`, which is
+easy to mistake for this one — do not add a second owner. Feed the mode to `ThemeBridge` instead:
+
+```tsx
+'use client';
+import { ThemeBridge } from '@ceebee/ui/client';
+import { useTheme } from '@/lib/theme';
+
+export default function UiThemeBridge({ children }: { children: ReactNode }) {
+  const { resolved } = useTheme();               // 'light' | 'dark'
+  return <ThemeBridge mode={resolved}>{children}</ThemeBridge>;
+}
+```
+
+Mount it inside the app's own provider, above everything that renders a component. `ceebee-list`
+needed this; its layout said `ThemeProvider` and meant its own.
+
+## Read this next: `Badge` changed meaning
 
 Ceebee's `Badge` was a chip — it wrapped content and drew a pill around it. The runtime's `Badge` is
 a count overlay: it wraps children and draws a dot or number in the corner. The import still
@@ -122,6 +154,14 @@ and `Heading` are still Ceebee's and are unaffected — only components the runt
 | `variant="outline"` | `variant="outlined"` |
 | `variant="ghost"` | `variant="text"` |
 
+`type` changed meaning entirely. It used to be the HTML button type; it is now the visual variant.
+`type="button"` is simply dropped, and `type="submit"` becomes `htmlType="submit"` — miss this and a
+form button silently stops submitting.
+
+`iconStart` and `iconEnd` became `icon`, with `iconPosition="end"` for the second. Their value is an
+element carrying its own props, so a text-level find-and-replace of `size` inside a `<Button>` tag
+hits the icon rather than the button. Rewrite attributes with something that counts braces.
+
 The runtime has its own `ghost` prop and it means something else: a transparent button for use on a
 coloured surface. Do not map `variant="ghost"` onto it.
 
@@ -154,6 +194,15 @@ confirm is `okButtonProps={{ danger: true }}`.
 **Skeleton**
 
 `radius` is gone. Reach for `className` or `style`.
+
+**Alert**
+
+It no longer renders children. The content is the `message` prop:
+
+```diff
+- <Alert tone="danger">{error}</Alert>
++ <Alert type="error" message={error} />
+```
 
 ## Unchanged
 
