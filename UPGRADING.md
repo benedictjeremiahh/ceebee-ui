@@ -183,8 +183,11 @@ coloured surface. Do not map `variant="ghost"` onto it.
 | `tone="info"` | `color="blue"` |
 | `tone="warning"` | `color="orange"` |
 | `tone="danger"` | `color="red"` |
-| `variant="outline"` | `bordered` |
-| `variant="solid"`, `variant="soft"` | a `color` — the runtime has one filled treatment |
+| `variant="soft"` | `variant="filled"` |
+| `variant="solid"` | `variant="solid"` |
+| `variant="outline"` | `variant="outlined"` |
+
+`Tag` has its own `variant`, so all three survive the move — they do not collapse.
 
 **Modal**
 
