@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 1.3.1
+
+### Patch Changes
+
+- 90592cd: Read Skin tokens on the first client render instead of in an effect, so a themed page no longer flashes Ant's own default palette before the Skin arrives.
+
 ## 1.3.0
 
 ### Minor Changes
