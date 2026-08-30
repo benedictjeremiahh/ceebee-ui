@@ -12,26 +12,33 @@ class NativeLayoutGallery extends StatelessWidget {
   const NativeLayoutGallery({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final TextTheme type = Theme.of(context).textTheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Text('Native layout', style: type.displaySmall),
-        const SizedBox(height: CbStructure.space2),
-        Text(
-          'Flutter owns axis, constraints, safe areas, and scroll composition. Ceebee supplies the spacing rhythm and Skin.',
-          style: type.bodyLarge,
-        ),
-        const SizedBox(height: CbStructure.space5),
-        _AdaptiveFlow(),
-        const SizedBox(height: CbStructure.space5),
-        _ResponsiveGrid(),
-        const SizedBox(height: CbStructure.space5),
-        const _AdaptiveWorkspaceShell(),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (BuildContext context, BoxConstraints constraints) {
+      // Android can briefly lay out the gallery at zero width while the first
+      // window metrics arrive. Its grid slivers require a positive cross axis.
+      if (!constraints.hasBoundedWidth || constraints.maxWidth <= 0) {
+        return const SizedBox.shrink();
+      }
+      final TextTheme type = Theme.of(context).textTheme;
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Text('Native layout', style: type.displaySmall),
+          const SizedBox(height: CbStructure.space2),
+          Text(
+            'Flutter owns axis, constraints, safe areas, and scroll composition. Ceebee supplies the spacing rhythm and Skin.',
+            style: type.bodyLarge,
+          ),
+          const SizedBox(height: CbStructure.space5),
+          _AdaptiveFlow(),
+          const SizedBox(height: CbStructure.space5),
+          _ResponsiveGrid(),
+          const SizedBox(height: CbStructure.space5),
+          const _AdaptiveWorkspaceShell(),
+        ],
+      );
+    },
+  );
 }
 
 class _AdaptiveFlow extends StatelessWidget {
@@ -128,51 +135,64 @@ class _HandoffActions extends StatelessWidget {
 
 class _ResponsiveGrid extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text('Responsive grid', style: Theme.of(context).textTheme.titleLarge),
-      const SizedBox(height: CbStructure.space2),
-      const Text(
-        'A maximum tile extent lets native GridView choose the column count from available content width.',
-      ),
-      const SizedBox(height: CbStructure.space4),
-      GridView.builder(
-        key: galleryResponsiveGridKey,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: CbStructure.space8 * 4,
-          mainAxisExtent: CbStructure.space8 * 3,
-          mainAxisSpacing: CbStructure.space4,
-          crossAxisSpacing: CbStructure.space4,
-        ),
-        itemCount: _gridItems.length,
-        itemBuilder: (BuildContext context, int index) => CbSurface(
-          variant: index == 0
-              ? CbSurfaceVariant.tinted
-              : CbSurfaceVariant.plain,
-          tone: index == 0 ? CbTone.brand : CbTone.neutral,
-          padding: CbPad.md,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Icon(_gridItems[index].icon),
-              const Spacer(),
-              Text(
-                _gridItems[index].title,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: CbStructure.space1),
-              Text(
-                _gridItems[index].detail,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (BuildContext context, BoxConstraints constraints) {
+      // Android can briefly lay out the gallery at zero width while the first
+      // window metrics arrive. SliverGrid rejects that transient constraint,
+      // so defer the grid until it has a real cross axis to divide.
+      if (!constraints.hasBoundedWidth || constraints.maxWidth <= 0) {
+        return const SizedBox.shrink();
+      }
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Responsive grid',
+            style: Theme.of(context).textTheme.titleLarge,
           ),
-        ),
-      ),
-    ],
+          const SizedBox(height: CbStructure.space2),
+          const Text(
+            'A maximum tile extent lets native GridView choose the column count from available content width.',
+          ),
+          const SizedBox(height: CbStructure.space4),
+          GridView.builder(
+            key: galleryResponsiveGridKey,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: CbStructure.space8 * 4,
+              mainAxisExtent: CbStructure.space8 * 3,
+              mainAxisSpacing: CbStructure.space4,
+              crossAxisSpacing: CbStructure.space4,
+            ),
+            itemCount: _gridItems.length,
+            itemBuilder: (BuildContext context, int index) => CbSurface(
+              variant: index == 0
+                  ? CbSurfaceVariant.tinted
+                  : CbSurfaceVariant.plain,
+              tone: index == 0 ? CbTone.brand : CbTone.neutral,
+              padding: CbPad.md,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Icon(_gridItems[index].icon),
+                  const Spacer(),
+                  Text(
+                    _gridItems[index].title,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: CbStructure.space1),
+                  Text(
+                    _gridItems[index].detail,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+    },
   );
 }
 

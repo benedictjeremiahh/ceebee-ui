@@ -26,7 +26,7 @@ void main() {
     await tester.pumpWidget(_gallery());
 
     expect(find.byKey(timelineGalleryKey), findsOneWidget);
-    expect(find.byType(CbTimeline), findsOneWidget);
+    expect(find.byType(CbTimeline), findsNWidgets(2));
     expect(find.byType(CbTimelineSkeleton), findsOneWidget);
     expect(tester.takeException(), isNull);
   });

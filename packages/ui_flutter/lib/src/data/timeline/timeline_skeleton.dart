@@ -36,6 +36,7 @@ class CbTimelineSkeleton extends StatelessWidget {
               _TimelineSkeletonEvent(
                 wide: wide,
                 timestamp: timestamps,
+                first: index == 0,
                 last: index == itemCount - 1,
                 motion: motion,
               ),
@@ -50,12 +51,14 @@ class _TimelineSkeletonEvent extends StatelessWidget {
   const _TimelineSkeletonEvent({
     required this.wide,
     required this.timestamp,
+    required this.first,
     required this.last,
     required this.motion,
   });
 
   final bool wide;
   final bool timestamp;
+  final bool first;
   final bool last;
   final bool motion;
 
@@ -93,7 +96,7 @@ class _TimelineSkeletonEvent extends StatelessWidget {
             ),
             const SizedBox(width: CbStructure.space4),
           ],
-          _TimelineSkeletonRail(last: last, motion: motion),
+          _TimelineSkeletonRail(first: first, last: last, motion: motion),
           SizedBox(width: wide ? CbStructure.space4 : CbStructure.space3),
           Expanded(
             flex: wide ? 5 : 1,
@@ -111,40 +114,60 @@ class _TimelineSkeletonEvent extends StatelessWidget {
 }
 
 class _TimelineSkeletonRail extends StatelessWidget {
-  const _TimelineSkeletonRail({required this.last, required this.motion});
+  const _TimelineSkeletonRail({
+    required this.first,
+    required this.last,
+    required this.motion,
+  });
 
+  final bool first;
   final bool last;
   final bool motion;
 
   @override
-  Widget build(BuildContext context) => SizedBox(
-    width: CbStructure.space5,
-    child: Stack(
-      alignment: AlignmentDirectional.topCenter,
-      children: <Widget>[
-        if (!last)
-          PositionedDirectional(
-            top: CbStructure.space3,
-            bottom: CbStructure.space0,
-            child: ColoredBox(
-              color: context.cb.border.toColor(),
-              child: const SizedBox(width: CbStructure.borderWidth),
+  Widget build(BuildContext context) {
+    const double markerInset = (CbStructure.space5 - CbStructure.space3) / 2;
+    const double markerEnd = markerInset + CbStructure.space3;
+    final Color connectorColor = context.cb.border.toColor();
+
+    return SizedBox(
+      width: CbStructure.space5,
+      child: Stack(
+        alignment: AlignmentDirectional.topCenter,
+        children: <Widget>[
+          if (!first)
+            PositionedDirectional(
+              top: CbStructure.space0,
+              height: markerInset,
+              child: ColoredBox(
+                color: connectorColor,
+                child: const SizedBox(width: CbStructure.borderWidth),
+              ),
             ),
-          ),
-        SizedBox.square(
-          dimension: CbStructure.space5,
-          child: Center(
-            child: SizedBox.square(
-              dimension: CbStructure.space3,
-              child: FittedBox(
-                child: CbSkeleton.circle(size: CbSize.sm, motion: motion),
+          if (!last)
+            PositionedDirectional(
+              top: markerEnd,
+              bottom: CbStructure.space0,
+              child: ColoredBox(
+                color: connectorColor,
+                child: const SizedBox(width: CbStructure.borderWidth),
+              ),
+            ),
+          SizedBox.square(
+            dimension: CbStructure.space5,
+            child: Center(
+              child: SizedBox.square(
+                dimension: CbStructure.space3,
+                child: FittedBox(
+                  child: CbSkeleton.circle(size: CbSize.sm, motion: motion),
+                ),
               ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }
 
 class _TimelineSkeletonContent extends StatelessWidget {

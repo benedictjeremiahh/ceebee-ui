@@ -43,14 +43,22 @@ class _TimelineGalleryState extends State<TimelineGallery> {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
-                TextButton.icon(
+                TextButton(
                   key: timelineCompleteKey,
                   onPressed: () =>
                       setState(() => _reviewComplete = !_reviewComplete),
-                  icon: Icon(
-                    _reviewComplete ? Icons.undo : Icons.task_alt_outlined,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        _reviewComplete ? Icons.undo : Icons.task_alt_outlined,
+                        size: CbStructure.textLg,
+                      ),
+                      const SizedBox(width: CbStructure.space2),
+                      Text(_reviewComplete ? 'Reset' : 'Complete review'),
+                    ],
                   ),
-                  label: Text(_reviewComplete ? 'Reset' : 'Complete review'),
                 ),
               ],
             ),
@@ -91,6 +99,45 @@ class _TimelineGalleryState extends State<TimelineGallery> {
                   timestamp: 'Next',
                   tone: CbTone.neutral,
                   content: Text('The app will notify Ari after settlement.'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(height: CbStructure.space4),
+      CbSurface(
+        variant: CbSurfaceVariant.tinted,
+        tone: CbTone.info,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Text(
+              'Travel itinerary',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: CbStructure.space4),
+            const CbTimeline(
+              items: <CbTimelineItem>[
+                CbTimelineItem(
+                  title: 'Walk to Central Station',
+                  timestamp: '8 min',
+                  marker: Icon(Icons.directions_walk_outlined),
+                  content: Text('Leave by 07:42 to keep the connection.'),
+                ),
+                CbTimelineItem(
+                  title: 'Metro to Riverside',
+                  timestamp: '07:51',
+                  tone: CbTone.info,
+                  marker: Icon(Icons.train_outlined),
+                  content: Text('Platform 2 · transfer at City Hall.'),
+                ),
+                CbTimelineItem(
+                  title: 'Arrive at Riverside',
+                  timestamp: '08:19',
+                  tone: CbTone.success,
+                  marker: Icon(Icons.location_on_outlined),
+                  content: Text('Use the north exit for the shortest walk.'),
                 ),
               ],
             ),

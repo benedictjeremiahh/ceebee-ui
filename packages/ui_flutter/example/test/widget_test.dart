@@ -15,6 +15,23 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  testWidgets('gallery tolerates transient zero-width mobile layout', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: cbThemeData(),
+        home: const Scaffold(
+          body: SingleChildScrollView(
+            child: SizedBox(width: 0, child: NativeLayoutGallery()),
+          ),
+        ),
+      ),
+    );
+
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('gallery switches Skin and transparency preference', (
     WidgetTester tester,
   ) async {

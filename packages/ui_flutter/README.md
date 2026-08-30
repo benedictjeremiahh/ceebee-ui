@@ -119,7 +119,8 @@ CbDescriptions(
 ```
 
 Event histories preserve application order and move timestamps into a separate
-column only when their container has room:
+column only when their container has room. The same read-only contract also
+fits itineraries; applications provide transport-specific markers and copy:
 
 ```dart
 const CbTimeline(

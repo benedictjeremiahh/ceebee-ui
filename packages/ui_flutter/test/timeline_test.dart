@@ -154,6 +154,46 @@ void main() {
       findsNothing,
     );
   });
+
+  testWidgets('Timeline Skeleton connectors stop at marker edges', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: cbThemeData(),
+        home: const Scaffold(
+          body: CbTimelineSkeleton(
+            itemCount: 3,
+            timestamps: true,
+            motion: false,
+          ),
+        ),
+      ),
+    );
+
+    final Finder timeline = find.byType(CbTimelineSkeleton);
+    final List<Rect> markerRects = tester
+        .widgetList<FittedBox>(
+          find.descendant(of: timeline, matching: find.byType(FittedBox)),
+        )
+        .map((FittedBox marker) => tester.getRect(find.byWidget(marker)))
+        .toList();
+    final List<Rect> connectorRects = tester
+        .widgetList<ColoredBox>(
+          find.descendant(of: timeline, matching: find.byType(ColoredBox)),
+        )
+        .map((ColoredBox connector) => tester.getRect(find.byWidget(connector)))
+        .toList();
+
+    expect(markerRects, hasLength(3));
+    expect(connectorRects, hasLength(4));
+    for (final Rect connector in connectorRects) {
+      expect(
+        markerRects.every((Rect marker) => !connector.overlaps(marker)),
+        isTrue,
+      );
+    }
+  });
 }
 
 Widget _responsiveTimeline() => const CbTimeline(
