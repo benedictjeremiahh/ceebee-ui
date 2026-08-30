@@ -84,6 +84,7 @@ replaced the `Field` wiring they shared.
 | Leaderboard (+ `.Skeleton`) | Composition | server | S3 — built |
 | Timeline (+ `.Skeleton`) | Composition | server | S4 — built |
 | StickerGroup (+ `.Skeleton`) | Composition | client | built — controlled removal with settle, peel, and layout motion |
+| PanZoomCanvas (+ `.Skeleton`) | Composition | client | built — pointer, pinch, wheel, and keyboard spatial navigation |
 
 ## nav
 

@@ -1,0 +1,58 @@
+import { PanZoomCanvasDemo } from '../../../components/pan-zoom-canvas-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# PanZoomCanvas <span className="docs__label">Composition</span>
+
+An interactive viewport for spatial content. It owns pan and zoom input, not the meaning or layout
+of the content placed inside it.
+
+## Usage
+
+<PanZoomCanvasDemo />
+
+## Interaction contract
+
+The viewport is one named keyboard region. Arrow keys pan, plus and minus zoom, and `0` or `Home`
+reset the view. Pointer drag pans; two-pointer pinch zooms; Ctrl/Command + wheel zooms. Interactive
+children retain their own focus and activation behavior, so dragging never replaces a node link or
+button.
+
+There is no dismissal, selection, graph layout, or full-screen overlay in this component. Compose it
+inside `Drawer` or `Modal` when a Product needs a full-screen mobile canvas. Reduced motion removes
+transform transitions while preserving every direct pan and zoom result.
+
+<Guidance
+  do="Use it when spatial position is meaningful and readers need to inspect beyond the initial frame."
+  dont="Use it as a substitute for a linear list, or put product-specific graph semantics into the canvas."
+/>
+
+## Loading
+
+`PanZoomCanvas.Skeleton` preserves the viewport and toolbar geometry while spatial content loads.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'label', type: 'string', description: 'Accessible name for the keyboard-operable viewport.' },
+  { name: 'children', type: 'ReactNode', description: 'Spatial content whose layout and semantics stay with the caller.' },
+  { name: 'hint', type: 'string', description: 'Optional visible gesture and keyboard guidance.' },
+  { name: 'zoomInLabel', type: 'string', default: 'Zoom in', description: 'Localised name for the zoom-in control.' },
+  { name: 'zoomOutLabel', type: 'string', default: 'Zoom out', description: 'Localised name for the zoom-out control.' },
+  { name: 'resetLabel', type: 'string', default: 'Reset canvas', description: 'Localised name for the reset control.' },
+  { name: 'zoomStatusLabel', type: 'string', default: 'Canvas zoom', description: 'Localised name for the current zoom output.' },
+  { name: 'motion', type: 'boolean', default: 'true', description: 'Disables transform transitions without disabling direct manipulation.' },
+]}/>
+
+## Keyboard
+
+| Key | Result |
+| --- | --- |
+| Arrow keys | Pan one tokenized step |
+| `+` / `=` | Zoom in |
+| `-` | Zoom out |
+| `0` / `Home` | Reset pan and zoom |
+
+## Tokens
+
+`--cb-bg-subtle`, `--cb-surface`, `--cb-border`, `--cb-fg-*`, `--cb-space-*`,
+`--cb-radius-*`, `--cb-control-height-*`, `--cb-focus-*`, `--cb-duration-*`, and `--cb-ease-*`.

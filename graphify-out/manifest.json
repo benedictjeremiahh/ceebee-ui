@@ -468,9 +468,9 @@
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
-    "mtime": 1788065083.8274467,
-    "seen": 1788082586.742403,
-    "ast_hash": "a974bfe2fddd813ca6eb5147830fb7b2",
+    "mtime": 1788104732.195105,
+    "seen": 1788104774.358782,
+    "ast_hash": "7e86cd3a5545920de3c68c4665803b47",
     "semantic_hash": ""
   },
   ".github/workflows/release.yml": {
@@ -8274,9 +8274,9 @@
     "semantic_hash": ""
   },
   "packages/ui_flutter/example/pubspec.yaml": {
-    "mtime": 1788104267.146908,
-    "seen": 1788104344.727906,
-    "ast_hash": "ad550f11a9c51cc2197f87b21377696a",
+    "mtime": 1788104667.725094,
+    "seen": 1788104774.358838,
+    "ast_hash": "05b7af02697050b3b2fe88a14d1a1394",
     "semantic_hash": ""
   },
   "packages/ui_flutter/example/web/index.html": {
@@ -8304,9 +8304,9 @@
     "semantic_hash": ""
   },
   "packages/ui_flutter/pubspec.yaml": {
-    "mtime": 1788065083.864623,
-    "seen": 1788082586.742453,
-    "ast_hash": "3bff2bd31990985b680b332b35385fa8",
+    "mtime": 1788104667.7246957,
+    "seen": 1788104774.3588412,
+    "ast_hash": "03130e738e93115acad09758d8261baa",
     "semantic_hash": ""
   },
   "packages/ui_flutter/example/android/app/src/main/res/mipmap-hdpi/ic_launcher.png": {

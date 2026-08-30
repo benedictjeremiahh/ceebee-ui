@@ -1761,6 +1761,21 @@
         "motion",
         "lucide-react"
       ]
+    },
+    "PanZoomCanvas": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/pan-zoom-canvas/pan-zoom-canvas.tsx",
+        "packages/ui/src/data/pan-zoom-canvas/pan-zoom-canvas.skeleton.tsx",
+        "packages/ui/src/data/pan-zoom-canvas/pan-zoom-canvas.css"
+      ],
+      "demoPath": "docs/app/data-display/pan-zoom-canvas",
+      "interactionContract": "named spatial viewport with pointer drag, two-pointer pinch, modified-wheel and keyboard pan/zoom; no selection or dismissal",
+      "substrate": [
+        "react",
+        "antd",
+        "lucide-react"
+      ]
     }
   }
 }

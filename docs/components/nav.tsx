@@ -122,6 +122,7 @@ const GROUPS: Group[] = [
       { href: '/data-display/image', label: 'Image' },
       { href: '/data-display/list', label: 'List' },
       { href: '/data-display/listy', label: 'Listy' },
+      { href: '/data-display/pan-zoom-canvas', label: 'PanZoomCanvas' },
       { href: '/data-display/popover', label: 'Popover' },
       { href: '/data-display/qr-code', label: 'QRCode' },
       { href: '/data-display/segmented', label: 'Segmented' },

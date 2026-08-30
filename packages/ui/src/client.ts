@@ -49,3 +49,5 @@ export type { RevealProps, StaggerProps } from './motion/reveal.js';
 
 export { StickerGroup } from './data/sticker-group/index.js';
 export type { StickerGroupProps, StickerGroupSkeletonProps, StickerItem } from './data/sticker-group/index.js';
+export { PanZoomCanvas } from './data/pan-zoom-canvas/index.js';
+export type { PanZoomCanvasProps, PanZoomCanvasSkeletonProps } from './data/pan-zoom-canvas/index.js';
