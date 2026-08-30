@@ -13,4 +13,5 @@ test-results/
 packages/ui_flutter/.dart_tool/
 packages/ui_flutter/build/
 packages/ui_flutter/pubspec.lock
+packages/ui_flutter/test/failures/
 packages/ui_flutter/example/test/failures/
