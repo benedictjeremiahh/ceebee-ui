@@ -5,6 +5,9 @@ import { describe, expect, it } from 'vitest';
 const SRC = join(process.cwd(), 'packages/ui/src');
 const prepaint = readFileSync(join(SRC, 'theme/ant-prepaint.css'), 'utf8');
 
+/** Prose in a comment can read like a declaration, so every scan works on the stripped source. */
+const declarations = prepaint.replace(/\/\*[\s\S]*?\*\//g, '');
+
 const declaredTokens = new Set(
   readdirSync(join(SRC, 'tokens'))
     .filter((name) => name.endsWith('.css'))
@@ -16,8 +19,7 @@ const declaredTokens = new Set(
    own rule wins the moment it arrives. A selector that escapes `:where()` would keep winning and
    silently reskin Ant instead of standing in for it. */
 function selectors() {
-  return prepaint
-    .replace(/\/\*[\s\S]*?\*\//g, '')
+  return declarations
     .split('}')
     .map((block) => block.split('{')[0]!.trim())
     .filter(Boolean);
@@ -64,7 +66,7 @@ describe('the Ant pre-paint fallback', () => {
   });
 
   it('reads only declared Ceebee tokens', () => {
-    const used = [...prepaint.matchAll(/var\((--cb-[\w-]+)\)/g)].map((match) => match[1]!);
+    const used = [...declarations.matchAll(/var\((--cb-[\w-]+)\)/g)].map((match) => match[1]!);
     expect(used.length).toBeGreaterThan(0);
 
     const undeclared = [...new Set(used)].filter((name) => !declaredTokens.has(name));
@@ -76,7 +78,7 @@ describe('the Ant pre-paint fallback', () => {
        constraints Ant does not set — it sets `height` and `width` — so a value here survived every
        Ant rule and permanently changed the control's geometry. That shipped once: it widened the
        icon-only buttons in a consumer's header until the brand overlapped them at 360px. */
-    const properties = [...prepaint.matchAll(/^\s*([\w-]+)\s*:/gm)].map((match) => match[1]!);
+    const properties = [...declarations.matchAll(/^\s*([\w-]+)\s*:/gm)].map((match) => match[1]!);
     const constraints = properties.filter((name) => /^(min|max)-/.test(name));
 
     expect(constraints, `constraint properties: ${constraints.join(', ')}`).toEqual([]);
@@ -85,7 +87,7 @@ describe('the Ant pre-paint fallback', () => {
   it('states no raw colour, radius, or control size', () => {
     /* AGENTS rule 1. `100%`, `1`, `none`, `auto`, and `transparent` carry no brand decision; a hex,
        an oklch(), or a pixel length would. */
-    const values = [...prepaint.matchAll(/^\s*[\w-]+:\s*([^;]+);/gm)].map((match) => match[1]!.trim());
+    const values = [...declarations.matchAll(/^\s*[\w-]+:\s*([^;]+);/gm)].map((match) => match[1]!.trim());
     const raw = values.filter((value) => /#[0-9a-f]{3,8}\b|oklch\(|rgba?\(|\d+px|\d*\.?\d+rem/i.test(value));
 
     expect(raw, `raw values: ${raw.join(' | ')}`).toEqual([]);

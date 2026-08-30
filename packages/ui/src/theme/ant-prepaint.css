@@ -13,13 +13,21 @@
    the ones Ant already puts in the server-rendered markup, including its variant and size classes,
    so a first paint can respect them. */
 
+/* Sizes below are Ant's own derived values, read out of a rendered control and then expressed in
+   Tokens rather than guessed: Ant lands on a spacing Token less its own border width, so
+   `space-4 - border-width` is 15px and `space-3 - border-width` is 11px. Where a variant's geometry
+   has not been measured that way, this layer states no size for it — a wrong size flickers as badly
+   as no size, and pretends to be right. */
+
 :where(.ant-btn) {
+  box-sizing: border-box;
   display: inline-flex;
   height: var(--cb-control-height-md);
   align-items: center;
   justify-content: center;
   gap: var(--cb-space-2);
-  padding-inline: var(--cb-space-4);
+  padding-block: var(--cb-space-0);
+  padding-inline: calc(var(--cb-space-4) - var(--cb-border-width));
   border: var(--cb-border-width) solid var(--cb-border-strong);
   border-radius: var(--cb-radius-sm);
   background: var(--cb-surface);
@@ -28,20 +36,21 @@
   font-size: var(--cb-text-sm);
 }
 
+/* Height and type scale come straight from the Tokens the bridge already hands Ant, so they agree.
+   The inline padding of these two sizes has not been measured, so it is left to Ant. */
 :where(.ant-btn-sm) {
   height: var(--cb-control-height-sm);
-  padding-inline: var(--cb-space-3);
   font-size: var(--cb-text-xs);
 }
 
 :where(.ant-btn-lg) {
   height: var(--cb-control-height-lg);
-  padding-inline: var(--cb-space-5);
   font-size: var(--cb-text-md);
 }
 
 :where(.ant-btn-icon-only) {
-  padding-inline: var(--cb-space-2);
+  width: var(--cb-control-height-md);
+  padding-inline: var(--cb-space-0);
 }
 
 :where(.ant-btn-block) {
@@ -61,7 +70,15 @@
   color: var(--cb-fg-on-brand);
 }
 
-:where(.ant-input, .ant-input-affix-wrapper, .ant-select .ant-select-selector) {
+/* The framed text controls. `.ant-select` carries its own box in this runtime — the inner element is
+   `.ant-select-content`, not a selector class this layer needs to name. */
+:where(.ant-input, .ant-input-affix-wrapper, .ant-select) {
+  box-sizing: border-box;
+  display: flex;
+  height: var(--cb-control-height-md);
+  align-items: center;
+  padding-block: var(--cb-space-2);
+  padding-inline: calc(var(--cb-space-3) - var(--cb-border-width));
   border: var(--cb-border-width) solid var(--cb-border-strong);
   border-radius: var(--cb-radius-sm);
   background: var(--cb-surface);
@@ -70,10 +87,57 @@
   font-size: var(--cb-text-sm);
 }
 
-/* An input inside an affix wrapper is already framed by the wrapper. */
+:where(.ant-input-lg, .ant-input-affix-wrapper-lg, .ant-select-lg) {
+  height: var(--cb-control-height-lg);
+  padding-block: calc(var(--cb-space-3) - var(--cb-border-width));
+  border-radius: var(--cb-radius-md);
+  font-size: var(--cb-text-md);
+}
+
+:where(.ant-input-sm, .ant-input-affix-wrapper-sm, .ant-select-sm) {
+  height: var(--cb-control-height-sm);
+  font-size: var(--cb-text-xs);
+}
+
+/* An input inside an affix wrapper is framed by the wrapper, so it states no box of its own. */
 :where(.ant-input-affix-wrapper .ant-input) {
+  width: 100%;
+  height: auto;
+  padding: var(--cb-space-0);
   border: none;
+  border-radius: var(--cb-radius-none);
   background: transparent;
+  font-size: inherit;
+  line-height: var(--cb-leading-normal);
+}
+
+/* The prefix sets the text's starting position, so leaving its spacing out moved the placeholder
+   sideways when Ant landed. Measured: Ant states `margin-inline-end` here, and its value is one
+   space step, mirrored on the suffix, which Ant spaces the same way. */
+:where(.ant-input-prefix, .ant-input-suffix) {
+  display: flex;
+  flex: none;
+  align-items: center;
+}
+
+:where(.ant-input-prefix) {
+  margin-inline-end: var(--cb-space-1);
+}
+
+:where(.ant-input-suffix) {
+  margin-inline-start: var(--cb-space-1);
+}
+
+/* `allowClear` renders its clear control on an empty field and hides it from JavaScript-built CSS.
+   Without that rule a stray clear icon is painted in every input until hydration, so the hidden
+   state is stated here too. */
+:where(.ant-input-clear-icon) {
+  font-size: var(--cb-text-xs);
+  color: var(--cb-fg-subtle);
+}
+
+:where(.ant-input-clear-icon-hidden) {
+  visibility: hidden;
 }
 
 /* A pseudo-element cannot live inside `:where()` — the rule would be dropped — so it sits outside
