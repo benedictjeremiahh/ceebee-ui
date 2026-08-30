@@ -1,0 +1,114 @@
+/* Ant builds its stylesheet in JavaScript, so a server-rendered document carries Ant's class names
+   and none of the rules behind them. Until hydration its controls paint with the browser's native
+   appearance: a square grey button on a Ceebee surface, in both colour modes.
+
+   Extracting Ant's rules on the server does not fix this. Ant derives its seed from live CSS Tokens,
+   which a server cannot read, so extracted rules carry Ant's default light palette and a dark reader
+   gets a white control instead of a tonally correct one — measured, and worse than the native
+   appearance, which at least follows `color-scheme`.
+
+   These declarations give Ant's primitives a token-correct first paint instead. Every selector is
+   wrapped in `:where()`, which contributes no specificity, so each real Ant rule wins the instant it
+   arrives and nothing here competes with the runtime that owns these components. The class names are
+   the ones Ant already puts in the server-rendered markup, including its variant and size classes,
+   so a first paint can respect them. */
+
+:where(.ant-btn) {
+  display: inline-flex;
+  min-height: var(--cb-control-height-md);
+  align-items: center;
+  justify-content: center;
+  gap: var(--cb-space-2);
+  padding-inline: var(--cb-space-4);
+  border: var(--cb-border-width) solid var(--cb-border-strong);
+  border-radius: var(--cb-radius-sm);
+  background: var(--cb-surface);
+  color: var(--cb-fg);
+  font-family: var(--cb-font-sans);
+  font-size: var(--cb-text-sm);
+}
+
+:where(.ant-btn-sm) {
+  min-height: var(--cb-control-height-sm);
+  padding-inline: var(--cb-space-3);
+  font-size: var(--cb-text-xs);
+}
+
+:where(.ant-btn-lg) {
+  min-height: var(--cb-control-height-lg);
+  padding-inline: var(--cb-space-5);
+  font-size: var(--cb-text-md);
+}
+
+:where(.ant-btn-icon-only) {
+  min-width: var(--cb-control-height-md);
+  padding-inline: var(--cb-space-0);
+}
+
+:where(.ant-btn-block) {
+  width: 100%;
+}
+
+/* A text or link button carries no chrome of its own, so borrowing the surface would make one look
+   like an outlined button for as long as the first paint lasts. */
+:where(.ant-btn-variant-text, .ant-btn-variant-link) {
+  border-color: transparent;
+  background: transparent;
+}
+
+:where(.ant-btn-variant-solid) {
+  border-color: transparent;
+  background: var(--cb-tone-brand);
+  color: var(--cb-fg-on-brand);
+}
+
+:where(.ant-input, .ant-input-affix-wrapper, .ant-select .ant-select-selector) {
+  display: flex;
+  min-height: var(--cb-control-height-md);
+  align-items: center;
+  gap: var(--cb-space-2);
+  padding-inline: var(--cb-space-3);
+  border: var(--cb-border-width) solid var(--cb-border-strong);
+  border-radius: var(--cb-radius-sm);
+  background: var(--cb-surface);
+  color: var(--cb-fg);
+  font-family: var(--cb-font-sans);
+  font-size: var(--cb-text-sm);
+}
+
+/* An input inside an affix wrapper is already framed by the wrapper. */
+:where(.ant-input-affix-wrapper .ant-input) {
+  min-height: auto;
+  padding-inline: var(--cb-space-0);
+  border: none;
+  background: transparent;
+}
+
+/* A pseudo-element cannot live inside `:where()` — the rule would be dropped — so it sits outside
+   it and carries only its own element-level weight, which Ant's `.ant-input::placeholder` outranks. */
+:where(.ant-input)::placeholder,
+:where(.ant-select-placeholder) {
+  color: var(--cb-fg-muted);
+}
+
+:where(.ant-segmented) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cb-space-1);
+  padding: var(--cb-space-1);
+  border-radius: var(--cb-radius-sm);
+  background: var(--cb-bg-subtle);
+  font-family: var(--cb-font-sans);
+  font-size: var(--cb-text-xs);
+}
+
+:where(.ant-segmented-item) {
+  padding-inline: var(--cb-space-3);
+  border-radius: var(--cb-radius-sm);
+  color: var(--cb-fg-muted);
+}
+
+:where(.ant-segmented-item-selected) {
+  background: var(--cb-surface);
+  color: var(--cb-fg);
+}
