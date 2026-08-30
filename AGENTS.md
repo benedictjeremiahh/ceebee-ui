@@ -39,6 +39,13 @@ without invention, and so nothing has to be re-litigated per component. The voca
     documented order. A portalled overlay assigns its rung to the positioning root that creates the
     stacking context through the selected substrate's documented API. Raw `z-index` is allowed only
     for local children inside one component's stacking context.
+12. **Protect the consumer boundary.** Every CeeBee web product consumes the versioned package,
+    reuses a matching Composition before primitives, and reaches interaction runtimes only through
+    `@ceebee/ui`. Run `pnpm check:consumers` when this public surface or its consumer contract changes.
+13. **Keep inspectable media inspectable.** Screenshots and gallery media that users are expected to
+    inspect open a viewport-sized preview through `Image` preview or `Image.PreviewGroup`. Consumers
+    must preserve the shared pointer, keyboard, dismissal, focus, zoom, navigation, and mobile contract
+    rather than implementing a product-local lightbox.
 
 ## Component-boundary check
 
