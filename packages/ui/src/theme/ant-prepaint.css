@@ -147,15 +147,23 @@
   color: var(--cb-fg-muted);
 }
 
+/* Segmented is measured at a 6px radius and 2px of inline padding, and no Token carries either
+   value — Ant derives them through its own algorithm from tokens the bridge does not feed. So this
+   states no size or radius for it, only the axis it lays out on, which it otherwise loses entirely
+   and stacks vertically, and the colours, which are Tokens. */
 :where(.ant-segmented) {
-  border-radius: var(--cb-radius-sm);
   background: var(--cb-bg-subtle);
   font-family: var(--cb-font-sans);
-  font-size: var(--cb-text-xs);
+  font-size: var(--cb-text-sm);
+}
+
+/* The options are laid out by an inner group, not by the root, so without this the control paints
+   as a vertical stack of labels. */
+:where(.ant-segmented-group) {
+  display: flex;
 }
 
 :where(.ant-segmented-item) {
-  border-radius: var(--cb-radius-sm);
   color: var(--cb-fg-muted);
 }
 
