@@ -16,7 +16,13 @@ const SKIN_LINK_ID = 'cb-skin';
  * interaction, accessibility, and derived tokens; Ceebee owns the active Skin and colour mode.
  */
 export function ThemeBridge({ children, mode, theme }: ThemeBridgeProps) {
-  const [skinToken, setSkinToken] = useState<CeebeeTheme>({ token: {}, components: {} });
+  /* Reading the tokens in an effect leaves the first client paint to Ant's own defaults, so a
+     themed page flashes Ant grey before the Skin arrives. The document already carries the tokens
+     by the time this component renders in the browser, so read them then; the effect below still
+     owns every later Skin or mode change. */
+  const [skinToken, setSkinToken] = useState<CeebeeTheme>(() => (typeof document === 'undefined'
+    ? { token: {}, components: {} }
+    : readCeebeeThemeToken(document.documentElement)));
 
   const refresh = useCallback(() => {
     setSkinToken(readCeebeeThemeToken(document.documentElement));
