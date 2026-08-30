@@ -57,6 +57,19 @@
 }
 .cb-palette__input::placeholder { color: var(--cb-fg-subtle); }
 
+/* The `outline: none` above states the intent, but a consumer's global `:focus-visible` reset
+   matches this input at the same weight and, imported after this stylesheet, wins on order — which
+   draws a hard box around a deliberately borderless field. Restating it against `:focus-visible`
+   settles it by weight instead. Focus stays visible: the search row takes the brand colour, and the
+   active command is highlighted the moment the palette opens. */
+.cb-palette__input:focus-visible {
+  outline: none;
+}
+
+.cb-palette__search:focus-within {
+  border-bottom-color: var(--cb-tone-brand);
+}
+
 .cb-palette__list { overflow-y: auto; padding: var(--cb-space-2); }
 .cb-palette__group + .cb-palette__group { margin-top: var(--cb-space-2); }
 .cb-palette__group-label {
