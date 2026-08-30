@@ -78,3 +78,10 @@ if it has one.
 - `asChild` — render-prop style composition where Base UI offers it; do not invent a second mechanism
 - Never a `className` escape hatch used to smuggle in raw values; if a consumer needs a change, the
   Token or the variant is the place to make it.
+
+## CeeBee estate graph
+
+- The cross-product knowledge graph lives at `/Users/benejeremiah/Documents/Projects/ceebee-graph`. Read its `AGENTS.md` and `ESTATE.md` before changing authentication, deployment, shared data, VPS services, or another cross-product contract.
+- Use `graphify query "…" --graph /Users/benejeremiah/Documents/Projects/ceebee-graph/graph.json` to locate cross-repository code paths. Treat it as navigation evidence; verify the returned source before editing.
+- After product code or product documentation work is complete and its own checks pass, run `/Users/benejeremiah/Documents/Projects/ceebee-graph/refresh.sh`, then `/Users/benejeremiah/Documents/Projects/ceebee-graph/check.sh`.
+- Report generated changes in both `ceebee-graph` and `ceebee-home/public/`. Do not publish or deploy them unless the user requested that separate action.
