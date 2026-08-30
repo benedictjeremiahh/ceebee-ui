@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 1.3.0
+
+### Minor Changes
+
+- 6cde75f: Add `--cb-fg-link` for brand-coloured text on a surface, and send Ant a placeholder colour. Ant derived its own 25%-alpha placeholder grey, which failed WCAG AA text contrast in both modes.
+
 ## 1.2.0
 
 ### Minor Changes
