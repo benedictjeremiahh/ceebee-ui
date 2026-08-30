@@ -80,6 +80,14 @@ const SCHEMA = {
   '--cb-shadow-md': { kind: 'shadow', field: 'shadowMd' },
   '--cb-shadow-lg': { kind: 'shadow', field: 'shadowLg' },
 
+  '--cb-paper-bg': { kind: 'color', field: 'paperBg' },
+  '--cb-paper-bg-warm': { kind: 'color', field: 'paperBgWarm' },
+  '--cb-paper-border': { kind: 'color', field: 'paperBorder' },
+  '--cb-paper-fg': { kind: 'color', field: 'paperFg' },
+  '--cb-paper-tape': { kind: 'color', field: 'paperTape' },
+  '--cb-paper-shadow': { kind: 'shadow', field: 'paperShadow' },
+  '--cb-sticker-shadow': { kind: 'shadow', field: 'stickerShadow' },
+
   '--cb-glass-bg': { kind: 'color', field: 'glassBg' },
   '--cb-glass-bg-opaque': { kind: 'color', field: 'glassBgOpaque' },
   '--cb-glass-border': { kind: 'color', field: 'glassBorder' },
@@ -301,9 +309,12 @@ function num(text) {
 }
 
 function parseLength(value, where) {
-  const match = /^(-?[\d.]+)px$/.exec(value.trim());
-  if (!match) throw new Error(`Expected a px length at ${where}: ${value}`);
-  return num(match[1]);
+  const raw = value.trim();
+  const px = /^(-?[\d.]+)px$/.exec(raw);
+  if (px) return num(px[1]);
+  const rem = /^(-?[\d.]+)rem$/.exec(raw);
+  if (rem) return num(String(Number(rem[1]) * REM));
+  throw new Error(`Expected a px or rem length at ${where}: ${value}`);
 }
 
 function parseAngle(value, where) {
@@ -383,14 +394,15 @@ function emitValue(name, value, where) {
 
 /* ---------------------------------------------------------------- emission */
 
-function buildVariant(rules, condition, where) {
+function buildVariant(rules, condition, where, sharedTokens) {
   const tokens = resolveTokens(rules, condition);
+  const resolvedTokens = new Map([...sharedTokens, ...tokens]);
   const fields = new Map();
   for (const [name, raw] of tokens) {
     const entry = SCHEMA[name];
     if (!entry) throw new Error(`Token ${name} has no Flutter mapping (${where}). Add it to SCHEMA.`);
     if (entry.kind === 'skip') continue;
-    fields.set(entry.field, emitValue(name, deref(raw, tokens), `${where}/${name}`));
+    fields.set(entry.field, emitValue(name, deref(raw, resolvedTokens), `${where}/${name}`));
   }
 
   const missing = Object.values(SCHEMA).filter((e) => e.kind !== 'skip' && !fields.has(e.field));
@@ -406,8 +418,14 @@ function dartName(skin, brightness, contrast) {
 function emit() {
   const baseCss = readFileSync(resolve(root, BASE), 'utf8');
   const baseRules = readRules(baseCss, BASE);
+  const structureCss = readFileSync(resolve(root, 'packages/ui/src/tokens/structure.css'), 'utf8');
+  const structureTokens = resolveTokens(
+    readRules(structureCss, 'packages/ui/src/tokens/structure.css'),
+    { brightness: 'light', contrast: 'normal' },
+  );
   const hash = createHash('sha256');
   hash.update(baseCss);
+  hash.update(structureCss);
 
   const variants = [];
   const registry = [];
@@ -423,7 +441,7 @@ function emit() {
     for (const brightness of ['light', 'dark']) {
       for (const contrast of ['normal', 'more']) {
         const where = `${skin.name}/${brightness}/${contrast}`;
-        const fields = buildVariant(rules, { brightness, contrast }, where);
+        const fields = buildVariant(rules, { brightness, contrast }, where, structureTokens);
         const name = dartName(skin.name, brightness, contrast);
         variants.push({ name, fields, doc: `${skin.doc} (${brightness}${contrast === 'more' ? ', high contrast' : ''})` });
         entries.push({ brightness, contrast, name });
@@ -517,6 +535,10 @@ const STRUCTURE_SCHEMA = {
   '--cb-radius-xl': { kind: 'rem', field: 'radiusXl' },
   '--cb-radius-full': { kind: 'rem', field: 'radiusFull' },
 
+  '--cb-tilt-left': { kind: 'degree', field: 'tiltLeft' },
+  '--cb-tilt-none': { kind: 'degree', field: 'tiltNone' },
+  '--cb-tilt-right': { kind: 'degree', field: 'tiltRight' },
+
   '--cb-text-xs': { kind: 'rem', field: 'textXs' },
   '--cb-text-sm': { kind: 'rem', field: 'textSm' },
   '--cb-text-md': { kind: 'rem', field: 'textMd' },
@@ -535,6 +557,12 @@ const STRUCTURE_SCHEMA = {
   '--cb-control-height-sm': { kind: 'rem', field: 'controlHeightSm' },
   '--cb-control-height-md': { kind: 'rem', field: 'controlHeightMd' },
   '--cb-control-height-lg': { kind: 'rem', field: 'controlHeightLg' },
+
+  '--cb-sticker-enter-y': { kind: 'rem', field: 'stickerEnterY' },
+  '--cb-sticker-exit-x': { kind: 'rem', field: 'stickerExitX' },
+  '--cb-sticker-enter-scale': { kind: 'number', field: 'stickerEnterScale' },
+  '--cb-sticker-exit-scale': { kind: 'number', field: 'stickerExitScale' },
+  '--cb-sticker-exit-rotate': { kind: 'degree', field: 'stickerExitRotate' },
 
   '--cb-border-width': { kind: 'rem', field: 'borderWidth' },
   '--cb-focus-width': { kind: 'rem', field: 'focusWidth' },
@@ -662,6 +690,11 @@ function emitFlatValue(kind, value, where) {
   switch (kind) {
     case 'rem': return num(String(remToPx(value, where)));
     case 'number': return num(value);
+    case 'degree': {
+      const match = /^(-?[\d.]+)deg$/.exec(value);
+      if (!match) throw new Error(`Expected a degree value at ${where}: ${value}`);
+      return num(match[1]);
+    }
     case 'int': {
       if (!/^-?\d+$/.test(value)) throw new Error(`Expected an integer at ${where}: ${value}`);
       return value;

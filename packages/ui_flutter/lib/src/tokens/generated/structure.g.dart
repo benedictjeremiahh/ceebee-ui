@@ -23,6 +23,9 @@ abstract final class CbStructure {
   static const double radiusLg = 20.0;
   static const double radiusXl = 28.0;
   static const double radiusFull = 999.0;
+  static const double tiltLeft = -1.5;
+  static const double tiltNone = 0.0;
+  static const double tiltRight = 1.5;
   static const double textXs = 12.0;
   static const double textSm = 14.0;
   static const double textMd = 16.0;
@@ -38,6 +41,11 @@ abstract final class CbStructure {
   static const double controlHeightSm = 32.0;
   static const double controlHeightMd = 40.0;
   static const double controlHeightLg = 48.0;
+  static const double stickerEnterY = 12.0;
+  static const double stickerExitX = 32.0;
+  static const double stickerEnterScale = 0.94;
+  static const double stickerExitScale = 0.9;
+  static const double stickerExitRotate = 8.0;
   static const double borderWidth = 1.0;
   static const double focusWidth = 2.0;
   static const double focusOffset = 2.0;

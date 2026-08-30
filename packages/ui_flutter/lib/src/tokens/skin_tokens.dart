@@ -67,6 +67,13 @@ class CbSkinTokens {
     required this.shadowSm,
     required this.shadowMd,
     required this.shadowLg,
+    required this.paperBg,
+    required this.paperBgWarm,
+    required this.paperBorder,
+    required this.paperFg,
+    required this.paperTape,
+    required this.paperShadow,
+    required this.stickerShadow,
     required this.glassBg,
     required this.glassBgOpaque,
     required this.glassBorder,
@@ -132,6 +139,14 @@ class CbSkinTokens {
   final List<CbShadow> shadowSm;
   final List<CbShadow> shadowMd;
   final List<CbShadow> shadowLg;
+
+  final CbOklch paperBg;
+  final CbOklch paperBgWarm;
+  final CbOklch paperBorder;
+  final CbOklch paperFg;
+  final CbOklch paperTape;
+  final List<CbShadow> paperShadow;
+  final List<CbShadow> stickerShadow;
 
   final CbOklch glassBg;
 
