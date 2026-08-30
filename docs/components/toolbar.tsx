@@ -5,6 +5,7 @@ import { Button, Select, useTheme } from '@ceebee/ui/client';
 import { useEffect, useState } from 'react';
 
 const SKINS = ['default', 'astra', 'clarity', 'moodboard'] as const;
+const FLUTTER_DOCS_URL = 'https://ui-flutter.ceebee.biz.id';
 type Skin = (typeof SKINS)[number];
 const SKIN_LABELS: Record<Skin, string> = {
   default: 'Default skin',
@@ -17,7 +18,6 @@ const SKIN_LABELS: Record<Skin, string> = {
 export function Toolbar() {
   const { choice, setChoice, resolved } = useTheme();
   const [skin, setSkin] = useState<Skin>('default');
-  const flutterDocsUrl = process.env.NEXT_PUBLIC_CEEBEE_FLUTTER_DOCS_URL;
 
   useEffect(() => {
     const id = 'cb-skin';
@@ -32,18 +32,16 @@ export function Toolbar() {
 
   return (
     <div className="docs__toolbar">
-      {flutterDocsUrl ? (
-        <Button
-          type="text"
-          size="small"
-          href={flutterDocsUrl}
-          target="_blank"
-          rel="noreferrer"
-          icon={<ExternalLink size={16} />}
-        >
-          Flutter docs
-        </Button>
-      ) : null}
+      <Button
+        type="text"
+        size="small"
+        href={FLUTTER_DOCS_URL}
+        target="_blank"
+        rel="noreferrer"
+        icon={<ExternalLink size={16} />}
+      >
+        Flutter docs
+      </Button>
       <Select<Skin>
         aria-label="Preview skin"
         className="docs__skin-select"

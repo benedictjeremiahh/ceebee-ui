@@ -5,6 +5,11 @@ accessibility, motion, and geometry; Ceebee supplies generated cross-platform
 Tokens, Skins, Surface materials, compact data visualizations, and mobile
 onboarding compositions.
 
+- [Interactive component gallery](https://ui-flutter.ceebee.biz.id)
+- [API documentation](https://pub.dev/documentation/ceebee_ui/latest/)
+- [Package on pub.dev](https://pub.dev/packages/ceebee_ui)
+- [Web component documentation](https://ui.ceebee.biz.id)
+
 ## Install
 
 Add the prerelease from pub.dev:

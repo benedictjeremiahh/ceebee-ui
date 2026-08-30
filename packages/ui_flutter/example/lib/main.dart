@@ -30,7 +30,10 @@ import 'input_number_gallery.dart';
 import 'color_picker_gallery.dart';
 import 'upload_gallery.dart';
 
-const String _webDocsUrl = String.fromEnvironment('CEEBEE_WEB_DOCS_URL');
+const String _webDocsUrl = String.fromEnvironment(
+  'CEEBEE_WEB_DOCS_URL',
+  defaultValue: 'https://ui.ceebee.biz.id',
+);
 const Key galleryNavigationDrawerKey = Key('gallery-navigation-drawer');
 
 void main() => runApp(const CeebeeDocsApp());

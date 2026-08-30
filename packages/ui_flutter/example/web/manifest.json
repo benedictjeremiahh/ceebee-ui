@@ -1,11 +1,11 @@
 {
-    "name": "ceebee_ui_example",
-    "short_name": "ceebee_ui_example",
+    "name": "Ceebee UI for Flutter",
+    "short_name": "Ceebee UI",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Interactive Flutter component gallery for Ceebee UI.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
