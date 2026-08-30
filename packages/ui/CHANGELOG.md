@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 1.2.0
+
+### Minor Changes
+
+- c40e26f: Add PanZoomCanvas with pointer, pinch, wheel, keyboard, reduced-motion, and skeleton contracts.
+
 ## 1.1.1
 
 ### Patch Changes
