@@ -7,6 +7,12 @@
 - e99f451: Add the Moodboard Skin, the taped-paper Surface variant, and the controlled StickerGroup
   composition with settle-in, peel-away, reduced-motion, and matching Skeleton states.
 
+## 1.0.2
+
+### Patch Changes
+
+- Add cross-platform token sources and strengthen accessibility token cascading for the Flutter package bridge.
+
 ## 1.0.1
 
 ### Patch Changes
