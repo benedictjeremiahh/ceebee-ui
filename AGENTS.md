@@ -85,3 +85,15 @@ if it has one.
 - Use `graphify query "…" --graph /Users/benejeremiah/Documents/Projects/ceebee-graph/graph.json` to locate cross-repository code paths. Treat it as navigation evidence; verify the returned source before editing.
 - After product code or product documentation work is complete and its own checks pass, run `/Users/benejeremiah/Documents/Projects/ceebee-graph/refresh.sh`, then `/Users/benejeremiah/Documents/Projects/ceebee-graph/check.sh`.
 - Report generated changes in both `ceebee-graph` and `ceebee-home/public/`. Do not publish or deploy them unless the user requested that separate action.
+
+## CeeBee product lifecycle
+
+- The canonical idea-to-release workflow lives at `/Users/benejeremiah/Documents/Projects/ceebee-ideas/docs/knowledge/release-lifecycle.md`. For work backed by a Product Idea, read it and the matching Idea Brief before starting, resuming, parking, or preparing a first or materially changed release.
+- Idea Status is independent from release and monitoring state. A private alpha may be released while its Idea remains `in-development`; a `parked` Idea requires an explicit product decision before implementation resumes.
+- After a successful first or material release, keep the durable release record here, then update the Idea Brief's Outcome with the date, release kind, and a link or stable path. Do not duplicate the implementation changelog in `ceebee-ideas`.
+
+## CeeBee release monitoring
+
+- The canonical release-to-monitoring handoff lives at `/Users/benejeremiah/Documents/Projects/ceebee-monitor/docs/RELEASE-MONITORING.md`. Read it before creating or changing a Deployment, release channel, Health Report, or monitoring ownership boundary.
+- Add `planned` only for a concrete operator-controlled target and change it to `active` only after the real release passes authentication, identity, reachability, and freshness proof with Monitor's own parser and probe.
+- Monitor Product-owned runtime and release capabilities, not user devices or third-party availability. Keep shared infrastructure checks with the Product that has the clearest operational ownership.
