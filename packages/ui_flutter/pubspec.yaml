@@ -4,8 +4,8 @@ version: 0.1.0-dev.1
 repository: https://github.com/benedictjeremiahh/ceebee-ui
 issue_tracker: https://github.com/benedictjeremiahh/ceebee-ui/issues
 environment:
-  sdk: ^3.8.0
-  flutter: ">=3.35.0"
+  sdk: ^3.13.1
+  flutter: ">=3.47.0"
 
 dependencies:
   flutter:

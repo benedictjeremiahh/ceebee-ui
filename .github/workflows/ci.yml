@@ -26,9 +26,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: minimum 3.35.0
-            version: 3.35.0
-          - name: current stable 3.47.1
+          - name: supported 3.47.1
             version: 3.47.1
     steps:
       - uses: actions/checkout@v4
@@ -45,7 +43,7 @@ jobs:
         run: flutter analyze
       - name: Test package
         working-directory: packages/ui_flutter
-        run: flutter test
+        run: flutter test $(find test -name '*_test.dart' ! -name '*_golden_test.dart' -print)
       - name: Resolve example dependencies
         working-directory: packages/ui_flutter/example
         run: flutter pub get
@@ -54,8 +52,30 @@ jobs:
         run: flutter analyze
       - name: Test example
         working-directory: packages/ui_flutter/example
-        run: flutter test
+        run: flutter test $(find test -name '*_test.dart' ! -name '*_golden_test.dart' -print)
       - name: Validate publish archive
-        if: matrix.version == '3.47.1'
         working-directory: packages/ui_flutter
         run: dart pub publish --dry-run
+
+  flutter-goldens:
+    name: Flutter goldens (macOS)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.47.1
+          channel: stable
+          cache: true
+      - name: Resolve package dependencies
+        working-directory: packages/ui_flutter
+        run: flutter pub get
+      - name: Test package goldens
+        working-directory: packages/ui_flutter
+        run: flutter test $(find test -name '*_golden_test.dart' -print)
+      - name: Resolve example dependencies
+        working-directory: packages/ui_flutter/example
+        run: flutter pub get
+      - name: Test example goldens
+        working-directory: packages/ui_flutter/example
+        run: flutter test $(find test -name '*_golden_test.dart' -print)
