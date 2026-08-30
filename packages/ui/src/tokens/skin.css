@@ -27,6 +27,10 @@
   --cb-fg-muted: oklch(0.45 0.02 280);
   --cb-fg-subtle: oklch(0.53 0.018 280);
   --cb-fg-on-brand: oklch(0.99 0 0);
+  /* Brand-coloured text on a surface. The brand ramp step that carries body text at WCAG AA is
+     not the same step in both modes, so link colour is a token rather than a ramp reference a
+     product has to pick per theme. */
+  --cb-fg-link: var(--cb-brand-600);
   /* A boundary has to be visible to be a boundary: border-strong carries the 3:1 WCAG asks of a
      control's edge, and border the quieter separation between panels. */
 
@@ -103,6 +107,7 @@
 
     --cb-brand-500: oklch(0.72 0.19 var(--cb-hue-brand));
     --cb-brand-600: oklch(0.64 0.2 var(--cb-hue-brand));
+    --cb-fg-link: var(--cb-brand-500);
 
     --cb-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.4);
     --cb-shadow-md: 0 6px 20px oklch(0 0 0 / 0.45);
@@ -153,6 +158,7 @@
 
   --cb-brand-500: oklch(0.72 0.19 var(--cb-hue-brand));
   --cb-brand-600: oklch(0.64 0.2 var(--cb-hue-brand));
+  --cb-fg-link: var(--cb-brand-500);
 
   --cb-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.4);
   --cb-shadow-md: 0 6px 20px oklch(0 0 0 / 0.45);
