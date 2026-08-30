@@ -114,9 +114,10 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
     colorTextTertiary: color('--cb-fg-subtle'),
     /* Ant derives its placeholder colour from its own algorithm rather than from any token this
        bridge already sends, and lands on a 25%-alpha grey that fails WCAG AA text contrast in both
-       modes. Placeholder text is text, so it takes the subtle foreground like every other quiet
-       label. */
-    colorTextPlaceholder: color('--cb-fg-subtle'),
+       modes. Placeholder text is text, and the subtle foreground only clears AA against the plain
+       surface, so placeholders take the muted foreground that clears it against every surface a
+       control can sit on. */
+    colorTextPlaceholder: color('--cb-fg-muted'),
     colorTextLightSolid: color('--cb-fg-on-brand'),
     colorBgBase: color('--cb-bg'),
     colorBgContainer: color('--cb-surface'),
