@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 1.1.1
+
+### Patch Changes
+
+- Ship the cross-platform token bridge on top of the Moodboard release line.
+
 ## 1.1.0
 
 ### Minor Changes
