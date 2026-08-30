@@ -35,7 +35,7 @@ consuming app picks its own charting library. The boundary is the axis.
 ### Style
 
 **Token**:
-A named design value exposed as a CSS custom property. Splits into *structure* (spacing, radius,
+A named design value shared across platform renderings. Splits into *structure* (spacing, radius,
 density, motion timing — stable across brands) and *skin* (colour, font, elevation, texture).
 _Avoid_: Variable, constant, theme value
 
@@ -45,14 +45,15 @@ different Skin, never editing a component.
 _Avoid_: Theme file, brand config, palette
 
 **Theme**:
-The resolved light or dark rendering of the active Skin, selected by `data-theme` on the document
-root, falling back to `prefers-color-scheme`.
+The resolved light or dark rendering of the active Skin, selected explicitly or from the reader's
+system preference.
 _Avoid_: Mode, colour scheme
 
 **Surface**:
 The component every raised or tinted panel is built on. Its `variant` (`plain`, `tinted`, `glass`,
 `gradient`) is what carries the Pinterest-board look, so glass and gradient are opt-in choices
-rather than a baked-in identity.
+rather than a baked-in identity. It owns visual treatment only, never interaction or content
+semantics.
 _Avoid_: Panel, container, box
 
 **Tone**:
@@ -95,6 +96,11 @@ geometry as the real thing, so the placeholder cannot drift out of sync with wha
 _Avoid_: Loader, placeholder, shimmer
 
 ### Boundaries
+
+**Substrate**:
+The platform component runtime that owns interaction, accessibility, motion, and geometry while
+Ceebee supplies Tokens, Skins, and Surface variants through a bridge.
+_Avoid_: Base library, generic material, component engine
 
 **Dialog**:
 A modal interruption for a bounded decision or task. It is centred or corner-positioned; it is not

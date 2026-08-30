@@ -1,6 +1,6 @@
 .cb-donut { position: relative; display: inline-grid; place-items: center; }
 .cb-donut svg { position: absolute; inset: 0; }
-.cb-donut__track { stroke: color-mix(in oklch, var(--cb-fg) 8%, transparent); }
+.cb-donut__track { stroke: color-mix(in oklch, var(--cb-fg) calc(var(--cb-mini-chart-track-strength) * 100%), transparent); }
 .cb-donut__arc { transition: stroke-dasharray var(--cb-duration-deliberate) var(--cb-ease-entrance); }
 /* Reduced motion: the arcs are drawn at their final length rather than growing into place. */
 @media (prefers-reduced-motion: reduce) {
@@ -33,7 +33,7 @@
 .cb-sparkline[data-hue="amber"] { --cb-spark-accent: var(--cb-decor-amber); }
 .cb-sparkline[data-hue="rose"] { --cb-spark-accent: var(--cb-decor-rose); }
 
-.cb-sparkline__line { stroke: var(--cb-spark-accent); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.cb-sparkline__area { fill: color-mix(in oklch, var(--cb-spark-accent) 16%, transparent); }
+.cb-sparkline__line { stroke: var(--cb-spark-accent); stroke-width: var(--cb-mini-chart-line-width); stroke-linecap: round; stroke-linejoin: round; }
+.cb-sparkline__area { fill: color-mix(in oklch, var(--cb-spark-accent) calc(var(--cb-mini-chart-area-strength) * 100%), transparent); }
 .cb-sparkline__last { fill: var(--cb-spark-accent); }
-.cb-sparkline__bar { fill: color-mix(in oklch, var(--cb-spark-accent) 70%, transparent); }
+.cb-sparkline__bar { fill: color-mix(in oklch, var(--cb-spark-accent) calc(var(--cb-mini-chart-bar-strength) * 100%), transparent); }

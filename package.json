@@ -17,6 +17,9 @@
     "release": "node scripts/release.mjs",
     "release:dry": "node scripts/release.mjs --dry",
     "check:docs": "node scripts/check-docs-pages.mjs",
+    "check:flutter-tokens": "node scripts/gen-flutter-tokens.mjs --check",
+    "check:flutter": "cd packages/ui_flutter && flutter analyze && flutter test && cd example && flutter analyze && flutter test",
+    "check:flutter-publish": "cd packages/ui_flutter && dart pub publish --dry-run",
     "sync:parity": "node scripts/sync-parity.mjs",
     "check:parity": "node scripts/check-parity.mjs"
   },

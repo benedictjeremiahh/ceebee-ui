@@ -3,6 +3,417 @@
     "version": "6.6.1",
     "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
   },
+  "flutterBaseline": {
+    "package": "flutter",
+    "version": "3.47.1",
+    "channel": "stable",
+    "commit": "6655482ec06e547f90abf8ae7590466f4415978d",
+    "dartVersion": "3.13.1",
+    "minimumVersion": "3.35.0",
+    "license": "BSD-3-Clause"
+  },
+  "flutterComponents": {
+    "CbSurface": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "DecoratedBox",
+        "ClipRRect",
+        "BackdropFilter.grouped",
+        "CustomPainter"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/foundation/surface.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/surface.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": []
+    },
+    "CbDonut": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "CustomPaint",
+        "Canvas.drawArc",
+        "Semantics"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/data/mini_charts/donut.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/data-visualization.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter accepts tokenized CbSize steps instead of raw numeric dimensions."
+      ]
+    },
+    "CbSparkline": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "CustomPaint",
+        "Canvas.drawPath",
+        "Semantics"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/data/mini_charts/sparkline.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/data-visualization.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter accepts tokenized CbSize steps instead of raw numeric dimensions."
+      ]
+    },
+    "CbBarMini": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "CustomPaint",
+        "Canvas.drawRRect",
+        "Semantics"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/data/mini_charts/bar_mini.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/data-visualization.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter accepts tokenized CbSize steps instead of raw numeric dimensions."
+      ]
+    },
+    "CbReveal": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "AnimationController",
+        "FadeTransition",
+        "Transform.translate",
+        "RenderAbstractViewport"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/motion/reveal.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/motion.css",
+        "packages/ui/src/tokens/structure.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter uses tokenized travel distances and delay steps instead of raw pixel and second values.",
+        "Flutter uses the canonical entrance tween instead of the web runtime spring presets."
+      ]
+    },
+    "CbStagger": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "Column",
+        "CbReveal",
+        "ScrollPosition"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/motion/reveal.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/motion.css",
+        "packages/ui/src/tokens/structure.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter accepts a tokenized stagger pace instead of a raw delay in seconds."
+      ]
+    },
+    "CbSkeleton": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "DecoratedBox",
+        "FadeTransition",
+        "ExcludeSemantics"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/loading/skeleton.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/motion.css",
+        "packages/ui/src/tokens/skeleton.css",
+        "packages/ui/src/tokens/structure.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter exposes tokenized CbSize and CbRadius steps instead of raw dimensions.",
+        "Feature Compositions retain explicit geometry-matched Skeleton companions."
+      ]
+    },
+    "CbEmpty": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "Column",
+        "Semantics",
+        "IconTheme",
+        "CbSkeleton"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/data/empty/empty.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/skeleton.css",
+        "packages/ui/src/tokens/structure.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter uses native Widget illustration and action slots instead of image URLs and React children.",
+        "Flutter exposes app-owned copy rather than a locale-provider default description."
+      ]
+    },
+    "CbResult": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "Column",
+        "Semantics",
+        "IconTheme",
+        "Wrap",
+        "CbSurface",
+        "CbSkeleton"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/feedback/result/result.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/skeleton.css",
+        "packages/ui/src/tokens/structure.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter exposes native Widget slots and Material actions instead of React nodes.",
+        "Flutter limits built-in statuses to mobile-relevant semantic outcomes; HTTP status illustrations remain app-owned content.",
+        "Flutter requires apps to provide localized semantic status copy instead of synthesizing English labels."
+      ]
+    },
+    "CbStatistic": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "Column",
+        "Row",
+        "Semantics",
+        "IconTheme",
+        "DefaultTextStyle",
+        "CbSkeleton"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/data/statistic/statistic.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/skeleton.css",
+        "packages/ui/src/tokens/structure.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter accepts an app-formatted display string and optional spoken value instead of owning numeric locale and precision formatting.",
+        "Flutter prefix and suffix Widgets are decorative; the app supplies the complete localized semantic value.",
+        "Animated and timer values have distinct state ownership and are not variants of the static CbStatistic contract."
+      ]
+    },
+    "CbDescriptions": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "Column",
+        "Wrap",
+        "LayoutBuilder",
+        "Semantics",
+        "IconTheme",
+        "DefaultTextStyle",
+        "CbSkeleton"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/data/descriptions/descriptions.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/skeleton.css",
+        "packages/ui/src/tokens/structure.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter uses a container-driven one or two column layout instead of the web responsive span map.",
+        "Flutter values and the optional header action are native app-owned Widgets instead of React nodes.",
+        "Desktop bordered and table-like variants remain compositions of CbSurface rather than changing the mobile record-summary contract."
+      ]
+    },
+    "CbTimeline": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "Column",
+        "Row",
+        "Stack",
+        "LayoutBuilder",
+        "Semantics",
+        "CircularProgressIndicator",
+        "IconTheme",
+        "CbSkeleton"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/data/timeline/timeline.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/skeleton.css",
+        "packages/ui/src/tokens/structure.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter keeps a vertical mobile history and moves timestamps into a wide leading column instead of exposing desktop horizontal or alternating modes.",
+        "The application owns source order; Flutter does not expose reverse because data ordering is not a visual variant.",
+        "Timeline is read-only and has no current index, selection, or navigation callbacks; those belong to the distinct Steps contract.",
+        "Flutter titles and timestamps are localized strings while optional event content and markers are native app-owned Widgets."
+      ]
+    },
+    "CbRating": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "GestureDetector",
+        "Semantics",
+        "LayoutBuilder",
+        "Stack",
+        "ClipRect",
+        "Icon"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/form/rating/rating.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/structure.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter keeps controlled tap and horizontal-drag selection, whole/half precision, optional clearing, RTL mapping, and adjustable semantics while excluding desktop hover preview and keyboard-only affordances.",
+        "Applications own value state and localized label/value semantics; the component does not persist or submit ratings.",
+        "A null callback is the disabled form-control state; display-only rating content should use a separate product composition rather than changing this input contract.",
+        "Custom glyphs use Material IconData for filled and empty states instead of arbitrary Ant Design character nodes."
+      ]
+    },
+    "CbInputNumber": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "TextField",
+        "IconButton",
+        "FocusNode",
+        "TextEditingController"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/form/input_number/input_number.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/structure.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter uses a horizontal mobile stepper with 48 logical-pixel controls instead of Ant Design's desktop hover controls.",
+        "Applications own controlled value state, validation, submission, localized labels, and optional locale-specific parsing and formatting.",
+        "Unparseable text remains a temporary editing draft and restores the controlled value on focus loss; empty text emits null.",
+        "Mouse-wheel stepping, desktop keyboard shortcuts, string mode, and arbitrary precision internals are excluded from the mobile contract."
+      ]
+    },
+    "CbPagination": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "Material",
+        "InkWell",
+        "Tooltip",
+        "Semantics",
+        "LayoutBuilder",
+        "AnimatedContainer",
+        "CbSkeleton"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/nav/pagination/pagination.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/motion.css",
+        "packages/ui/src/tokens/skeleton.css",
+        "packages/ui/src/tokens/structure.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter keeps controlled one-based page state, previous/next navigation, and a bounded page window while excluding desktop hover, quick-jump input, page-size changer, and keyboard-only affordances.",
+        "Compact containers preserve touch targets with previous/current-total/next controls instead of horizontally scrolling or shrinking a desktop page strip.",
+        "Applications own data loading, asynchronous progress, total calculation, page state, callbacks, and localized page semantics.",
+        "A null callback disables navigation; the component never fetches or caches product data."
+      ]
+    },
+    "CbSteps": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "Material",
+        "InkWell",
+        "Semantics",
+        "LayoutBuilder",
+        "AnimatedContainer",
+        "Row",
+        "Column",
+        "Stack",
+        "CbSkeleton"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/nav/steps/steps.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/motion.css",
+        "packages/ui/src/tokens/skeleton.css",
+        "packages/ui/src/tokens/structure.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter exposes adaptive, horizontal, and vertical progress layouts; desktop navigation, inline, panel, dot, ellipsis, max-count, and hover variants are excluded from the mobile contract.",
+        "Applications own current state, validation, navigation callbacks, and localized complete/active/waiting/error semantics.",
+        "Timeline remains a distinct read-only app-ordered history despite sharing connector geometry internally.",
+        "Compact adaptive Steps becomes vertical instead of introducing horizontal scrolling."
+      ]
+    },
+    "CbChecklist": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "Material",
+        "InkWell",
+        "LinearProgressIndicator",
+        "Semantics"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/onboarding/checklist.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/structure.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter uses String labels and descriptions instead of arbitrary React nodes.",
+        "Flutter task rows guarantee the native mobile touch-target floor."
+      ]
+    },
+    "CbColorPicker": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "HSVColor",
+        "Slider",
+        "Semantics"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/form/color_picker/color_picker.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/structure.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter exposes a controlled HSV model through three native adjustable controls instead of reproducing Ant Design's desktop popup, text formats, presets, trigger, and hover interactions.",
+        "HSVColor is selected product data, not a styling escape hatch; Ceebee still owns component geometry and Skin rendering.",
+        "Applications own value state, persistence, validation, and localized group/channel/value copy; Ceebee maps each channel to adjustable semantics.",
+        "A null callback disables the complete input."
+      ]
+    },
+    "CbUpload": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "FilledButton",
+        "Material",
+        "LinearProgressIndicator",
+        "IconButton",
+        "Semantics",
+        "CbSkeleton"
+      ],
+      "adapter": "packages/ui_flutter/lib/src/form/upload/upload.dart",
+      "tokenSource": [
+        "packages/ui/src/tokens/skin.css",
+        "packages/ui/src/tokens/skeleton.css",
+        "packages/ui/src/tokens/structure.css"
+      ],
+      "license": "BSD-3-Clause",
+      "parityGaps": [
+        "Flutter renders controlled queued, uploading, success, and error rows while excluding Ant Design's desktop drag target, picture-card geometry, hover actions, and directory traversal.",
+        "Applications inject file or media picking, permissions, validation, transport, persistence, retry, removal, and every localized label; the package never touches the filesystem or network.",
+        "Determinate and indeterminate progress use Material's essential native loading behavior; the explicit CbUploadSkeleton obeys reduced motion.",
+        "File identity and status are immutable controlled values so async work cannot leak into the design-system layer."
+      ]
+    }
+  },
   "components": {
     "Button": {
       "strategy": "antd-runtime",
