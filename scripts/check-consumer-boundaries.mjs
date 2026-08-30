@@ -7,6 +7,13 @@ const projectsDirectory = dirname(process.cwd());
 const contractHeading = "## CeeBee UI consumer contract";
 const inspectableMediaRule = "Inspectable screenshots and gallery media";
 const forbiddenRuntime = /(?:from\s+|require\(|import\()\s*["'](antd(?:\/[^"']*)?|@base-ui\/[^"']+|embla-carousel[^"']*|@radix-ui\/[^"']+|@headlessui\/[^"']+|@mantine\/[^"']+)["']/g;
+/* The inspectable media rule was a sentence in AGENTS.md that nothing enforced, and one product
+   carried a 309-line hand-built viewer for two years underneath it. A product-local viewer looks
+   the same every time: a portal or a fixed overlay holding a raw `<img>`, or a file that says what
+   it is in its own name. */
+const productViewerName = /(?:^|\/)[^/]*(?:lightbox|photo-?viewer|image-?viewer|gallery-?overlay)[^/]*$/i;
+const portalImage = /createPortal/;
+const rawImage = /<img[\s/>]/;
 const forbiddenDependencyPrefixes = [
   "antd",
   "@base-ui/",
@@ -82,6 +89,11 @@ for (const entry of await readdir(projectsDirectory, { withFileTypes: true })) {
     const source = await readFile(resolve(repository, relativePath), "utf8");
     for (const match of source.matchAll(forbiddenRuntime)) {
       errors.push(`${entry.name}/${relativePath}: import ${match[1]} through @ceebee/ui instead`);
+    }
+    if (productViewerName.test(relativePath)) {
+      errors.push(`${entry.name}/${relativePath}: open inspectable media through Image or Image.PreviewGroup instead of a product-local viewer`);
+    } else if (portalImage.test(source) && rawImage.test(source)) {
+      errors.push(`${entry.name}/${relativePath}: a portal holding a raw <img> is a product-local media viewer; use Image or Image.PreviewGroup`);
     }
   }
 }
