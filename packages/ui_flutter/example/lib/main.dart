@@ -1,4 +1,5 @@
 import 'package:ceebee_ui/ceebee_ui.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,6 +23,7 @@ import 'empty_gallery.dart';
 import 'result_gallery.dart';
 import 'statistic_gallery.dart';
 import 'descriptions_gallery.dart';
+import 'device_preview.dart';
 import 'timeline_gallery.dart';
 import 'steps_gallery.dart';
 import 'pagination_gallery.dart';
@@ -70,16 +72,19 @@ class _CeebeeDocsAppState extends State<CeebeeDocsApp> {
       darkTheme: theme(Brightness.dark),
       highContrastTheme: theme(Brightness.light, highContrast: true),
       highContrastDarkTheme: theme(Brightness.dark, highContrast: true),
-      home: SurfaceGalleryPage(
-        animateStatus: widget.animateStatus,
-        skin: _skin,
-        themeMode: _themeMode,
-        reduceTransparency: _reduceTransparency,
-        onSkinChanged: (CbSkin skin) => setState(() => _skin = skin),
-        onThemeModeChanged: (ThemeMode mode) =>
-            setState(() => _themeMode = mode),
-        onReduceTransparencyChanged: (bool value) =>
-            setState(() => _reduceTransparency = value),
+      home: GalleryDevicePreview(
+        enabled: kIsWeb,
+        child: SurfaceGalleryPage(
+          animateStatus: widget.animateStatus,
+          skin: _skin,
+          themeMode: _themeMode,
+          reduceTransparency: _reduceTransparency,
+          onSkinChanged: (CbSkin skin) => setState(() => _skin = skin),
+          onThemeModeChanged: (ThemeMode mode) =>
+              setState(() => _themeMode = mode),
+          onReduceTransparencyChanged: (bool value) =>
+              setState(() => _reduceTransparency = value),
+        ),
       ),
     );
   }

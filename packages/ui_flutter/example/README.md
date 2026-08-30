@@ -8,6 +8,11 @@ The published interactive gallery is available at
 [ui-flutter.ceebee.biz.id](https://ui-flutter.ceebee.biz.id). The web component documentation is
 available at [ui.ceebee.biz.id](https://ui.ceebee.biz.id).
 
+On the web, the gallery includes a layout-only device preview with phone and tablet presets,
+orientation, text scaling, and safe-area simulation. Rendering, gestures, keyboard behavior,
+platform dialogs, and performance can still differ from native Android and iOS builds, so release
+validation remains a device responsibility.
+
 Run locally:
 
 ```sh
