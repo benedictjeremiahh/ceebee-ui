@@ -71,6 +71,17 @@ describe('the Ant pre-paint fallback', () => {
     expect(undeclared, `undeclared tokens: ${undeclared.join(', ')}`).toEqual([]);
   });
 
+  it('states no constraint property, which an Ant rule cannot override', () => {
+    /* `:where()` only guarantees Ant wins for the same property. `min-height` and `min-width` are
+       constraints Ant does not set — it sets `height` and `width` — so a value here survived every
+       Ant rule and permanently changed the control's geometry. That shipped once: it widened the
+       icon-only buttons in a consumer's header until the brand overlapped them at 360px. */
+    const properties = [...prepaint.matchAll(/^\s*([\w-]+)\s*:/gm)].map((match) => match[1]!);
+    const constraints = properties.filter((name) => /^(min|max)-/.test(name));
+
+    expect(constraints, `constraint properties: ${constraints.join(', ')}`).toEqual([]);
+  });
+
   it('states no raw colour, radius, or control size', () => {
     /* AGENTS rule 1. `100%`, `1`, `none`, `auto`, and `transparent` carry no brand decision; a hex,
        an oklch(), or a pixel length would. */

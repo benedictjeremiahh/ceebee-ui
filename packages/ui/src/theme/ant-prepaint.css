@@ -15,7 +15,7 @@
 
 :where(.ant-btn) {
   display: inline-flex;
-  min-height: var(--cb-control-height-md);
+  height: var(--cb-control-height-md);
   align-items: center;
   justify-content: center;
   gap: var(--cb-space-2);
@@ -29,20 +29,19 @@
 }
 
 :where(.ant-btn-sm) {
-  min-height: var(--cb-control-height-sm);
+  height: var(--cb-control-height-sm);
   padding-inline: var(--cb-space-3);
   font-size: var(--cb-text-xs);
 }
 
 :where(.ant-btn-lg) {
-  min-height: var(--cb-control-height-lg);
+  height: var(--cb-control-height-lg);
   padding-inline: var(--cb-space-5);
   font-size: var(--cb-text-md);
 }
 
 :where(.ant-btn-icon-only) {
-  min-width: var(--cb-control-height-md);
-  padding-inline: var(--cb-space-0);
+  padding-inline: var(--cb-space-2);
 }
 
 :where(.ant-btn-block) {
@@ -63,11 +62,6 @@
 }
 
 :where(.ant-input, .ant-input-affix-wrapper, .ant-select .ant-select-selector) {
-  display: flex;
-  min-height: var(--cb-control-height-md);
-  align-items: center;
-  gap: var(--cb-space-2);
-  padding-inline: var(--cb-space-3);
   border: var(--cb-border-width) solid var(--cb-border-strong);
   border-radius: var(--cb-radius-sm);
   background: var(--cb-surface);
@@ -78,8 +72,6 @@
 
 /* An input inside an affix wrapper is already framed by the wrapper. */
 :where(.ant-input-affix-wrapper .ant-input) {
-  min-height: auto;
-  padding-inline: var(--cb-space-0);
   border: none;
   background: transparent;
 }
@@ -92,10 +84,6 @@
 }
 
 :where(.ant-segmented) {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--cb-space-1);
-  padding: var(--cb-space-1);
   border-radius: var(--cb-radius-sm);
   background: var(--cb-bg-subtle);
   font-family: var(--cb-font-sans);
@@ -103,7 +91,6 @@
 }
 
 :where(.ant-segmented-item) {
-  padding-inline: var(--cb-space-3);
   border-radius: var(--cb-radius-sm);
   color: var(--cb-fg-muted);
 }
