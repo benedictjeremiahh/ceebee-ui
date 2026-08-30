@@ -34260,6 +34260,318 @@
       "_origin": "ast"
     },
     {
+      "id": "packages_ui_flutter_example_lib_device_preview",
+      "label": "device_preview.dart",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_gallerydevicepreview",
+      "label": "GalleryDevicePreview",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_gallerydevicepreviewstate",
+      "label": "_GalleryDevicePreviewState",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_previewlabel",
+      "label": "_PreviewLabel",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_profilemenu",
+      "label": "_ProfileMenu",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_textscalemenu",
+      "label": "_TextScaleMenu",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_devicestage",
+      "label": "_DeviceStage",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_deviceprofile",
+      "label": "_DeviceProfile",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_devicepreviewprofilekey",
+      "label": "devicePreviewProfileKey",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_deviceprevieworientationkey",
+      "label": "devicePreviewOrientationKey",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_devicepreviewtextscalekey",
+      "label": "devicePreviewTextScaleKey",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_devicepreviewsafeareakey",
+      "label": "devicePreviewSafeAreaKey",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_devicepreviewviewportkey",
+      "label": "devicePreviewViewportKey",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_enabled",
+      "label": "enabled",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_child",
+      "label": "child",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "widget",
+      "label": "Widget?",
+      "file_type": "code",
+      "source_file": null,
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_profile",
+      "label": "_profile",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_orientation",
+      "label": "_orientation",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "orientation",
+      "label": "Orientation",
+      "file_type": "code",
+      "source_file": null,
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_textscale",
+      "label": "_textScale",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_safearea",
+      "label": "_safeArea",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_tokens",
+      "label": "tokens",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_onselected",
+      "label": "onSelected",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_scale",
+      "label": "scale",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_scales",
+      "label": "_scales",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "static_const_list",
+      "label": "static const List",
+      "file_type": "code",
+      "source_file": null,
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_ipadmini",
+      "label": "ipadMini",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "responsive_iphone15pro_pixel9",
+      "label": "responsive,\n  iphone15Pro,\n  pixel9,",
+      "file_type": "code",
+      "source_file": null,
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_label",
+      "label": "label",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "string_get",
+      "label": "String get",
+      "file_type": "code",
+      "source_file": null,
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_icon",
+      "label": "icon",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "icondata_get",
+      "label": "IconData get",
+      "file_type": "code",
+      "source_file": null,
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_portraitsize",
+      "label": "_portraitSize",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "size_get",
+      "label": "Size get",
+      "file_type": "code",
+      "source_file": null,
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_createstate",
+      "label": "createState",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_build",
+      "label": "build",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_viewport",
+      "label": "viewport",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_lib_device_preview_safeinsets",
+      "label": "safeInsets",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "dart_math",
+      "label": "dart:math",
+      "file_type": "code",
+      "source_file": null,
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
       "id": "packages_ui_flutter_example_lib_empty_gallery",
       "label": "empty_gallery.dart",
       "file_type": "code",
@@ -35028,14 +35340,6 @@
       "_origin": "ast"
     },
     {
-      "id": "string_get",
-      "label": "String get",
-      "file_type": "code",
-      "source_file": null,
-      "source_location": null,
-      "_origin": "ast"
-    },
-    {
       "id": "packages_ui_flutter_example_lib_main_color",
       "label": "color",
       "file_type": "code",
@@ -35112,6 +35416,14 @@
       "label": "build",
       "file_type": "code",
       "source_file": "packages/ui_flutter/example/lib/main.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "package_flutter_foundation_dart",
+      "label": "package:flutter/foundation.dart",
+      "file_type": "code",
+      "source_file": null,
       "source_location": null,
       "_origin": "ast"
     },
@@ -35284,6 +35596,14 @@
       "_origin": "ast"
     },
     {
+      "id": "device_preview_dart",
+      "label": "device_preview.dart",
+      "file_type": "code",
+      "source_file": null,
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
       "id": "timeline_gallery_dart",
       "label": "timeline_gallery.dart",
       "file_type": "code",
@@ -35448,14 +35768,6 @@
       "label": "chart",
       "file_type": "code",
       "source_file": "packages/ui_flutter/example/lib/mini_charts_gallery.dart",
-      "source_location": null,
-      "_origin": "ast"
-    },
-    {
-      "id": "widget",
-      "label": "Widget?",
-      "file_type": "code",
-      "source_file": null,
       "source_location": null,
       "_origin": "ast"
     },
@@ -35812,14 +36124,6 @@
       "_origin": "ast"
     },
     {
-      "id": "static_const_list",
-      "label": "static const List",
-      "file_type": "code",
-      "source_file": null,
-      "source_location": null,
-      "_origin": "ast"
-    },
-    {
       "id": "packages_ui_flutter_example_lib_native_data_display_gallery_icon",
       "label": "icon",
       "file_type": "code",
@@ -36064,14 +36368,6 @@
       "label": "_ignoreAction",
       "file_type": "code",
       "source_file": "packages/ui_flutter/example/lib/native_data_display_gallery.dart",
-      "source_location": null,
-      "_origin": "ast"
-    },
-    {
-      "id": "dart_math",
-      "label": "dart:math",
-      "file_type": "code",
-      "source_file": null,
       "source_location": null,
       "_origin": "ast"
     },
@@ -38403,6 +38699,38 @@
       "label": "copyWith",
       "file_type": "code",
       "source_file": "packages/ui_flutter/example/test/descriptions_golden_test.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_test_device_preview_test",
+      "label": "device_preview_test.dart",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/test/device_preview_test.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_test_device_preview_test_main",
+      "label": "main",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/test/device_preview_test.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "packages_ui_flutter_example_test_device_preview_test_previewapp",
+      "label": "_previewApp",
+      "file_type": "code",
+      "source_file": "packages/ui_flutter/example/test/device_preview_test.dart",
+      "source_location": null,
+      "_origin": "ast"
+    },
+    {
+      "id": "package_ceebee_ui_example_device_preview_dart",
+      "label": "package:ceebee_ui_example/device_preview.dart",
+      "file_type": "code",
+      "source_file": null,
       "source_location": null,
       "_origin": "ast"
     },
@@ -41360,14 +41688,6 @@
       "_origin": "ast"
     },
     {
-      "id": "package_flutter_foundation_dart",
-      "label": "package:flutter/foundation.dart",
-      "file_type": "code",
-      "source_file": null,
-      "source_location": null,
-      "_origin": "ast"
-    },
-    {
       "id": "package_ceebee_ui_src_data_mini_charts_bar_mini_math_dart",
       "label": "package:ceebee_ui/src/data/mini_charts/bar_mini_math.dart",
       "file_type": "code",
@@ -41564,14 +41884,6 @@
       "label": "plotSize",
       "file_type": "code",
       "source_file": "packages/ui_flutter/lib/src/data/mini_charts/chart_size.dart",
-      "source_location": null,
-      "_origin": "ast"
-    },
-    {
-      "id": "size_get",
-      "label": "Size get",
-      "file_type": "code",
-      "source_file": null,
       "source_location": null,
       "_origin": "ast"
     },
@@ -160252,6 +160564,578 @@
       "_origin": "ast"
     },
     {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_gallerydevicepreview",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview_gallerydevicepreview",
+      "target": "statefulwidget",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_gallerydevicepreviewstate",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview_gallerydevicepreviewstate",
+      "target": "state",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview_gallerydevicepreviewstate",
+      "target": "packages_ui_flutter_example_lib_device_preview_gallerydevicepreview",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_previewlabel",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview_previewlabel",
+      "target": "statelesswidget",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_profilemenu",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview_profilemenu",
+      "target": "statelesswidget",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_textscalemenu",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview_textscalemenu",
+      "target": "statelesswidget",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_devicestage",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview_devicestage",
+      "target": "statelesswidget",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_deviceprofile",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_devicepreviewprofilekey",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "key",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "variable_type",
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_deviceprevieworientationkey",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_devicepreviewtextscalekey",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_devicepreviewsafeareakey",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_devicepreviewviewportkey",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_enabled",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_child",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "widget",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "variable_type",
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_profile",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_deviceprofile",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "variable_type",
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_orientation",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "orientation",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "variable_type",
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_textscale",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_safearea",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_tokens",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_lib_src_tokens_skin_tokens_cbskintokens",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "variable_type",
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_onselected",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "valuechanged",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "variable_type",
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_scale",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_scales",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "static_const_list",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "variable_type",
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_ipadmini",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "responsive_iphone15pro_pixel9",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "variable_type",
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_label",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "string_get",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "variable_type",
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_icon",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "icondata_get",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "variable_type",
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_portraitsize",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "size_get",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "variable_type",
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_createstate",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_build",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_viewport",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "packages_ui_flutter_example_lib_device_preview_safeinsets",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "dart_math",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "package_ceebee_ui_ceebee_ui_dart",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_device_preview",
+      "target": "package_flutter_material_dart",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/device_preview.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "packages_ui_flutter_example_lib_empty_gallery",
       "target": "packages_ui_flutter_example_lib_empty_gallery_emptygallery",
       "relation": "defines",
@@ -161982,6 +162866,17 @@
     },
     {
       "source": "packages_ui_flutter_example_lib_main",
+      "target": "package_flutter_foundation_dart",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/main.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_main",
       "target": "package_flutter_material_dart",
       "relation": "imports",
       "confidence": "EXTRACTED",
@@ -162214,6 +163109,17 @@
     {
       "source": "packages_ui_flutter_example_lib_main",
       "target": "descriptions_gallery_dart",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/lib/main.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_lib_main",
+      "target": "device_preview_dart",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -168183,6 +169089,72 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "packages/ui_flutter/example/test/descriptions_golden_test.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_test_device_preview_test",
+      "target": "packages_ui_flutter_example_test_device_preview_test_main",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/test/device_preview_test.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_test_device_preview_test",
+      "target": "packages_ui_flutter_example_test_device_preview_test_previewapp",
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/test/device_preview_test.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_test_device_preview_test",
+      "target": "package_ceebee_ui_ceebee_ui_dart",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/test/device_preview_test.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_test_device_preview_test",
+      "target": "package_ceebee_ui_example_device_preview_dart",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/test/device_preview_test.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_test_device_preview_test",
+      "target": "package_flutter_material_dart",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/test/device_preview_test.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "packages_ui_flutter_example_test_device_preview_test",
+      "target": "package_flutter_test_flutter_test_dart",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/ui_flutter/example/test/device_preview_test.dart",
       "source_location": null,
       "weight": 1.0,
       "_origin": "ast"
