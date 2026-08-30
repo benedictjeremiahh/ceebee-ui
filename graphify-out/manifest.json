@@ -120,9 +120,9 @@
     "semantic_hash": ""
   },
   "docs/components/toolbar.tsx": {
-    "mtime": 1788065115.2233088,
-    "seen": 1788065473.878876,
-    "ast_hash": "5b2017dcd2dcb981bf1650e79941a732",
+    "mtime": 1788067186.7736015,
+    "seen": 1788067514.7383308,
+    "ast_hash": "28cdbc1b97ff63fe14b2c8be5e98ef87",
     "semantic_hash": ""
   },
   "docs/components/widget-demos.tsx": {
@@ -7266,9 +7266,9 @@
     "semantic_hash": ""
   },
   "packages/ui_flutter/example/lib/main.dart": {
-    "mtime": 1788065083.8363008,
-    "seen": 1788065473.878921,
-    "ast_hash": "15fa2b2918175add765f2643dc943eac",
+    "mtime": 1788067186.7740426,
+    "seen": 1788067514.738379,
+    "ast_hash": "5454fce63a12aee4dbfd3bb38e690f2c",
     "semantic_hash": ""
   },
   "packages/ui_flutter/example/lib/mini_charts_gallery.dart": {
@@ -7626,9 +7626,9 @@
     "semantic_hash": ""
   },
   "packages/ui_flutter/example/web/manifest.json": {
-    "mtime": 1788065083.8593416,
-    "seen": 1788065473.8789551,
-    "ast_hash": "0ab1caa9f4d0de546c171829eed2d93b",
+    "mtime": 1788067361.3629215,
+    "seen": 1788067514.738414,
+    "ast_hash": "118c5b1e355f4a7f5b6f5eba3fcfbd85",
     "semantic_hash": ""
   },
   "packages/ui_flutter/example/windows/flutter/generated_plugin_registrant.cc": {
@@ -8220,9 +8220,9 @@
     "semantic_hash": ""
   },
   "packages/ui_flutter/README.md": {
-    "mtime": 1788065083.8302658,
-    "seen": 1788065473.8790631,
-    "ast_hash": "a4b7cc556fc7e6b57a8bcef22c2e7de2",
+    "mtime": 1788067186.7749152,
+    "seen": 1788067514.738524,
+    "ast_hash": "c94a3c4228671cd57536342df72dab0f",
     "semantic_hash": ""
   },
   "packages/ui_flutter/THIRD_PARTY_NOTICES.md": {
@@ -8238,9 +8238,9 @@
     "semantic_hash": ""
   },
   "packages/ui_flutter/example/README.md": {
-    "mtime": 1788065083.8305476,
-    "seen": 1788065473.879064,
-    "ast_hash": "b8cb0aaaf560da0240ea6cbec1d30ff7",
+    "mtime": 1788067186.7745123,
+    "seen": 1788067514.738529,
+    "ast_hash": "bfb6b78080df87c3eb66775411395091",
     "semantic_hash": ""
   },
   "packages/ui_flutter/example/analysis_options.yaml": {
@@ -8280,9 +8280,9 @@
     "semantic_hash": ""
   },
   "packages/ui_flutter/example/web/index.html": {
-    "mtime": 1788065083.8592782,
-    "seen": 1788065473.879068,
-    "ast_hash": "32249cc5c238f5af48c31c8b03abd5f8",
+    "mtime": 1788067361.3625553,
+    "seen": 1788067514.738532,
+    "ast_hash": "8402caa0e37f17bc07d4c8b41a943641",
     "semantic_hash": ""
   },
   "packages/ui_flutter/example/windows/CMakeLists.txt": {
