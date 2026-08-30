@@ -53,6 +53,26 @@ const STICKER_VARIANTS: Variants = {
 };
 
 /**
+ * A sticker's angle belongs to the sticker, not to where it happens to be standing.
+ *
+ * Deriving it from the array index meant removing one re-tilted every sticker after it: the
+ * collection appeared to rearrange itself in response to a dismissal it had nothing to do with.
+ * A hash of the item's own id is stable for as long as that value is on screen, and still spreads
+ * a fresh set of values across the three angles.
+ */
+function stableChoice(id: string, salt: string, options: number) {
+  let hash = 2166136261;
+  for (const character of `${salt}:${id}`) {
+    hash ^= character.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0) % options;
+}
+
+const TILTS = ['left', 'right', 'none'] as const;
+const EXITS = ['left', 'right'] as const;
+
+/**
  * A controlled list of removable values. Each sticker is one native button: Tab reaches it and
  * Enter or Space dismisses it. The collection owns only exit choreography, never product state.
  */
@@ -70,9 +90,9 @@ function StickerGroupRoot({
   return (
     <ul className={cn('cb-sticker-group', className)} aria-label={label}>
       <AnimatePresence initial={false}>
-        {items.map((item, index) => {
-          const tilt = index % 3 === 0 ? 'left' : index % 3 === 1 ? 'right' : 'none';
-          const exit = index % 2 === 0 ? 'left' : 'right';
+        {items.map((item) => {
+          const tilt = TILTS[stableChoice(item.id, 'tilt', TILTS.length)];
+          const exit = EXITS[stableChoice(item.id, 'exit', EXITS.length)];
           const itemLabel = item.ariaLabel ?? (typeof item.label === 'string' ? item.label : 'item');
           const dismissLabel = getDismissLabel?.(item) ?? `Remove ${itemLabel}`;
 

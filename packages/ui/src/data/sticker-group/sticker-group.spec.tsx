@@ -43,4 +43,24 @@ describe('StickerGroup', () => {
     render(<StickerGroup.Skeleton count={2} label="Loading selected places" />);
     expect(screen.getByRole('status', { name: 'Loading selected places' }).children).toHaveLength(2);
   });
+  it('keeps each sticker at its own angle when another one leaves', () => {
+    const items = [
+      { id: 'jakarta', label: 'Jakarta' },
+      { id: 'bandung', label: 'Bandung' },
+      { id: 'bogor', label: 'Bogor' },
+    ];
+    /* The exiting sticker is still mounted while its exit plays, so the angle is read from the
+       sticker itself rather than from where it sits in the list. */
+    const angleOf = (name: string) => screen
+      .getByRole('button', { name: `Remove ${name}` })
+      .closest('.cb-sticker-group__item')
+      ?.getAttribute('data-tilt');
+
+    const { rerender } = render(<StickerGroup items={items} onDismiss={() => undefined} />);
+    const before = angleOf('Bogor');
+
+    rerender(<StickerGroup items={items.slice(1)} onDismiss={() => undefined} />);
+
+    expect(angleOf('Bogor')).toBe(before);
+  });
 });
