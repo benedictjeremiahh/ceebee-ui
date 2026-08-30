@@ -7896,38 +7896,38 @@
     "semantic_hash": ""
   },
   "packages/ui_flutter/lib/src/tokens/generated/data_visualization.g.dart": {
-    "mtime": 1788065083.8640125,
-    "seen": 1788082586.742372,
+    "mtime": 1788104359.1118367,
+    "seen": 1788104429.1388109,
     "ast_hash": "4603891de3b9d4da56b57b2ad85a2ebf",
     "semantic_hash": ""
   },
   "packages/ui_flutter/lib/src/tokens/generated/motion.g.dart": {
-    "mtime": 1788065083.8640583,
-    "seen": 1788082586.7423732,
+    "mtime": 1788104359.1116667,
+    "seen": 1788104429.1388118,
     "ast_hash": "4a5ab67fa805b4a623d30782dd8c41a1",
     "semantic_hash": ""
   },
   "packages/ui_flutter/lib/src/tokens/generated/skeleton.g.dart": {
-    "mtime": 1788065083.8641052,
-    "seen": 1788082586.7423732,
+    "mtime": 1788104359.1118886,
+    "seen": 1788104429.1388118,
     "ast_hash": "3a728bbeb7082573f10e3754a4b977e2",
     "semantic_hash": ""
   },
   "packages/ui_flutter/lib/src/tokens/generated/skins.g.dart": {
-    "mtime": 1788065083.864183,
-    "seen": 1788082586.7423732,
-    "ast_hash": "ec18b41893da5d773c9b4b25c625f033",
+    "mtime": 1788104359.1094553,
+    "seen": 1788104429.138813,
+    "ast_hash": "b507a3fc02b46f1cf1ec71c785e18f53",
     "semantic_hash": ""
   },
   "packages/ui_flutter/lib/src/tokens/generated/structure.g.dart": {
-    "mtime": 1788065083.8642426,
-    "seen": 1788082586.742374,
-    "ast_hash": "18d068650e21e77e670b21d18b8ac187",
+    "mtime": 1788104359.111579,
+    "seen": 1788104429.138813,
+    "ast_hash": "7998e0f30ce4b11df054f9321b710519",
     "semantic_hash": ""
   },
   "packages/ui_flutter/lib/src/tokens/generated/surface.g.dart": {
-    "mtime": 1788065083.8643103,
-    "seen": 1788082586.742374,
+    "mtime": 1788104359.1117842,
+    "seen": 1788104429.138814,
     "ast_hash": "646ed095deca5dac392a3f53171152ed",
     "semantic_hash": ""
   },
@@ -7938,9 +7938,9 @@
     "semantic_hash": ""
   },
   "packages/ui_flutter/lib/src/tokens/skin_tokens.dart": {
-    "mtime": 1788065083.8644462,
-    "seen": 1788082586.742375,
-    "ast_hash": "a0953ff068f84a2d923b7e476eae21aa",
+    "mtime": 1788104304.942906,
+    "seen": 1788104344.727824,
+    "ast_hash": "d7360abf0ed95ed5dfd19cf2e15f6a99",
     "semantic_hash": ""
   },
   "packages/ui_flutter/lib/src/tokens/tone.dart": {
@@ -8184,9 +8184,9 @@
     "semantic_hash": ""
   },
   "scripts/gen-flutter-tokens.mjs": {
-    "mtime": 1788065083.882555,
-    "seen": 1788082586.742399,
-    "ast_hash": "6ddc9d5b6ac296ad37e93ccfc33db55f",
+    "mtime": 1788104354.3867986,
+    "seen": 1788104429.1388428,
+    "ast_hash": "14d29d5a6685147e237a28cfad76f63b",
     "semantic_hash": ""
   },
   "tests/browser/token-cascade.spec.ts": {
@@ -8274,9 +8274,9 @@
     "semantic_hash": ""
   },
   "packages/ui_flutter/example/pubspec.yaml": {
-    "mtime": 1788065083.8405123,
-    "seen": 1788082586.742451,
-    "ast_hash": "05b7af02697050b3b2fe88a14d1a1394",
+    "mtime": 1788104267.146908,
+    "seen": 1788104344.727906,
+    "ast_hash": "ad550f11a9c51cc2197f87b21377696a",
     "semantic_hash": ""
   },
   "packages/ui_flutter/example/web/index.html": {
