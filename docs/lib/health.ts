@@ -6,30 +6,9 @@
 // this endpoint could observe.
 import { UI_MANIFEST } from './ui-manifest.generated';
 import type { UiManifest } from './ui-manifest';
+import type { HealthReport } from '@ceebee/health-contract';
 
-export type HealthStatus = 'healthy' | 'warning' | 'critical';
-
-export type HealthCheck = { key: string; label: string; status: HealthStatus; summary: string };
-
-export type ProductMetric = {
-  key: string;
-  label: string;
-  value: number | string;
-  format: 'number' | 'duration' | 'percentage' | 'currency' | 'text';
-  unit?: string;
-  group?: string;
-  description: string;
-  order: number;
-};
-
-export type HealthReport = {
-  schemaVersion: 1;
-  deploymentKey: string;
-  generatedAt: string;
-  revision: { commit: string; message: string };
-  checks: HealthCheck[];
-  metrics: ProductMetric[];
-};
+export type { HealthCheck, HealthReport, HealthStatus, ProductMetric } from '@ceebee/health-contract';
 
 export const DEPLOYMENT_KEY = 'ceebee-ui-docs';
 

@@ -59,6 +59,9 @@ importers:
       '@base-ui/react':
         specifier: ^1.7.0
         version: 1.7.0(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@ceebee/health-contract':
+        specifier: 0.1.0
+        version: 0.1.0
       '@ceebee/ui':
         specifier: workspace:*
         version: link:../packages/ui
@@ -337,6 +340,10 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  '@ceebee/health-contract@0.1.0':
+    resolution: {integrity: sha512-jHpAIePggUNIB+yX4iPIVXQEMD18gAjmjAzaadPM5Fn3abK0e16+uZ3GiyJ2j8iO9YwsokRYnd2YesIPObVTmw==}
+    engines: {node: '>=20'}
 
   '@changesets/apply-release-plan@7.1.1':
     resolution: {integrity: sha512-9qPCm/rLx/xoOFXIHGB229+4GOL76S4MC+7tyOuTsR6+1jYlfFDQORdvwR5hDA6y4FL2BPt3qpbcQIS+dW85LA==}
@@ -3358,6 +3365,8 @@ snapshots:
       use-sync-external-store: 1.6.0(react@19.2.8)
     optionalDependencies:
       '@types/react': 19.2.18
+
+  '@ceebee/health-contract@0.1.0': {}
 
   '@changesets/apply-release-plan@7.1.1':
     dependencies:
