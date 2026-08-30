@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 1.0.2
+
+### Patch Changes
+
+- Add cross-platform token sources and strengthen accessibility token cascading for the Flutter package bridge.
+
 ## 1.0.1
 
 ### Patch Changes
