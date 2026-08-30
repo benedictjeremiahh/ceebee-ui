@@ -1,0 +1,6 @@
+/* Skeleton component Tokens shared by web and Flutter renderings. */
+:root {
+  --cb-skeleton-fill-strength: 0.28;
+  --cb-skeleton-opacity-min: 0.56;
+  --cb-skeleton-opacity-max: 1;
+}

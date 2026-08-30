@@ -1,6 +1,6 @@
 'use client';
 
-import { Moon, Sun } from 'lucide-react';
+import { ExternalLink, Moon, Sun } from 'lucide-react';
 import { Button, Select, useTheme } from '@ceebee/ui/client';
 import { useEffect, useState } from 'react';
 
@@ -17,6 +17,7 @@ const SKIN_LABELS: Record<Skin, string> = {
 export function Toolbar() {
   const { choice, setChoice, resolved } = useTheme();
   const [skin, setSkin] = useState<Skin>('default');
+  const flutterDocsUrl = process.env.NEXT_PUBLIC_CEEBEE_FLUTTER_DOCS_URL;
 
   useEffect(() => {
     const id = 'cb-skin';
@@ -31,6 +32,18 @@ export function Toolbar() {
 
   return (
     <div className="docs__toolbar">
+      {flutterDocsUrl ? (
+        <Button
+          type="text"
+          size="small"
+          href={flutterDocsUrl}
+          target="_blank"
+          rel="noreferrer"
+          icon={<ExternalLink size={16} />}
+        >
+          Flutter docs
+        </Button>
+      ) : null}
       <Select<Skin>
         aria-label="Preview skin"
         className="docs__skin-select"

@@ -5,6 +5,9 @@
   --cb-duration-base: 220ms;
   --cb-duration-slow: 380ms;
   --cb-duration-deliberate: 620ms;
+  --cb-duration-stagger-tight: 40ms;
+  --cb-duration-stagger-standard: 60ms;
+  --cb-duration-stagger-relaxed: 80ms;
 
   --cb-ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --cb-ease-entrance: cubic-bezier(0.05, 0.7, 0.1, 1);

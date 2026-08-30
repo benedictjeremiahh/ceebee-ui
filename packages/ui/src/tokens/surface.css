@@ -1,0 +1,7 @@
+/* Component Tokens shared by every platform Surface rendering. */
+:root {
+  --cb-surface-tinted-edge-strength: 0.22;
+  --cb-surface-gradient-start-strength: 0.26;
+  --cb-surface-gradient-end-strength: 0.06;
+  --cb-surface-gradient-edge-strength: 0.24;
+}

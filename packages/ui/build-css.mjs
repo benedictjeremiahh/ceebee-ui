@@ -7,7 +7,14 @@ import { join } from 'node:path';
 const SRC = new URL('./src/', import.meta.url).pathname;
 const DIST = new URL('./dist/', import.meta.url).pathname;
 
-const TOKEN_ORDER = ['structure.css', 'skin.css', 'motion.css'];
+const TOKEN_ORDER = [
+  'structure.css',
+  'skin.css',
+  'motion.css',
+  'surface.css',
+  'data-visualization.css',
+  'skeleton.css',
+];
 const GROUPS = ['foundation', 'form', 'feedback', 'overlay', 'data', 'media', 'nav', 'motion', 'onboarding', 'theme'];
 
 async function cssFilesIn(dir) {

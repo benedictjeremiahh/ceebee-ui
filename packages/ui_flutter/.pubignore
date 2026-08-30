@@ -1,0 +1,6 @@
+.dart_tool/
+build/
+test/failures/
+example/.dart_tool/
+example/build/
+example/test/failures/

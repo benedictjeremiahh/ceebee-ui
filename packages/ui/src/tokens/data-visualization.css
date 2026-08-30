@@ -1,0 +1,24 @@
+/* Component Tokens shared by the web and Flutter mini-chart renderings. */
+:root {
+  --cb-mini-chart-track-strength: 0.08;
+  --cb-mini-chart-area-strength: 0.16;
+  --cb-mini-chart-bar-strength: 0.70;
+  --cb-mini-chart-line-width: 0.09375rem;
+  --cb-mini-chart-marker-radius: 0.15625rem;
+  --cb-mini-chart-bar-gap: 0.125rem;
+  --cb-mini-chart-min-bar: 0.0625rem;
+  --cb-mini-chart-bar-radius: 0.0625rem;
+  --cb-mini-chart-donut-size-sm: 4rem;
+  --cb-mini-chart-donut-size-md: 7.5rem;
+  --cb-mini-chart-donut-size-lg: 10rem;
+  --cb-mini-chart-donut-thickness-sm: 0.5rem;
+  --cb-mini-chart-donut-thickness-md: 1rem;
+  --cb-mini-chart-donut-thickness-lg: 1.5rem;
+  --cb-mini-chart-width-sm: 6rem;
+  --cb-mini-chart-width-md: 7.5rem;
+  --cb-mini-chart-width-lg: 10rem;
+  --cb-mini-chart-height-sm: 1.5rem;
+  --cb-mini-chart-height-md: 2rem;
+  --cb-mini-chart-height-lg: 3rem;
+  --cb-mini-chart-padding: 0.0625rem;
+}

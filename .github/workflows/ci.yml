@@ -17,3 +17,45 @@ jobs:
       - run: pnpm build
       - run: pnpm test
       - run: pnpm typecheck
+      - run: pnpm check:flutter-tokens
+
+  flutter:
+    name: Flutter (${{ matrix.name }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: minimum 3.35.0
+            version: 3.35.0
+          - name: current stable 3.47.1
+            version: 3.47.1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ matrix.version }}
+          channel: stable
+          cache: true
+      - name: Resolve package dependencies
+        working-directory: packages/ui_flutter
+        run: flutter pub get
+      - name: Analyze package
+        working-directory: packages/ui_flutter
+        run: flutter analyze
+      - name: Test package
+        working-directory: packages/ui_flutter
+        run: flutter test
+      - name: Resolve example dependencies
+        working-directory: packages/ui_flutter/example
+        run: flutter pub get
+      - name: Analyze example
+        working-directory: packages/ui_flutter/example
+        run: flutter analyze
+      - name: Test example
+        working-directory: packages/ui_flutter/example
+        run: flutter test
+      - name: Validate publish archive
+        if: matrix.version == '3.47.1'
+        working-directory: packages/ui_flutter
+        run: dart pub publish --dry-run

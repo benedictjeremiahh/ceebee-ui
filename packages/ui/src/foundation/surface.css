@@ -23,7 +23,11 @@
 /* Tint mixes the accent into the surface so one strength token retunes every tinted card. */
 .cb-surface--tinted {
   background: color-mix(in oklch, var(--cb-surface-accent) calc(var(--cb-tint-strength) * 100%), var(--cb-surface));
-  border-color: color-mix(in oklch, var(--cb-surface-accent) 22%, transparent);
+  border-color: color-mix(
+    in oklch,
+    var(--cb-surface-accent) calc(var(--cb-surface-tinted-edge-strength) * 100%),
+    transparent
+  );
 }
 
 .cb-surface--glass {
@@ -53,10 +57,22 @@
 .cb-surface--gradient {
   background: linear-gradient(
     var(--cb-gradient-angle),
-    color-mix(in oklch, var(--cb-surface-accent) 26%, var(--cb-surface)),
-    color-mix(in oklch, var(--cb-surface-accent) 6%, var(--cb-surface))
+    color-mix(
+      in oklch,
+      var(--cb-surface-accent) calc(var(--cb-surface-gradient-start-strength) * 100%),
+      var(--cb-surface)
+    ),
+    color-mix(
+      in oklch,
+      var(--cb-surface-accent) calc(var(--cb-surface-gradient-end-strength) * 100%),
+      var(--cb-surface)
+    )
   );
-  border-color: color-mix(in oklch, var(--cb-surface-accent) 24%, transparent);
+  border-color: color-mix(
+    in oklch,
+    var(--cb-surface-accent) calc(var(--cb-surface-gradient-edge-strength) * 100%),
+    transparent
+  );
 }
 
 .cb-surface--paper {
