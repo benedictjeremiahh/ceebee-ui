@@ -1,3 +1,9 @@
+> **Visibility: PUBLIC.** This repository is published to the world. Every commit is permanent
+> and cloneable within minutes; deleting a file from `HEAD` does not unpublish it. Never commit a
+> credential, a `/Users/...` path from the authoring machine, the name or internal path of another
+> (private) repository, an internal hostname or SSH target, or generated cache. Describe a consumer
+> application generically. Actions minutes here are free and unmetered.
+
 # Authoring contract for @ceebee/ui
 
 Read before adding or changing a component. These rules exist so a new component looks like the rest
@@ -42,10 +48,27 @@ without invention, and so nothing has to be re-litigated per component. The voca
 12. **Protect the consumer boundary.** Every CeeBee web product consumes the versioned package,
     reuses a matching Composition before primitives, and reaches interaction runtimes only through
     `@ceebee/ui`. Run `pnpm check:consumers` when this public surface or its consumer contract changes.
+    A consumer must not blanket-reset the controls this package owns: `button, input { font: inherit }`
+    forces the size too, outranks the package's own pre-paint rules, and resizes every control at
+    hydration. Inherit `font-family` alone.
 13. **Keep inspectable media inspectable.** Screenshots and gallery media that users are expected to
     inspect open a viewport-sized preview through `Image` preview or `Image.PreviewGroup`. Consumers
     must preserve the shared pointer, keyboard, dismissal, focus, zoom, navigation, and mobile contract
     rather than implementing a product-local lightbox.
+
+14. **Never hand-approximate a Substrate's generated styling.** Ant builds its stylesheet in
+    JavaScript from a seed `ThemeBridge` reads out of the DOM, so a server-rendered document carries
+    Ant's class names and none of its rules and its controls paint natively until hydration. Do not
+    close that gap by writing CSS that guesses what Ant will produce. That is a second source of
+    truth: it drifts when Ant changes its arithmetic, it misses whole components, and wrapped in
+    `:where()` to let Ant win it also loses to any consumer rule carrying a single element selector.
+    State a geometry value only when it is **derived from the Substrate's own API** —
+    `theme.getDesignToken()` is pure, needs no DOM, and returns every derived token including the
+    ones the bridge never feeds — or **verified against a rendered control**. Where neither holds,
+    state no size: a wrong size flickers as badly as no size and pretends to be right. Prefer
+    withholding the paint, through the Composition's Skeleton or by hiding until the Substrate's CSS
+    lands, over painting it wrong. A pre-paint layer is a courtesy, never a contract; the contract is
+    the Substrate's own stylesheet.
 
 ## Component-boundary check
 
