@@ -11,7 +11,7 @@ const SKIN_LABELS: Record<Skin, string> = {
   default: 'Default skin',
   astra: 'Astra skin',
   clarity: 'Clarity skin',
-  moodboard: 'Moodboard · Ceebee List',
+  moodboard: 'Moodboard skin',
 };
 
 /** Also a live demo of the two providers: the toggles below drive the whole page. */

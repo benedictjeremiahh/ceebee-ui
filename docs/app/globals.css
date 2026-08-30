@@ -188,7 +188,7 @@ body { margin: 0; font-family: var(--cb-font-sans); }
   border-block-end: var(--cb-border-width) solid var(--cb-border);
   background: var(--cb-bg);
 }
-.docs__skin-select { inline-size: calc(var(--cb-space-8) * 3); }
+.docs__skin-select { inline-size: calc(var(--cb-space-8) * 2 + var(--cb-space-4)); }
 .docs__main h1 { margin-bottom: var(--cb-space-3); }
 .docs__main h2 { margin-top: var(--cb-space-6); margin-bottom: var(--cb-space-3); }
 .docs__main h3 { margin-top: var(--cb-space-5); margin-bottom: var(--cb-space-2); }
