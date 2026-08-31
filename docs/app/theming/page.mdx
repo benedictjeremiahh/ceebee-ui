@@ -10,7 +10,8 @@ Colour resolves in CSS, before React runs. A **Theme** is the light or dark rend
 ## Selecting a theme
 
 `data-theme` on the document root wins in both directions; with no attribute the page follows
-`prefers-color-scheme`. `ThemeProvider` only writes that attribute — it never holds colour.
+`prefers-color-scheme`. CSS remains the source of truth. `ThemeProvider` writes the attribute and
+gives Ant a generated seed from those same Tokens so server and client use the same palette.
 
 The provider belongs at the root of an application, so it cannot be staged inside an example. The
 toggle at the top right of this page is this exact hook.
@@ -27,6 +28,45 @@ function ThemeToggle() {
   return <Button onClick={() => setChoice(resolved === 'dark' ? 'light' : 'dark')}>{resolved}</Button>;
 }
 ```
+
+## Server rendering Ant controls
+
+An application that extracts Ant styles during server rendering must pass the resolved mode that
+the server knew. `ThemeProvider` writes that non-sensitive mode to `cb-theme-mode`; the next request
+can read it with the framework-neutral helper from the server-safe package entry. The values are
+generated inside CeeBee—an application never copies raw colours or Ant tokens.
+
+```tsx
+// Server Component. In Next.js 15+, headers() is asynchronous.
+import { headers } from 'next/headers';
+import { readThemeModeCookie } from '@ceebee/ui';
+import { ThemeProvider } from '@ceebee/ui/client';
+
+export default async function Layout({ children }) {
+  const requestHeaders = await headers();
+  const initialMode = readThemeModeCookie(requestHeaders.get('cookie')) ?? 'light';
+
+  return (
+    <html data-theme={initialMode}>
+      <body>
+        <ThemeProvider initialMode={initialMode} skin="clarity">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+Set the same mode on the server-rendered document root; otherwise the generated Ant seed and the
+CSS Skin can disagree during the first paint. The `skin` prop must match the Skin stylesheet imported by the application. The default Skin is
+`ceebee`; the other generated choices are `astra`, `clarity`, and `moodboard`. On a reader's first
+request there may be no cookie yet. The application chooses its default for that request, while the
+zero-specificity pre-paint layer keeps controls readable until hydration; subsequent requests carry
+the browser's resolved mode and can safely use the framework's Ant style-extraction adapter.
+
+`getCeebeeAntThemeSeed` is also exported for framework adapters that need the generated seed
+directly. It returns a fresh object for one Skin, mode, and contrast preference.
 
 ## Writing a Skin
 

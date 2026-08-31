@@ -29,7 +29,7 @@ export { MotionProvider, useMotionSettings } from './motion/motion-provider.js';
 export type { MotionProviderProps, MotionSettings, MotionHelpers, SpringPreset, DurationToken } from './motion/motion-provider.js';
 
 export { ThemeProvider, useTheme } from './theme/theme-provider.js';
-export type { ThemeChoice } from './theme/theme-provider.js';
+export type { ThemeChoice, ThemeProviderProps } from './theme/theme-provider.js';
 
 export { CommandPalette } from './overlay/command-palette.js';
 export type { CommandPaletteProps, PaletteCommand } from './overlay/command-palette.js';

@@ -5,6 +5,20 @@
 export { cn } from './lib/cn.js';
 export type { Tone, Size, DecorHue } from './lib/cn.js';
 
+export {
+  getCeebeeAntThemeSeed,
+  readThemeModeCookie,
+  serializeThemeModeCookie,
+  THEME_MODE_COOKIE,
+} from './theme/server-theme.js';
+export type {
+  CeebeeAntThemeSeed,
+  CeebeeAntThemeSeedOptions,
+  CeebeeSkin,
+  ThemeContrast,
+  ThemeMode,
+} from './theme/server-theme.js';
+
 export { Surface } from './foundation/surface.js';
 export type { GlassStyle, PaperTilt, SurfaceProps, SurfaceVariant } from './foundation/surface.js';
 export { Flex, Grid, Container } from './foundation/layout.js';

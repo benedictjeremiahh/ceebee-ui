@@ -442,5 +442,6 @@ extension on CbSkin {
     CbSkin.ceebee => 'Default',
     CbSkin.astra => 'Astra',
     CbSkin.clarity => 'Clarity',
+    CbSkin.moodboard => 'Moodboard',
   };
 }

@@ -3,8 +3,28 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
 import type { ThemeConfig } from 'antd';
 import { ThemeBridge } from './theme-bridge.js';
+import {
+  serializeThemeModeCookie,
+  type CeebeeSkin,
+  type ThemeContrast,
+  type ThemeMode,
+} from './server-theme.js';
 
 export type ThemeChoice = 'light' | 'dark' | 'system';
+
+export interface ThemeProviderProps {
+  children: ReactNode;
+  defaultChoice?: ThemeChoice;
+  /** Resolved mode read by the server, normally via readThemeModeCookie(request Cookie header). */
+  initialMode?: ThemeMode;
+  /** Must match the Skin stylesheet loaded by the application. */
+  skin?: CeebeeSkin;
+  /** Server-known contrast preference. Browsers still refresh from live CSS after mounting. */
+  contrast?: ThemeContrast;
+  persist?: boolean;
+  /** Optional Ant token/component overrides applied after the active Ceebee Skin. */
+  antdTheme?: ThemeConfig;
+}
 
 interface ThemeState {
   choice: ThemeChoice;
@@ -17,24 +37,20 @@ const ThemeContext = createContext<ThemeState | null>(null);
 const STORAGE_KEY = 'cb-theme';
 
 /**
- * Colour itself comes from CSS, not from here — this only flips `data-theme`
- * on the document root, so the first paint is already correct without a blocking script
- * for anyone who never overrides the system setting.
+ * CSS remains the colour source of truth. This flips `data-theme` and gives Ant the generated seed
+ * for the server-known rendering; after mount ThemeBridge refreshes from the live CSS cascade.
  */
 export function ThemeProvider({
   children,
   defaultChoice = 'system',
+  initialMode,
+  skin = 'ceebee',
+  contrast = 'normal',
   persist = true,
   antdTheme,
-}: {
-  children: ReactNode;
-  defaultChoice?: ThemeChoice;
-  persist?: boolean;
-  /** Optional Ant token/component overrides applied after the active Ceebee Skin. */
-  antdTheme?: ThemeConfig;
-}) {
+}: ThemeProviderProps) {
   const [choice, setChoiceState] = useState<ThemeChoice>(defaultChoice);
-  const [systemDark, setSystemDark] = useState(false);
+  const [systemDark, setSystemDark] = useState(initialMode === 'dark');
 
   useEffect(() => {
     const query = window.matchMedia('(prefers-color-scheme: dark)');
@@ -66,9 +82,15 @@ export function ThemeProvider({
 
   const resolved = choice === 'system' ? (systemDark ? 'dark' : 'light') : choice;
 
+  useEffect(() => {
+    if (persist) document.cookie = serializeThemeModeCookie(resolved);
+  }, [persist, resolved]);
+
   return (
     <ThemeContext.Provider value={{ choice, setChoice, resolved }}>
-      <ThemeBridge mode={resolved} theme={antdTheme}>{children}</ThemeBridge>
+      <ThemeBridge mode={resolved} skin={skin} contrast={contrast} theme={antdTheme}>
+        {children}
+      </ThemeBridge>
     </ThemeContext.Provider>
   );
 }

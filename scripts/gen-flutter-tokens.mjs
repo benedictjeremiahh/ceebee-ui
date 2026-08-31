@@ -16,6 +16,7 @@ import { createHash } from 'node:crypto';
 
 const root = resolve(import.meta.dirname, '..');
 const out = resolve(root, 'packages/ui_flutter/lib/src/tokens/generated/skins.g.dart');
+const antSeedOut = resolve(root, 'packages/ui/src/theme/ant-theme-seeds.generated.ts');
 
 /** The base Skin every Skin file layers on top of, then the Skins themselves. */
 const BASE = 'packages/ui/src/tokens/skin.css';
@@ -23,6 +24,7 @@ const SKINS = [
   { name: 'ceebee', file: null, doc: 'The default Ceebee Skin, defined by the base tokens alone.' },
   { name: 'astra', file: 'packages/ui/src/skins/astra.css', doc: 'The violet-to-blue gradient dashboard look.' },
   { name: 'clarity', file: 'packages/ui/src/skins/clarity.css', doc: "CeeBee's content-first glass Skin." },
+  { name: 'moodboard', file: 'packages/ui/src/skins/moodboard.css', doc: 'The warm taped-paper product Skin.' },
 ];
 
 /**
@@ -502,6 +504,119 @@ ${lookup}
 `;
 }
 
+const ANT_COLOR_TOKENS = {
+  colorPrimary: '--cb-tone-brand',
+  colorInfo: '--cb-tone-info',
+  colorSuccess: '--cb-tone-success',
+  colorWarning: '--cb-tone-warning',
+  colorError: '--cb-tone-danger',
+  colorText: '--cb-fg',
+  colorTextSecondary: '--cb-fg-muted',
+  colorTextTertiary: '--cb-fg-subtle',
+  colorTextPlaceholder: '--cb-fg-muted',
+  colorTextLightSolid: '--cb-fg-on-brand',
+  colorBgBase: '--cb-bg',
+  colorBgContainer: '--cb-surface',
+  colorBgElevated: '--cb-surface-raised',
+  colorBorder: '--cb-border-strong',
+  colorBorderSecondary: '--cb-border',
+};
+
+const ANT_LENGTH_TOKENS = {
+  fontSize: '--cb-text-sm',
+  fontSizeSM: '--cb-text-xs',
+  fontSizeLG: '--cb-text-md',
+  borderRadius: '--cb-radius-sm',
+  borderRadiusLG: '--cb-radius-md',
+  controlHeight: '--cb-control-height-md',
+  controlHeightSM: '--cb-control-height-sm',
+  controlHeightLG: '--cb-control-height-lg',
+  lineWidth: '--cb-border-width',
+};
+
+function emitAntThemeSeeds() {
+  const baseRules = readRules(readFileSync(resolve(root, BASE), 'utf8'), BASE);
+  const structureFile = 'packages/ui/src/tokens/structure.css';
+  const structureTokens = resolveTokens(
+    readRules(readFileSync(resolve(root, structureFile), 'utf8'), structureFile),
+    { brightness: 'light', contrast: 'normal' },
+  );
+  const registry = {};
+
+  for (const skin of SKINS) {
+    let rules = baseRules;
+    if (skin.file) {
+      rules = [...baseRules, ...readRules(readFileSync(resolve(root, skin.file), 'utf8'), skin.file)];
+    }
+    registry[skin.name] = {};
+    for (const brightness of ['light', 'dark']) {
+      registry[skin.name][brightness] = {};
+      for (const contrast of ['normal', 'more']) {
+        const tokens = resolveTokens(rules, { brightness, contrast });
+        const resolvedTokens = new Map([...structureTokens, ...tokens]);
+        const value = (name) => deref(resolvedTokens.get(name), resolvedTokens).trim();
+        const token = {
+          ...Object.fromEntries(Object.entries(ANT_COLOR_TOKENS)
+            .map(([field, name]) => [field, antColor(value(name), `${skin.name}/${brightness}/${contrast}/${name}`)])),
+          ...Object.fromEntries(Object.entries(ANT_LENGTH_TOKENS)
+            .map(([field, name]) => [field, remToPx(value(name), `${structureFile}/${name}`)])),
+          fontFamily: 'var(--cb-font-sans)',
+          boxShadow: 'var(--cb-shadow-md)',
+          boxShadowSecondary: 'var(--cb-shadow-sm)',
+        };
+        registry[skin.name][brightness][contrast] = {
+          token,
+          components: {
+            Slider: {
+              trackBg: antColor(value('--cb-brand-300'), `${skin.name}/${brightness}/${contrast}/--cb-brand-300`),
+              trackHoverBg: antColor(value('--cb-brand-400'), `${skin.name}/${brightness}/${contrast}/--cb-brand-400`),
+              handleColor: antColor(value('--cb-brand-300'), `${skin.name}/${brightness}/${contrast}/--cb-brand-300`),
+              dotActiveBorderColor: antColor(value('--cb-brand-300'), `${skin.name}/${brightness}/${contrast}/--cb-brand-300`),
+            },
+          },
+        };
+      }
+    }
+  }
+
+  return `// GENERATED FILE — DO NOT EDIT.
+// Written by scripts/gen-flutter-tokens.mjs from the CSS Skins and structure Tokens.
+
+import type { CeebeeAntSeedRegistry } from './server-theme.js';
+
+export const generatedCeebeeAntSeeds = ${JSON.stringify(registry, null, 2)} as const satisfies CeebeeAntSeedRegistry;
+`;
+}
+
+function antColor(value, where) {
+  const match = OKLCH.exec(value);
+  if (!match) throw new Error(`Expected an oklch colour at ${where}: ${value}`);
+  const lightness = Number(match[1]);
+  const chroma = Number(match[2]);
+  const hue = Number(match[3]) * Math.PI / 180;
+  const alpha = match[4] === undefined ? 1 : Number(match[4]);
+  const labA = chroma * Math.cos(hue);
+  const labB = chroma * Math.sin(hue);
+  const lPrime = lightness + 0.3963377774 * labA + 0.2158037573 * labB;
+  const mPrime = lightness - 0.1055613458 * labA - 0.0638541728 * labB;
+  const sPrime = lightness - 0.0894841775 * labA - 1.291485548 * labB;
+  const l = lPrime ** 3;
+  const m = mPrime ** 3;
+  const s = sPrime ** 3;
+  const linear = [
+    4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+    -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s,
+  ];
+  const channels = linear.map((channel) => {
+    const encoded = channel <= 0.0031308
+      ? 12.92 * channel
+      : 1.055 * channel ** (1 / 2.4) - 0.055;
+    return Math.round(Math.min(1, Math.max(0, encoded)) * 255);
+  });
+  return `rgba(${channels.join(', ')}, ${alpha})`;
+}
+
 function brightnessKey(entry) {
   const brightness = entry.brightness === 'dark' ? 'dark' : 'light';
   const contrast = entry.contrast === 'more' ? 'HighContrast' : '';
@@ -775,6 +890,7 @@ const skeleton = emitFlat(
 
 const artefacts = [
   { path: out, text: emit(), label: 'Skin tokens' },
+  { path: antSeedOut, text: emitAntThemeSeeds(), label: 'Ant server theme seeds' },
   { path: resolve(root, 'packages/ui_flutter/lib/src/tokens/generated/structure.g.dart'), text: structure.text, label: 'structure tokens' },
   { path: resolve(root, 'packages/ui_flutter/lib/src/tokens/generated/motion.g.dart'), text: motion.text, label: 'motion tokens' },
   { path: resolve(root, 'packages/ui_flutter/lib/src/tokens/generated/surface.g.dart'), text: surface.text, label: 'Surface tokens' },
@@ -788,13 +904,13 @@ if (process.argv.includes('--check')) {
     try {
       current = readFileSync(artefact.path, 'utf8');
     } catch {
-      throw new Error(`The Flutter ${artefact.label} have never been generated. Run node scripts/gen-flutter-tokens.mjs.`);
+      throw new Error(`The ${artefact.label} have never been generated. Run node scripts/gen-flutter-tokens.mjs.`);
     }
     if (current !== artefact.text) {
-      throw new Error(`The Flutter ${artefact.label} are stale. Run node scripts/gen-flutter-tokens.mjs.`);
+      throw new Error(`The ${artefact.label} are stale. Run node scripts/gen-flutter-tokens.mjs.`);
     }
   }
-  console.log('Flutter Tokens match the CSS Tokens.');
+  console.log('Generated web and Flutter theme artefacts match the CSS Tokens.');
 } else {
   for (const artefact of artefacts) {
     writeFileSync(artefact.path, artefact.text);

@@ -2,10 +2,18 @@
 
 import { ConfigProvider, theme as antdTheme, type ThemeConfig } from 'antd';
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
+import {
+  getCeebeeAntThemeSeed,
+  type CeebeeSkin,
+  type ThemeContrast,
+  type ThemeMode,
+} from './server-theme.js';
 
 export interface ThemeBridgeProps {
   children: ReactNode;
-  mode: 'light' | 'dark';
+  mode: ThemeMode;
+  skin?: CeebeeSkin;
+  contrast?: ThemeContrast;
   theme?: ThemeConfig;
 }
 
@@ -15,14 +23,19 @@ const SKIN_LINK_ID = 'cb-skin';
  * Translates Ceebee's live CSS Tokens into Ant's theme seed. Ant still owns component geometry,
  * interaction, accessibility, and derived tokens; Ceebee owns the active Skin and colour mode.
  */
-export function ThemeBridge({ children, mode, theme }: ThemeBridgeProps) {
-  /* Reading the tokens in an effect leaves the first client paint to Ant's own defaults, so a
-     themed page flashes Ant grey before the Skin arrives. The document already carries the tokens
-     by the time this component renders in the browser, so read them then; the effect below still
-     owns every later Skin or mode change. */
-  const [skinToken, setSkinToken] = useState<CeebeeTheme>(() => (typeof document === 'undefined'
-    ? { token: {}, components: {} }
-    : readCeebeeThemeToken(document.documentElement)));
+export function ThemeBridge({
+  children,
+  mode,
+  skin = 'ceebee',
+  contrast = 'normal',
+  theme,
+}: ThemeBridgeProps) {
+  /* The generated seed is deliberately the first value on both server and client. It makes SSR
+     extraction deterministic and keeps hydration on the same Ant hash. Once mounted, the live CSS
+     Tokens remain authoritative and the effect below takes over every Skin, mode, or contrast
+     change the browser can actually resolve. */
+  const [skinToken, setSkinToken] = useState<CeebeeTheme>(() =>
+    getCeebeeAntThemeSeed({ skin, mode, contrast }));
 
   const refresh = useCallback(() => {
     setSkinToken(readCeebeeThemeToken(document.documentElement));
@@ -176,6 +189,9 @@ function resolveCssColor(probe: HTMLElement, name: string): string | undefined {
   const value = getComputedStyle(probe).color;
   probe.style.removeProperty('color');
   if (!value) return undefined;
+  // A DOM implementation without Custom Property resolution (notably jsdom) returns the var()
+  // expression unchanged. It is not a colour and must not be sent through the canvas fallback.
+  if (value.startsWith('var(')) return undefined;
   if (/^(?:#|rgb|hsl|hsv)/i.test(value)) return value;
 
   const canvas = document.createElement('canvas');

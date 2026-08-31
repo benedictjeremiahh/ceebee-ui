@@ -10,7 +10,7 @@ export const UI_MANIFEST: UiManifest = {
     "moodboard"
   ],
   "exports": {
-    "server": 15,
+    "server": 19,
     "client": 25
   }
 };

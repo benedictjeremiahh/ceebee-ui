@@ -18,6 +18,9 @@ enum CbSkin {
 
   /// The content-first glass Skin.
   clarity,
+
+  /// The warm taped-paper product Skin.
+  moodboard,
 }
 
 /// Which rendering of a Skin is in force: the resolved Theme, plus the reader's contrast setting.
