@@ -1,5 +1,12 @@
 # @ceebee/ui
 
+## 1.5.1
+
+### Patch Changes
+
+- 6beab7d: Hide Segmented's native radio input in the token-based pre-paint fallback so a first request without
+  a persisted theme remains visually identical until Ant's runtime stylesheet arrives.
+
 ## 1.5.0
 
 ### Minor Changes
