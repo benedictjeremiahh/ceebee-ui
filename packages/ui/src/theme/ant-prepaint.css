@@ -193,6 +193,15 @@
   display: flex;
 }
 
+/* The native radio remains in the server markup. Without Ant's runtime rule it paints as a normal
+   form control beside every option, even though the visible label already owns the interaction. */
+:where(.ant-segmented-item-input) {
+  position: absolute;
+  inset: var(--cb-space-0);
+  opacity: 0;
+  pointer-events: none;
+}
+
 :where(.ant-segmented-item) {
   color: var(--cb-fg-muted);
 }
