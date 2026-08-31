@@ -180,6 +180,9 @@ importers:
 
   packages/ui:
     dependencies:
+      '@ant-design/cssinjs':
+        specifier: 2.1.2
+        version: 2.1.2(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       antd:
         specifier: 6.6.1
         version: 6.6.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)

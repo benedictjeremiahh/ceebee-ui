@@ -7,7 +7,9 @@
 - f6f29e2: Add generated, mode-aware Ant theme seeds and a server-readable resolved-mode cookie contract for
   SSR style extraction. ThemeProvider now accepts `initialMode`, `skin`, and `contrast`, while the
   server-safe entry exports seed and cookie helpers. Moodboard is included in the shared web/Flutter
-  Skin registry.
+  Skin registry. Framework adapters also receive CeeBee-owned cache, extraction, and provider seams,
+  preventing a package-manager symlink or non-deduped dependency tree from giving the adapter and
+  Ant separate CSS-in-JS instances that silently extract no rules.
 
 ### Patch Changes
 

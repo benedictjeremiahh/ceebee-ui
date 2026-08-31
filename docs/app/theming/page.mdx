@@ -68,6 +68,38 @@ the browser's resolved mode and can safely use the framework's Ant style-extract
 `getCeebeeAntThemeSeed` is also exported for framework adapters that need the generated seed
 directly. It returns a fresh object for one Skin, mode, and contrast preference.
 
+The style cache must come from CeeBee too. Importing a framework registry directly can give the
+registry and CeeBee's Ant runtime separate CSS-in-JS instances—especially through a workspace or
+package-manager symlink—and silently extract no rules. A framework adapter creates, extracts, and
+provides the shared cache through the client entry; cookie and seed helpers remain server-safe:
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+import { useServerInsertedHTML } from 'next/navigation';
+import {
+  CeebeeAntStyleProvider,
+  createCeebeeAntStyleCache,
+  extractCeebeeAntStyles,
+} from '@ceebee/ui/client';
+
+export function AntStyleRegistry({ children }) {
+  const [cache] = useState(createCeebeeAntStyleCache);
+
+  useServerInsertedHTML(() => {
+    const css = extractCeebeeAntStyles(cache);
+    if (!css) return null;
+    return <style id="ceebee-ant-cssinjs" dangerouslySetInnerHTML={{ __html: css }} />;
+  });
+
+  return <CeebeeAntStyleProvider cache={cache}>{children}</CeebeeAntStyleProvider>;
+}
+```
+
+This adapter is Next-specific only at the insertion hook. Cache ownership, extraction, Ant's
+runtime, Skin seeds, and hydrated provider stay framework-neutral and versioned together.
+
 ## Writing a Skin
 
 A Skin rewrites skin tokens only. It never touches structure tokens and never writes a component

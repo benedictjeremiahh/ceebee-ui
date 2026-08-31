@@ -58,6 +58,7 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
+    "@ant-design/cssinjs": "2.1.2",
     "antd": "6.6.1",
     "dayjs": "1.11.18"
   }

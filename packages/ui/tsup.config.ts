@@ -19,6 +19,6 @@ export default defineConfig([
     clean: false,
     treeshake: true,
     banner: { js: '"use client";' },
-    external: ['react', 'react-dom', 'motion', '@base-ui/react', 'lucide-react', 'antd'],
+    external: ['react', 'react-dom', 'motion', '@base-ui/react', 'lucide-react', 'antd', '@ant-design/cssinjs'],
   },
 ]);

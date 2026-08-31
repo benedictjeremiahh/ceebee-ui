@@ -8,6 +8,10 @@
 export * from 'antd';
 export { ThemeBridge } from './theme/theme-bridge.js';
 export type { ThemeBridgeProps } from './theme/theme-bridge.js';
+export { CeebeeAntStyleProvider } from './theme/ant-style-provider.js';
+export type { CeebeeAntStyleProviderProps } from './theme/ant-style-provider.js';
+export { createCeebeeAntStyleCache, extractCeebeeAntStyles } from './theme/ant-style-cache.js';
+export type { CeebeeAntStyleCache } from './theme/ant-style-cache.js';
 
 /**
  * The runtime publishes its locales as subpath modules rather than from its main entry, and

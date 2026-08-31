@@ -2,8 +2,9 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import { Button } from 'antd';
+import { createCeebeeAntStyleCache, extractCeebeeAntStyles } from './ant-style-cache.js';
+import { CeebeeAntStyleProvider } from './ant-style-provider.js';
 import { ThemeProvider, useTheme } from './theme-provider.js';
 
 function CurrentMode() {
@@ -32,15 +33,15 @@ describe('ThemeProvider server mode', () => {
   });
 
   it('server-renders an Ant control from a DOM-free dark seed', () => {
-    const cache = createCache();
+    const cache = createCeebeeAntStyleCache();
     const html = renderToString(
-      <StyleProvider cache={cache}>
+      <CeebeeAntStyleProvider cache={cache}>
         <ThemeProvider defaultChoice="dark" initialMode="dark">
           <Button>Open</Button>
         </ThemeProvider>
-      </StyleProvider>,
+      </CeebeeAntStyleProvider>,
     );
-    const css = extractStyle(cache, { plain: true });
+    const css = extractCeebeeAntStyles(cache);
 
     expect(html).toContain('ant-btn');
     expect(html).toContain('Open');
