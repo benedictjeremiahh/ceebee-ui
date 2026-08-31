@@ -37,8 +37,11 @@ pnpm build      # library: dist/index.js, dist/client.js, dist/styles.css, dist/
 pnpm typecheck
 ```
 
-Releases go through Changesets: `pnpm changeset` to describe a change, and merging the generated
-"Version Packages" PR publishes to npm.
+Releases go through Changesets: `pnpm changeset` describes a change, and the Release workflow keeps
+the generated "Version Packages" PR current. After that PR is merged, an operator runs
+`pnpm release` from a clean `main` checkout to publish to npm and push the release tag. Automated
+publishing stays disabled until npm trusted publishing is configured; CI has no interactive browser
+session and must not pretend that browser authentication can work there.
 
 ## Status
 
