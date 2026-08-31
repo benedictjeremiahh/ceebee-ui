@@ -101,3 +101,12 @@ if it has one.
 - `asChild` — render-prop style composition where Base UI offers it; do not invent a second mechanism
 - Never a `className` escape hatch used to smuggle in raw values; if a consumer needs a change, the
   Token or the variant is the place to make it.
+
+## Deployment and package release path
+
+- The UI docs Vercel project is linked to GitHub `ceebee-ui` with production branch `main`. A push to
+  `main` already deploys the docs; inspect that Deployment instead of invoking `vercel deploy` again.
+- The Changesets workflow on `main` prepares version changes but does not publish npm automatically.
+  Package publication remains the explicit operator release path in this repository.
+- Before publishing a package, prove the consumer change through a local symlink, run the package
+  and consumer gates, then publish once and verify the registry artifact before upgrading consumers.
