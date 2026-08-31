@@ -47,6 +47,7 @@ class CbSkinTokens {
     required this.fg,
     required this.fgMuted,
     required this.fgSubtle,
+    required this.fgLink,
     required this.fgOnBrand,
     required this.toneNeutral,
     required this.toneBrand,
@@ -113,6 +114,7 @@ class CbSkinTokens {
   final CbOklch fg;
   final CbOklch fgMuted;
   final CbOklch fgSubtle;
+  final CbOklch fgLink;
   final CbOklch fgOnBrand;
 
   final CbOklch toneNeutral;

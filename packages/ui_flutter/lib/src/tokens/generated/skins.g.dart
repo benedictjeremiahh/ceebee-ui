@@ -8,7 +8,7 @@
 // Colours stay in oklch here rather than being flattened to sRGB, so Dart runs the same colour
 // space the CSS does — that is what lets a tint mix in oklch instead of approximating it.
 //
-// Source digest: 68493534d6151118
+// Source digest: fff5b2e6630cb295
 // Regenerate with: node scripts/gen-flutter-tokens.mjs
 
 part of 'package:ceebee_ui/src/tokens/skin_tokens.dart';
@@ -32,6 +32,7 @@ const CbSkinTokens _ceebeeLight = CbSkinTokens(
   fg: CbOklch(0.22, 0.02, 280.0),
   fgMuted: CbOklch(0.45, 0.02, 280.0),
   fgSubtle: CbOklch(0.53, 0.018, 280.0),
+  fgLink: CbOklch(0.54, 0.19, 274.0),
   fgOnBrand: CbOklch(0.99, 0.0, 0.0),
   toneNeutral: CbOklch(0.45, 0.02, 280.0),
   toneBrand: CbOklch(0.62, 0.2, 274.0),
@@ -98,6 +99,7 @@ const CbSkinTokens _ceebeeLightHighContrast = CbSkinTokens(
   fg: CbOklch(0.22, 0.02, 280.0),
   fgMuted: CbOklch(0.35, 0.02, 280.0),
   fgSubtle: CbOklch(0.4, 0.018, 280.0),
+  fgLink: CbOklch(0.54, 0.19, 274.0),
   fgOnBrand: CbOklch(0.99, 0.0, 0.0),
   toneNeutral: CbOklch(0.35, 0.02, 280.0),
   toneBrand: CbOklch(0.62, 0.2, 274.0),
@@ -164,6 +166,7 @@ const CbSkinTokens _ceebeeDark = CbSkinTokens(
   fg: CbOklch(0.96, 0.006, 280.0),
   fgMuted: CbOklch(0.78, 0.015, 280.0),
   fgSubtle: CbOklch(0.66, 0.018, 280.0),
+  fgLink: CbOklch(0.72, 0.19, 274.0),
   fgOnBrand: CbOklch(0.99, 0.0, 0.0),
   toneNeutral: CbOklch(0.78, 0.015, 280.0),
   toneBrand: CbOklch(0.72, 0.19, 274.0),
@@ -230,6 +233,7 @@ const CbSkinTokens _ceebeeDarkHighContrast = CbSkinTokens(
   fg: CbOklch(0.96, 0.006, 280.0),
   fgMuted: CbOklch(0.88, 0.012, 280.0),
   fgSubtle: CbOklch(0.78, 0.016, 280.0),
+  fgLink: CbOklch(0.72, 0.19, 274.0),
   fgOnBrand: CbOklch(0.99, 0.0, 0.0),
   toneNeutral: CbOklch(0.88, 0.012, 280.0),
   toneBrand: CbOklch(0.72, 0.19, 274.0),
@@ -296,6 +300,7 @@ const CbSkinTokens _astraLight = CbSkinTokens(
   fg: CbOklch(0.22, 0.02, 280.0),
   fgMuted: CbOklch(0.45, 0.02, 280.0),
   fgSubtle: CbOklch(0.53, 0.018, 280.0),
+  fgLink: CbOklch(0.54, 0.19, 278.0),
   fgOnBrand: CbOklch(0.99, 0.0, 0.0),
   toneNeutral: CbOklch(0.45, 0.02, 280.0),
   toneBrand: CbOklch(0.62, 0.2, 278.0),
@@ -362,6 +367,7 @@ const CbSkinTokens _astraLightHighContrast = CbSkinTokens(
   fg: CbOklch(0.22, 0.02, 280.0),
   fgMuted: CbOklch(0.35, 0.02, 280.0),
   fgSubtle: CbOklch(0.4, 0.018, 280.0),
+  fgLink: CbOklch(0.54, 0.19, 278.0),
   fgOnBrand: CbOklch(0.99, 0.0, 0.0),
   toneNeutral: CbOklch(0.35, 0.02, 280.0),
   toneBrand: CbOklch(0.62, 0.2, 278.0),
@@ -428,6 +434,7 @@ const CbSkinTokens _astraDark = CbSkinTokens(
   fg: CbOklch(0.96, 0.006, 280.0),
   fgMuted: CbOklch(0.78, 0.015, 280.0),
   fgSubtle: CbOklch(0.66, 0.018, 280.0),
+  fgLink: CbOklch(0.72, 0.19, 278.0),
   fgOnBrand: CbOklch(0.99, 0.0, 0.0),
   toneNeutral: CbOklch(0.78, 0.015, 280.0),
   toneBrand: CbOklch(0.72, 0.19, 278.0),
@@ -494,6 +501,7 @@ const CbSkinTokens _astraDarkHighContrast = CbSkinTokens(
   fg: CbOklch(0.96, 0.006, 280.0),
   fgMuted: CbOklch(0.88, 0.012, 280.0),
   fgSubtle: CbOklch(0.78, 0.016, 280.0),
+  fgLink: CbOklch(0.72, 0.19, 278.0),
   fgOnBrand: CbOklch(0.99, 0.0, 0.0),
   toneNeutral: CbOklch(0.88, 0.012, 280.0),
   toneBrand: CbOklch(0.72, 0.19, 278.0),
@@ -560,6 +568,7 @@ const CbSkinTokens _clarityLight = CbSkinTokens(
   fg: CbOklch(0.22, 0.02, 280.0),
   fgMuted: CbOklch(0.45, 0.02, 280.0),
   fgSubtle: CbOklch(0.53, 0.018, 280.0),
+  fgLink: CbOklch(0.54, 0.19, 264.0),
   fgOnBrand: CbOklch(0.99, 0.0, 0.0),
   toneNeutral: CbOklch(0.45, 0.02, 280.0),
   toneBrand: CbOklch(0.62, 0.2, 264.0),
@@ -626,6 +635,7 @@ const CbSkinTokens _clarityLightHighContrast = CbSkinTokens(
   fg: CbOklch(0.22, 0.02, 280.0),
   fgMuted: CbOklch(0.35, 0.02, 280.0),
   fgSubtle: CbOklch(0.4, 0.018, 280.0),
+  fgLink: CbOklch(0.54, 0.19, 264.0),
   fgOnBrand: CbOklch(0.99, 0.0, 0.0),
   toneNeutral: CbOklch(0.35, 0.02, 280.0),
   toneBrand: CbOklch(0.62, 0.2, 264.0),
@@ -692,6 +702,7 @@ const CbSkinTokens _clarityDark = CbSkinTokens(
   fg: CbOklch(0.96, 0.006, 280.0),
   fgMuted: CbOklch(0.78, 0.015, 280.0),
   fgSubtle: CbOklch(0.66, 0.018, 280.0),
+  fgLink: CbOklch(0.72, 0.19, 264.0),
   fgOnBrand: CbOklch(0.99, 0.0, 0.0),
   toneNeutral: CbOklch(0.78, 0.015, 280.0),
   toneBrand: CbOklch(0.72, 0.19, 264.0),
@@ -758,6 +769,7 @@ const CbSkinTokens _clarityDarkHighContrast = CbSkinTokens(
   fg: CbOklch(0.96, 0.006, 280.0),
   fgMuted: CbOklch(0.88, 0.012, 280.0),
   fgSubtle: CbOklch(0.78, 0.016, 280.0),
+  fgLink: CbOklch(0.72, 0.19, 264.0),
   fgOnBrand: CbOklch(0.99, 0.0, 0.0),
   toneNeutral: CbOklch(0.88, 0.012, 280.0),
   toneBrand: CbOklch(0.72, 0.19, 264.0),
@@ -824,6 +836,7 @@ CbSkinTokens _lerpCbSkinTokens(CbSkinTokens a, CbSkinTokens b, double t) => CbSk
   fg: lerpCbOklch(a.fg, b.fg, t),
   fgMuted: lerpCbOklch(a.fgMuted, b.fgMuted, t),
   fgSubtle: lerpCbOklch(a.fgSubtle, b.fgSubtle, t),
+  fgLink: lerpCbOklch(a.fgLink, b.fgLink, t),
   fgOnBrand: lerpCbOklch(a.fgOnBrand, b.fgOnBrand, t),
   toneNeutral: lerpCbOklch(a.toneNeutral, b.toneNeutral, t),
   toneBrand: lerpCbOklch(a.toneBrand, b.toneBrand, t),

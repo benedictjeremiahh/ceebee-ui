@@ -55,6 +55,7 @@ const SCHEMA = {
   '--cb-fg': { kind: 'color', field: 'fg' },
   '--cb-fg-muted': { kind: 'color', field: 'fgMuted' },
   '--cb-fg-subtle': { kind: 'color', field: 'fgSubtle' },
+  '--cb-fg-link': { kind: 'color', field: 'fgLink' },
   '--cb-fg-on-brand': { kind: 'color', field: 'fgOnBrand' },
 
   '--cb-tone-neutral': { kind: 'color', field: 'toneNeutral' },
@@ -557,6 +558,7 @@ const STRUCTURE_SCHEMA = {
   '--cb-control-height-sm': { kind: 'rem', field: 'controlHeightSm' },
   '--cb-control-height-md': { kind: 'rem', field: 'controlHeightMd' },
   '--cb-control-height-lg': { kind: 'rem', field: 'controlHeightLg' },
+  '--cb-canvas-block-size': { kind: 'rem', field: 'canvasBlockSize' },
 
   '--cb-sticker-enter-y': { kind: 'rem', field: 'stickerEnterY' },
   '--cb-sticker-exit-x': { kind: 'rem', field: 'stickerExitX' },

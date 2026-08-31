@@ -41,6 +41,7 @@ abstract final class CbStructure {
   static const double controlHeightSm = 32.0;
   static const double controlHeightMd = 40.0;
   static const double controlHeightLg = 48.0;
+  static const double canvasBlockSize = 512.0;
   static const double stickerEnterY = 12.0;
   static const double stickerExitX = 32.0;
   static const double stickerEnterScale = 0.94;
