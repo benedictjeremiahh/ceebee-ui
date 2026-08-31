@@ -151,6 +151,36 @@
    value — Ant derives them through its own algorithm from tokens the bridge does not feed. So this
    states no size or radius for it, only the axis it lays out on, which it otherwise loses entirely
    and stacks vertically, and the colours, which are Tokens. */
+/* Checkbox server-renders with no box at all until Ant lands: no border, no background, so a reader
+   sees nothing where a checkbox belongs. Ant sizes its interactive controls at half the control
+   height — `controlInteractiveSize` is `controlHeight / 2` in Ant's own token deriver, checked
+   against it — so that size is derived rather than guessed. Its 6px corner comes from
+   `borderRadiusSM`, which no Ceebee Token carries, so no radius is stated here: a square box for one
+   paint is honest, a nearly-right radius is not. */
+:where(.ant-checkbox-wrapper) {
+  display: flex;
+  align-items: center;
+  font-family: var(--cb-font-sans);
+  font-size: var(--cb-text-sm);
+}
+
+/* The box is `.ant-checkbox` itself in this runtime; there is no `-inner` element, and a rule
+   naming one matches nothing. It is a `span`, so it needs a block-ish display before a size means
+   anything. */
+:where(.ant-checkbox) {
+  display: inline-block;
+  flex: none;
+  width: calc(var(--cb-control-height-md) / 2);
+  height: calc(var(--cb-control-height-md) / 2);
+  border: var(--cb-border-width) solid var(--cb-border-strong);
+  background: var(--cb-surface);
+}
+
+/* Measured at one space step on each side, which is exactly the 16px the wrapper was short. */
+:where(.ant-checkbox-label) {
+  padding-inline: var(--cb-space-2);
+}
+
 :where(.ant-segmented) {
   background: var(--cb-bg-subtle);
   font-family: var(--cb-font-sans);
