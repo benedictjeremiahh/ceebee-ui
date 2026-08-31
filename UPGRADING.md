@@ -36,8 +36,8 @@ export default function UiThemeBridge({ children }: { children: ReactNode }) {
 }
 ```
 
-Mount it inside the app's own provider, above everything that renders a component. `ceebee-list`
-needed this; its layout said `ThemeProvider` and meant its own.
+Mount it inside the app's own provider, above everything that renders a component. One large
+consumer needed this because its layout said `ThemeProvider` and meant its own.
 
 ## Read this next: `Badge` changed meaning
 
@@ -82,7 +82,7 @@ decorative pills that is a bad trade. Build the pill locally from tokens instead
 }
 ```
 
-`ceebee-home` went this way. Check for a `ThemeProvider` before you reach for `Tag`.
+A server-rendered consumer went this way. Check for a `ThemeProvider` before you reach for `Tag`.
 
 ## Removed symbols
 
@@ -223,13 +223,13 @@ sites are attributes the runtime will ignore or reject.
 
 | App | On | Symbol sites | Prop sites | Shape of the work |
 | --- | --- | --- | --- | --- |
-| `ceebee-price-reference` | 0.3.0 | 1 | 7 | An afternoon. Do this one first. |
-| `ceebee-home` | 0.3.0 | 2 | 5 | An afternoon. |
-| `ceebee-monitor` | 0.3.3 | 7 | 2 | `Stack`, `StatCard`, `Breadcrumbs`, then done. |
-| `ceebee-list` | 0.6.0 | 23 | 239 | The real one. Budget properly. |
+| Small server-rendered consumer | 0.3.0 | 1 | 7 | An afternoon. Do this one first. |
+| Small client consumer | 0.3.0 | 2 | 5 | An afternoon. |
+| Medium dashboard consumer | 0.3.3 | 7 | 2 | `Stack`, `StatCard`, `Breadcrumbs`, then done. |
+| Large application consumer | 0.6.0 | 23 | 239 | The real one. Budget properly. |
 
 Go in that order. The three small apps are the same migration at a size where a mistake is obvious,
-and they will surface anything this guide gets wrong before it costs a day in `ceebee-list`.
+and they will surface anything this guide gets wrong before it costs a day in the large consumer.
 
 ### Per app
 
@@ -243,7 +243,7 @@ and they will surface anything this guide gets wrong before it costs a day in `c
 
 Step 5 is not optional and does not have a compiler behind it.
 
-### `ceebee-list` specifically
+### Large-consumer specifics
 
 239 prop sites is mechanical but not blind — `tone` on a `Button` and `tone` on a `Text` are
 different prop systems that happen to share a name, and only the first one moves. Migrate one
@@ -261,4 +261,4 @@ revert rather than a bisect. The 237 sites concentrate hard:
 
 `Button` and `Badge` are 88% of it. Clear those two and the rest is an afternoon.
 
-`app/ui-probe/` uses `Coachmark`. That is the only `Tour` work in any app.
+The large consumer's UI probe uses `Coachmark`. That is the only `Tour` work in any app.

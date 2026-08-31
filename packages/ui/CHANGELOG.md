@@ -360,8 +360,8 @@
   `.cb-dialog` or `.cb-stack` has to follow. `DialogClose` keeps its name because
   Base UI's own part is called that.
 
-  Known callers at the time of writing: `ceebee-home` uses `Stack` in 26 places;
-  `ceebee-monitor` uses `Stack` in 53, `StatCard` in 20 and `Breadcrumbs` in 2.
+  Known callers at the time of writing: a small consumer uses `Stack` in 26 places;
+  a dashboard consumer uses `Stack` in 53, `StatCard` in 20 and `Breadcrumbs` in 2.
   Neither picks this up on its own — a caret range on a 0.x version does not cross
   a minor — so both stay on what they have until somebody bumps them deliberately.
 

@@ -1,6 +1,6 @@
 > **Visibility: PUBLIC.** This repository is published to the world. Every commit is permanent
 > and cloneable within minutes; deleting a file from `HEAD` does not unpublish it. Never commit a
-> credential, a `/Users/...` path from the authoring machine, the name or internal path of another
+> credential, an absolute path from the authoring machine, the name or internal path of another
 > (private) repository, an internal hostname or SSH target, or generated cache. Describe a consumer
 > application generically. Actions minutes here are free and unmetered.
 
@@ -101,22 +101,3 @@ if it has one.
 - `asChild` — render-prop style composition where Base UI offers it; do not invent a second mechanism
 - Never a `className` escape hatch used to smuggle in raw values; if a consumer needs a change, the
   Token or the variant is the place to make it.
-
-## CeeBee estate graph
-
-- The cross-product knowledge graph lives at `/Users/benejeremiah/Documents/Projects/ceebee-graph`. Read its `AGENTS.md` and `ESTATE.md` before changing authentication, deployment, shared data, VPS services, or another cross-product contract.
-- Use `graphify query "…" --graph /Users/benejeremiah/Documents/Projects/ceebee-graph/graph.json` to locate cross-repository code paths. Treat it as navigation evidence; verify the returned source before editing.
-- After product code or product documentation work is complete and its own checks pass, run `/Users/benejeremiah/Documents/Projects/ceebee-graph/refresh.sh`, then `/Users/benejeremiah/Documents/Projects/ceebee-graph/check.sh`.
-- Report generated changes in both `ceebee-graph` and `ceebee-home/public/`. Do not publish or deploy them unless the user requested that separate action.
-
-## CeeBee product lifecycle
-
-- The canonical idea-to-release workflow lives at `/Users/benejeremiah/Documents/Projects/ceebee-ideas/docs/knowledge/release-lifecycle.md`. For work backed by a Product Idea, read it and the matching Idea Brief before starting, resuming, parking, or preparing a first or materially changed release.
-- Idea Status is independent from release and monitoring state. A private alpha may be released while its Idea remains `in-development`; a `parked` Idea requires an explicit product decision before implementation resumes.
-- After a successful first or material release, keep the durable release record here, then update the Idea Brief's Outcome with the date, release kind, and a link or stable path. Do not duplicate the implementation changelog in `ceebee-ideas`.
-
-## CeeBee release monitoring
-
-- The canonical release-to-monitoring handoff lives at `/Users/benejeremiah/Documents/Projects/ceebee-monitor/docs/RELEASE-MONITORING.md`. Read it before creating or changing a Deployment, release channel, Health Report, or monitoring ownership boundary.
-- Add `planned` only for a concrete operator-controlled target and change it to `active` only after the real release passes authentication, identity, reachability, and freshness proof with Monitor's own parser and probe.
-- Monitor Product-owned runtime and release capabilities, not user devices or third-party availability. Keep shared infrastructure checks with the Product that has the clearest operational ownership.

@@ -8,6 +8,7 @@ dist/
 .env*
 playwright-report/
 test-results/
+graphify-out/
 
 # Flutter package build state. Generated Dart sources are intentionally committed.
 packages/ui_flutter/.dart_tool/

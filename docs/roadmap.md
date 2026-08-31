@@ -129,7 +129,7 @@ owns, not a Pro mapping.
 
 ## Product-proven gaps
 
-These are the strongest first delivery candidates because `ceebee-list` already implements them.
+These are the strongest first delivery candidates because a large internal consumer already implements them.
 
 ### Completed first delivery wave
 
@@ -148,7 +148,7 @@ These are the strongest first delivery candidates because `ceebee-list` already 
    fixed-width grid cell. `Card.Meta` is the non-interactive avatar/title/description anatomy, and
    nested Card treatment is visual geometry only. Hover transforms drop under reduced motion. This
    slice stops at the library component, tests, docs, and a minor changeset; publishing and migrating
-   `ceebee-list` are separate follow-up slices.
+   migrating the large internal consumer are separate follow-up slices.
 2. **Collapse** — removes two independent disclosure implementations. Built with controlled or
    uncontrolled single/multiple modes and a matching Skeleton.
 3. **Modal confirmation** — extends the existing modal contract without conflating it with
@@ -165,7 +165,7 @@ These are the strongest first delivery candidates because `ceebee-list` already 
 
 ### Still awaiting a boundary decision
 
-`Tooltip` wraps one trigger. `ceebee-list` also has `TooltipLayer`, one document listener serving
+`Tooltip` wraps one trigger. A large internal consumer also has `TooltipLayer`, one document listener serving
 attribute-marked targets that may sit in clipped or stacked rows. This appears to be the same
 interaction contract with a different delivery mechanism, so the boundary rule points toward one
 `Tooltip` API rather than another public component.
