@@ -1,0 +1,14 @@
+/* Vendored runtime geometry that Ant does not expose through component tokens.
+
+   Ant derives Tag height from line height and content. A bare label, a label
+   with a third-party SVG, and a CheckableTag therefore land on three different
+   physical heights even though they share one semantic component. Ant exposes
+   its colours but no height component token, so the additive floor lives at
+   the Skin bridge. The zero-specificity selector lets an upstream min-height
+   take ownership if one is added later. */
+:where(.ant-tag) {
+  box-sizing: border-box;
+  min-height: calc(var(--cb-control-height-sm) - var(--cb-space-1));
+  align-content: center;
+  vertical-align: middle;
+}
