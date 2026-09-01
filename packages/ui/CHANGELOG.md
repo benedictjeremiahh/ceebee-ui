@@ -1,5 +1,12 @@
 # @ceebee/ui
 
+## 1.5.2
+
+### Patch Changes
+
+- dacf4d6: Preserve Modal title and description semantics, restore trigger focus across controlled unmounts,
+  and expose stable CeeBee modal layer classes.
+
 ## 1.5.1
 
 ### Patch Changes
