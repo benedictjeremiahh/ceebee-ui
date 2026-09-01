@@ -1,0 +1,14 @@
+.cb-modal {
+  z-index: var(--cb-z-modal) !important;
+}
+
+.cb-modal__backdrop {
+  z-index: var(--cb-z-modal-backdrop) !important;
+}
+
+.cb-modal__description {
+  margin-block-end: var(--cb-space-4);
+  color: var(--cb-fg-muted);
+  font-size: var(--cb-text-sm);
+  line-height: var(--cb-leading-normal);
+}

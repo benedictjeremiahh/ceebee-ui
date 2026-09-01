@@ -25,6 +25,7 @@ const App: React.FC = () => {
       </Button>
       <Modal
         title="Basic Modal"
+        description="Review the details, then confirm or cancel."
         closable={{ 'aria-label': 'Custom Close Button' }}
         open={isModalOpen}
         onOk={handleOk}

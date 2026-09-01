@@ -3,13 +3,33 @@ import { ApiReference } from '../../../components/api-reference';
 
 # Modal
 
-Display a modal dialog box, providing a title, content area, and action buttons.
+Display a modal dialog box with a distinct accessible title, optional description, content area,
+and actions.
 
 ## When to use
 
 When requiring users to interact with the application, but without jumping to a new page and interrupting the user's workflow, you can use `Modal` to create a new floating layer over the current page to get user feedback or display information.
 
 Additionally, if you need to show a simple confirmation dialog, you can use App.useApp hooks.
+
+Use `description` for explanatory copy below the title. Do not place a subtitle inside `title`:
+assistive technology must receive a concise accessible name and a separate description. Focus
+returns to the opening control even when a controlled consumer unmounts the Modal immediately.
+
+The positioning wrapper and backdrop expose `cb-modal` and `cb-modal__backdrop` respectively.
+Use the upstream `classNames` semantic slots for any other additive styling.
+
+## Keyboard
+
+- `Tab` and `Shift+Tab` move through focusable controls inside the modal.
+- `Escape` requests dismissal when keyboard dismissal is enabled.
+- After dismissal, focus returns to the control that opened the modal unless
+  `focusable.focusTriggerAfterClose` is explicitly disabled.
+
+## Do / don't
+
+- Do pass a short `title` and supporting `description` as separate props.
+- Don't build a stacked title-and-subtitle React node and pass the whole block as `title`.
 
 ## Examples
 

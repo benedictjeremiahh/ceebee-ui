@@ -1534,11 +1534,15 @@
         "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
       },
       "license": "MIT",
-      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "adapter": "packages/ui/src/overlay/modal.tsx",
       "demoPath": "docs/components/feedback/modal",
       "parityGaps": [],
       "proof": "docs/parity.generated.json#Modal",
-      "legacyAdapter": "packages/ui/src/overlay/modal.tsx"
+      "additiveExtensions": [
+        "Separate accessible description",
+        "Focus restoration across conditional unmount",
+        "Stable CeeBee semantic layer classes"
+      ]
     },
     "Notification": {
       "strategy": "antd-runtime",

@@ -6,6 +6,8 @@
  * Skins — see THIRD_PARTY_NOTICES.md and docs/component-sources.json for what came from where.
  */
 export * from 'antd';
+export { Modal } from './overlay/modal.js';
+export type { ModalProps } from './overlay/modal.js';
 export { ThemeBridge } from './theme/theme-bridge.js';
 export type { ThemeBridgeProps } from './theme/theme-bridge.js';
 export { CeebeeAntStyleProvider } from './theme/ant-style-provider.js';
