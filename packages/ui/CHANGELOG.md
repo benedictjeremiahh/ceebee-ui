@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 1.5.3
+
+### Patch Changes
+
+- fa07526: Keep vendored Tag and CheckableTag geometry aligned across plain, icon-leading, linked, filled, and solid content.
+
 ## 1.5.2
 
 ### Patch Changes
