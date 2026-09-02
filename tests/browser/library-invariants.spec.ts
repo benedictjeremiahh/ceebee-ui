@@ -810,3 +810,95 @@ test('Navigation docs match the documented card geometry, coverage, and primary 
   await expect.poll(() => themedStep.evaluate((element) => getComputedStyle(element).backgroundColor)).not.toBe(defaultSkinColor);
 });
 
+
+/**
+ * Text contrast, with the transfer curve WCAG actually specifies.
+ *
+ * The `contrast` helper above answers "is this surface darker than that one", which is all its
+ * callers ask, and its straight-line luminance is fine for that. A ratio compared against 4.5 is a
+ * different question and needs the real curve, plus compositing: disabled text is delivered as an
+ * alpha, and an alpha measured as if it were opaque reads far better than what reaches the eye.
+ */
+function channelToLinear(value: number): number {
+  const unit = value / 255;
+  return unit <= 0.04045 ? unit / 12.92 : ((unit + 0.055) / 1.055) ** 2.4;
+}
+
+function parseRgba(color: string): [number, number, number, number] {
+  const [red = 0, green = 0, blue = 0, alpha = 1] = color.match(/[\d.]+/g)?.map(Number) ?? [];
+  return [red, green, blue, alpha];
+}
+
+function textContrast(foreground: string, background: string): number {
+  const [fgRed, fgGreen, fgBlue, alpha] = parseRgba(foreground);
+  const [bgRed, bgGreen, bgBlue] = parseRgba(background);
+  const composited = [
+    fgRed * alpha + bgRed * (1 - alpha),
+    fgGreen * alpha + bgGreen * (1 - alpha),
+    fgBlue * alpha + bgBlue * (1 - alpha),
+  ].map(channelToLinear);
+  const back = [bgRed, bgGreen, bgBlue].map(channelToLinear);
+  const relative = (channels: number[]) =>
+    0.2126 * channels[0]! + 0.7152 * channels[1]! + 0.0722 * channels[2]!;
+  const [lighter, darker] = [relative(composited), relative(back)].sort((a, b) => b - a) as [number, number];
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+/**
+ * A disabled control still has to say what it is.
+ *
+ * The runtime derives its disabled foreground from its own algorithm rather than from any token the
+ * bridge sends, and lands on a 25%-alpha grey — about 2.1:1 on a dark surface, which is a word you
+ * can see the shape of and not read. WCAG exempts inactive controls from 1.4.3, and that exemption
+ * is the wrong thing to lean on here: the label on a disabled control is precisely what tells you
+ * why it is disabled and what would enable it, so it is the one piece of text on the control that
+ * has to survive. This is the same defect, and the same fix, as `colorTextPlaceholder`.
+ *
+ * The bar is 4.5:1 because this is body-sized text. Disabled still reads as disabled: the control
+ * loses its border and its ground, which is the cue that does not depend on colour at all.
+ */
+for (const mode of ['light', 'dark'] as const) {
+  test(`a disabled button's label stays readable in ${mode}`, async ({ page }) => {
+    await page.addInitScript((choice) => window.localStorage.setItem('cb-theme', choice), mode);
+    await page.goto('/form/button');
+    await page.evaluate((choice) => document.documentElement.setAttribute('data-theme', choice), mode);
+
+    /* Not a ghost button: those sit on the fixed mid-tone backdrop the test above pins, and the
+       demo makes them deliberately faint. The claim here is about an ordinary disabled control on
+       an ordinary surface, which is what a product actually renders. */
+    const disabled = page
+      .locator('.ant-btn:disabled:not(.ant-btn-background-ghost)')
+      .filter({ has: page.locator(':scope:not(.site-button-ghost-wrapper *)') })
+      .first();
+    await expect(disabled).toBeVisible();
+
+    await expect.poll(async () => {
+      const { color, background } = await disabled.evaluate((element) => {
+        /* Normalised through a canvas rather than read off `getComputedStyle` as-is. Tokens resolve
+           to whatever colour space they were authored in — the stage here computes to `lab(...)` —
+           and a regex that assumes three 0-255 channels turns that into a number that means
+           nothing. Painting each colour and reading the pixel back gives sRGB for all of them. */
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = 1;
+        const context = canvas.getContext('2d', { willReadFrequently: true })!;
+        const toRgba = (value: string) => {
+          context.clearRect(0, 0, 1, 1);
+          context.fillStyle = value;
+          context.fillRect(0, 0, 1, 1);
+          const [red, green, blue, alpha] = context.getImageData(0, 0, 1, 1).data;
+          return `rgba(${red}, ${green}, ${blue}, ${alpha! / 255})`;
+        };
+
+        /* The nearest ancestor that actually paints. A disabled control's own ground is usually a
+           translucent wash, so the colour the label is read against comes from underneath it. */
+        let ground = 'rgb(255, 255, 255)';
+        for (let node: Element | null = element; node; node = node.parentElement) {
+          const painted = toRgba(getComputedStyle(node).backgroundColor);
+          if (painted.endsWith(', 1)')) { ground = painted; break; }
+        }
+        return { color: toRgba(getComputedStyle(element).color), background: ground };
+      });
+      return Number(textContrast(color, background).toFixed(2));
+    }, { timeout: 10_000 }).toBeGreaterThanOrEqual(4.5);
+  });
+}

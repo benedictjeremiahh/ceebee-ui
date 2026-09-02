@@ -131,6 +131,20 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
        surface, so placeholders take the muted foreground that clears it against every surface a
        control can sit on. */
     colorTextPlaceholder: color('--cb-fg-muted'),
+    /* The same defect as the placeholder above, in the same shape: Ant derives its disabled
+       foreground from its own algorithm and lands on a 25%-alpha grey — measured at 1.19:1 on a
+       light stage and 2.08:1 on a dark one, which is a word you can see the shape of and not read.
+       WCAG exempts inactive controls, and that exemption is the wrong thing to lean on: the label on
+       a disabled control is exactly what tells you why it is disabled and what would enable it, so
+       it is the one piece of text on the control that has to survive.
+
+       The muted foreground rather than the subtle one, for the reason the placeholder note above
+       already records: subtle clears AA against the plain surface and nothing else, and a disabled
+       control sits on a translucent wash over whatever surface the product put it on. Measured on a
+       consumer's own panel, subtle came back at 4.37:1 — under the bar, from the one step that
+       looked quiet enough. Disabled still reads as disabled: the control also loses its border and
+       its ground, which are cues that do not depend on colour at all. */
+    colorTextDisabled: color('--cb-fg-muted'),
     colorTextLightSolid: color('--cb-fg-on-brand'),
     colorBgBase: color('--cb-bg'),
     colorBgContainer: color('--cb-surface'),
