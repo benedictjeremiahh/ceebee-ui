@@ -17,8 +17,14 @@ reset the view. Pointer drag pans; two-pointer pinch zooms; Ctrl/Command + wheel
 children retain their own focus and activation behavior, so dragging never replaces a node link or
 button.
 
-There is no dismissal, selection, graph layout, or full-screen overlay in this component. Compose it
-inside `Drawer` or `Modal` when a Product needs a full-screen mobile canvas. Reduced motion removes
+A canvas is usually laid out inside a page column narrower than the content it holds, so the toolbar
+offers fullscreen alongside zoom and reset. It uses the browser's Fullscreen API rather than an
+overlay of its own: the browser promotes the element above every stacking context, keeps focus inside
+it, and closes it on `Escape`, so this component implements no dismissal, focus trap, or `z-index` of
+its own. Where the API is unavailable — iOS Safari among them — the control is not rendered at all
+rather than offered and inert.
+
+There is still no dismissal, selection, or graph layout in this component. Reduced motion removes
 transform transitions while preserving every direct pan and zoom result.
 
 <Guidance
@@ -40,6 +46,8 @@ transform transitions while preserving every direct pan and zoom result.
   { name: 'zoomOutLabel', type: 'string', default: 'Zoom out', description: 'Localised name for the zoom-out control.' },
   { name: 'resetLabel', type: 'string', default: 'Reset canvas', description: 'Localised name for the reset control.' },
   { name: 'zoomStatusLabel', type: 'string', default: 'Canvas zoom', description: 'Localised name for the current zoom output.' },
+  { name: 'fullscreenLabel', type: 'string', default: 'Enter fullscreen', description: 'Localised name for the fullscreen control. The control is absent where the browser has no Fullscreen API.' },
+  { name: 'exitFullscreenLabel', type: 'string', default: 'Exit fullscreen', description: 'Localised name the same control takes while the canvas is fullscreen.' },
   { name: 'motion', type: 'boolean', default: 'true', description: 'Disables transform transitions without disabling direct manipulation.' },
 ]}/>
 
@@ -51,6 +59,7 @@ transform transitions while preserving every direct pan and zoom result.
 | `+` / `=` | Zoom in |
 | `-` | Zoom out |
 | `0` / `Home` | Reset pan and zoom |
+| `Escape` | Leave fullscreen, handled by the browser |
 
 ## Tokens
 

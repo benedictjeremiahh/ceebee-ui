@@ -1,8 +1,9 @@
 'use client';
 
 import { Button } from 'antd';
-import { Minus, Plus, RotateCcw } from 'lucide-react';
+import { Maximize2, Minimize2, Minus, Plus, RotateCcw } from 'lucide-react';
 import {
+  useEffect,
   useRef,
   useState,
   type CSSProperties,
@@ -22,6 +23,10 @@ export interface PanZoomCanvasProps {
   zoomOutLabel?: string;
   resetLabel?: string;
   zoomStatusLabel?: string;
+  /* A canvas is usually laid out inside a page column that is narrower than the diagram it holds.
+     Fullscreen hands it the whole viewport without the consumer building a second surface for it. */
+  fullscreenLabel?: string;
+  exitFullscreenLabel?: string;
   motion?: boolean;
 }
 
@@ -50,9 +55,16 @@ function PanZoomCanvasRoot({
   zoomOutLabel = 'Zoom out',
   resetLabel = 'Reset canvas',
   zoomStatusLabel = 'Canvas zoom',
+  fullscreenLabel = 'Enter fullscreen',
+  exitFullscreenLabel = 'Exit fullscreen',
   motion: motionEnabled = true,
 }: PanZoomCanvasProps) {
   const motionSettings = useMotionSettings();
+  const rootRef = useRef<HTMLElement>(null);
+  /* Resolved after mount so the server and the first client render agree, and so a browser without
+     the API is offered nothing rather than a control that does nothing. */
+  const [fullscreenAvailable, setFullscreenAvailable] = useState(false);
+  const [fullscreen, setFullscreen] = useState(false);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [scale, setScale] = useState(1);
   const pointers = useRef(new Map<number, Point>());
@@ -60,6 +72,25 @@ function PanZoomCanvasRoot({
   const pinchOrigin = useRef<{ distance: number; scale: number } | null>(null);
   const stepRef = useRef<HTMLSpanElement>(null);
   const shouldAnimate = motionEnabled && motionSettings.enabled;
+
+  /* The browser owns the fullscreen surface: it promotes the element above every stacking context,
+     keeps focus inside it, and closes it on Escape. Nothing here re-implements dismissal or focus. */
+  useEffect(() => {
+    setFullscreenAvailable(typeof document !== 'undefined' && document.fullscreenEnabled === true && typeof rootRef.current?.requestFullscreen === 'function');
+    function onChange() {
+      setFullscreen(document.fullscreenElement === rootRef.current);
+    }
+    document.addEventListener('fullscreenchange', onChange);
+    return () => document.removeEventListener('fullscreenchange', onChange);
+  }, []);
+
+  function toggleFullscreen() {
+    if (document.fullscreenElement === rootRef.current) {
+      void document.exitFullscreen();
+      return;
+    }
+    void rootRef.current?.requestFullscreen();
+  }
 
   function reset() {
     setPan({ x: 0, y: 0 });
@@ -143,7 +174,7 @@ function PanZoomCanvasRoot({
   } as CSSProperties;
 
   return (
-    <section className="cb-pan-zoom-canvas" data-motion={String(shouldAnimate)}>
+    <section ref={rootRef} className="cb-pan-zoom-canvas" data-motion={String(shouldAnimate)} data-fullscreen={String(fullscreen)}>
       <div className="cb-pan-zoom-canvas__toolbar">
         {hint ? <p className="cb-pan-zoom-canvas__hint">{hint}</p> : <span />}
         <div className="cb-pan-zoom-canvas__controls">
@@ -151,6 +182,16 @@ function PanZoomCanvasRoot({
           <output className="cb-pan-zoom-canvas__zoom" aria-label={zoomStatusLabel}>{Math.round(scale * 100)}%</output>
           <Button type="text" size="small" icon={<Plus aria-hidden="true" />} aria-label={zoomInLabel} onClick={() => zoom(SCALE_STEP)} disabled={scale >= MAX_SCALE} />
           <Button type="text" size="small" icon={<RotateCcw aria-hidden="true" />} aria-label={resetLabel} onClick={reset} />
+          {fullscreenAvailable ? (
+            <Button
+              type="text"
+              size="small"
+              icon={fullscreen ? <Minimize2 aria-hidden="true" /> : <Maximize2 aria-hidden="true" />}
+              aria-label={fullscreen ? exitFullscreenLabel : fullscreenLabel}
+              aria-pressed={fullscreen}
+              onClick={toggleFullscreen}
+            />
+          ) : null}
         </div>
       </div>
       <div

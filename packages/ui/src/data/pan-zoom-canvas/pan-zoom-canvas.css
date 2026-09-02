@@ -116,6 +116,19 @@
   inset-inline: calc(var(--cb-space-8) * 3);
 }
 
+/* Fullscreen hands the element the whole screen, so the fixed canvas height stops being the right
+   size: the viewport takes the space the toolbar leaves instead of leaving the rest blank. */
+.cb-pan-zoom-canvas:fullscreen {
+  border-radius: var(--cb-radius-none);
+  display: flex;
+  flex-direction: column;
+}
+
+.cb-pan-zoom-canvas:fullscreen .cb-pan-zoom-canvas__viewport {
+  block-size: auto;
+  flex: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cb-pan-zoom-canvas__content { transition: none; }
 }
