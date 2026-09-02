@@ -902,3 +902,53 @@ for (const mode of ['light', 'dark'] as const) {
     }, { timeout: 10_000 }).toBeGreaterThanOrEqual(4.5);
   });
 }
+
+/**
+ * A segmented control follows the skin it is rendered in.
+ *
+ * The bridge sends the runtime a set of explicit colours, and every component
+ * that reads one of those follows the theme. Segmented does not read them: its
+ * track and its selected pill come from tokens the bridge leaves to the
+ * runtime's own algorithm, which is the light one. So in the dark skin the
+ * chosen option keeps a white pill while its label follows the theme — measured
+ * in a consumer at 1.13:1, which is a chosen option you cannot read at all.
+ *
+ * The failure is quiet in exactly the way that matters: the control works, the
+ * selection is correct, and the one thing it exists to communicate is invisible.
+ */
+for (const mode of ['light', 'dark'] as const) {
+  test(`a segmented control's chosen option is readable in ${mode}`, async ({ page }) => {
+    await page.addInitScript((choice) => window.localStorage.setItem('cb-theme', choice), mode);
+    await page.goto('/data-display/segmented');
+    await page.evaluate((choice) => document.documentElement.setAttribute('data-theme', choice), mode);
+
+    const selected = page.locator('.ant-segmented-item-selected').first();
+    await expect(selected).toBeVisible();
+    /* Nothing hovering: the runtime's hover rule outranks the selected state,
+       so a control read under the pointer reports the pointer, not the state. */
+    await page.mouse.move(0, 0);
+
+    await expect.poll(async () => {
+      const { color, background } = await selected.evaluate((element) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = 1;
+        const context = canvas.getContext('2d', { willReadFrequently: true })!;
+        const toRgba = (value: string) => {
+          context.clearRect(0, 0, 1, 1);
+          context.fillStyle = value;
+          context.fillRect(0, 0, 1, 1);
+          const [red, green, blue, alpha] = context.getImageData(0, 0, 1, 1).data;
+          return `rgba(${red}, ${green}, ${blue}, ${alpha! / 255})`;
+        };
+        const label = element.querySelector('.ant-segmented-item-label') ?? element;
+        let ground = 'rgb(255, 255, 255)';
+        for (let node: Element | null = element; node; node = node.parentElement) {
+          const painted = toRgba(getComputedStyle(node).backgroundColor);
+          if (painted.endsWith(', 1)')) { ground = painted; break; }
+        }
+        return { color: toRgba(getComputedStyle(label).color), background: ground };
+      });
+      return Number(textContrast(color, background).toFixed(2));
+    }, { timeout: 10_000 }).toBeGreaterThanOrEqual(4.5);
+  });
+}
