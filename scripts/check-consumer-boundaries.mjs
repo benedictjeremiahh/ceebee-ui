@@ -37,10 +37,28 @@ const exists = async (path) => {
   }
 };
 
+/* Consumers used to be one checkout each beside this one. They are workspaces
+   now, so a sibling may hold several applications under `apps/`, and scanning
+   only the top level would validate nothing and report success — which is worse
+   than failing. Both shapes are discovered, and neither is named here. */
+const candidates = [];
 for (const entry of await readdir(projectsDirectory, { withFileTypes: true })) {
-  if (!entry.isDirectory() || !entry.name.startsWith("ceebee-") || entry.name === "ceebee-ui") continue;
+  if (!entry.isDirectory() || entry.name === "ceebee-ui" || entry.name.startsWith(".")) continue;
+  const sibling = resolve(projectsDirectory, entry.name);
+  if (await exists(resolve(sibling, "pnpm-workspace.yaml"))) {
+    const appsDirectory = resolve(sibling, "apps");
+    if (await exists(appsDirectory)) {
+      for (const app of await readdir(appsDirectory, { withFileTypes: true })) {
+        if (app.isDirectory()) candidates.push({ name: `${entry.name}/apps/${app.name}`, path: resolve(appsDirectory, app.name) });
+      }
+    }
+    continue;
+  }
+  if (entry.name.startsWith("ceebee-")) candidates.push({ name: entry.name, path: sibling });
+}
 
-  const repository = resolve(projectsDirectory, entry.name);
+for (const entry of candidates) {
+  const repository = entry.path;
   const packagePath = resolve(repository, "package.json");
   if (!(await exists(packagePath))) continue;
 
@@ -53,8 +71,12 @@ for (const entry of await readdir(projectsDirectory, { withFileTypes: true })) {
     ["-C", repository, "rev-parse", "--git-common-dir"],
     { encoding: "utf8" },
   ).trim());
-  if (seenGitDirectories.has(gitDirectory)) continue;
-  seenGitDirectories.add(gitDirectory);
+  /* One workspace is one git directory holding several consumers, so the
+     de-duplication that stopped a worktree being counted twice must not now
+     collapse them into one. */
+  const identity = `${gitDirectory}::${entry.name}`;
+  if (seenGitDirectories.has(identity)) continue;
+  seenGitDirectories.add(identity);
 
   consumers.push(entry.name);
   if (!dependencies["@ceebee/ui"]) {
@@ -66,11 +88,17 @@ for (const entry of await readdir(projectsDirectory, { withFileTypes: true })) {
     }
   }
 
-  const agentsPath = resolve(repository, "AGENTS.md");
-  if (!(await exists(agentsPath))) {
+  /* The contract may be stated once for a whole workspace rather than repeated
+     in every application. Either place satisfies it; neither place fails it. */
+  const agentsPaths = [resolve(repository, "AGENTS.md"), resolve(repository, "..", "..", "AGENTS.md")];
+  const presentAgents = [];
+  for (const candidate of agentsPaths) {
+    if (await exists(candidate)) presentAgents.push(await readFile(candidate, "utf8"));
+  }
+  if (presentAgents.length === 0) {
     errors.push(`${entry.name}: missing AGENTS.md consumer contract`);
   } else {
-    const agentInstructions = await readFile(agentsPath, "utf8");
+    const agentInstructions = presentAgents.join("\n");
     if (!agentInstructions.includes(contractHeading)) {
       errors.push(`${entry.name}: AGENTS.md is missing the CeeBee UI consumer contract`);
     }
