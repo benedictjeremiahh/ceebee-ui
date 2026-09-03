@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.0-dev.3
+
+- The moodboard Skin now carries its own high-contrast edges, in its own warmth,
+  instead of falling back to the base's neutral ones. The values are the ones a
+  product had already tuned and shipped locally.
+
 ## 0.1.0-dev.2
 
 - Added the moodboard Skin, so the warm taped-paper palette is available to

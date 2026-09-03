@@ -90,3 +90,24 @@
     --cb-sticker-shadow: 0 var(--cb-space-1) var(--cb-space-2) oklch(0 0 0 / 0.42);
   }
 }
+
+/* Someone on this Skin who asks for more contrast should get an edge in this
+   Skin's own warmth, not the neutral one the base falls back to. These values
+   are the ones CeeBee List's Flutter client had tuned locally and shipped —
+   what already worked, abstracted so every product on this Skin gets it.
+
+   `html:root` matches the base's own specificity and comes later, which is how
+   this wins. The base claims that weight so a Skin cannot weaken an
+   accessibility edge; both of these are stronger than what they replace —
+   0.5632 against the base's 0.70 in light, 0.6834 against 0.58 in dark — so the
+   rule is honoured rather than worked around. */
+@media (prefers-contrast: more) {
+  html:root {
+    --cb-border: oklch(0.5632 0.0183 58.4);
+  }
+
+  html:root[data-theme="dark"],
+  html:root:not([data-theme="light"]) {
+    --cb-border: oklch(0.6834 0.0241 302.8);
+  }
+}
