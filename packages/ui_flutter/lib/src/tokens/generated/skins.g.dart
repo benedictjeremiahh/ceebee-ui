@@ -9,7 +9,7 @@
 // Colours stay in oklch here rather than being flattened to sRGB, so Dart runs the same colour
 // space the CSS does — that is what lets a tint mix in oklch instead of approximating it.
 //
-// Source digest: 16dd2e0152d3c73f
+// Source digest: b42b6c78b81c28bd
 // Regenerate with: node scripts/gen-flutter-tokens.mjs
 
 part of 'package:ceebee_ui/src/tokens/skin_tokens.dart';
@@ -899,7 +899,7 @@ const CbSkinTokens _moodboardLightHighContrast = CbSkinTokens(
   bgSubtle: CbOklch(0.9702, 0.03, 83.6),
   surface: CbOklch(0.9942, 0.0069, 88.6),
   surfaceRaised: CbOklch(1.0, 0.0, 0.0),
-  border: CbOklch(0.7, 0.014, 280.0),
+  border: CbOklch(0.5632, 0.0183, 58.4),
   borderStrong: CbOklch(0.45, 0.02, 280.0),
   fg: CbOklch(0.3255, 0.0264, 291.0),
   fgMuted: CbOklch(0.35, 0.02, 280.0),
@@ -1033,7 +1033,7 @@ const CbSkinTokens _moodboardDarkHighContrast = CbSkinTokens(
   bgSubtle: CbOklch(0.2811, 0.0183, 285.2),
   surface: CbOklch(0.2811, 0.0183, 285.2),
   surfaceRaised: CbOklch(0.3022, 0.0113, 55.9),
-  border: CbOklch(0.58, 0.026, 280.0),
+  border: CbOklch(0.6834, 0.0241, 302.8),
   borderStrong: CbOklch(0.72, 0.03, 280.0),
   fg: CbOklch(0.9524, 0.0093, 62.6),
   fgMuted: CbOklch(0.88, 0.012, 280.0),
