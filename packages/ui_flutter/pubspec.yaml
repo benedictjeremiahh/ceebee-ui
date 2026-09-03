@@ -1,6 +1,6 @@
 name: ceebee_ui
 description: Ceebee's design system for Flutter — Tokens, themed primitives, motion, and onboarding.
-version: 0.1.0-dev.1
+version: 0.1.0-dev.2
 repository: https://github.com/benedictjeremiahh/ceebee-ui
 issue_tracker: https://github.com/benedictjeremiahh/ceebee-ui/issues
 environment:

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0-dev.2
+
+- Added the moodboard Skin, so the warm taped-paper palette is available to
+  Flutter consumers rather than living only in this repository.
+- Regenerated the Skin and Structure Tokens from the CSS sources.
+- Corrected the timeline Skeleton.
+
 ## 0.1.0-dev.1
 
 - Added generated cross-platform Skin, Structure, Surface, motion, and data
