@@ -3,6 +3,7 @@
 // Components are plain `cb-`-prefixed CSS, so no scoping step exists.
 import { readdir, readFile, writeFile, mkdir, copyFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { createRequire } from 'node:module';
 
 const SRC = new URL('./src/', import.meta.url).pathname;
 const DIST = new URL('./dist/', import.meta.url).pathname;
@@ -40,7 +41,21 @@ const files = [
 ];
 
 const chunks = [];
-for (const file of files) {
+for (const file of files.slice(0, TOKEN_ORDER.length)) {
+  chunks.push(`/* ${file.slice(SRC.length)} */\n${await readFile(file, 'utf8')}`);
+}
+
+/* Diagram and DiagramEditor run on React Flow, whose layout rules (viewport, node wrappers, handles, edge
+   paths) live in its base stylesheet. It is structural only — no colour — and is included once, after the
+   Tokens and before the components, so `cb-diagram` rules skin it and a consumer never imports the
+   substrate's CSS directly. */
+const require = createRequire(import.meta.url);
+const substrateCss = [['@xyflow/react/dist/base.css', require.resolve('@xyflow/react/dist/base.css')]];
+for (const [name, path] of substrateCss) {
+  chunks.push(`/* ${name} (MIT, see THIRD_PARTY_NOTICES.md) */\n${await readFile(path, 'utf8')}`);
+}
+
+for (const file of files.slice(TOKEN_ORDER.length)) {
   chunks.push(`/* ${file.slice(SRC.length)} */\n${await readFile(file, 'utf8')}`);
 }
 

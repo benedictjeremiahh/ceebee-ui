@@ -118,6 +118,8 @@ const GROUPS: Group[] = [
       { href: '/data-display/carousel', label: 'Carousel' },
       { href: '/data-display/collapse', label: 'Collapse' },
       { href: '/data-display/descriptions', label: 'Descriptions' },
+      { href: '/data-display/diagram', label: 'Diagram' },
+      { href: '/data-display/diagram-editor', label: 'DiagramEditor' },
       { href: '/data-display/empty', label: 'Empty' },
       { href: '/data-display/image', label: 'Image' },
       { href: '/data-display/list', label: 'List' },

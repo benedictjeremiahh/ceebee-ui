@@ -1,0 +1,193 @@
+/* Diagram and DiagramEditor run on React Flow. Its base stylesheet (bundled before this file) owns layout and
+   reads its colours from `--xy-*` custom properties; here those are pointed at Tokens, and the node React
+   Flow wraps is drawn by this library. */
+
+.cb-diagram {
+  --cb-diagram-cell: var(--cb-space-5);
+  min-inline-size: 0;
+  position: relative;
+}
+
+.cb-diagram__cell {
+  inline-size: var(--cb-diagram-cell);
+  pointer-events: none;
+  position: absolute;
+  visibility: hidden;
+}
+
+.cb-diagram__hint {
+  color: var(--cb-fg-muted);
+  font-size: var(--cb-text-xs);
+  margin: 0 0 var(--cb-space-2);
+}
+
+.cb-diagram__viewport {
+  background: var(--cb-surface);
+  block-size: var(--cb-canvas-block-size);
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-lg);
+  overflow: hidden;
+}
+
+.cb-diagram .react-flow {
+  --xy-background-color: var(--cb-surface);
+  --xy-background-pattern-color: var(--cb-border);
+  --xy-edge-stroke: var(--cb-border-strong);
+  --xy-edge-stroke-selected: var(--cb-tone-brand);
+  --xy-edge-stroke-width: var(--cb-border-width);
+  --xy-connectionline-stroke: var(--cb-tone-info);
+  --xy-connectionline-stroke-width: var(--cb-border-width);
+  --xy-handle-background-color: var(--cb-surface);
+  --xy-handle-border-color: var(--cb-border-strong);
+  --xy-attribution-background-color: transparent;
+  --xy-controls-button-background-color: var(--cb-surface);
+  --xy-controls-button-background-color-hover: var(--cb-bg-subtle);
+  --xy-controls-button-color: var(--cb-fg);
+  --xy-controls-button-color-hover: var(--cb-fg);
+  --xy-controls-button-border-color: var(--cb-border);
+  --xy-controls-box-shadow: none;
+  --xy-edge-label-background-color: var(--cb-surface);
+  --xy-edge-label-color: var(--cb-fg-muted);
+  color: var(--cb-fg);
+  font-family: inherit;
+}
+
+.cb-diagram .react-flow__edge-text {
+  fill: var(--cb-fg-muted);
+  font-size: var(--cb-text-xs);
+}
+
+.cb-diagram .react-flow__edge-textbg { fill: var(--cb-surface); }
+
+.cb-diagram .cb-diagram__edge--neutral .react-flow__edge-path { stroke: var(--cb-tone-neutral); }
+.cb-diagram .cb-diagram__edge--brand .react-flow__edge-path { stroke: var(--cb-tone-brand); }
+.cb-diagram .cb-diagram__edge--info .react-flow__edge-path { stroke: var(--cb-tone-info); }
+.cb-diagram .cb-diagram__edge--success .react-flow__edge-path { stroke: var(--cb-tone-success); }
+.cb-diagram .cb-diagram__edge--warning .react-flow__edge-path { stroke: var(--cb-tone-warning); }
+.cb-diagram .cb-diagram__edge--danger .react-flow__edge-path { stroke: var(--cb-tone-danger); }
+
+.cb-diagram .react-flow__node:focus-visible,
+.cb-diagram .react-flow__edge:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-focus);
+  outline-offset: var(--cb-focus-offset);
+}
+
+.cb-diagram__node {
+  align-items: center;
+  background: var(--cb-surface);
+  block-size: calc(var(--cb-diagram-cell) * 3);
+  border: var(--cb-border-width) solid var(--cb-border-strong);
+  border-radius: var(--cb-radius-md);
+  box-sizing: border-box;
+  color: var(--cb-fg);
+  display: flex;
+  flex-direction: column;
+  font-size: var(--cb-text-sm);
+  gap: var(--cb-space-1);
+  inline-size: calc(var(--cb-diagram-cell) * 8);
+  isolation: isolate;
+  justify-content: center;
+  padding: var(--cb-space-1) var(--cb-space-2);
+  position: relative;
+  text-align: center;
+}
+
+.cb-diagram--editor .cb-diagram__node { cursor: grab; }
+
+.cb-diagram__node[data-shape="pill"] { border-radius: var(--cb-radius-full); }
+
+/* A diamond's box is square, so the handles React Flow places at the middle of each side sit exactly on the
+   diamond's tips and arrows meet the drawn outline. The rotated square's diagonal equals the box's side. */
+.cb-diagram__node[data-shape="diamond"] {
+  background: transparent;
+  block-size: calc(var(--cb-diagram-cell) * 4);
+  border-color: transparent;
+  inline-size: calc(var(--cb-diagram-cell) * 4);
+}
+
+.cb-diagram__node[data-shape="diamond"]::before {
+  aspect-ratio: 1;
+  background: var(--cb-surface);
+  block-size: 70.7%;
+  border: var(--cb-border-width) solid var(--cb-border-strong);
+  content: "";
+  inset: 0;
+  margin: auto;
+  position: absolute;
+  rotate: 45deg;
+  z-index: -1;
+}
+
+.cb-diagram__node[data-tone="neutral"],
+.cb-diagram__node[data-tone="neutral"]::before { border-color: var(--cb-tone-neutral); }
+.cb-diagram__node[data-tone="brand"],
+.cb-diagram__node[data-tone="brand"]::before { border-color: var(--cb-tone-brand); }
+.cb-diagram__node[data-tone="info"],
+.cb-diagram__node[data-tone="info"]::before { border-color: var(--cb-tone-info); }
+.cb-diagram__node[data-tone="success"],
+.cb-diagram__node[data-tone="success"]::before { border-color: var(--cb-tone-success); }
+.cb-diagram__node[data-tone="warning"],
+.cb-diagram__node[data-tone="warning"]::before { border-color: var(--cb-tone-warning); }
+.cb-diagram__node[data-tone="danger"],
+.cb-diagram__node[data-tone="danger"]::before { border-color: var(--cb-tone-danger); }
+
+.cb-diagram__node[data-shape="diamond"][data-tone] { border-color: transparent; }
+
+.cb-diagram__node[data-selected="true"],
+.cb-diagram__node[data-selected="true"]::before {
+  border-color: var(--cb-tone-brand);
+  box-shadow: 0 0 0 var(--cb-border-width) var(--cb-tone-brand);
+}
+
+.cb-diagram__node[data-shape="diamond"][data-selected="true"] { box-shadow: none; }
+
+.cb-diagram__node[data-connecting="true"],
+.cb-diagram__node[data-connecting="true"]::before {
+  border-color: var(--cb-tone-info);
+  border-style: dashed;
+}
+
+.cb-diagram__label {
+  max-inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cb-diagram .cb-diagram__handle {
+  background: var(--cb-surface);
+  block-size: var(--cb-space-3);
+  border: var(--cb-border-width) solid var(--cb-border-strong);
+  inline-size: var(--cb-space-3);
+}
+
+.cb-diagram:not(.cb-diagram--editor) .cb-diagram__handle { visibility: hidden; }
+
+/* Where a pointer can hover, handles appear with the node's hover or focus; on touch there is no hover, so
+   they stay visible to tap. */
+@media (hover: hover) {
+  .cb-diagram--editor .react-flow__node:not(:hover, :focus-within, .selected) .cb-diagram__handle { opacity: 0; }
+}
+
+.cb-diagram .react-flow__controls-button svg { fill: currentColor; }
+
+.cb-diagram .react-flow__attribution { font-size: var(--cb-text-xs); }
+
+.cb-diagram__outline,
+.cb-diagram__status {
+  block-size: var(--cb-border-width);
+  clip-path: inset(50%);
+  inline-size: var(--cb-border-width);
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+}
+
+@media (forced-colors: active) {
+  .cb-diagram__node,
+  .cb-diagram__node::before,
+  .cb-diagram .cb-diagram__handle { border-color: CanvasText; }
+  .cb-diagram .react-flow__edge-path { stroke: CanvasText; }
+}

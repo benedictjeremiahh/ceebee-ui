@@ -59,6 +59,7 @@
   },
   "dependencies": {
     "@ant-design/cssinjs": "2.1.2",
+    "@xyflow/react": "12.11.6",
     "antd": "6.6.1",
     "dayjs": "1.11.18"
   }

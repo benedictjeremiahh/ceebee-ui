@@ -57,3 +57,15 @@ export { StickerGroup } from './data/sticker-group/index.js';
 export type { StickerGroupProps, StickerGroupSkeletonProps, StickerItem } from './data/sticker-group/index.js';
 export { PanZoomCanvas } from './data/pan-zoom-canvas/index.js';
 export type { PanZoomCanvasProps, PanZoomCanvasSkeletonProps } from './data/pan-zoom-canvas/index.js';
+export { Diagram, DiagramEditor } from './data/diagram/index.js';
+export type {
+  DiagramEdge,
+  DiagramEditorProps,
+  DiagramNode,
+  DiagramPosition,
+  DiagramProps,
+  DiagramRemoval,
+  DiagramRenameTarget,
+  DiagramShape,
+  DiagramSkeletonProps,
+} from './data/diagram/index.js';

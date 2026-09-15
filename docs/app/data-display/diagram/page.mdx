@@ -1,0 +1,52 @@
+import { DiagramDemo } from '../../../components/diagram-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Diagram <span className="docs__label">Composition</span>
+
+A read-only drawing of nodes joined by arrows, on a grid. It renders a diagram the caller already has;
+editing one is `DiagramEditor`, a separate interaction contract.
+
+## Usage
+
+<DiagramDemo />
+
+## Interaction contract
+
+The drawing runs on the React Flow runtime (`@xyflow/react`), which owns the viewport: drag the background
+to pan, scroll or pinch to zoom, and use the controls to zoom or fit. Nothing in the drawing is focusable,
+draggable or selectable. The viewport is a named region described by an outline list — every node with the
+edges leaving it — so assistive technology reads the diagram as a list.
+
+Positions are grid cells chosen by the caller, and one cell is one `--cb-space-5`. The component does no
+layout and gives nodes and edges no meaning: a shape and a Tone are visual treatment only.
+
+<Guidance
+  do="Use it to show a process or dependency that readers follow by position and arrows."
+  dont="Use it for data that has an axis or a scale — that is a Chart, outside this library."
+/>
+
+## Loading
+
+`Diagram.Skeleton` keeps the viewport geometry while the diagram loads, without inventing node positions.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'label', type: 'string', description: 'Accessible name for the diagram viewport.' },
+  { name: 'nodes', type: 'DiagramNode[]', description: 'id, label, position in grid cells, optional shape (rect | pill | diamond), tone and static content.' },
+  { name: 'edges', type: 'DiagramEdge[]', description: 'id, from, to, optional label and tone. An edge naming a missing node is not drawn.' },
+  { name: 'hint', type: 'string', description: 'Optional visible guidance above the viewport.' },
+  { name: 'outlineLabel', type: 'string', default: 'Diagram outline', description: 'Accessible name for the outline list.' },
+  { name: 'ariaLabels', type: 'Partial<AriaLabelConfig>', description: 'Localised names for the runtime’s own controls.' },
+]}/>
+
+## Keyboard
+
+| Key | Result |
+| --- | --- |
+| `Tab` | Reaches the zoom and fit controls; nodes are not focusable |
+
+## Tokens
+
+`--cb-space-5` (one grid cell), `--cb-canvas-block-size`, `--cb-surface`, `--cb-border*`, `--cb-tone-*`,
+`--cb-fg*`, `--cb-radius-*` and `--cb-text-*`.

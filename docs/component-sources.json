@@ -1780,6 +1780,50 @@
         "antd",
         "lucide-react"
       ]
+    },
+    "Diagram": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/diagram/diagram.tsx",
+        "packages/ui/src/data/diagram/diagram-flow.tsx",
+        "packages/ui/src/data/diagram/diagram-node.tsx",
+        "packages/ui/src/data/diagram/diagram.math.ts",
+        "packages/ui/src/data/diagram/diagram.skeleton.tsx",
+        "packages/ui/src/data/diagram/diagram.css"
+      ],
+      "demoPath": "docs/app/data-display/diagram",
+      "interactionContract": "read-only React Flow viewport with its pan, zoom and controls; no focusable, draggable or selectable elements; content exposed as an outline list",
+      "runtime": {
+        "package": "@xyflow/react",
+        "version": "12.11.6",
+        "license": "MIT"
+      },
+      "substrate": [
+        "react",
+        "@xyflow/react"
+      ]
+    },
+    "DiagramEditor": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/diagram/diagram-editor.tsx",
+        "packages/ui/src/data/diagram/diagram-flow.tsx",
+        "packages/ui/src/data/diagram/diagram-node.tsx",
+        "packages/ui/src/data/diagram/diagram.math.ts",
+        "packages/ui/src/data/diagram/diagram.skeleton.tsx",
+        "packages/ui/src/data/diagram/diagram.css"
+      ],
+      "demoPath": "docs/app/data-display/diagram-editor",
+      "interactionContract": "React Flow's own interaction model (focusable nodes and edges, Enter/Space select, arrow move of selected nodes, Delete, pointer drag, drag or click between handles to connect, pan and zoom) with every change turned into a request; adds C-then-C keyboard connecting, Escape cancel and F2 rename requests",
+      "runtime": {
+        "package": "@xyflow/react",
+        "version": "12.11.6",
+        "license": "MIT"
+      },
+      "substrate": [
+        "react",
+        "@xyflow/react"
+      ]
     }
   }
 }
