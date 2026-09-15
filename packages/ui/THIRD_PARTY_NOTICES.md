@@ -20,6 +20,14 @@ Copyright © 2015-present Ant UED
 Icon components come from `@ant-design/icons` 6.x, a peer dependency. It is licensed under the MIT
 License.
 
+## React Flow (@xyflow/react)
+
+Copyright © 2019-present webkid GmbH
+
+`Diagram` and `DiagramEditor` in `@ceebee/ui/client` are built on the `@xyflow/react` 12.11.6 runtime,
+a dependency. Its base stylesheet is included in `styles.css`, and its appearance is set by Ceebee's
+Tokens. React Flow is licensed under the MIT License, and its copyright notice is retained here.
+
 ## dayjs
 
 Copyright © 2018-present iamkun

@@ -1,0 +1,71 @@
+import { DiagramEditorDemo } from '../../../components/diagram-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# DiagramEditor <span className="docs__label">Composition</span>
+
+Draws and edits a diagram of nodes joined by arrows. The caller owns the nodes and edges; every change is a
+request the caller applies, or does not.
+
+## Usage
+
+<DiagramEditorDemo />
+
+## Interaction contract
+
+The editor runs on the React Flow runtime (`@xyflow/react`) and keeps its interaction model rather than
+re-implementing one. Nodes and edges are focusable; `Enter` or `Space` selects the focused one, arrow keys
+move selected nodes one grid cell, and `Delete` or `Backspace` asks to remove the selection. With a pointer,
+drag a node to move it, drag from one handle to another to connect — or click one handle and then another,
+which works on touch — and drag the background to pan.
+
+Nothing is applied by the component. A move is reported in whole cells when the drag ends or the key is
+pressed, and snaps back unless the caller updates `nodes`; a connection, a removal (a node brings the edges
+touching it) and a rename are requests too. The component does not know what a valid diagram is.
+
+React Flow has no keyboard way to connect, so this component adds one: `C` on a focused node begins a
+connection and `C` on another node commits it, announced through a status message; `C` on the starting
+node or `Escape` cancels. `F2` asks to rename the focused node or edge — the caller renders the input.
+
+<Guidance
+  do="Keep nodes and edges in state and apply each request, rejecting the ones your rules forbid."
+  dont="Treat onRemove as already done, or put interactive controls inside a node's content."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'label', type: 'string', description: 'Accessible name for the editor viewport.' },
+  { name: 'nodes', type: 'DiagramNode[]', description: 'id, label, position in grid cells, optional shape, tone and static content.' },
+  { name: 'edges', type: 'DiagramEdge[]', description: 'id, from, to, optional label and tone.' },
+  { name: 'selectedId', type: 'string | null', description: 'The selected node.' },
+  { name: 'onSelectionChange', type: '(id) => void', description: 'Called when a different node becomes selected.' },
+  { name: 'onMoveNode', type: '(id, position) => void', description: 'A move request in whole cells, from a drag or an arrow key.' },
+  { name: 'onConnect', type: '(from, to) => void', description: 'A connection request. Never called with from equal to to.' },
+  { name: 'onRemove', type: '({ nodeIds, edgeIds }) => void', description: 'A removal request; a node brings the edges touching it.' },
+  { name: 'onRename', type: '({ kind, id }) => void', description: 'A rename request for a node or an edge.' },
+  { name: 'connectingStatus', type: '(nodeLabel) => string', description: 'Localised announcement while connecting from the keyboard.' },
+  { name: 'hint', type: 'string', description: 'Optional visible guidance above the viewport.' },
+  { name: 'outlineLabel', type: 'string', default: 'Diagram outline', description: 'Accessible name for the outline list.' },
+  { name: 'ariaLabels', type: 'Partial<AriaLabelConfig>', description: 'Localised names and keyboard descriptions for the runtime.' },
+]}/>
+
+## Skeleton
+
+`DiagramEditor.Skeleton` is the same loading state as `Diagram.Skeleton`.
+
+## Keyboard
+
+| Key | Result |
+| --- | --- |
+| `Tab` | Moves between nodes, edges and the controls |
+| `Enter` / `Space` | Selects the focused node or edge |
+| Arrow keys | Request moving the selected nodes one grid cell |
+| `Delete` / `Backspace` | Request removing the selection, with the edges touching removed nodes |
+| `C` | Begin connecting from the focused node; while connecting, connect to it |
+| `Escape` | Cancel connecting; clear the selection |
+| `F2` | Request renaming the focused node or edge |
+
+## Tokens
+
+`--cb-space-5` (one grid cell), `--cb-canvas-block-size`, `--cb-surface`, `--cb-border*`, `--cb-tone-*`,
+`--cb-fg*`, `--cb-focus-*`, `--cb-radius-*` and `--cb-text-*`.

@@ -85,6 +85,8 @@ replaced the `Field` wiring they shared.
 | Timeline (+ `.Skeleton`) | Composition | server | S4 — built |
 | StickerGroup (+ `.Skeleton`) | Composition | client | built — controlled removal with settle, peel, and layout motion |
 | PanZoomCanvas (+ `.Skeleton`) | Composition | client | built — pointer, pinch, wheel, and keyboard spatial navigation |
+| Diagram (+ `.Skeleton`) | Composition | client | built — read-only nodes and arrows on the React Flow runtime, with an outline list for assistive technology |
+| DiagramEditor (+ `.Skeleton`) | Composition | client | built — React Flow editing (drag, handle connect, select, Delete) turned into requests; adds C-then-C keyboard connect and F2 rename |
 
 ## nav
 
