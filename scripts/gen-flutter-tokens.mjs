@@ -242,6 +242,10 @@ function selectorList(selector) {
 function applies(rule, { brightness, contrast }) {
   if (rule.media === '(prefers-color-scheme: dark)' && brightness !== 'dark') return false;
   if (rule.media === '(prefers-contrast: more)' && contrast !== 'more') return false;
+  /* The generated structure Tokens are the fine-pointer, default-contrast values. Touch geometry is
+     a web runtime concern: Flutter sizes controls from its own platform metrics and never reads
+     `pointer`, so the coarse ladder must not leak into the generated artefact. */
+  if (rule.media === '(pointer: coarse)') return false;
   if (rule.media && !['(prefers-color-scheme: dark)', '(prefers-contrast: more)'].includes(rule.media)) {
     throw new Error(`Unmapped media condition in ${rule.file}: ${rule.media}`);
   }
@@ -673,6 +677,15 @@ const STRUCTURE_SCHEMA = {
   '--cb-control-height-sm': { kind: 'rem', field: 'controlHeightSm' },
   '--cb-control-height-md': { kind: 'rem', field: 'controlHeightMd' },
   '--cb-control-height-lg': { kind: 'rem', field: 'controlHeightLg' },
+  /* Pointer floors are a web `@media (pointer: coarse)` concern; Flutter sizes controls from its
+     own platform metrics, so they are deliberately not carried there. The generated values above
+     resolve the web `max()` to its fine-pointer step, which is what a touch-free platform gets. */
+  '--cb-control-floor-fine': { kind: 'skip' },
+  '--cb-control-floor-coarse': { kind: 'skip' },
+  '--cb-control-floor': { kind: 'skip' },
+  '--cb-control-height-base-sm': { kind: 'skip' },
+  '--cb-control-height-base-md': { kind: 'skip' },
+  '--cb-control-height-base-lg': { kind: 'skip' },
   '--cb-canvas-block-size': { kind: 'rem', field: 'canvasBlockSize' },
 
   '--cb-sticker-enter-y': { kind: 'rem', field: 'stickerEnterY' },
@@ -840,15 +853,25 @@ function emitFlatValue(kind, value, where) {
  * Flutter has no rem: a logical pixel is the unit, and the root font size it would scale from is
  * 16. Text sizes stay in logical pixels for the same reason — `MediaQuery.textScaler` is where a
  * reader's own scaling enters, not the Token.
+ *
+ * `max()` is resolved here rather than carried: Flutter has no CSS custom-property cascade, so the
+ * web ladder's pointer floor has to become one number. The generated artefact is the fine-pointer
+ * reading, which is what a platform without a pointer of its own should get.
  */
 function remToPx(value, where) {
   const trimmed = value.trim();
   if (trimmed === '0') return 0;
+  const max = /^max\(([\s\S]*)\)$/.exec(trimmed);
+  if (max) {
+    const candidates = splitTopLevel(max[1], ',').map((part) => remToPx(part, where));
+    if (candidates.length === 0) throw new Error(`Empty max() at ${where}: ${value}`);
+    return Math.max(...candidates);
+  }
   const rem = /^(-?[\d.]+)rem$/.exec(trimmed);
   if (rem) return Number(rem[1]) * REM;
   const px = /^(-?[\d.]+)px$/.exec(trimmed);
   if (px) return Number(px[1]);
-  throw new Error(`Expected a rem or px length at ${where}: ${value}`);
+  throw new Error(`Expected a rem, px, or max() length at ${where}: ${value}`);
 }
 
 const structure = emitFlat(

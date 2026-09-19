@@ -37,9 +37,23 @@
   --cb-weight-medium: 500;
   --cb-weight-semibold: 600;
 
-  --cb-control-height-sm: 2rem;
-  --cb-control-height-md: 2.5rem;
-  --cb-control-height-lg: 3rem;
+  /* The height a control must not go below for the pointer in use. A mouse points and can hit a
+     32px target; a finger cannot, so a coarse pointer needs 44px — WCAG 2.5.5, Apple HIG, and
+     Material all land there. */
+  --cb-control-floor-fine: 2rem;
+  --cb-control-floor-coarse: 2.75rem;
+  --cb-control-floor: var(--cb-control-floor-fine);
+
+  /* The ladder's preferred heights. A density scale retunes these; the resolved heights below are
+     `max()` of the preferred step and the active floor, so no scale can shrink a control under the
+     target its pointer can hit. */
+  --cb-control-height-base-sm: 2rem;
+  --cb-control-height-base-md: 2.5rem;
+  --cb-control-height-base-lg: 3rem;
+
+  --cb-control-height-sm: max(var(--cb-control-height-base-sm), var(--cb-control-floor));
+  --cb-control-height-md: max(var(--cb-control-height-base-md), var(--cb-control-floor));
+  --cb-control-height-lg: max(var(--cb-control-height-base-lg), var(--cb-control-floor));
   --cb-canvas-block-size: 32rem;
 
   --cb-sticker-enter-y: var(--cb-space-3);
@@ -70,4 +84,14 @@
   --cb-z-coachmark: 1100;
   /* Compatibility for consumers that used the earlier coarse overlay layer. */
   --cb-z-overlay: var(--cb-z-modal-backdrop);
+}
+
+/* A coarse pointer switches the active floor to the touch target. The resolved heights above are
+   `max()` of the preferred step and that floor, so `sm` and `md` both reach 44px and `lg` keeps its
+   48px — nothing here restates a step, so retuning `--cb-control-height-base-*` on either pointer
+   still cannot take a control under its floor. */
+@media (pointer: coarse) {
+  :root {
+    --cb-control-floor: var(--cb-control-floor-coarse);
+  }
 }

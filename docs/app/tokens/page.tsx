@@ -25,6 +25,7 @@ const COLOUR_TOKENS = [
 const SPACE_STEPS = [1, 2, 3, 4, 5, 6, 7, 8];
 const RADII = ['sm', 'md', 'lg', 'xl', 'full'];
 const DURATIONS = ['instant', 'fast', 'base', 'slow', 'deliberate'];
+const CONTROL_HEIGHTS = ['sm', 'md', 'lg'];
 
 export default function TokensPage() {
   return (
@@ -66,6 +67,46 @@ export default function TokensPage() {
                   borderRadius: 'var(--cb-radius-sm)',
                 }}
               />
+            </Flex>
+          ))}
+        </Flex>
+      </div>
+
+      <div>
+        <Heading level={2} size="xl">Control heights</Heading>
+        <Text tone="muted">
+          The height a form control is drawn at: <code>sm</code> 2rem (32px), <code>md</code> 2.5rem
+          (40px), <code>lg</code> 3rem (48px). Each is <code>max()</code> of a preferred step
+          (<code>--cb-control-height-base-*</code>) and the active pointer floor, so a density scale
+          can retune the ladder but never take a control under its floor.
+        </Text>
+        <Text tone="muted">
+          On a coarse pointer — a touch screen — <code>--cb-control-floor</code> becomes
+          <code> --cb-control-floor-coarse</code> (2.75rem, 44px), so <code>sm</code> and{' '}
+          <code>md</code> both reach 44px and <code>lg</code> keeps its 48px, with no per-control CSS.
+          A pointer that hovers keeps <code>--cb-control-floor-fine</code> (2rem, 32px).
+        </Text>
+        <Text tone="muted">
+          The 2026 SaaS convention is a tighter ladder — <code>xs</code> 24 / <code>sm</code> 28 /{' '}
+          <code>md</code> 36 / <code>lg</code> 44 / <code>xl</code> 52. Ceebee starts higher (its{' '}
+          <code>sm</code> 32 is already above that convention&apos;s <code>sm</code> 28) and its{' '}
+          <code>md</code> is 40 because the library is drawn at a roomier base than a dense admin
+          table. The top is <code>lg</code> 48; there is no <code>xl</code> control. A consumer that
+          wants the convention&apos;s tighter steps retunes <code>--cb-control-height-base-*</code>,
+          and the floor still holds.
+        </Text>
+        <Flex direction="row" gap={4} align="end">
+          {CONTROL_HEIGHTS.map((step) => (
+            <Flex key={step} direction="column" gap={1} align="center">
+              <div
+                style={{
+                  inlineSize: '3.5rem',
+                  blockSize: `var(--cb-control-height-${step})`,
+                  background: 'var(--cb-tone-brand)',
+                  borderRadius: 'var(--cb-radius-sm)',
+                }}
+              />
+              <Text size="xs" tone="subtle">--cb-control-height-{step}</Text>
             </Flex>
           ))}
         </Flex>

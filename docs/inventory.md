@@ -13,7 +13,7 @@ already had to write for itself — is in [roadmap.md](./roadmap.md).
 
 | Piece | Label | Entry | Slice | Notes |
 |---|---|---|---|---|
-| Tokens (structure) | — | css | S1 | spacing, radius, density, z, motion timing |
+| Tokens (structure) | — | css | S1 | spacing, radius, density, z, motion timing; control heights carry fine/coarse pointer floors |
 | Tokens (skin) | — | css | S1 | colour ramps, elevation, font; optional Astra, Clarity, and Moodboard Skins |
 | Theme switching | — | css + client | S1 | `data-theme` + `prefers-color-scheme`; `ThemeProvider` only for the toggle |
 | MotionProvider | Atom | client | S1 | global scale / kill switch, reduced-motion seam |

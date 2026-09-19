@@ -62,10 +62,18 @@ export function ThemeBridge({
     };
     document.addEventListener('load', onSkinLoad, true);
 
+    /* A live pointer change — a tablet that gains a mouse, a desktop that loses one — switches the
+       coarse control-height Tokens under the `@media (pointer: coarse)` rule, so Ant's geometry is
+       read again rather than staying at whatever the pointer was when the page loaded. */
+    const coarsePointer = window.matchMedia('(pointer: coarse)');
+    const onPointerChange = () => refresh();
+    coarsePointer.addEventListener('change', onPointerChange);
+
     return () => {
       rootObserver.disconnect();
       headObserver.disconnect();
       document.removeEventListener('load', onSkinLoad, true);
+      coarsePointer.removeEventListener('change', onPointerChange);
     };
   }, [refresh]);
 
