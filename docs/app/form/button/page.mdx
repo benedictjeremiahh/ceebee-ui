@@ -19,6 +19,15 @@ contract.
 
 <ButtonShowcase />
 
+## Sizes
+
+`small`, `middle` (the default), and `large` map to `--cb-control-height-sm`, `--cb-control-height-md`,
+and `--cb-control-height-lg`. Each is `max()` of a preferred step (`--cb-control-height-base-*`) and
+the active pointer floor, so a density scale can retune the ladder but never take a control under its
+floor. On a coarse pointer — a touch screen — `--cb-control-floor` becomes
+`--cb-control-floor-coarse` (2.75rem, 44px), so `small` and `middle` both reach 44px and `large` keeps
+its 48px, with no per-control CSS. A pointer that hovers keeps `--cb-control-floor-fine` (2rem, 32px).
+
 ## API
 
 `Button` and `ButtonProps` are exported from `@ceebee/ui/client`.
