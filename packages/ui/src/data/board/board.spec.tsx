@@ -156,6 +156,71 @@ describe('Board', () => {
     expect(screen.getByText(/over the limit/)).toBeTruthy();
   });
 
+  it('lets a card carry its own actions, and a click on one is not a drag', () => {
+    const acted = vi.fn();
+    render(
+      <Board
+        layout="board"
+        onMove={vi.fn()}
+        columns={[
+          {
+            id: 'todo',
+            name: 'To do',
+            cards: [{ id: 'a', title: 'Pour the slab', meta: <button type="button" onClick={acted}>Edit</button> }],
+          },
+        ]}
+      />,
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Edit' }));
+    expect(acted).toHaveBeenCalledTimes(1);
+  });
+
+  it('puts the grab on a handle when asked, so a card’s own buttons stay reachable', () => {
+    const acted = vi.fn();
+    const { container } = render(
+      <Board
+        layout="board"
+        handle
+        onMove={vi.fn()}
+        columns={[
+          {
+            id: 'todo',
+            name: 'To do',
+            cards: [{ id: 'a', title: 'Pour the slab', meta: <button type="button" onClick={acted}>Edit</button> }],
+          },
+        ]}
+      />,
+    );
+    // The card is plain markup now — it is not itself a control, so its children stay in the tree.
+    const cardEl = screen.getByText('Pour the slab').closest('li') as HTMLElement;
+    expect(cardEl.getAttribute('role')).toBeNull();
+    expect(container.querySelector('.cb-board__handle')).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'Edit' }));
+    expect(acted).toHaveBeenCalledTimes(1);
+  });
+
+  it('moves by keyboard from the handle, so the keyboard path survives the handle', async () => {
+    const onMove = vi.fn();
+    render(
+      <Board
+        layout="board"
+        handle
+        onMove={onMove}
+        columns={[
+          { id: 'todo', name: 'To do', cards: [{ id: 'a', title: 'Pour the slab' }] },
+          { id: 'doing', name: 'Doing', cards: [] },
+        ]}
+      />,
+    );
+    const grab = screen.getByRole('button', { name: 'Move Pour the slab' });
+    grab.focus();
+    fireEvent.keyDown(grab, { key: ' ' });
+    fireEvent.keyDown(grab, { key: 'ArrowRight' });
+    fireEvent.keyDown(grab, { key: ' ' });
+    await waitFor(() => expect(onMove).toHaveBeenCalledTimes(1));
+    expect(moveAt(onMove, 0).to.columnId).toBe('doing');
+  });
+
   it('ships a Skeleton built from the same anatomy', () => {
     const { container } = render(<Board.Skeleton columns={2} cards={2} />);
     expect(container.querySelectorAll('.cb-board__column')).toHaveLength(2);

@@ -25,6 +25,8 @@ export interface BoardLabels {
   cancelled: string;
   refused: (reason: string) => string;
   undo: string;
+  /** The drag handle's accessible name, when cards carry their own actions. */
+  move: (card: string) => string;
   undone: string;
   lanes: string;
   over: (count: number, limit: number) => string;
@@ -36,6 +38,7 @@ const DEFAULTS: BoardLabels = {
   cancelled: 'Move cancelled.',
   refused: (reason) => `Move refused: ${reason}`,
   undo: 'Undo',
+  move: (card) => `Move ${card}`,
   undone: 'Move undone.',
   lanes: 'Column',
   over: (count, limit) => `${count} of ${limit}, over the limit`,
@@ -54,6 +57,14 @@ export interface BoardProps {
   phoneQuery?: string;
   labels?: Partial<BoardLabels>;
   motion?: boolean;
+  /**
+   * Put the grab on a handle instead of the whole card. Use it whenever a card carries its own
+   * buttons: a card that is itself a control has **presentational children**, so anything
+   * interactive inside it disappears from the accessibility tree. With a handle the card is plain
+   * markup, its buttons stay reachable, and the handle is the one thing that drags and takes the
+   * keyboard.
+   */
+  handle?: boolean;
   'aria-label'?: string;
 }
 
@@ -67,6 +78,7 @@ function BoardRoot({
   phoneQuery = '(max-width: 640px)',
   labels,
   motion = true,
+  handle = false,
   'aria-label': ariaLabel = 'Board',
 }: BoardProps) {
   const text = { ...DEFAULTS, ...labels };
@@ -208,7 +220,7 @@ function BoardRoot({
       >
         <div className="cb-board__surface" role="group" aria-label={ariaLabel} data-lanes={lanes ? '' : undefined}>
           {shown.map((column) => (
-            <Column key={column.id} column={column} held={held} onCardKeyDown={onCardKeyDown} labels={text} />
+            <Column key={column.id} column={column} held={held} onCardKeyDown={onCardKeyDown} labels={text} handle={handle} />
           ))}
         </div>
         <DragOverlay>{dragging ? <div className="cb-board__card cb-board__card--lift">{cardTitle(view, dragging)}</div> : null}</DragOverlay>
@@ -247,11 +259,13 @@ function Column({
   held,
   onCardKeyDown,
   labels,
+  handle,
 }: {
   column: BoardColumn;
   held: { cardId: string; at: BoardPosition } | null;
   onCardKeyDown: (event: React.KeyboardEvent, cardId: string) => void;
   labels: BoardLabels;
+  handle: boolean;
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: column.id });
   const load = columnLoad(column);
@@ -280,6 +294,8 @@ function Column({
               held={held?.cardId === card.id}
               marker={holding && held?.at.index === index}
               onKeyDown={onCardKeyDown}
+              handle={handle}
+              labels={labels}
             />
           ))}
           {holding && held.at.index >= column.cards.length ? <li className="cb-board__marker" aria-hidden /> : null}
@@ -299,11 +315,15 @@ function Card({
   held,
   marker,
   onKeyDown,
+  handle,
+  labels,
 }: {
   card: BoardColumn['cards'][number];
   held: boolean;
   marker: boolean;
   onKeyDown: (event: React.KeyboardEvent, cardId: string) => void;
+  handle: boolean;
+  labels: BoardLabels;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: card.id,
@@ -320,13 +340,33 @@ function Card({
         data-dragging={isDragging ? '' : undefined}
         data-held={held ? '' : undefined}
         data-disabled={card.disabled ? '' : undefined}
-        {...attributes}
-        {...(card.disabled ? {} : listeners)}
-        tabIndex={0}
-        aria-roledescription="draggable card"
-        aria-disabled={card.disabled || undefined}
-        onKeyDown={(event) => onKeyDown(event, card.id)}
+        data-handle={handle ? '' : undefined}
+        {...(handle
+          ? {}
+          : {
+              ...attributes,
+              ...(card.disabled ? {} : listeners),
+              tabIndex: 0,
+              'aria-roledescription': 'draggable card',
+              'aria-disabled': card.disabled || undefined,
+              onKeyDown: (event: React.KeyboardEvent) => onKeyDown(event, card.id),
+            })}
       >
+        {handle ? (
+          <button
+            type="button"
+            className="cb-board__handle"
+            {...attributes}
+            {...(card.disabled ? {} : listeners)}
+            aria-label={labels.move(typeof card.title === 'string' ? card.title : card.id)}
+            aria-roledescription="drag handle"
+            aria-disabled={card.disabled || undefined}
+            disabled={card.disabled}
+            onKeyDown={(event) => onKeyDown(event, card.id)}
+          >
+            <span aria-hidden>⠿</span>
+          </button>
+        ) : null}
         <div className="cb-board__title">{card.title}</div>
         {card.meta ? <div className="cb-board__meta">{card.meta}</div> : null}
       </li>

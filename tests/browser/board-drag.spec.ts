@@ -15,11 +15,12 @@ const rootOf = (page: Page, name: string) => page.locator('.cb-board').filter({ 
 const cardIn = (page: Page, board: string, column: string, title: string) =>
   boardNamed(page, board).locator('.cb-board__column', { hasText: column }).locator('.cb-board__card', { hasText: title });
 
-async function dragOnto(page: Page, card: ReturnType<typeof cardIn>, target: ReturnType<typeof cardIn>) {
+/** `grab` is the handle where a board has one, and the card itself where it does not. */
+async function dragOnto(page: Page, card: ReturnType<typeof cardIn>, target: ReturnType<typeof cardIn>, grab = card) {
   // The mouse works in viewport coordinates, so a board below the fold has to be brought into view
   // before it is measured — otherwise the drag is aimed at a point that is not on screen.
   await card.scrollIntoViewIfNeeded();
-  const from = await card.boundingBox();
+  const from = await grab.boundingBox();
   const to = await target.boundingBox();
   if (!from || !to) throw new Error('the board did not lay out');
   // dnd-kit's PointerSensor needs movement past its activation distance, in more than one step.
@@ -35,13 +36,15 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/data/board');
 });
 
-test('a card is dragged from one column into another, and stays there', async ({ page }) => {
+test('a card is dragged by its handle from one column into another, and stays there', async ({ page }) => {
   const board = 'Site work';
   const card = cardIn(page, board, 'To do', 'Pour the slab');
   await expect(card).toBeVisible();
 
+  // This board carries card actions, so the grab is a handle rather than the whole card.
+  const grab = card.locator('.cb-board__handle');
   const doing = boardNamed(page, board).locator('.cb-board__column', { hasText: 'Doing' });
-  await dragOnto(page, card, doing);
+  await dragOnto(page, card, doing, grab);
 
   await expect(cardIn(page, board, 'Doing', 'Pour the slab')).toBeVisible();
   await expect(cardIn(page, board, 'To do', 'Pour the slab')).toHaveCount(0);
@@ -59,4 +62,14 @@ test('a refused move puts the card back and says why', async ({ page }) => {
   await expect(cardIn(page, board, 'To do', 'Pour the slab')).toBeVisible();
   await expect(cardIn(page, board, 'Doing', 'Pour the slab')).toHaveCount(0);
   await expect(rootOf(page, board).locator('.cb-board__live')).toContainText('someone else is already on that');
+});
+
+test('a button inside a card is clicked, not dragged', async ({ page }) => {
+  const board = 'Site work';
+  const open = boardNamed(page, board).getByRole('button', { name: 'Open' });
+  await open.scrollIntoViewIfNeeded();
+  await open.click();
+  await expect(page.getByText('Opened “Pour the slab”.')).toBeVisible();
+  // And the card did not move while being clicked.
+  await expect(cardIn(page, board, 'To do', 'Pour the slab')).toBeVisible();
 });
