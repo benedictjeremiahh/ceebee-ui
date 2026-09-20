@@ -176,6 +176,37 @@ interaction contract with a different delivery mechanism, so the boundary rule p
 control image-request volume. It also owns Google attribution, URL-suffix sizing, and dead-photo
 handling, all of which are product knowledge and stay in the app.
 
+## Board — the record taken before it was built
+
+**Role.** Columns of cards a person moves between states of a workflow. Not a list with headings: the
+pattern's defining affordance is movement, and a board whose cards move only through a dialog is a
+column view wearing the name.
+
+**Keyboard and focus.** Every card is a tab stop. Space or Enter picks one up, the arrow keys move it
+(left and right across columns, up and down within one), Space or Enter drops it, Escape puts it back.
+Focus stays on the card throughout, and a polite live region announces the pick-up, each landing place,
+the drop by the card's own name, and every refusal. The keyboard path is the board's own rather than a
+generic sortable's, because two of its rules are the board's: a column that accepts nothing is stepped
+over instead of offered, and a card crossing columns keeps its depth where the destination is long
+enough to hold it.
+
+**State ownership.** The consumer owns the columns. The board applies a move optimistically so a card
+does not lag the hand that moved it, then asks the consumer through one callback; a refusal — returned
+or thrown — restores what was there and says why. Both the pointer and the keyboard reach that callback
+with the same move, and the rules deciding where a card lands are pure functions shared between them,
+so the two hands cannot disagree.
+
+**Dismissal and positioning.** Neither applies: the board is in document flow and is not an overlay. The
+only layer it raises is the carried card, which follows the pointer and is removed on drop or cancel.
+
+**Gestures.** Whole-card pointer drag through `@dnd-kit` (a 6px activation distance, so a click is still
+a click), with its autoscroll near the edges, a drop marker showing where the card would land, and a
+lift on the card that follows the pointer. On a narrow viewport the board renders as lanes — one column
+behind a switcher — which is a chosen rendering, not a squeezed board.
+
+**Substrate.** `@dnd-kit` joins React Flow as a recorded exception to the vendored runtime: the pinned
+upstream has no board, and the issue's own instruction was not to hand-roll drag.
+
 ## Taking an entry to built
 
 Before implementation, record its role, keyboard and focus behaviour, state ownership, dismissal,
