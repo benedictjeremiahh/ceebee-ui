@@ -20,6 +20,9 @@ as plain markup. That is an accessibility requirement rather than a preference: 
 the card a control, and a control has presentational children, so any button inside it leaves the
 accessibility tree entirely. The keyboard path moves to the handle with it.
 
+A card whose title is a node takes `label` for announcements and the handle's name, so a screen reader
+never reads a uuid. Card titles clamp to two lines, so one long name cannot stretch the row.
+
 A column whose header is a node rather than a string takes `label` for its accessible name, so a header
 carrying status tags is still nameable.
 

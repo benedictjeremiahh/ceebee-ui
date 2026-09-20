@@ -153,6 +153,12 @@
   font-size: var(--cb-text-sm);
   color: var(--cb-fg);
   line-height: var(--cb-leading-tight);
+  /* A long title clamps rather than stretching its own card and the cards beside it. The full name
+     belongs in a tooltip the consumer supplies around the title. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
 .cb-board__meta {

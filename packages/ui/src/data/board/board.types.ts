@@ -4,6 +4,11 @@ import type { ReactNode } from 'react';
 export interface BoardCard {
   id: string;
   title: ReactNode;
+  /**
+   * The card's name in an announcement and on the drag handle, when `title` is a node rather than a
+   * string. Without it a node-titled card is announced by its id, which is a uuid read aloud.
+   */
+  label?: string;
   /** Whatever a person triages by — an owner, an age, a due date, a blocked marker. */
   meta?: ReactNode;
   /** A card that cannot move: it stays visible, is not a drag source, and is skipped by the keyboard path. */

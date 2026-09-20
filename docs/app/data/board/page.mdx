@@ -64,6 +64,9 @@ why. An accepted move leaves an **Undo**, which is an ordinary move back through
 switcher, which is a deliberate rendering rather than a board squeezed until its columns are unusable.
 Force it with `layout="lanes"` to see it, or `layout="board"` to keep the columns.
 
+A card title clamps to two lines, so one long name cannot stretch its own card or the cards beside it.
+Wrap the title in a tooltip when the full name matters.
+
 ## Loading
 
 `Board.Skeleton` renders the same column and card geometry, so the page keeps its shape while the work
@@ -82,6 +85,7 @@ arrives.
   { name: 'column.label', type: 'string', description: "The column's accessible name when name is a node rather than a string — a header carrying status tags still has to be nameable." },
   { name: 'column.limit', type: 'number', description: 'A work-in-progress limit. Going over marks the column — it never blocks a move.' },
   { name: 'column.accepts', type: 'boolean', description: 'false refuses drops and is stepped over by the keyboard, with refusal as the reason shown.' },
+  { name: 'card.label', type: 'string', description: 'The card’s name in announcements and on the drag handle, when title is a node. Without it a node-titled card is announced by its id — a uuid read aloud.' },
   { name: 'card.disabled', type: 'boolean', description: 'The card stays visible and cannot be picked up; disabledReason is announced when someone tries.' },
 ]} />
 
