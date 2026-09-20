@@ -1,0 +1,273 @@
+/* Board — columns of cards a person moves by pointer or by keyboard.
+   Every value is a Token. The drag lift, the gap animation and the drop marker all have a
+   reduced-motion rendering: transform drops, the marker stays, so a move is never invisible. */
+
+.cb-board {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-3);
+  font-family: var(--cb-font-sans);
+}
+
+.cb-board__surface {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--cb-space-3);
+  overflow-x: auto;
+  padding-bottom: var(--cb-space-2);
+}
+
+.cb-board__surface[data-lanes] {
+  overflow-x: visible;
+}
+
+/* ── column ── */
+
+.cb-board__column {
+  flex: 0 0 auto;
+  inline-size: 17rem;
+  max-inline-size: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-2);
+  padding: var(--cb-space-3);
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-lg);
+  background: var(--cb-bg-subtle);
+}
+
+.cb-board__surface[data-lanes] .cb-board__column {
+  flex: 1 1 auto;
+  inline-size: 100%;
+}
+
+/* The column a pointer is over: named by a ring rather than a fill, so a tinted card keeps its tone. */
+.cb-board__column[data-over] {
+  border-color: var(--cb-tone-brand);
+  background: color-mix(in oklch, var(--cb-tone-brand) 8%, var(--cb-bg-subtle));
+}
+
+/* A column that takes no cards says so before a drop is attempted. */
+.cb-board__column[data-refuses] {
+  background: var(--cb-bg);
+  border-style: dashed;
+}
+
+.cb-board__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cb-space-2);
+}
+
+.cb-board__name {
+  font-size: var(--cb-text-sm);
+  font-weight: 600;
+  color: var(--cb-fg);
+}
+
+.cb-board__count {
+  font-size: var(--cb-text-xs);
+  color: var(--cb-fg-muted);
+  padding: 0 var(--cb-space-2);
+  border-radius: var(--cb-radius-full);
+  background: var(--cb-bg);
+  border: var(--cb-border-width) solid var(--cb-border);
+}
+
+/* Over a WIP limit is marked, never blocked — the board reports, the consumer decides. */
+.cb-board__count[data-over-limit] {
+  color: var(--cb-tone-warning);
+  border-color: var(--cb-tone-warning);
+}
+
+.cb-board__over,
+.cb-board__refusal {
+  margin: 0;
+  font-size: var(--cb-text-xs);
+  color: var(--cb-fg-muted);
+}
+
+.cb-board__over { color: var(--cb-tone-warning); }
+
+/* ── cards ── */
+
+.cb-board__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-2);
+  min-block-size: var(--cb-space-8);
+}
+
+.cb-board__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-1);
+  padding: var(--cb-space-3);
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-md);
+  background: var(--cb-bg);
+  box-shadow: var(--cb-shadow-sm);
+  cursor: grab;
+  transition: box-shadow var(--cb-duration-fast) var(--cb-ease-standard),
+    transform var(--cb-duration-base) var(--cb-ease-standard);
+}
+
+.cb-board__card:hover {
+  box-shadow: var(--cb-shadow-md);
+}
+
+.cb-board__card:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
+}
+
+/* Held by the keyboard: the same lift a pointer drag gives, so both paths look alike. */
+.cb-board__card[data-held] {
+  box-shadow: var(--cb-shadow-lg);
+  border-color: var(--cb-tone-brand);
+}
+
+.cb-board__card[data-dragging] {
+  opacity: 0.4;
+}
+
+.cb-board__card[data-disabled] {
+  cursor: not-allowed;
+  color: var(--cb-fg-muted);
+  background: var(--cb-bg-subtle);
+  box-shadow: var(--cb-shadow-none);
+}
+
+/* What follows the pointer. It is out of flow, so it carries the lift on its own. */
+.cb-board__card--lift {
+  cursor: grabbing;
+  box-shadow: var(--cb-shadow-lg);
+  transform: rotate(1.5deg);
+}
+
+.cb-board__title {
+  font-size: var(--cb-text-sm);
+  color: var(--cb-fg);
+  line-height: var(--cb-leading-tight);
+}
+
+.cb-board__meta {
+  font-size: var(--cb-text-xs);
+  color: var(--cb-fg-muted);
+}
+
+/* Where the held card would land. It is the one affordance that must survive reduced motion. */
+.cb-board__marker {
+  block-size: var(--cb-space-1);
+  border-radius: var(--cb-radius-full);
+  background: var(--cb-tone-brand);
+  list-style: none;
+}
+
+.cb-board__empty {
+  padding: var(--cb-space-4) var(--cb-space-3);
+  border: var(--cb-border-width) dashed var(--cb-border-strong);
+  border-radius: var(--cb-radius-md);
+  text-align: center;
+  font-size: var(--cb-text-xs);
+  color: var(--cb-fg-muted);
+}
+
+/* ── lanes: the phone rendering, chosen rather than a squeezed board ── */
+
+.cb-board__lanes {
+  display: flex;
+  gap: var(--cb-space-1);
+  overflow-x: auto;
+}
+
+.cb-board__lane {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cb-space-2);
+  min-block-size: var(--cb-control-floor);
+  padding: 0 var(--cb-space-3);
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-full);
+  background: var(--cb-bg);
+  color: var(--cb-fg-muted);
+  font: inherit;
+  font-size: var(--cb-text-sm);
+  cursor: pointer;
+}
+
+.cb-board__lane[aria-selected='true'] {
+  background: color-mix(in oklch, var(--cb-tone-brand) 12%, var(--cb-bg));
+  border-color: var(--cb-tone-brand);
+  color: var(--cb-fg);
+}
+
+.cb-board__lane:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
+}
+
+/* ── undo ── */
+
+.cb-board__undo button {
+  min-block-size: var(--cb-control-floor);
+  padding: 0 var(--cb-space-3);
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-md);
+  background: var(--cb-bg);
+  color: var(--cb-fg-link);
+  font: inherit;
+  font-size: var(--cb-text-sm);
+  cursor: pointer;
+}
+
+.cb-board__undo button:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
+}
+
+/* The announcement is for a screen reader, not the page. */
+.cb-board__live {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ── skeleton ── */
+
+.cb-board__ghost,
+.cb-board__ghost-card {
+  border-radius: var(--cb-radius-md);
+  background: color-mix(in oklch, var(--cb-fg-subtle) 18%, transparent);
+}
+
+.cb-board__ghost--name { inline-size: var(--cb-space-8); block-size: var(--cb-space-3); }
+.cb-board__ghost--count { inline-size: var(--cb-space-4); block-size: var(--cb-space-3); }
+.cb-board__ghost-card { block-size: var(--cb-space-8); border: 0; box-shadow: var(--cb-shadow-none); }
+
+/* ── renderings that are not decoration ── */
+
+@media (prefers-reduced-motion: reduce) {
+  .cb-board__card { transition: none; }
+  /* The lift's tilt is decoration; the shadow that says "this one is moving" stays. */
+  .cb-board__card--lift { transform: none; }
+}
+
+.cb-board[data-motion='off'] .cb-board__card { transition: none; }
+.cb-board[data-motion='off'] .cb-board__card--lift { transform: none; }
+
+@media (forced-colors: active) {
+  .cb-board__column,
+  .cb-board__card { border-color: CanvasText; }
+  .cb-board__marker { background: Highlight; }
+  .cb-board__card[data-held] { outline: var(--cb-focus-width) solid Highlight; }
+}

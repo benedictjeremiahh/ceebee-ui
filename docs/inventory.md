@@ -77,6 +77,7 @@ replaced the `Field` wiring they shared.
 | QRCode | Atom | server | built |
 | Tree (+ `.Skeleton`) | Composition | client | built |
 | Listy (+ `.Skeleton`) | Composition | server | built |
+| Board (+ `.Skeleton`) | Composition | client | built |
 | Statistic (+ `.Skeleton`) | Composition | server | S1 |
 | Donut | Widget | server | S2 — built |
 | Sparkline / BarMini | Widget | server | S2 — built |

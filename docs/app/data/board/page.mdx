@@ -1,0 +1,74 @@
+import { BoardDemo, BoardRefusalDemo } from '../../../components/board-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Board <span className="docs__label">Composition</span>
+
+Columns of cards a person moves between states. A board's defining affordance is **movement**, so this
+one moves by pointer **and** by keyboard — a column view where a card only moves through a dialog is
+not a board.
+
+## Usage
+
+<BoardDemo />
+
+<Guidance
+  do="Let the consumer validate every move and refuse it with a reason — the board is a view of someone else's rules."
+  dont="Use a board for a list that has no states. Columns are steps in a workflow, not categories."
+/>
+
+## One path for both hands
+
+Drag and keyboard reach the same answer because both call `onMove` with the same `BoardMove`, and the
+rules that decide where a card lands are pure functions the board shares between them. Pointer dragging
+is `@dnd-kit`'s; the keyboard path is the board's own, because two of its rules are the board's and not
+a generic list's: a column that `accepts={false}` is **stepped over** rather than offered, and a card
+crossing columns **keeps its depth** where the new column is long enough to hold it.
+
+| Key | What it does |
+|---|---|
+| <kbd>Space</kbd> / <kbd>Enter</kbd> | Pick the card up, then drop it |
+| <kbd>←</kbd> <kbd>→</kbd> | Move it between columns |
+| <kbd>↑</kbd> <kbd>↓</kbd> | Move it within a column |
+| <kbd>Esc</kbd> | Put it back |
+
+Every step is announced in a polite live region: the pick-up, each landing place, the drop by the
+card's own name, and any refusal.
+
+## A refused move goes back
+
+<BoardRefusalDemo />
+
+The board applies a move optimistically so a card does not lag behind the hand that moved it, then asks
+the consumer. Return `{ refused }` — or reject — and the board restores what was there and announces
+why. An accepted move leaves an **Undo**, which is an ordinary move back through the same callback.
+
+## On a phone
+
+`layout="auto"` switches to **lanes** on a narrow viewport: one column at a time behind a lane
+switcher, which is a deliberate rendering rather than a board squeezed until its columns are unusable.
+Force it with `layout="lanes"` to see it, or `layout="board"` to keep the columns.
+
+## Loading
+
+`Board.Skeleton` renders the same column and card geometry, so the page keeps its shape while the work
+arrives.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'columns', type: 'BoardColumn[]', description: 'id, name, cards, and optionally limit, empty, accepts and refusal. The board renders what it is given and owns no card state.' },
+  { name: 'onMove', type: '(move: BoardMove) => void | { refused: string } | Promise<…>', description: 'The one path every move takes. Return { refused } or reject to roll the board back and announce the reason.' },
+  { name: 'layout', type: "'auto' | 'board' | 'lanes'", default: "'auto'", description: 'auto switches to lanes on a narrow viewport. Force either to prove one.' },
+  { name: 'phoneQuery', type: 'string', default: "'(max-width: 640px)'", description: 'What auto calls narrow.' },
+  { name: 'labels', type: 'Partial<BoardLabels>', description: 'Every announcement and the Undo label, for a product that does not speak English.' },
+  { name: 'motion', type: 'boolean', default: 'true', description: 'false drops the lift and the gap animation. Reduced motion does the same on its own; the drop marker always stays.' },
+  { name: 'column.limit', type: 'number', description: 'A work-in-progress limit. Going over marks the column — it never blocks a move.' },
+  { name: 'column.accepts', type: 'boolean', description: 'false refuses drops and is stepped over by the keyboard, with refusal as the reason shown.' },
+  { name: 'card.disabled', type: 'boolean', description: 'The card stays visible and cannot be picked up; disabledReason is announced when someone tries.' },
+]} />
+
+## Tokens
+
+Spacing `--cb-space-*`, radii `--cb-radius-*`, `--cb-shadow-sm|md|lg` for the rest, hover and carried
+card, `--cb-tone-brand` for the drop marker and the held card, `--cb-tone-warning` for a column over
+its limit, and `--cb-control-floor` so the lane switcher and Undo stay touch-sized.
