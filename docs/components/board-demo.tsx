@@ -51,6 +51,28 @@ const apply = (columns: BoardColumn[], move: BoardMove): BoardColumn[] => {
 
 export function BoardDemo() {
   const [columns, setColumns] = useState(START);
+  const [opened, setOpened] = useState('');
+
+  // A card carries its own actions on a real board. A click on one must stay a click.
+  const withAction = (cols: BoardColumn[]): BoardColumn[] =>
+    cols.map((column) => ({
+      ...column,
+      cards: column.cards.map((c) =>
+        c.id === 'slab'
+          ? {
+              ...c,
+              meta: (
+                <>
+                  {c.meta}{' '}
+                  <button type="button" onClick={() => setOpened('Opened “Pour the slab”.')}>
+                    Open
+                  </button>
+                </>
+              ),
+            }
+          : c,
+      ),
+    }));
 
   return (
     <Demo
@@ -65,13 +87,15 @@ export function BoardDemo() {
 />`}
     >
       <Board
-        columns={columns}
+        columns={withAction(columns)}
+        handle
         aria-label="Site work"
         onMove={(move) => {
           setColumns((current) => apply(current, move));
         }}
       />
       <p>Drag a card, or focus one and press Space, then the arrow keys, then Space again.</p>
+      {opened ? <p>{opened}</p> : null}
     </Demo>
   );
 }

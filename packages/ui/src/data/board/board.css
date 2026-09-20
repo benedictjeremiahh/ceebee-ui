@@ -271,3 +271,42 @@
   .cb-board__marker { background: Highlight; }
   .cb-board__card[data-held] { outline: var(--cb-focus-width) solid Highlight; }
 }
+
+/* A card that carries its own buttons puts the grab on a handle instead of the card. A card that is
+   itself a control has presentational children, so anything interactive inside it leaves the
+   accessibility tree — the handle is what keeps those buttons reachable. */
+.cb-board__card[data-handle] {
+  cursor: default;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 'handle title' '. meta';
+  column-gap: var(--cb-space-2);
+  align-items: start;
+}
+
+.cb-board__card[data-handle] .cb-board__title { grid-area: title; }
+.cb-board__card[data-handle] .cb-board__meta { grid-area: meta; }
+
+.cb-board__handle {
+  grid-area: handle;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--cb-space-5);
+  min-block-size: var(--cb-space-5);
+  padding: 0;
+  border: 0;
+  border-radius: var(--cb-radius-sm);
+  background: transparent;
+  color: var(--cb-fg-subtle);
+  font: inherit;
+  line-height: var(--cb-leading-tight);
+  cursor: grab;
+}
+
+.cb-board__handle:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
+}
+
+.cb-board__handle:disabled { cursor: not-allowed; }

@@ -34,6 +34,22 @@ crossing columns **keeps its depth** where the new column is long enough to hold
 Every step is announced in a polite live region: the pick-up, each landing place, the drop by the
 card's own name, and any refusal.
 
+## Cards that carry their own buttons need `handle`
+
+A card is normally grabbed anywhere, which is right for a simple card. The moment a card carries its
+own controls — Edit, Open, anything — set `handle`.
+
+The reason is not taste. A whole-card grab makes the card itself a control, and a control has
+**presentational children**: everything interactive inside it leaves the accessibility tree. Without a
+handle, a card reading “Pour the slab · Open” exposes *one* control whose name is the whole card, and
+the Open button cannot be reached at all. With `handle`, the card is plain markup, its buttons stay
+reachable, and the handle is the one thing that drags and takes the keyboard.
+
+<Guidance
+  do="Set handle as soon as a card has a button inside it — the buttons stay reachable and the keyboard path moves to the handle."
+  dont="Leave the whole card grabbable and put controls inside it; those controls disappear from the accessibility tree."
+/>
+
 ## A refused move goes back
 
 <BoardRefusalDemo />
@@ -61,6 +77,7 @@ arrives.
   { name: 'layout', type: "'auto' | 'board' | 'lanes'", default: "'auto'", description: 'auto switches to lanes on a narrow viewport. Force either to prove one.' },
   { name: 'phoneQuery', type: 'string', default: "'(max-width: 640px)'", description: 'What auto calls narrow.' },
   { name: 'labels', type: 'Partial<BoardLabels>', description: 'Every announcement and the Undo label, for a product that does not speak English.' },
+  { name: 'handle', type: 'boolean', default: 'false', description: 'Put the grab on a handle instead of the whole card. Required whenever a card carries its own controls, or they leave the accessibility tree.' },
   { name: 'motion', type: 'boolean', default: 'true', description: 'false drops the lift and the gap animation. Reduced motion does the same on its own; the drop marker always stays.' },
   { name: 'column.limit', type: 'number', description: 'A work-in-progress limit. Going over marks the column — it never blocks a move.' },
   { name: 'column.accepts', type: 'boolean', description: 'false refuses drops and is stepped over by the keyboard, with refusal as the reason shown.' },

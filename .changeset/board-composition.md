@@ -15,6 +15,11 @@ about where a card lands. A move applies optimistically and is then validated by
 `{ refused }` or reject, and the board restores what was there and announces why. An accepted move
 leaves an Undo, which is an ordinary move back. Every step is announced in a polite live region.
 
+Cards that carry their own controls set `handle`, which moves the grab to a handle and leaves the card
+as plain markup. That is an accessibility requirement rather than a preference: a whole-card grab makes
+the card a control, and a control has presentational children, so any button inside it leaves the
+accessibility tree entirely. The keyboard path moves to the handle with it.
+
 On a narrow viewport the board renders as lanes — one column behind a switcher — rather than squeezing
 its columns. Ships `Board.Skeleton`, a reduced-motion rendering that keeps the drop marker, and a
 forced-colors rendering.
