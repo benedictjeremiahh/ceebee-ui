@@ -221,6 +221,27 @@ describe('Board', () => {
     expect(moveAt(onMove, 0).to.columnId).toBe('doing');
   });
 
+  it('names a column whose header is a node, and announces it by that name', async () => {
+    const onMove = vi.fn();
+    render(
+      <Board
+        layout="board"
+        onMove={onMove}
+        columns={[
+          { id: 'todo', name: <span>To do <em>2</em></span>, label: 'To do', cards: [{ id: 'a', title: 'Pour the slab' }] },
+          { id: 'doing', name: <span>Doing</span>, label: 'Doing', cards: [] },
+        ]}
+      />,
+    );
+    expect(screen.getByRole('region', { name: 'To do' }) ?? screen.getByLabelText('To do')).toBeTruthy();
+    const a = screen.getByText('Pour the slab').closest('li') as HTMLElement;
+    a.focus();
+    fireEvent.keyDown(a, { key: ' ' });
+    fireEvent.keyDown(a, { key: 'ArrowRight' });
+    fireEvent.keyDown(a, { key: ' ' });
+    await waitFor(() => expect(onMove).toHaveBeenCalledTimes(1));
+  });
+
   it('ships a Skeleton built from the same anatomy', () => {
     const { container } = render(<Board.Skeleton columns={2} cards={2} />);
     expect(container.querySelectorAll('.cb-board__column')).toHaveLength(2);

@@ -79,6 +79,7 @@ arrives.
   { name: 'labels', type: 'Partial<BoardLabels>', description: 'Every announcement and the Undo label, for a product that does not speak English.' },
   { name: 'handle', type: 'boolean', default: 'false', description: 'Put the grab on a handle instead of the whole card. Required whenever a card carries its own controls, or they leave the accessibility tree.' },
   { name: 'motion', type: 'boolean', default: 'true', description: 'false drops the lift and the gap animation. Reduced motion does the same on its own; the drop marker always stays.' },
+  { name: 'column.label', type: 'string', description: "The column's accessible name when name is a node rather than a string — a header carrying status tags still has to be nameable." },
   { name: 'column.limit', type: 'number', description: 'A work-in-progress limit. Going over marks the column — it never blocks a move.' },
   { name: 'column.accepts', type: 'boolean', description: 'false refuses drops and is stepped over by the keyboard, with refusal as the reason shown.' },
   { name: 'card.disabled', type: 'boolean', description: 'The card stays visible and cannot be picked up; disabledReason is announced when someone tries.' },

@@ -20,6 +20,9 @@ as plain markup. That is an accessibility requirement rather than a preference: 
 the card a control, and a control has presentational children, so any button inside it leaves the
 accessibility tree entirely. The keyboard path moves to the handle with it.
 
+A column whose header is a node rather than a string takes `label` for its accessible name, so a header
+carrying status tags is still nameable.
+
 On a narrow viewport the board renders as lanes — one column behind a switcher — rather than squeezing
 its columns. Ships `Board.Skeleton`, a reduced-motion rendering that keeps the drop marker, and a
 forced-colors rendering.

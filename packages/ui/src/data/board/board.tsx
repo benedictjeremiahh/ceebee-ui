@@ -97,7 +97,10 @@ function BoardRoot({
   const narrow = useNarrow(layout === 'auto' ? phoneQuery : null);
   const lanes = layout === 'lanes' || (layout === 'auto' && narrow);
 
-  const nameOf = (columnId: string) => textOf(view.find((c) => c.id === columnId)?.name, columnId);
+  const nameOf = (columnId: string) => {
+    const column = view.find((c) => c.id === columnId);
+    return column?.label ?? textOf(column?.name, columnId);
+  };
 
   /**
    * Every move — dragged or typed — comes through here. It applies optimistically, asks the consumer,
@@ -277,7 +280,7 @@ function Column({
       className="cb-board__column"
       data-over={isOver ? '' : undefined}
       data-refuses={column.accepts === false ? '' : undefined}
-      aria-label={typeof column.name === 'string' ? column.name : undefined}
+      aria-label={column.label ?? (typeof column.name === 'string' ? column.name : undefined)}
     >
       <header className="cb-board__head">
         <span className="cb-board__name">{column.name}</span>
