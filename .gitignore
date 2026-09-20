@@ -16,3 +16,7 @@ packages/ui_flutter/build/
 packages/ui_flutter/pubspec.lock
 packages/ui_flutter/test/failures/
 packages/ui_flutter/example/test/failures/
+
+# A consumer proof packs the library into a tarball before publishing (AGENTS.md). It is build
+# output, and this repository is public — generated artefacts are never committed.
+*.tgz
