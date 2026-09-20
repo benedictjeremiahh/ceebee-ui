@@ -255,7 +255,10 @@ const cardTitle = (columns: BoardColumn[], cardId: string) =>
   columns.flatMap((c) => c.cards).find((c) => c.id === cardId)?.title ?? null;
 
 /** The card's name as text, for an announcement. Falls back to the id only when the title is a node. */
-const titleOf = (columns: BoardColumn[], cardId: string) => textOf(cardTitle(columns, cardId), cardId);
+const titleOf = (columns: BoardColumn[], cardId: string) => {
+  const card = columns.flatMap((c) => c.cards).find((c) => c.id === cardId);
+  return card?.label ?? textOf(card?.title, cardId);
+};
 
 function Column({
   column,
@@ -361,7 +364,7 @@ function Card({
             className="cb-board__handle"
             {...attributes}
             {...(card.disabled ? {} : listeners)}
-            aria-label={labels.move(typeof card.title === 'string' ? card.title : card.id)}
+            aria-label={labels.move(card.label ?? (typeof card.title === 'string' ? card.title : card.id))}
             aria-roledescription="drag handle"
             aria-disabled={card.disabled || undefined}
             disabled={card.disabled}

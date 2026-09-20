@@ -242,6 +242,29 @@ describe('Board', () => {
     await waitFor(() => expect(onMove).toHaveBeenCalledTimes(1));
   });
 
+  it('announces a node-titled card by its label, never by its id', async () => {
+    const onMove = vi.fn();
+    const { container } = render(
+      <Board
+        layout="board"
+        onMove={onMove}
+        columns={[
+          { id: 'todo', name: 'To do', cards: [{ id: '0b5f1c2a-1111-4222-8333-444455556666', title: <strong>Pour the slab</strong>, label: 'Pour the slab' }] },
+          { id: 'doing', name: 'Doing', cards: [] },
+        ]}
+      />,
+    );
+    const a = screen.getByText('Pour the slab').closest('li') as HTMLElement;
+    a.focus();
+    fireEvent.keyDown(a, { key: ' ' });
+    fireEvent.keyDown(a, { key: 'ArrowRight' });
+    fireEvent.keyDown(a, { key: ' ' });
+    await waitFor(() => expect(onMove).toHaveBeenCalledTimes(1));
+    const live = container.querySelector('.cb-board__live') as HTMLElement;
+    expect(live.textContent).toContain('Pour the slab moved to Doing');
+    expect(live.textContent).not.toContain('0b5f1c2a');
+  });
+
   it('ships a Skeleton built from the same anatomy', () => {
     const { container } = render(<Board.Skeleton columns={2} cards={2} />);
     expect(container.querySelectorAll('.cb-board__column')).toHaveLength(2);
