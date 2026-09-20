@@ -16,6 +16,11 @@ export interface BoardCard {
 export interface BoardColumn {
   id: string;
   name: ReactNode;
+  /**
+   * The column's accessible name, when `name` is a node rather than a string — a header carrying
+   * status tags still has to be nameable. Without it a node-named column has no accessible name.
+   */
+  label?: string;
   cards: BoardCard[];
   /** A work-in-progress limit, shown beside the count; exceeding it marks the column, never blocks a move. */
   limit?: number;
