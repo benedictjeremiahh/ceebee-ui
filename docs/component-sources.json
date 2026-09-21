@@ -1824,6 +1824,29 @@
         "react",
         "@xyflow/react"
       ]
+    },
+    "ProgressCurve": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/progress-curve/progress-curve.tsx",
+        "packages/ui/src/data/progress-curve/progress-curve.chart.ts",
+        "packages/ui/src/data/progress-curve/progress-curve.math.ts",
+        "packages/ui/src/data/progress-curve/progress-curve.types.ts",
+        "packages/ui/src/data/progress-curve/progress-curve.skeleton.tsx",
+        "packages/ui/src/data/progress-curve/progress-curve.css"
+      ],
+      "demoPath": "docs/app/data-display/progress-curve",
+      "interactionContract": "read-only time-series plot with a crosshair on hover; no pan, no zoom, no selection and no dismissal. The picture is a canvas, so the accessible rendering is a table of the same readings, always present and shown in place of the canvas under forced colors.",
+      "runtime": {
+        "package": "lightweight-charts",
+        "version": "5.2.1",
+        "license": "Apache-2.0",
+        "loading": "dynamic import inside the mount effect, so it is never evaluated on the server and never downloaded by a consumer that shows no chart"
+      },
+      "substrate": [
+        "react",
+        "lightweight-charts"
+      ]
     }
   }
 }

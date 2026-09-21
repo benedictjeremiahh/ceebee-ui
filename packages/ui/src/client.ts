@@ -69,6 +69,23 @@ export type {
   BoardShape,
   BoardSkeletonProps,
 } from './data/board/index.js';
+export { ProgressCurve, ProgressCurveSkeleton } from './data/progress-curve/index.js';
+export type {
+  CurvePalette,
+  CurvePoint,
+  CurveReading,
+  ProgressCurveProps,
+  ProgressCurveSkeletonProps,
+} from './data/progress-curve/index.js';
+export {
+  asDay,
+  curveRows,
+  curveSeries,
+  curveSpan,
+  nearestDay,
+  orderedPoints,
+  readingOn,
+} from './data/progress-curve/index.js';
 export { Diagram, DiagramEditor } from './data/diagram/index.js';
 export type {
   DiagramEdge,

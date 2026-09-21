@@ -1,6 +1,7 @@
 # Third-party notices
 
-`@ceebee/ui` includes software from these MIT-licensed projects:
+`@ceebee/ui` includes software from the projects below. Most are MIT-licensed; the one Apache-2.0
+dependency names its licence in its own section.
 
 ## Ant Design
 
@@ -34,3 +35,20 @@ Copyright © 2018-present iamkun
 
 Date and time components use `dayjs` 1.11.18 as their date engine. It is licensed under the MIT
 License.
+
+## @dnd-kit
+
+Copyright © 2021, Claudéric Demers
+
+`Board` in `@ceebee/ui/client` uses `@dnd-kit/core` 6.3.1, `@dnd-kit/sortable` 10.0.0 and
+`@dnd-kit/utilities` 3.2.2 as its drag-and-drop runtime. They are licensed under the MIT License.
+
+## Lightweight Charts™
+
+Copyright © 2023 TradingView, Inc.
+
+`ProgressCurve` in `@ceebee/ui/client` draws its canvas with `lightweight-charts` 5.2.1, a
+dependency loaded on demand. It is licensed under the **Apache License, Version 2.0**; a copy is in
+the package at `node_modules/lightweight-charts/LICENSE`, and the attribution is retained here
+rather than painted into a consumer's chart, where the library's `attributionLogo` option is turned
+off.

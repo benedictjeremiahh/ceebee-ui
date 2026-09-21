@@ -1,0 +1,93 @@
+import { ProgressCurveDemo, ProgressCurveSkeletonDemo } from '../../../components/progress-curve-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# ProgressCurve <span className="docs__label">Composition</span>
+
+An S-curve: what a plan said would be complete by each day, against what was reported. It answers one
+question — *how far behind are we, today, in points* — and says the answer in words before it draws
+anything.
+
+## Usage
+
+<ProgressCurveDemo />
+
+## Reading, then picture
+
+The sentence above the chart is not a caption. It is the reading on the day the reader is standing
+on: the actual, the planned, and the gap between them in points. Somebody checking a job on a phone
+between sites gets their answer without interpreting a line, and the picture is there for the shape
+of the slip — when it started, whether it is still widening.
+
+A day nobody reported is **not** a day of no progress. Both series carry the last report forward, so
+a gap in reporting reads as a flat stretch rather than a collapse to zero, which would say the work
+went backwards.
+
+The vertical scale is pinned to 0–100%. Autoscaling would stretch a job that has reached 30% to the
+full height of the plot, which reads as *nearly there* — the opposite of the truth.
+
+## Interaction contract
+
+Read-only. A crosshair follows the pointer; there is no pan, no zoom, no selection and no dismissal.
+A dashboard chart is read, not traded, and panning would let a reader scroll the plan off the screen
+with no way back.
+
+The `today` mark lands on the **nearest reported day**, because the substrate attaches markers to
+data points rather than to arbitrary positions. The reading beside the chart names that day, so the
+mark never claims to sit exactly on today.
+
+## Accessibility
+
+The plot is a `<canvas>`, so it is not in the accessibility tree at all. This component therefore
+ships a second rendering rather than a description of the first: a table of every day either series
+reports, with both values and the gap. It is always in the DOM, visually hidden, and built from the
+same numbers as the line.
+
+Under `forced-colors: active` the canvas is **not rendered at all** and the table takes its place. A
+bitmap is the one thing a forced-colors user cannot have recoloured for them, and an empty labelled
+region holding a chart's worth of blank space is a worse answer than the readings themselves.
+
+Colour is never the only difference between the two lines: the plan is dashed and thin, the actual is
+solid and thick, in the plot and in the legend.
+
+<Guidance
+  do="Use it when a plan and its delivery share one scale over time, and the gap between them is the point."
+  dont="Use it for counts by category, or for a series with no dates — the substrate's scales are time scales."
+/>
+
+## Loading
+
+<ProgressCurveSkeletonDemo />
+
+## Substrate
+
+The canvas is drawn by TradingView's [Lightweight Charts](https://github.com/tradingview/lightweight-charts)
+5.2.1 (Apache-2.0), **imported dynamically inside the mount effect**. A server render never evaluates
+it, and a consumer who shows no chart never downloads it. Attribution lives in
+`THIRD_PARTY_NOTICES.md` rather than on the canvas.
+
+Tokens are read from the DOM with `getComputedStyle` and re-read whenever the theme, the Skin or the
+system colour scheme changes — a canvas cannot inherit CSS. Where they do not resolve, nothing is
+drawn: the component will not invent a colour, and the table stands as the rendering until they do.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'planned', type: 'CurvePoint[]', description: 'What the plan said would be complete, by day. `{ day: "YYYY-MM-DD", percent: 0-100 }`.' },
+  { name: 'actual', type: 'CurvePoint[]', description: 'What was reported complete, by day. A repeated day takes the later value as the correction it is.' },
+  { name: 'label', type: 'string', description: 'Accessible name for the plot. Name the job.' },
+  { name: 'today', type: 'string', description: 'The day the reader is standing on. The mark lands on the nearest reported day.' },
+  { name: 'height', type: 'number', default: '260', description: 'Plot height in pixels. The width is the container\'s.' },
+  { name: 'plannedLabel', type: 'string', default: 'Planned', description: 'Legend and column name for the plan.' },
+  { name: 'actualLabel', type: 'string', default: 'Actual', description: 'Legend and column name for delivery.' },
+  { name: 'todayLabel', type: 'string', default: 'Today', description: 'Text on the mark.' },
+  { name: 'emptyLabel', type: 'string', default: 'Nothing has been reported yet.', description: 'Shown instead of the chart when neither series has a usable day.' },
+  { name: 'tableLabel', type: 'string', default: 'Progress by day', description: 'Caption of the accessible table.' },
+  { name: 'aheadLabel / behindLabel / onTrackLabel', type: 'string', description: 'The words the gap is stated in.' },
+  { name: 'loading', type: 'boolean', default: 'false', description: 'Renders `ProgressCurve.Skeleton` in place of the chart.' },
+]}/>
+
+## Tokens
+
+`--cb-tone-brand` (actual), `--cb-fg-subtle` (planned, crosshair), `--cb-fg-muted`, `--cb-fg`,
+`--cb-border` (grid and axes), `--cb-surface` (plot ground), `--cb-font-sans`, `--cb-tone-danger`
+and `--cb-tone-success` for the reading, plus `--cb-space-*`, `--cb-text-*` and `--cb-radius-*`.

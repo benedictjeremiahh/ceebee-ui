@@ -2,6 +2,7 @@
 
 import { ConfigProvider, theme as antdTheme, type ThemeConfig } from 'antd';
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { createCssProbe, watchTokens } from '../lib/css-probe.js';
 import {
   getCeebeeAntThemeSeed,
   type CeebeeSkin,
@@ -16,8 +17,6 @@ export interface ThemeBridgeProps {
   contrast?: ThemeContrast;
   theme?: ThemeConfig;
 }
-
-const SKIN_LINK_ID = 'cb-skin';
 
 /**
  * Translates Ceebee's live CSS Tokens into Ant's theme seed. Ant still owns component geometry,
@@ -44,23 +43,7 @@ export function ThemeBridge({
   useEffect(() => {
     refresh();
 
-    const rootObserver = new MutationObserver(refresh);
-    rootObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme'],
-    });
-
-    const headObserver = new MutationObserver((records) => {
-      const skinChanged = records.some((record) => [...record.addedNodes, ...record.removedNodes]
-        .some((node) => node instanceof HTMLElement && node.id === SKIN_LINK_ID));
-      if (skinChanged) refresh();
-    });
-    headObserver.observe(document.head, { childList: true });
-
-    const onSkinLoad = (event: Event) => {
-      if (event.target instanceof HTMLElement && event.target.id === SKIN_LINK_ID) refresh();
-    };
-    document.addEventListener('load', onSkinLoad, true);
+    const stopWatchingTokens = watchTokens(refresh);
 
     /* A live pointer change — a tablet that gains a mouse, a desktop that loses one — switches the
        coarse control-height Tokens under the `@media (pointer: coarse)` rule, so Ant's geometry is
@@ -70,9 +53,7 @@ export function ThemeBridge({
     coarsePointer.addEventListener('change', onPointerChange);
 
     return () => {
-      rootObserver.disconnect();
-      headObserver.disconnect();
-      document.removeEventListener('load', onSkinLoad, true);
+      stopWatchingTokens();
       coarsePointer.removeEventListener('change', onPointerChange);
     };
   }, [refresh]);
@@ -116,14 +97,9 @@ function mergeComponents(
 }
 
 export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
-  const probe = document.createElement('span');
-  probe.style.position = 'fixed';
-  probe.style.pointerEvents = 'none';
-  probe.style.visibility = 'hidden';
-  root.append(probe);
-
-  const color = (name: string) => resolveCssColor(probe, name);
-  const length = (name: string) => resolveCssLength(probe, name);
+  const probe = createCssProbe(root);
+  const color = (name: string) => probe.color(name);
+  const length = (name: string) => probe.length(name);
   const tokens: NonNullable<ThemeConfig['token']> = {
     colorPrimary: color('--cb-tone-brand'),
     colorInfo: color('--cb-tone-info'),
@@ -190,40 +166,11 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
     };
   }
 
-  probe.remove();
+  probe.done();
   return {
     token: Object.fromEntries(
       Object.entries(tokens).filter(([, value]) => value !== undefined),
     ) as NonNullable<ThemeConfig['token']>,
     components,
   };
-}
-
-function resolveCssLength(probe: HTMLElement, name: string): number | undefined {
-  probe.style.width = `var(${name})`;
-  const value = Number.parseFloat(getComputedStyle(probe).width);
-  probe.style.removeProperty('width');
-  return Number.isFinite(value) ? value : undefined;
-}
-
-function resolveCssColor(probe: HTMLElement, name: string): string | undefined {
-  probe.style.color = `var(${name})`;
-  const value = getComputedStyle(probe).color;
-  probe.style.removeProperty('color');
-  if (!value) return undefined;
-  // A DOM implementation without Custom Property resolution (notably jsdom) returns the var()
-  // expression unchanged. It is not a colour and must not be sent through the canvas fallback.
-  if (value.startsWith('var(')) return undefined;
-  if (/^(?:#|rgb|hsl|hsv)/i.test(value)) return value;
-
-  const canvas = document.createElement('canvas');
-  canvas.width = 1;
-  canvas.height = 1;
-  const context = canvas.getContext('2d', { willReadFrequently: true });
-  if (!context) return undefined;
-  context.clearRect(0, 0, 1, 1);
-  context.fillStyle = value;
-  context.fillRect(0, 0, 1, 1);
-  const [red = 0, green = 0, blue = 0, alpha = 255] = context.getImageData(0, 0, 1, 1).data;
-  return `rgba(${red}, ${green}, ${blue}, ${alpha / 255})`;
 }
