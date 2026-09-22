@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { cn } from '../../lib/cn.js';
 import { createCssProbe, watchTokens } from '../../lib/css-probe.js';
 import { mountCurveChart, type CurveChart } from './progress-curve.chart.js';
-import { curveRows, curveSeries, nearestDay, round1 } from './progress-curve.math.js';
+import { asDay, curveRows, curveSeries, readingOn, round1 } from './progress-curve.math.js';
 import { ProgressCurveSkeleton } from './progress-curve.skeleton.js';
 import type { CurvePalette, ProgressCurveProps } from './progress-curve.types.js';
 
@@ -25,7 +25,7 @@ function ProgressCurveRoot({
   height = 260,
   plannedLabel = 'Planned',
   actualLabel = 'Actual',
-  todayLabel = 'Today',
+  lastReportLabel = 'Last report',
   emptyLabel = 'Nothing has been reported yet.',
   tableLabel = 'Progress by day',
   aheadLabel = 'ahead of plan',
@@ -42,11 +42,17 @@ function ProgressCurveRoot({
   const rows = useMemo(() => curveRows(plannedSeries, actualSeries), [plannedSeries, actualSeries]);
   const empty = rows.length === 0;
 
-  const todayMark = useMemo(
-    () => (today ? nearestDay(rows.map((row) => row.day), today) : null),
-    [rows, today],
-  );
-  const latest = todayMark ? rows.find((row) => row.day === todayMark) : rows[rows.length - 1];
+  const lastReport = actualSeries.at(-1)?.day ?? null;
+  /* The reading is taken on `today` itself, never on the marked day. They are different questions: a
+     marker has to attach to a data point, so it snaps to the nearest reported day — which can be in the
+     *future*, since a plan states days that have not arrived. Reading there would report the plan for next
+     week as though it were due now, and a job 7 points behind would be shown as 22 behind. `readingOn`
+     carries the last reading at or before the day forward, which is what "as of today" means. */
+  const latest = useMemo(() => {
+    if (!today) return rows[rows.length - 1];
+    const day = asDay(today);
+    return day === null ? rows[rows.length - 1] : { day, ...readingOn(plannedSeries, actualSeries, day) };
+  }, [today, rows, plannedSeries, actualSeries]);
 
   /* Forced colors is asked once and then watched, because it can be switched on while the page is
      open. When it is on the canvas is never mounted at all: a bitmap the system cannot recolour is
@@ -87,7 +93,7 @@ function ProgressCurveRoot({
       const current = readPalette(element) ?? palette;
       if (current) mounted.applyPalette(current);
       mounted.setData(plannedSeries, actualSeries);
-      mounted.markToday(todayMark, todayLabel);
+      mounted.markLastReport(lastReport, lastReportLabel);
     });
 
     const stopWatchingTokens = watchTokens(() => {
@@ -103,7 +109,7 @@ function ProgressCurveRoot({
       chart?.destroy();
       chart = null;
     };
-  }, [plannedSeries, actualSeries, todayMark, todayLabel, empty, forcedColors, loading]);
+  }, [plannedSeries, actualSeries, lastReport, lastReportLabel, empty, forcedColors, loading]);
 
   if (loading) return <ProgressCurveSkeleton height={height} className={className} />;
 
@@ -164,7 +170,7 @@ function ProgressCurveRoot({
         </thead>
         <tbody>
           {rows.map((row) => (
-            <tr key={row.day} data-today={row.day === todayMark || undefined}>
+            <tr key={row.day} data-last-report={row.day === lastReport || undefined}>
               <th scope="row">{row.day}</th>
               <td>{format(row.plannedPercent)}</td>
               <td>{format(row.actualPercent)}</td>

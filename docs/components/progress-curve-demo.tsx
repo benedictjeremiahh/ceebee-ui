@@ -36,10 +36,10 @@ export function ProgressCurveDemo() {
   label="Ruko Depok — structure"
   planned={planned}
   actual={actual}
-  today="2026-09-20"
+  today="2026-09-22"
 />`}
     >
-      <ProgressCurve label="Ruko Depok — structure" planned={planned} actual={actual} today="2026-09-20" />
+      <ProgressCurve label="Ruko Depok — structure" planned={planned} actual={actual} today="2026-09-22" />
     </Demo>
   );
 }

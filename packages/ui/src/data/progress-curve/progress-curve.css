@@ -144,7 +144,7 @@
     text-align: start;
   }
 
-  .cb-progress-curve__table tr[data-today] { font-weight: 700; }
+  .cb-progress-curve__table tr[data-last-report] { font-weight: 700; }
 }
 
 .cb-progress-curve--skeleton {

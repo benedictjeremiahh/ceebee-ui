@@ -12,7 +12,7 @@ import type { CurvePalette } from './progress-curve.types.js';
 
 export interface CurveChart {
   setData(planned: readonly CurvePoint[], actual: readonly CurvePoint[]): void;
-  markToday(day: string | null, text: string): void;
+  markLastReport(day: string | null, text: string): void;
   applyPalette(palette: CurvePalette): void;
   destroy(): void;
 }
@@ -82,12 +82,16 @@ export async function mountCurveChart(host: HTMLElement, palette: CurvePalette):
       actual.setData(actualPoints.map((point) => ({ time: point.day, value: point.percent })));
       chart.timeScale().fitContent();
     },
-    markToday(day, text) {
-      /* Below the actual point, not above it. Above is where the plan line runs whenever the job is
-         behind — which is the case this mark exists for — so the arrow and its text landed on top of
-         the dashed line. It also takes the actual series' own colour: it marks where delivery has
-         got to, and the muted grey it used to wear was the one thing on the canvas that was hard to
-         read. */
+    markLastReport(day, text) {
+      /* It marks the **last report**, not today, and that is a correctness matter rather than a
+         preference: a marker attaches to a data point, so a "today" mark snapped to whichever reported
+         day sat nearest and then carried a label that was simply false — an arrow reading "Today"
+         pointing four days off it. The last reported day is a point that always exists, the arrow lands
+         exactly on it, and it tells a reader the one thing the line cannot: how stale the actual is.
+         Today's reading is stated in words above the plot, where it needs no pixel to land on.
+
+         Below the point, not above: above is where the plan line runs whenever the job is behind, which
+         is the case anybody reads this chart for. */
       markers.setMarkers(day === null ? [] : [{
         time: day,
         position: 'belowBar',

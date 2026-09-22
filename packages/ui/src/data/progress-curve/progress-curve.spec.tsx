@@ -63,9 +63,26 @@ describe('ProgressCurve', () => {
 
   it('reads on the day asked for, not on the last one, when today is given', () => {
     render(<ProgressCurve planned={planned} actual={actual} label="Ruko Depok" today="2026-09-11" />);
-    // 2026-09-10 is the nearest reported day: planned 35, actual carried forward at 10.
+    // Read on 2026-09-11 itself: both series carry forward — planned 35, actual 10 — and the day named
+    // is the one asked for, not whichever reported day happens to sit nearest it.
     expect(screen.getByText(/behind plan/)).toHaveTextContent('25 behind plan');
-    expect(screen.getByText(/behind plan/)).toHaveTextContent('(2026-09-10)');
+    expect(screen.getByText(/behind plan/)).toHaveTextContent('(2026-09-11)');
+  });
+
+  /* The case a real plan produces and the spec above did not: the nearest reported day is in the FUTURE,
+     because a plan states days that have not arrived. Reading there reports next week's target as though
+     it were due today, which is how a job 7 points behind gets shown as 22 behind. */
+  it('does not read the plan from a day that has not arrived', () => {
+    const plan = [
+      { day: '2026-09-18', percent: 55 },
+      { day: '2026-09-25', percent: 70 },
+    ];
+    const done = [{ day: '2026-09-18', percent: 48 }];
+    render(<ProgressCurve planned={plan} actual={done} label="Ruko Depok" today="2026-09-22" />);
+    const reading = screen.getByText(/behind plan/);
+    expect(reading).toHaveTextContent('7 behind plan');
+    expect(reading).toHaveTextContent('(2026-09-22)');
+    expect(reading).not.toHaveTextContent('70%');
   });
 
   it('names the chart for a screen reader', () => {

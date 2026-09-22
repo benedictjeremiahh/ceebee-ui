@@ -202,7 +202,7 @@ importers:
         specifier: 1.11.18
         version: 1.11.18
       lightweight-charts:
-        specifier: ^5.2.1
+        specifier: 5.2.1
         version: 5.2.1
       lucide-react:
         specifier: '>=0.400.0'

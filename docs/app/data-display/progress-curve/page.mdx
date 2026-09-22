@@ -31,9 +31,12 @@ Read-only. A crosshair follows the pointer; there is no pan, no zoom, no selecti
 A dashboard chart is read, not traded, and panning would let a reader scroll the plan off the screen
 with no way back.
 
-The `today` mark lands on the **nearest reported day**, because the substrate attaches markers to
-data points rather than to arbitrary positions. The reading beside the chart names that day, so the
-mark never claims to sit exactly on today.
+What is marked on the plot is the **last report**, not today. A marker attaches to a data point, and
+today is usually not one — a "today" mark snapped to whichever reported day sat nearest it and then
+carried a label that was false, an arrow reading *Today* pointing four days off it. The last reported
+day is a point that always exists, so the arrow lands exactly on it, and it tells a reader the one
+thing the line cannot: how stale the actual is. Today's reading is stated in words above the plot,
+where it needs no pixel to land on.
 
 ## Accessibility
 
@@ -75,11 +78,11 @@ drawn: the component will not invent a colour, and the table stands as the rende
   { name: 'planned', type: 'CurvePoint[]', description: 'What the plan said would be complete, by day. `{ day: "YYYY-MM-DD", percent: 0-100 }`.' },
   { name: 'actual', type: 'CurvePoint[]', description: 'What was reported complete, by day. A repeated day takes the later value as the correction it is.' },
   { name: 'label', type: 'string', description: 'Accessible name for the plot. Name the job.' },
-  { name: 'today', type: 'string', description: 'The day the reader is standing on. The mark lands on the nearest reported day.' },
+  { name: 'today', type: 'string', description: 'The day the reading above the plot is taken on; both series carry their last value at or before it forward. Not drawn on the plot. Without it, the reading is taken on the last reported day.' },
   { name: 'height', type: 'number', default: '260', description: 'Plot height in pixels. The width is the container\'s.' },
   { name: 'plannedLabel', type: 'string', default: 'Planned', description: 'Legend and column name for the plan.' },
   { name: 'actualLabel', type: 'string', default: 'Actual', description: 'Legend and column name for delivery.' },
-  { name: 'todayLabel', type: 'string', default: 'Today', description: 'Text on the mark.' },
+  { name: 'lastReportLabel', type: 'string', default: 'Last report', description: 'Text on the mark sitting at the last reported day.' },
   { name: 'emptyLabel', type: 'string', default: 'Nothing has been reported yet.', description: 'Shown instead of the chart when neither series has a usable day.' },
   { name: 'tableLabel', type: 'string', default: 'Progress by day', description: 'Caption of the accessible table.' },
   { name: 'aheadLabel / behindLabel / onTrackLabel', type: 'string', description: 'The words the gap is stated in.' },
