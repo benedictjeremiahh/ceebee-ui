@@ -1,16 +1,5 @@
 import type { CurvePoint } from './progress-curve.math.js';
 
-/** The colours the canvas is drawn in, resolved from Tokens rather than written down. */
-export interface CurvePalette {
-  planned: string;
-  actual: string;
-  text: string;
-  muted: string;
-  grid: string;
-  background: string;
-  font: string;
-}
-
 export interface ProgressCurveProps {
   /** What the plan said would be complete, by day. */
   planned: CurvePoint[];
@@ -22,8 +11,8 @@ export interface ProgressCurveProps {
    * `YYYY-MM-DD`. The day the reading above the plot is taken on — both series carry their last value
    * at or before it forward. Without it the reading is taken on the last day anything was reported.
    *
-   * It is deliberately not drawn on the plot: the substrate attaches a mark to a data point, and today
-   * is usually not one. What is marked is the last report (see `lastReportLabel`).
+   * It is deliberately not drawn on the plot: a mark attaches to a data point, and today is usually not
+   * one. What is marked is the last report (see `lastReportLabel`).
    */
   today?: string;
   height?: number;

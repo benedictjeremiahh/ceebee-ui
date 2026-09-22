@@ -69,23 +69,37 @@ export type {
   BoardShape,
   BoardSkeletonProps,
 } from './data/board/index.js';
+export { TimeSeriesChart, TimeSeriesChartSkeleton } from './data/time-series/index.js';
+export type {
+  Baseline,
+  ChartPalette,
+  SeriesEmphasis,
+  SeriesPoint,
+  SeriesSpec,
+  TimeSeriesChartProps,
+  TimeSeriesChartSkeletonProps,
+  ValueRange,
+} from './data/time-series/index.js';
+export {
+  alignRows,
+  asDay,
+  nearestDay,
+  round1,
+  seriesPoints,
+  seriesSpan,
+  valueOn,
+} from './data/time-series/index.js';
+export { BalanceCurve, BalanceCurveSkeleton } from './data/balance-curve/index.js';
+export type { BalanceCurveProps, BalanceCurveSkeletonProps, BalanceReading } from './data/balance-curve/index.js';
+export { balanceReading } from './data/balance-curve/index.js';
 export { ProgressCurve, ProgressCurveSkeleton } from './data/progress-curve/index.js';
 export type {
-  CurvePalette,
   CurvePoint,
   CurveReading,
   ProgressCurveProps,
   ProgressCurveSkeletonProps,
 } from './data/progress-curve/index.js';
-export {
-  asDay,
-  curveRows,
-  curveSeries,
-  curveSpan,
-  nearestDay,
-  orderedPoints,
-  readingOn,
-} from './data/progress-curve/index.js';
+export { curveRows, readingOn, toPoints } from './data/progress-curve/index.js';
 export { Diagram, DiagramEditor } from './data/diagram/index.js';
 export type {
   DiagramEdge,

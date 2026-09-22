@@ -63,14 +63,25 @@ solid and thick, in the plot and in the legend.
 
 ## Substrate
 
-The canvas is drawn by TradingView's [Lightweight Charts](https://github.com/tradingview/lightweight-charts)
-5.2.1 (Apache-2.0), **imported dynamically inside the mount effect**. A server render never evaluates
-it, and a consumer who shows no chart never downloads it. Attribution lives in
-`THIRD_PARTY_NOTICES.md` rather than on the canvas.
+The canvas, the Token reading, the forced-colors path and the accessible table belong to
+**TimeSeriesChart**, the primitive every dated chart here is built from. This Composition adds the part
+that is about progress: the scale pinned to 0–100%, the two series with their dash treatment, and the
+reading in words.
+
+That split happened when the second dated chart arrived
+([BalanceCurve](/data-display/balance-curve)). The shared half is ~200 lines of canvas and Token
+handling in which three defects had already been found — a theme applied during the substrate's async
+import being lost for good, an invisible table-sized box lying across the plot, and a mark labelled
+"Today" pointing four days off it. A second copy would have carried whichever two were fixed last.
+
+Underneath, TradingView's [Lightweight Charts](https://github.com/tradingview/lightweight-charts) 5.2.1
+(Apache-2.0), **imported dynamically inside the mount effect**. A server render never evaluates it, and
+a consumer who shows no chart never downloads it — in a real consumer's production build it lands as its
+own 57 KB gzipped chunk. Attribution lives in `THIRD_PARTY_NOTICES.md` rather than on the canvas.
 
 Tokens are read from the DOM with `getComputedStyle` and re-read whenever the theme, the Skin or the
-system colour scheme changes — a canvas cannot inherit CSS. Where they do not resolve, nothing is
-drawn: the component will not invent a colour, and the table stands as the rendering until they do.
+system colour scheme changes — a canvas cannot inherit CSS. Where they do not resolve, nothing is drawn:
+the component will not invent a colour, and the table stands as the rendering until they do.
 
 ## Props
 

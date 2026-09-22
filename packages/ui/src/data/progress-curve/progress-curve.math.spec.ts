@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { asDay, curveRows, curveSeries, curveSpan, nearestDay, orderedPoints, readingOn, round1 } from './progress-curve.math';
+import { curveRows, readingOn, toPoints } from './progress-curve.math';
 
+/**
+ * Only the progress-specific arithmetic is here. Ordering, de-duplication, day validation and the
+ * day-by-day alignment moved to `../time-series/time-series.math.spec.ts` when three charts needed
+ * them — one copy of that, spec'd once, rather than one per chart drifting apart.
+ */
 const planned = [
   { day: '2026-09-01', percent: 10 },
   { day: '2026-09-10', percent: 35 },
@@ -11,34 +16,10 @@ const actual = [
   { day: '2026-09-12', percent: 30 },
 ];
 
-describe('asDay', () => {
-  it('takes a calendar day', () => {
-    expect(asDay('2026-09-21')).toBe('2026-09-21');
-  });
-
-  // The pattern is not the test: 2026-02-30 matches it and is not a day.
-  it('refuses a date that does not exist', () => {
-    expect(asDay('2026-02-30')).toBeNull();
-    expect(asDay('2026-13-01')).toBeNull();
-  });
-
-  it('refuses an instant, a blank and nonsense', () => {
-    expect(asDay('2026-09-21T00:00:00Z')).toBeNull();
-    expect(asDay('')).toBeNull();
-    expect(asDay('kemarin')).toBeNull();
-  });
-});
-
-describe('orderedPoints', () => {
-  it('sorts by day', () => {
-    expect(orderedPoints([{ day: '2026-09-10', percent: 2 }, { day: '2026-09-01', percent: 1 }]).map((p) => p.day))
-      .toEqual(['2026-09-01', '2026-09-10']);
-  });
-
-  // One bad row should not bend the line, and should not take the rest of the chart with it.
-  it('drops what is not a day rather than failing', () => {
-    expect(orderedPoints([{ day: 'besok', percent: 5 }, { day: '2026-09-01', percent: 1 }]).map((p) => p.day))
-      .toEqual(['2026-09-01']);
+describe('toPoints', () => {
+  it('renames this Block\u2019s percent to the library\u2019s value, sorted and de-duplicated', () => {
+    expect(toPoints([{ day: '2026-09-10', percent: 2 }, { day: '2026-09-01', percent: 1 }]))
+      .toEqual([{ day: '2026-09-01', value: 1 }, { day: '2026-09-10', value: 2 }]);
   });
 });
 
@@ -74,16 +55,6 @@ describe('readingOn', () => {
   });
 });
 
-describe('curveSpan', () => {
-  it('covers both series', () => {
-    expect(curveSpan(planned, actual)).toEqual({ from: '2026-09-01', to: '2026-09-20' });
-  });
-
-  it('is nothing to draw when there are no points', () => {
-    expect(curveSpan([], [])).toBeNull();
-  });
-});
-
 describe('curveRows', () => {
   // This is the accessible rendering, not a caption — so it is every day either series reports, with
   // both values, because a canvas gives a screen reader nothing else to read.
@@ -101,42 +72,3 @@ describe('curveRows', () => {
   });
 });
 
-describe('round1', () => {
-  it('keeps one decimal, because four is false precision on an estimate', () => {
-    expect(round1(13.4999)).toBe(13.5);
-    expect(round1(-5.04)).toBe(-5);
-  });
-});
-
-describe('curveSeries', () => {
-  // The substrate throws on a repeated or unsorted time, so this is a crash guard, not tidying.
-  it('keeps one point per day, taking the later value as the correction it is', () => {
-    expect(curveSeries([
-      { day: '2026-09-10', percent: 30 },
-      { day: '2026-09-01', percent: 10 },
-      { day: '2026-09-10', percent: 34 },
-    ])).toEqual([
-      { day: '2026-09-01', percent: 10 },
-      { day: '2026-09-10', percent: 34 },
-    ]);
-  });
-
-  it('drops what is not a day', () => {
-    expect(curveSeries([{ day: '2026-02-30', percent: 5 }])).toEqual([]);
-  });
-});
-
-describe('nearestDay', () => {
-  it('finds the reported day closest to the one asked for', () => {
-    expect(nearestDay(['2026-09-01', '2026-09-10', '2026-09-20'], '2026-09-12')).toBe('2026-09-10');
-  });
-
-  it('takes the earlier day when two are equally close, rather than inventing a tiebreak', () => {
-    expect(nearestDay(['2026-09-10', '2026-09-20'], '2026-09-15')).toBe('2026-09-10');
-  });
-
-  it('is nothing when nothing was reported, or when the day asked for is not one', () => {
-    expect(nearestDay([], '2026-09-12')).toBeNull();
-    expect(nearestDay(['2026-09-10'], 'hari ini')).toBeNull();
-  });
-});

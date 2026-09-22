@@ -1829,14 +1829,30 @@
       "strategy": "ceebee",
       "source": [
         "packages/ui/src/data/progress-curve/progress-curve.tsx",
-        "packages/ui/src/data/progress-curve/progress-curve.chart.ts",
         "packages/ui/src/data/progress-curve/progress-curve.math.ts",
         "packages/ui/src/data/progress-curve/progress-curve.types.ts",
         "packages/ui/src/data/progress-curve/progress-curve.skeleton.tsx",
         "packages/ui/src/data/progress-curve/progress-curve.css"
       ],
       "demoPath": "docs/app/data-display/progress-curve",
-      "interactionContract": "read-only time-series plot with a crosshair on hover; no pan, no zoom, no selection and no dismissal. The picture is a canvas, so the accessible rendering is a table of the same readings, always present and shown in place of the canvas under forced colors.",
+      "interactionContract": "read-only S-curve, planned against actual, on a scale pinned to 0-100%; the reading for a given day is stated in words above the plot. Interaction, canvas, Token reading and the accessible table belong to TimeSeriesChart.",
+      "substrate": [
+        "react",
+        "TimeSeriesChart"
+      ]
+    },
+    "TimeSeriesChart": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/time-series/time-series.tsx",
+        "packages/ui/src/data/time-series/time-series.chart.ts",
+        "packages/ui/src/data/time-series/time-series.math.ts",
+        "packages/ui/src/data/time-series/time-series.types.ts",
+        "packages/ui/src/data/time-series/time-series.skeleton.tsx",
+        "packages/ui/src/data/time-series/time-series.css"
+      ],
+      "demoPath": "docs/app/data-display/progress-curve",
+      "interactionContract": "read-only dated plot with a crosshair on hover; no pan, no zoom, no selection, no dismissal. The picture is a canvas, so the accessible rendering is a table of the same readings, always present and shown in place of the canvas under forced colors. It is the primitive the dated Compositions are built from and carries no domain meaning.",
       "runtime": {
         "package": "lightweight-charts",
         "version": "5.2.1",
@@ -1846,6 +1862,22 @@
       "substrate": [
         "react",
         "lightweight-charts"
+      ]
+    },
+    "BalanceCurve": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/balance-curve/balance-curve.tsx",
+        "packages/ui/src/data/balance-curve/balance-curve.math.ts",
+        "packages/ui/src/data/balance-curve/balance-curve.types.ts",
+        "packages/ui/src/data/balance-curve/balance-curve.skeleton.tsx",
+        "packages/ui/src/data/balance-curve/balance-curve.css"
+      ],
+      "demoPath": "docs/app/data-display/balance-curve",
+      "interactionContract": "read-only running balance drawn against a threshold as a baseline series, shaded above and below in the semantic colours; the day it breaches and the lowest point are stated in words above the plot. Interaction, canvas, Token reading and the accessible table belong to TimeSeriesChart.",
+      "substrate": [
+        "react",
+        "TimeSeriesChart"
       ]
     }
   }

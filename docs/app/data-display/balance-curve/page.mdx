@@ -1,0 +1,81 @@
+import { BalanceCurveDemo, BalanceCurveBufferDemo, BalanceCurveSkeletonDemo } from '../../../components/balance-curve-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# BalanceCurve <span className="docs__label">Composition</span>
+
+A running balance over days, read against a line: a cash projection, a budget remaining, a tank. It
+answers two questions a list of days cannot — **when does this go under, and how far down does it get.**
+
+## Usage
+
+<BalanceCurveDemo />
+
+## The line is the argument
+
+The plot is drawn as a **baseline** series, not a line: it shades above and below the threshold in the
+semantic colours, so the stretch in trouble is coloured by its own values. That replaces the usual
+treatment — a red badge on every bad row — which says nothing about depth. Seven identical warnings and
+a dip of one percent look the same; a shaded area does not.
+
+The threshold defaults to zero and is deliberately a prop. A business that must keep a minimum on hand
+is in trouble well before it reaches nothing, and a chart drawn against zero tells it everything is
+fine right up to the day it is not.
+
+<BalanceCurveBufferDemo />
+
+Above the plot, the reading in words: the day it goes under and the lowest it gets. A chart shows the
+shape; the sentence gives the two figures a decision needs, so nobody reads a position off an axis to
+act on it. "Below" is strict — a balance sitting exactly on the threshold has met it, and reporting
+that as a breach would cry wolf on the one day the business did precisely what it planned.
+
+## No currency
+
+The library holds no currency and no locale. `format` is a function the product passes, so the same
+chart serves rupiah, a percentage of a budget, or litres of diesel — and the compact form a dashboard
+wants stays the product's decision, not this component's.
+
+## Interaction contract
+
+Read-only. A crosshair follows the pointer; there is no pan, no zoom, no selection and no dismissal —
+the same contract as [ProgressCurve](/data-display/progress-curve), because both are read rather than
+explored. The mark on the plot is the **low point**, which is a day the series definitely reports, so
+the arrow lands exactly on it.
+
+## Accessibility
+
+The plot is a `<canvas>`, so it is not in the accessibility tree at all. Like every dated chart here it
+ships a second rendering rather than a description of the first: a table of every day, always in the
+DOM, visually hidden, built from the same numbers. Under `forced-colors: active` the canvas is **not
+rendered** and the table takes its place.
+
+<Guidance
+  do="Use it when a balance over time is read against a line, and the crossing is the point."
+  dont="Use it for two measures compared against each other — that is ProgressCurve, or a TimeSeriesChart with two series."
+/>
+
+## Loading
+
+<BalanceCurveSkeletonDemo />
+
+## Props
+
+<PropsTable rows={[
+  { name: 'label', type: 'string', description: 'Accessible name for the plot.' },
+  { name: 'balances', type: 'SeriesPoint[]', description: 'The running balance by day: `{ day: "YYYY-MM-DD", value }`. A repeated day takes the later value.' },
+  { name: 'format', type: '(value: number) => string', description: 'How a value is written, on the axis and in the table. The product owns this.' },
+  { name: 'threshold', type: '{ value, label? }', default: '{ value: 0 }', description: 'The line the balance is read against, and what to call it.' },
+  { name: 'height', type: 'number', default: '260', description: 'Plot height in pixels; the width is the container\'s.' },
+  { name: 'seriesLabel', type: 'string', default: 'Balance', description: 'Column name in the accessible table.' },
+  { name: 'emptyLabel', type: 'string', default: 'Nothing to project yet.', description: 'Shown instead of the chart when there is no usable day.' },
+  { name: 'tableLabel', type: 'string', default: 'Balance by day', description: 'Caption of the accessible table.' },
+  { name: 'belowLabel', type: '(from, lowest, days) => string', description: 'Wording when the balance breaches, given the formatted figures.' },
+  { name: 'clearLabel', type: '(lowest) => string', description: 'Wording when it never breaches.' },
+  { name: 'loading', type: 'boolean', default: 'false', description: 'Renders `BalanceCurve.Skeleton`.' },
+]}/>
+
+## Tokens
+
+`--cb-tone-success` and `--cb-tone-danger` shade above and below the threshold, `--cb-tone-brand` the
+line, `--cb-fg-muted` and `--cb-fg-subtle` the text and crosshair, `--cb-border` the grid and axes,
+`--cb-surface` the plot ground, `--cb-font-sans`, plus `--cb-space-*`, `--cb-text-*` and
+`--cb-radius-*`.
