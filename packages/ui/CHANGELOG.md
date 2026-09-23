@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 1.13.1
+
+### Patch Changes
+
+- 6eb61d3: Scrollbars take the theme's accent (`--cb-tone-brand`) instead of a faint foreground grey, so they read in the same colour as the rest of the chrome.
+
 ## 1.13.0
 
 ### Minor Changes
