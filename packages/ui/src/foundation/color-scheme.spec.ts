@@ -25,8 +25,8 @@ describe('color-scheme follows the theme', () => {
     expect(css.slice(0, css.indexOf('@media'))).toContain('color-scheme: light');
   });
 
-  it('colours scrollbars from the theme, with no track, and hands them back to the system in forced colours', () => {
-    expect(css).toMatch(/scrollbar-color:\s*color-mix\(in oklch, var\(--cb-fg\)[^;]*\)\s+transparent;/);
+  it('colours scrollbars with the theme accent, with no track, and hands them back to the system in forced colours', () => {
+    expect(css).toMatch(/scrollbar-color:\s*color-mix\(in oklch, var\(--cb-tone-brand\)[^;]*\)\s+transparent;/);
     expect(css).toMatch(/@media \(forced-colors: active\)[\s\S]*scrollbar-color:\s*auto/);
   });
 });

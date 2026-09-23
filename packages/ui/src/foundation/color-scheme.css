@@ -4,10 +4,11 @@
    unless the document asked for light, and an explicit choice winning both ways. */
 :root {
   color-scheme: light;
-  /* One colour, no track: the thumb is the theme's foreground, faint, so it reads as part of the surface
-     it scrolls. `scrollbar-color` is inherited, so every scroll container below takes it. Browsers
-     without it (older Safari) still get native scrollbars in the right scheme from `color-scheme`. */
-  scrollbar-color: color-mix(in oklch, var(--cb-fg) 28%, transparent) transparent;
+  /* One colour, no track: the thumb is the theme's accent, so the scrollbar speaks the same colour as the
+     rest of the chrome (the current menu entry, focus) instead of a stray grey. `scrollbar-color` is
+     inherited, so every scroll container below takes it. Browsers without it (older Safari) still get
+     native scrollbars in the right scheme from `color-scheme`. */
+  scrollbar-color: color-mix(in oklch, var(--cb-tone-brand) 55%, transparent) transparent;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
