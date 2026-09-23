@@ -1,0 +1,89 @@
+import { TargetBarsDemo, TargetBarsLowerDemo } from '../../../components/target-bars-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# TargetBars <span className="docs__label">Composition</span>
+
+Actual against target, one row per thing — a bullet chart. It answers a question asked **per
+category** rather than over time: *which finished jobs made the margin they were priced at, and by how
+much did the others miss.*
+
+## Usage
+
+<TargetBarsDemo />
+
+## One scale, and it contains zero
+
+Every row is drawn on the same scale, and that scale always includes zero. Scaling each row to its own
+range — or starting the axis at the smallest value — makes a 2% margin look like a 20% one, which is
+the failure this chart exists to prevent. A row that lost money draws to the left of the zero line, so a
+loss reads as a loss and not as a short bar.
+
+The target is a mark on the same track, so *how far off* is a distance the eye can compare across rows.
+
+## Unknown is not zero
+
+A figure that cannot be known yet — a job waiting for its last invoice — is `null`. It is written as
+unknown and draws no bar; the target mark still shows. Drawing it as zero would state that the job
+earned nothing, which is a claim about the business the data does not make.
+
+## Higher or lower is better
+
+`better` decides which side of the target counts as met. The default is `higher` — a margin, a score.
+Pass `lower` for a cost, a delay, a defect rate. Meeting the target exactly counts as met.
+
+<TargetBarsLowerDemo />
+
+## No currency
+
+The library holds no unit, currency or locale. `format` is a function the product passes, so the same
+chart serves a percentage, rupiah or days — and the product's decimal mark stays the product's choice.
+
+## Interaction contract
+
+Read-only. No hover, no selection, no dismissal. Every figure is already written out, so there is
+nothing a tooltip would add.
+
+## Accessibility
+
+A `<ul>` named by `label`, one `<li>` per row, each stating its label and both figures as text. The bars
+are `aria-hidden`: the sentence already says what they show, and a screen reader reading "bar, 62
+percent width" adds noise, not information. Under `forced-colors: active` the bars keep system colours
+(`Highlight`, `CanvasText`) rather than vanishing with their backgrounds; under
+`prefers-reduced-motion: reduce` they are drawn at their final length instead of growing into place.
+
+<Guidance
+  do="Use it to compare an outcome against its target across a handful of categories."
+  dont="Use it for a series over time — that is TimeSeriesChart, or ProgressCurve for a plan against progress."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'label', type: 'string', description: 'Accessible name for the list. Required.' },
+  { name: 'rows', type: 'TargetBarsRow[]', description: 'One row per category, drawn in the order given.' },
+  { name: 'format', type: '(value: number) => string', description: 'How a figure is written. The product owns this.' },
+  { name: 'better', type: "'higher' | 'lower'", default: "'higher'", description: 'Which side of the target counts as met.' },
+  { name: 'actualLabel', type: 'string', default: "'Actual'", description: 'Word before the actual figure.' },
+  { name: 'targetLabel', type: 'string', default: "'Target'", description: 'Word before the target figure.' },
+  { name: 'unknownLabel', type: 'string', default: "'unknown'", description: 'Written where a figure is `null`.' },
+  { name: 'emptyLabel', type: 'string', default: "'Nothing to compare yet.'", description: 'Shown instead of the list when there are no rows.' },
+  { name: 'className', type: 'string', description: 'Added to the root element.' },
+]}/>
+
+`TargetBarsRow`:
+
+<PropsTable rows={[
+  { name: 'id', type: 'string', description: 'Stable key for the row.' },
+  { name: 'label', type: 'string', description: 'What the row is.' },
+  { name: 'target', type: 'number | null', description: 'What it was meant to reach; `null` when none was set.' },
+  { name: 'actual', type: 'number | null', description: 'What it reached; `null` when it cannot be known yet.' },
+  { name: 'detail', type: 'ReactNode', description: 'A second line under the label: a date, a reason, a group.' },
+]}/>
+
+## Tokens
+
+`--cb-tone-success` and `--cb-tone-danger` fill a met or missed bar, `--cb-fg-subtle` an unknown
+verdict, `--cb-fg` the target mark and the actual figure, `--cb-fg-muted` the other text, `--cb-border`
+the zero line, `--cb-mini-chart-track-strength` the track, `--cb-radius-sm`, `--cb-border-width`,
+`--cb-font-sans`, `--cb-text-sm`, `--cb-text-xs`, `--cb-space-*`, and `--cb-duration-deliberate` with
+`--cb-ease-entrance` for the bars growing in.

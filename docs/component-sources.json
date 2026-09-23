@@ -1879,6 +1879,19 @@
         "react",
         "TimeSeriesChart"
       ]
+    },
+    "TargetBars": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/target-bars/target-bars.tsx",
+        "packages/ui/src/data/target-bars/target-bars.math.ts",
+        "packages/ui/src/data/target-bars/target-bars.css"
+      ],
+      "demoPath": "docs/app/data-display/target-bars",
+      "interactionContract": "read-only actual-against-target per category on one shared scale that always contains zero; no hover, no selection, no dismissal. Both figures are written as text in each list item; the bars are aria-hidden. A null figure is written as unknown and draws no bar.",
+      "substrate": [
+        "react"
+      ]
     }
   }
 }
