@@ -5,6 +5,14 @@
 Every released version, and what breaks when you move between them. Written from the changesets that
 shipped with each change.
 
+## 1.11.0
+
+### Minor Changes
+
+- 9947ec8: `ThemeProvider` takes a `locale` — one of the locale exports such as `idIDLocale` — so the strings the component runtime draws itself ("No data", "Select date", pagination) follow the product's language, static dialogs included. The locale objects were already exported; there was no way to apply them.
+
+  `ProgressCurve` takes `dayLabel` for its table's day column and `formatNumber` for the numbers in its reading, so a product that marks decimals with a comma no longer shows `74.4%` beside its own `74,4`. Defaults are unchanged.
+
 ## 1.10.0
 
 ### Minor Changes
