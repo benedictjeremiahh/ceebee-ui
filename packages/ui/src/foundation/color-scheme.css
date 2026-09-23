@@ -1,0 +1,28 @@
+/* The browser's own chrome follows the theme: scrollbars, date and select popups, autofill, the caret.
+   Without `color-scheme` a dark theme still gets the browser's light scrollbars — a white track and a
+   grey pill beside dark surfaces. The selectors are the themes' own (tokens/skin.css): system dark
+   unless the document asked for light, and an explicit choice winning both ways. */
+:root {
+  color-scheme: light;
+  /* One colour, no track: the thumb is the theme's foreground, faint, so it reads as part of the surface
+     it scrolls. `scrollbar-color` is inherited, so every scroll container below takes it. Browsers
+     without it (older Safari) still get native scrollbars in the right scheme from `color-scheme`. */
+  scrollbar-color: color-mix(in oklch, var(--cb-fg) 28%, transparent) transparent;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+/* Forced colours: the system picks scrollbar colours; a faint custom thumb could vanish. */
+@media (forced-colors: active) {
+  :root {
+    scrollbar-color: auto;
+  }
+}
