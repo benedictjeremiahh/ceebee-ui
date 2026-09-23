@@ -105,6 +105,12 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
   const tokens: NonNullable<ThemeConfig['token']> = {
     colorPrimary: color('--cb-tone-brand'),
     colorInfo: color('--cb-tone-info'),
+    /* Ant derives its link colour from colorInfo, not colorPrimary, so every link-style button took the
+       info hue — a second accent beside the brand. Links are the theme's link colour, derived from the
+       brand; hover lifts to the brand tone. */
+    colorLink: color('--cb-fg-link'),
+    colorLinkHover: color('--cb-tone-brand'),
+    colorLinkActive: color('--cb-fg-link'),
     colorSuccess: color('--cb-tone-success'),
     colorWarning: color('--cb-tone-warning'),
     colorError: color('--cb-tone-danger'),

@@ -511,6 +511,10 @@ ${lookup}
 const ANT_COLOR_TOKENS = {
   colorPrimary: '--cb-tone-brand',
   colorInfo: '--cb-tone-info',
+  // Ant derives its link colour from colorInfo, so every link button was the info hue — a second accent.
+  colorLink: '--cb-fg-link',
+  colorLinkHover: '--cb-tone-brand',
+  colorLinkActive: '--cb-fg-link',
   colorSuccess: '--cb-tone-success',
   colorWarning: '--cb-tone-warning',
   colorError: '--cb-tone-danger',
