@@ -29,6 +29,17 @@ function ThemeToggle() {
 }
 ```
 
+## The browser's own chrome
+
+The library declares `color-scheme` for each theme, with the same selectors the tokens use, so what the
+browser draws itself follows the theme: scrollbars, native pickers, autofill. Without it a dark theme still
+gets the browser's light scrollbars — a white track beside dark surfaces. Scrollbars take one colour, the
+theme's foreground at low strength, with no track; under `forced-colors` they are the system's again.
+
+A scroll container that should only show its scrollbar while it is being scrolled (a navigation rail, a
+short list) can clear `scrollbar-color` at rest and restore it while scrolling — that is the product's
+choice per container, not a global default, because a long page's scrollbar is a cue that there is more.
+
 ## Server rendering Ant controls
 
 An application that extracts Ant styles during server rendering must pass the resolved mode that
