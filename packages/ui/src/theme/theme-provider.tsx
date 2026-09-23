@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
-import type { ThemeConfig } from 'antd';
+import type { ConfigProviderProps, ThemeConfig } from 'antd';
 import { ThemeBridge } from './theme-bridge.js';
 import {
   serializeThemeModeCookie,
@@ -24,6 +24,12 @@ export interface ThemeProviderProps {
   persist?: boolean;
   /** Optional Ant token/component overrides applied after the active Ceebee Skin. */
   antdTheme?: ThemeConfig;
+  /**
+   * The language of the strings the runtime draws itself — an empty table's "No data", a date
+   * picker's "Select date", pagination. Pass one of the locale exports (`idIDLocale`, …). The
+   * library's own strings are a separate contract: see `LabelsProvider`.
+   */
+  locale?: ConfigProviderProps['locale'];
 }
 
 interface ThemeState {
@@ -48,6 +54,7 @@ export function ThemeProvider({
   contrast = 'normal',
   persist = true,
   antdTheme,
+  locale,
 }: ThemeProviderProps) {
   const [choice, setChoiceState] = useState<ThemeChoice>(defaultChoice);
   const [systemDark, setSystemDark] = useState(initialMode === 'dark');
@@ -88,7 +95,7 @@ export function ThemeProvider({
 
   return (
     <ThemeContext.Provider value={{ choice, setChoice, resolved }}>
-      <ThemeBridge mode={resolved} skin={skin} contrast={contrast} theme={antdTheme}>
+      <ThemeBridge mode={resolved} skin={skin} contrast={contrast} theme={antdTheme} locale={locale}>
         {children}
       </ThemeBridge>
     </ThemeContext.Provider>

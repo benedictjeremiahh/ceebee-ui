@@ -96,6 +96,8 @@ the component will not invent a colour, and the table stands as the rendering un
   { name: 'lastReportLabel', type: 'string', default: 'Last report', description: 'Text on the mark sitting at the last reported day.' },
   { name: 'emptyLabel', type: 'string', default: 'Nothing has been reported yet.', description: 'Shown instead of the chart when neither series has a usable day.' },
   { name: 'tableLabel', type: 'string', default: 'Progress by day', description: 'Caption of the accessible table.' },
+  { name: 'dayLabel', type: 'string', default: 'Day', description: 'Header of the table\'s day column.' },
+  { name: 'formatNumber', type: '(value: number) => string', default: 'one decimal, dot', description: 'How the actual, the plan and the gap are written in the reading, without the `%`. A product that marks decimals with a comma passes its own.' },
   { name: 'aheadLabel / behindLabel / onTrackLabel', type: 'string', description: 'The words the gap is stated in.' },
   { name: 'loading', type: 'boolean', default: 'false', description: 'Renders `ProgressCurve.Skeleton` in place of the chart.' },
 ]}/>

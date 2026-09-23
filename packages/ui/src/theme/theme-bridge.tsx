@@ -1,6 +1,6 @@
 'use client';
 
-import { ConfigProvider, theme as antdTheme, type ThemeConfig } from 'antd';
+import { ConfigProvider, theme as antdTheme, type ConfigProviderProps, type ThemeConfig } from 'antd';
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { createCssProbe, watchTokens } from '../lib/css-probe.js';
 import {
@@ -16,6 +16,7 @@ export interface ThemeBridgeProps {
   skin?: CeebeeSkin;
   contrast?: ThemeContrast;
   theme?: ThemeConfig;
+  locale?: ConfigProviderProps['locale'];
 }
 
 /**
@@ -28,6 +29,7 @@ export function ThemeBridge({
   skin = 'ceebee',
   contrast = 'normal',
   theme,
+  locale,
 }: ThemeBridgeProps) {
   /* The generated seed is deliberately the first value on both server and client. It makes SSR
      extraction deterministic and keeps hydration on the same Ant hash. Once mounted, the live CSS
@@ -72,11 +74,11 @@ export function ThemeBridge({
   // carrying the same theme, so a static dialog matches the page it was opened from.
   useEffect(() => {
     ConfigProvider.config({
-      holderRender: (holder) => <ConfigProvider theme={mergedTheme}>{holder}</ConfigProvider>,
+      holderRender: (holder) => <ConfigProvider theme={mergedTheme} locale={locale}>{holder}</ConfigProvider>,
     });
-  }, [mergedTheme]);
+  }, [mergedTheme, locale]);
 
-  return <ConfigProvider theme={mergedTheme}>{children}</ConfigProvider>;
+  return <ConfigProvider theme={mergedTheme} locale={locale}>{children}</ConfigProvider>;
 }
 
 export interface CeebeeTheme {

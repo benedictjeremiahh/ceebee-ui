@@ -24,6 +24,13 @@ export interface ProgressCurveProps {
   emptyLabel?: string;
   /** The table a screen reader reads, and what a forced-colors viewer sees instead of the canvas. */
   tableLabel?: string;
+  /** Header of the table's day column. */
+  dayLabel?: string;
+  /**
+   * How a number in the reading is written, without its `%` — the actual, the plan and the gap.
+   * Defaults to one decimal with a dot; a product that marks decimals with a comma passes its own.
+   */
+  formatNumber?: (value: number) => string;
   aheadLabel?: string;
   behindLabel?: string;
   onTrackLabel?: string;

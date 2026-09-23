@@ -27,6 +27,8 @@ function ProgressCurveRoot({
   lastReportLabel = 'Last report',
   emptyLabel = 'Nothing has been reported yet.',
   tableLabel = 'Progress by day',
+  dayLabel,
+  formatNumber = oneDecimal,
   aheadLabel = 'ahead of plan',
   behindLabel = 'behind plan',
   onTrackLabel = 'on plan',
@@ -73,13 +75,13 @@ function ProgressCurveRoot({
       {/* The reading in words, above the picture — the one number somebody opened this to find. */}
       {latest ? (
         <p className="cb-progress-curve__reading" data-state={stateOf(latest.gap)}>
-          <strong>{percent(latest.actualPercent)}</strong>
+          <strong>{percent(latest.actualPercent, formatNumber)}</strong>
           {' '}
-          {actualLabel.toLowerCase()} · {percent(latest.plannedPercent)} {plannedLabel.toLowerCase()}
+          {actualLabel.toLowerCase()} · {percent(latest.plannedPercent, formatNumber)} {plannedLabel.toLowerCase()}
           {latest.gap === null ? null : (
             <>
               {' — '}
-              {Math.abs(latest.gap)} {gapWord(latest.gap, { aheadLabel, behindLabel, onTrackLabel })}
+              {formatNumber(Math.abs(latest.gap))} {gapWord(latest.gap, { aheadLabel, behindLabel, onTrackLabel })}
             </>
           )}
           <span className="cb-progress-curve__on-day"> ({latest.day})</span>
@@ -95,6 +97,7 @@ function ProgressCurveRoot({
         height={height}
         emptyLabel={emptyLabel}
         tableLabel={tableLabel}
+        dayLabel={dayLabel}
       />
     </figure>
   );
@@ -105,8 +108,10 @@ export const ProgressCurve = Object.assign(ProgressCurveRoot, { Skeleton: Progre
 
 const percentOf = (value: number): string => `${Math.round(value)}%`;
 
-function percent(value: number | null): string {
-  return value === null ? '—' : `${round1(value)}%`;
+const oneDecimal = (value: number): string => String(round1(value));
+
+function percent(value: number | null, formatNumber: (value: number) => string): string {
+  return value === null ? '—' : `${formatNumber(value)}%`;
 }
 
 function stateOf(gap: number | null): 'behind' | 'ahead' | 'on-plan' | 'unknown' {

@@ -56,6 +56,24 @@ describe('ProgressCurve', () => {
     expect(reading).toHaveAttribute('data-state', 'behind');
   });
 
+  // A product that marks decimals with a comma shows the reading its own way, and names the day column.
+  it('formats the reading and heads the day column in the consumer\'s language', () => {
+    render(
+      <ProgressCurve
+        planned={[{ day: '2026-09-01', percent: 12.5 }]}
+        actual={[{ day: '2026-09-01', percent: 7.5 }]}
+        label="Ruko Depok"
+        dayLabel="Tanggal"
+        behindLabel="tertinggal"
+        formatNumber={(value) => String(value).replace('.', ',')}
+      />,
+    );
+    const reading = screen.getByText(/tertinggal/);
+    expect(reading).toHaveTextContent('7,5%');
+    expect(reading).toHaveTextContent('12,5%');
+    expect(screen.getByRole('columnheader', { name: 'Tanggal' })).toBeInTheDocument();
+  });
+
   it('says ahead, and says on plan, rather than only ever counting down', () => {
     render(<ProgressCurve planned={actual} actual={planned} label="Ruko Depok" />);
     expect(screen.getByText(/ahead of plan/)).toHaveAttribute('data-state', 'ahead');

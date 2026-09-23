@@ -2,7 +2,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import { Button } from 'antd';
+import { Button, Empty } from 'antd';
+import idID from 'antd/locale/id_ID.js';
 import { createCeebeeAntStyleCache, extractCeebeeAntStyles } from './ant-style-cache.js';
 import { CeebeeAntStyleProvider } from './ant-style-provider.js';
 import { ThemeProvider, useTheme } from './theme-provider.js';
@@ -59,5 +60,15 @@ describe('ThemeProvider server mode', () => {
 
     expect(screen.getByText('dark')).toBeInTheDocument();
     await waitFor(() => expect(document.cookie).toContain('cb-theme-mode=dark'));
+  });
+
+  it('speaks the locale it is given, in the strings Ant draws for itself', () => {
+    render(
+      <ThemeProvider locale={idID} persist={false}>
+        <Empty />
+      </ThemeProvider>,
+    );
+
+    expect(document.querySelector('.ant-empty-description')?.textContent).toBe('Tidak ada data');
   });
 });

@@ -65,6 +65,21 @@ request there may be no cookie yet. The application chooses its default for that
 zero-specificity pre-paint layer keeps controls readable until hydration; subsequent requests carry
 the browser's resolved mode and can safely use the framework's Ant style-extraction adapter.
 
+## Language of the runtime's own strings
+
+An empty table's "No data", a date picker's "Select date", pagination: the component runtime draws
+those itself, in English unless told otherwise. Pass one of the locale exports to `ThemeProvider`
+and they follow the product's language — including in static dialogs, which render outside the tree:
+
+```tsx
+import { ThemeProvider, idIDLocale } from '@ceebee/ui/client';
+
+<ThemeProvider skin="clarity" locale={idIDLocale}>{children}</ThemeProvider>
+```
+
+The library's own strings — overlays, carousel, pagination summaries — are a separate contract, set
+through [`LabelsProvider`](/labels).
+
 `getCeebeeAntThemeSeed` is also exported for framework adapters that need the generated seed
 directly. It returns a fresh object for one Skin, mode, and contrast preference.
 
