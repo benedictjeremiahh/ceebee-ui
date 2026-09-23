@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { Donut } from './data/donut.js';
 import { Leaderboard } from './data/leaderboard.js';
 import { Sparkline } from './data/sparkline.js';
+import { TargetBars } from './data/target-bars/target-bars.js';
 import { Checklist } from './onboarding/checklist.js';
 
 /**
@@ -34,6 +35,11 @@ describe('accessibility', () => {
           />
           <Donut label="Spend by category" slices={[{ label: 'Rent', value: 4 }, { label: 'Food', value: 6 }]} />
           <Sparkline label="Sessions this week" values={[3, 5, 4, 8, 6, 9, 7]} />
+          <TargetBars
+            label="Final margin"
+            format={(value) => `${value}%`}
+            rows={[{ id: 'a', label: 'Job A', target: 15, actual: 12 }, { id: 'b', label: 'Job B', target: 15, actual: null }]}
+          />
           <Checklist
             title="Getting started"
             tasks={[

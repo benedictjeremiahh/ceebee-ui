@@ -38,3 +38,5 @@ export { sparklineGeometry } from './data/sparkline.math.js';
 export type { SparklineGeometry } from './data/sparkline.math.js';
 export { Leaderboard } from './data/leaderboard.js';
 export type { LeaderboardProps, LeaderboardEntry } from './data/leaderboard.js';
+export { TargetBars, targetBarsScale, positionOf, barSpan, verdictOf } from './data/target-bars/index.js';
+export type { TargetBarsProps, TargetBarsRow, TargetBarsScale, TargetVerdict } from './data/target-bars/index.js';

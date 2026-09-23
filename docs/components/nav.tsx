@@ -134,6 +134,7 @@ const GROUPS: Group[] = [
       { href: '/data-display/statistic', label: 'Statistic' },
       { href: '/data-display/table', label: 'Table' },
       { href: '/data-display/tag', label: 'Tag' },
+      { href: '/data-display/target-bars', label: 'TargetBars' },
       { href: '/data-display/timeline', label: 'Timeline' },
       { href: '/data-display/tooltip', label: 'Tooltip' },
       { href: '/data-display/tour', label: 'Tour' },

@@ -1,0 +1,56 @@
+.cb-target-bars {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-3);
+  font-family: var(--cb-font-sans);
+  color: var(--cb-fg);
+  --cb-target-bars-fill: var(--cb-fg-subtle);
+}
+.cb-target-bars__row { margin: 0; display: flex; flex-direction: column; gap: var(--cb-space-1); min-inline-size: 0; }
+.cb-target-bars__row[data-verdict="met"] { --cb-target-bars-fill: var(--cb-tone-success); }
+.cb-target-bars__row[data-verdict="missed"] { --cb-target-bars-fill: var(--cb-tone-danger); }
+.cb-target-bars__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  column-gap: var(--cb-space-3);
+  row-gap: var(--cb-space-0);
+}
+.cb-target-bars__label { font-weight: 600; overflow-wrap: anywhere; }
+.cb-target-bars__figures { font-size: var(--cb-text-sm); color: var(--cb-fg-muted); font-variant-numeric: tabular-nums; }
+.cb-target-bars__actual { color: var(--cb-fg); font-weight: 600; }
+.cb-target-bars__detail { font-size: var(--cb-text-xs); color: var(--cb-fg-muted); }
+.cb-target-bars__track {
+  position: relative;
+  block-size: var(--cb-space-3);
+  border-radius: var(--cb-radius-sm);
+  background: color-mix(in oklch, var(--cb-fg) calc(var(--cb-mini-chart-track-strength) * 100%), transparent);
+}
+.cb-target-bars__zero,
+.cb-target-bars__target { position: absolute; inset-block: calc(var(--cb-space-1) * -1); inline-size: var(--cb-border-width); }
+.cb-target-bars__zero { background: var(--cb-border); }
+.cb-target-bars__target { inline-size: calc(var(--cb-border-width) * 2); background: var(--cb-fg); transform: translateX(-50%); }
+.cb-target-bars__fill {
+  position: absolute;
+  inset-block: 0;
+  border-radius: var(--cb-radius-sm);
+  background: var(--cb-target-bars-fill);
+  transition: inline-size var(--cb-duration-deliberate) var(--cb-ease-entrance), inset-inline-start var(--cb-duration-deliberate) var(--cb-ease-entrance);
+}
+.cb-target-bars__empty { margin: 0; color: var(--cb-fg-muted); font-family: var(--cb-font-sans); }
+/* Reduced motion: the bars are drawn at their final length rather than growing into place. */
+@media (prefers-reduced-motion: reduce) {
+  .cb-target-bars__fill { transition: none; }
+}
+/* Forced colours: backgrounds are repainted, so the bars would vanish. They keep system colours; the
+   verdict is still carried by the written figures, which is what the row states first. */
+@media (forced-colors: active) {
+  .cb-target-bars__track { forced-color-adjust: none; background: Canvas; outline: var(--cb-border-width) solid CanvasText; }
+  .cb-target-bars__fill { background: Highlight; }
+  .cb-target-bars__zero { background: GrayText; }
+  .cb-target-bars__target { background: CanvasText; }
+}
