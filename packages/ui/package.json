@@ -1,6 +1,6 @@
 {
   "name": "@ceebee/ui",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "Ceebee's design system: tokens, themed primitives, motion, and onboarding.",
   "license": "MIT",
   "repository": {
