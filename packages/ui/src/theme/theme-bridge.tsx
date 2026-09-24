@@ -3,6 +3,7 @@
 import { ConfigProvider, theme as antdTheme, type ConfigProviderProps, type ThemeConfig } from 'antd';
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { createCssProbe, watchTokens } from '../lib/css-probe.js';
+import { antPresetTokens } from './ant-presets.js';
 import {
   getCeebeeAntThemeSeed,
   type CeebeeSkin,
@@ -64,7 +65,7 @@ export function ThemeBridge({
     ...theme,
     algorithm: theme?.algorithm ?? (mode === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm),
     cssVar: theme?.cssVar ?? { prefix: 'cb-ant' },
-    token: { ...skinToken.token, ...theme?.token },
+    token: { ...skinToken.token, ...antPresetTokens(mode === 'dark' ? 'dark' : 'light'), ...theme?.token },
     components: mergeComponents(skinToken.components, theme?.components),
   }), [mode, skinToken, theme]);
 

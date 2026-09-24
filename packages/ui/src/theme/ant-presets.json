@@ -1,0 +1,8 @@
+{
+  "hues": {
+    "blue": 255, "geekblue": 268, "purple": 300, "magenta": 340, "pink": 355, "red": 25, "volcano": 38,
+    "orange": 55, "gold": 78, "yellow": 95, "lime": 125, "green": 150, "cyan": 200
+  },
+  "light": { "ground": [0.95, 0.035], "border": [0.84, 0.07], "fill": [0.5, 0.13], "text": [0.47, 0.12] },
+  "dark": { "ground": [0.3, 0.05], "border": [0.45, 0.07], "fill": [0.76, 0.12], "text": [0.8, 0.11] }
+}

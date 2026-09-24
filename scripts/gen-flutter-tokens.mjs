@@ -575,6 +575,7 @@ function emitAntThemeSeeds() {
         const resolvedTokens = new Map([...structureTokens, ...tokens]);
         const value = (name) => deref(resolvedTokens.get(name), resolvedTokens).trim();
         const token = {
+          ...antPresetTokens(brightness),
           ...Object.fromEntries(Object.entries(ANT_COLOR_TOKENS)
             .map(([field, name]) => [field, antColor(value(name), `${skin.name}/${brightness}/${contrast}/${name}`)])),
           ...Object.fromEntries(Object.entries(ANT_LENGTH_TOKENS)
@@ -611,6 +612,20 @@ import type { CeebeeAntSeedRegistry } from './server-theme.js';
 
 export const generatedCeebeeAntSeeds = ${JSON.stringify(registry, null, 2)} as const satisfies CeebeeAntSeedRegistry;
 `;
+}
+
+/** Ant's preset palette steps, from the numbers theme/ant-presets.ts reads — same data, same maths. */
+function antPresetTokens(brightness) {
+  const presets = JSON.parse(readFileSync(resolve(root, 'packages/ui/src/theme/ant-presets.json'), 'utf8'));
+  const steps = presets[brightness];
+  const out = {};
+  for (const [name, hue] of Object.entries(presets.hues)) {
+    for (const [index, step] of [[1, 'ground'], [3, 'border'], [6, 'fill'], [7, 'text']]) {
+      const [lightness, chroma] = steps[step];
+      out[`${name}${index}`] = antColor(`oklch(${lightness} ${chroma} ${hue})`, `ant-presets/${brightness}/${name}${index}`);
+    }
+  }
+  return out;
 }
 
 function antColor(value, where) {

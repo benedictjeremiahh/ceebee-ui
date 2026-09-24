@@ -67,6 +67,21 @@ describe('tone contrast', () => {
     expect(failing).toEqual([]);
   });
 
+  it('reads every Ant preset colour (a gold tag, a green badge) at WCAG AA, as text on its ground and under its text as a fill', () => {
+    const presets = ['blue', 'geekblue', 'purple', 'magenta', 'pink', 'red', 'volcano', 'orange', 'gold', 'yellow', 'lime', 'green', 'cyan'];
+    const failing = seeds.flatMap(({ name, seed }) =>
+      presets.flatMap((p) => {
+        const text = ratio(String(seed.token[`${p}7`]), String(seed.token[`${p}1`]));
+        const fill = ratio(String(seed.token.colorTextLightSolid), String(seed.token[`${p}6`]));
+        return [
+          ...(text < 4.5 ? [`${name} ${p}7 on ${p}1: ${text.toFixed(2)}`] : []),
+          ...(fill < 4.5 ? [`${name} text on ${p}6: ${fill.toFixed(2)}`] : []),
+        ];
+      }),
+    );
+    expect(failing).toEqual([]);
+  });
+
   it('keeps light text on the dark neutrals (tooltip, tour, image preview) in both modes', () => {
     const failing = seeds.flatMap(({ name, seed }) =>
       (['Tooltip', 'Tour', 'Image'] as const)
