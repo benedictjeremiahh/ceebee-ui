@@ -18,7 +18,10 @@ export function DiagramNodeView({ data, selected }: NodeProps<DiagramFlowNode>) 
     >
       <Handle id="left" type="target" position={Position.Left} className="cb-diagram__handle" isConnectable={data.connectable} />
       <Handle id="top" type="target" position={Position.Top} className="cb-diagram__handle" isConnectable={data.connectable} />
-      <span className="cb-diagram__label">{data.label}</span>
+      {/* Two lines, then an ellipsis; the whole label is the tooltip and is always in the outline. */}
+      <span className="cb-diagram__label" title={data.label}>
+        {data.label}
+      </span>
       {data.content}
       <Handle id="right" type="source" position={Position.Right} className="cb-diagram__handle" isConnectable={data.connectable} />
       <Handle id="bottom" type="source" position={Position.Bottom} className="cb-diagram__handle" isConnectable={data.connectable} />

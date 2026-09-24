@@ -1,12 +1,20 @@
 'use client';
 
-import type { NodeTypes } from '@xyflow/react';
+import type { FitViewOptions, NodeTypes } from '@xyflow/react';
 import { useEffect, useState, type RefObject } from 'react';
 import { DiagramNodeView } from './diagram-node.js';
 import { FALLBACK_CELL, FLOW_NODE_TYPE, cellSize } from './diagram.math.js';
-import type { DiagramEdge, DiagramNode } from './diagram.types.js';
+import { shapesInUse } from './diagram.selection.js';
+import type { DiagramEdge, DiagramNode, DiagramShape } from './diagram.types.js';
 
 /* What Diagram and DiagramEditor share on top of React Flow. */
+
+/**
+ * Fit the whole diagram on open, but never below a zoom at which a label can still be read: a fourteen-stage
+ * flow fitted at 0.5× drew 14px labels at 7px. Past this, the reader pans — the controls and the outline
+ * still reach every node.
+ */
+export const FIT_VIEW: FitViewOptions = { minZoom: 0.8, padding: 0.1 };
 
 /** Stable across renders: React Flow re-mounts every node when this object changes identity. */
 export const NODE_TYPES: NodeTypes = { [FLOW_NODE_TYPE]: DiagramNodeView };
@@ -57,4 +65,29 @@ export function DiagramOutline({
 /** `useId` output contains colons, which are awkward in an id reference. */
 export function safeId(id: string): string {
   return id.replace(/[^a-zA-Z0-9_-]/g, '');
+}
+
+/** A key to the node shapes the diagram draws, named by the consumer (a diamond is "Keputusan", say). */
+export function DiagramLegend({
+  nodes,
+  labels,
+}: {
+  nodes: readonly DiagramNode[];
+  labels: Partial<Record<DiagramShape, string>>;
+}) {
+  const entries = shapesInUse(nodes).flatMap((shape) => {
+    const name = labels[shape];
+    return name ? [{ shape, name }] : [];
+  });
+  if (entries.length === 0) return null;
+  return (
+    <ul className="cb-diagram__legend">
+      {entries.map(({ shape, name }) => (
+        <li key={shape} className="cb-diagram__legend-item">
+          <span className="cb-diagram__legend-swatch" data-shape={shape} aria-hidden="true" />
+          {name}
+        </li>
+      ))}
+    </ul>
+  );
 }
