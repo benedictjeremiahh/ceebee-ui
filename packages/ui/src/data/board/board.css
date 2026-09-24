@@ -91,7 +91,9 @@
 
 .cb-board__column {
   flex: 0 0 auto;
-  inline-size: 17rem;
+  /* How wide a lane is. The default is the width the board has always drawn; a product whose Stages are
+     narrow — or whose page is — sets the seam rather than restyling the column from outside. */
+  inline-size: var(--cb-board-column-inline-size, 17rem);
   max-inline-size: 100%;
   display: flex;
   flex-direction: column;
