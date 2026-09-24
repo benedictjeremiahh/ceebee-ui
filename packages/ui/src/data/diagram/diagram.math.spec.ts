@@ -1,6 +1,8 @@
 import { MarkerType, type NodeChange } from '@xyflow/react';
 import { describe, expect, it } from 'vitest';
 import {
+  arrowSize,
+  edgeThickness,
   FALLBACK_CELL,
   applySelection,
   cellSize,
@@ -198,5 +200,34 @@ describe('connectStep', () => {
 
   it('restarts from another node when told to start', () => {
     expect(connectStep({ mode: 'connecting', from: 'a' }, { type: 'start', nodeId: 'c' })).toEqual({ state: { mode: 'connecting', from: 'c' } });
+  });
+});
+
+describe('edgeThickness', () => {
+  it('draws a trickle at 1.5× the border width and the busiest path at 8×', () => {
+    expect(edgeThickness(0)).toBe(1.5);
+    expect(edgeThickness(1)).toBe(8);
+    expect(edgeThickness(0.5)).toBe(4.75);
+  });
+  it('keeps the arrowhead the same size on a thick line', () => {
+    expect(arrowSize(1) * edgeThickness(1)).toBeCloseTo(12.5, 1);
+    expect(arrowSize(0) * edgeThickness(0)).toBeCloseTo(12.5, 1);
+  });
+  it('clamps a weight outside 0–1', () => {
+    expect(edgeThickness(3)).toBe(8);
+    expect(edgeThickness(-1)).toBe(1.5);
+  });
+});
+
+describe('toFlowEdges weights', () => {
+  const from = { id: 'a', label: 'A', position: { x: 0, y: 0 } };
+  const to = { id: 'b', label: 'B', position: { x: 10, y: 0 } };
+  it('thickens a weighted edge and marks an untaken one as unused', () => {
+    const [heavy] = toFlowEdges([{ id: 'e', from: 'a', to: 'b', weight: 1 }], [from, to]);
+    expect(heavy?.style?.strokeWidth).toBe('calc(var(--cb-border-width) * 8)');
+    expect(heavy?.markerEnd).toEqual({ type: MarkerType.ArrowClosed, width: 1.56, height: 1.56 });
+    const [unused] = toFlowEdges([{ id: 'e', from: 'a', to: 'b', weight: 0 }], [from, to]);
+    expect(unused?.className).toContain('cb-diagram__edge--unused');
+    expect(unused?.style).toBeUndefined();
   });
 });

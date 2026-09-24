@@ -5,6 +5,7 @@ import { useEffect, useState, type RefObject } from 'react';
 import { DiagramNodeView } from './diagram-node.js';
 import { FALLBACK_CELL, FLOW_NODE_TYPE, cellSize } from './diagram.math.js';
 import { shapesInUse } from './diagram.selection.js';
+import type { Tone } from '../../lib/cn.js';
 import type { DiagramEdge, DiagramNode, DiagramShape } from './diagram.types.js';
 
 /* What Diagram and DiagramEditor share on top of React Flow. */
@@ -68,24 +69,39 @@ export function safeId(id: string): string {
 }
 
 /** A key to the node shapes the diagram draws, named by the consumer (a diamond is "Keputusan", say). */
+/** One legend line: a node's shape and tone, and what it means. */
+export interface DiagramLegendEntry {
+  shape: DiagramShape;
+  tone?: Tone;
+  label: string;
+}
+
+/**
+ * A key to the nodes. Given `entries`, it lists exactly those — a shape alone cannot tell a finished end
+ * from a lost one when both are pills. Given only `labels`, it names the shapes the diagram draws.
+ */
 export function DiagramLegend({
   nodes,
   labels,
+  entries: given,
 }: {
   nodes: readonly DiagramNode[];
-  labels: Partial<Record<DiagramShape, string>>;
+  labels?: Partial<Record<DiagramShape, string>>;
+  entries?: readonly DiagramLegendEntry[];
 }) {
-  const entries = shapesInUse(nodes).flatMap((shape) => {
-    const name = labels[shape];
-    return name ? [{ shape, name }] : [];
-  });
+  const entries: readonly DiagramLegendEntry[] =
+    given ??
+    shapesInUse(nodes).flatMap((shape) => {
+      const label = labels?.[shape];
+      return label ? [{ shape, label }] : [];
+    });
   if (entries.length === 0) return null;
   return (
     <ul className="cb-diagram__legend">
-      {entries.map(({ shape, name }) => (
-        <li key={shape} className="cb-diagram__legend-item">
-          <span className="cb-diagram__legend-swatch" data-shape={shape} aria-hidden="true" />
-          {name}
+      {entries.map(({ shape, tone, label }) => (
+        <li key={`${shape}-${tone ?? ''}-${label}`} className="cb-diagram__legend-item">
+          <span className="cb-diagram__legend-swatch" data-shape={shape} data-tone={tone} aria-hidden="true" />
+          {label}
         </li>
       ))}
     </ul>

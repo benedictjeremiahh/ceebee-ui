@@ -14,7 +14,7 @@ import {
   type ReactFlowProps,
 } from '@xyflow/react';
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
-import { DiagramLegend, DiagramOutline, FIT_VIEW, NODE_TYPES, safeId, useCellSize } from './diagram-flow.js';
+import { DiagramLegend, type DiagramLegendEntry, DiagramOutline, FIT_VIEW, NODE_TYPES, safeId, useCellSize } from './diagram-flow.js';
 import { describeSelection, type DiagramSelection, type DiagramSelectionTarget } from './diagram.selection.js';
 import {
   applySelection,
@@ -70,6 +70,8 @@ export interface DiagramEditorProps {
   inspectorLabel?: string;
   /** Names for the node shapes in use; given, a legend lists the shapes the diagram draws. */
   legendLabels?: Partial<Record<DiagramShape, string>>;
+  /** An explicit legend — shape, tone and meaning — for a diagram whose shapes alone do not tell nodes apart. */
+  legend?: readonly DiagramLegendEntry[];
 }
 
 const CONNECT_KEY = 'c';
@@ -107,6 +109,7 @@ function DiagramEditorRoot(props: DiagramEditorProps) {
     renderInspector,
     inspectorLabel = 'Selection',
     legendLabels,
+    legend,
   } = props;
   // What the inspector describes: a node or an edge. The runtime selects both; only nodes are reported out.
   const [inspected, setInspected] = useState<DiagramSelectionTarget>(selectedId ? { kind: 'node', id: selectedId } : null);
@@ -240,7 +243,7 @@ function DiagramEditorRoot(props: DiagramEditorProps) {
         </aside>
       ) : null}
       </div>
-      {legendLabels ? <DiagramLegend nodes={nodes} labels={legendLabels} /> : null}
+      {legend || legendLabels ? <DiagramLegend nodes={nodes} labels={legendLabels} entries={legend} /> : null}
       <p className="cb-diagram__status" role="status">
         {connectingFrom ? connectingStatus(labelOf(connectingFrom)) : ''}
       </p>

@@ -107,6 +107,7 @@ export { Diagram, DiagramEditor, describeSelection, shapesInUse } from './data/d
 export type {
   DiagramEdge,
   DiagramEditorProps,
+  DiagramLegendEntry,
   DiagramLink,
   DiagramSelection,
   DiagramSelectionTarget,
