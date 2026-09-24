@@ -81,6 +81,21 @@ describe('Board', () => {
     expect(screen.getByLabelText('Show Later')).toBeTruthy();
   });
 
+  it('gives each column its own way to add a card, and none to a column that refuses them', () => {
+    const onAddCard = vi.fn();
+    board({
+      onAddCard,
+      columns: [
+        { id: 'todo', name: 'To do', cards: [] },
+        { id: 'done', name: 'Done', cards: [{ id: 'c', title: 'Survey' }], accepts: false },
+      ],
+    });
+    // Named for its column, so two columns are two actions rather than "Add" twice.
+    expect(screen.queryByText('Add a card to Done')).toBeNull();
+    fireEvent.click(screen.getByText('Add a card to To do'));
+    expect(onAddCard).toHaveBeenCalledWith('todo');
+  });
+
   it('moves a card by keyboard, and reports the move once', async () => {
     const onMove = vi.fn();
     board({ onMove });
