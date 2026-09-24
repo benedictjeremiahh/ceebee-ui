@@ -125,6 +125,69 @@
   border-style: dashed;
 }
 
+/* ── a column kept as a strip ── */
+
+/* A column the consumer marks `collapsed` — an empty Stage, say — is a label rather than a lane, so a board
+   of mostly-empty Stages is not mostly empty space. It stays a column: a drop target that keeps its count,
+   because a Stage nobody has opened is exactly where a card is about to be sent. */
+.cb-board__column[data-strip] {
+  inline-size: auto;
+  padding: 0;
+}
+
+.cb-board__strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--cb-space-2);
+  block-size: 100%;
+  min-block-size: var(--cb-space-8);
+  padding: var(--cb-space-3) var(--cb-space-2);
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: var(--cb-fg);
+  font: inherit;
+  cursor: pointer;
+}
+
+.cb-board__strip:hover { background: var(--cb-bg); }
+
+.cb-board__strip:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
+}
+
+/* Read down the strip: a name beside a count in a lane this narrow has room for neither. */
+.cb-board__strip-name {
+  writing-mode: vertical-rl;
+  font-size: var(--cb-text-sm);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.cb-board__collapse {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--cb-space-5);
+  min-block-size: var(--cb-space-5);
+  padding: 0;
+  border: 0;
+  border-radius: var(--cb-radius-sm);
+  background: transparent;
+  color: var(--cb-fg-subtle);
+  font: inherit;
+  cursor: pointer;
+}
+
+.cb-board__collapse:hover { color: var(--cb-fg); }
+
+.cb-board__collapse:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
+}
+
 .cb-board__head {
   display: flex;
   align-items: center;

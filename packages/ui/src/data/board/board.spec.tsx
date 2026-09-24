@@ -65,6 +65,22 @@ describe('Board', () => {
     expect(screen.queryByLabelText('Scroll on one column')).toBeNull();
   });
 
+  it('keeps a column the consumer collapsed as a labelled strip, and opens it when asked', () => {
+    board({
+      columns: [
+        { id: 'later', name: 'Later', cards: [], collapsed: true },
+        { id: 'todo', name: 'To do', cards: [{ id: 'a', title: 'Pour the slab' }] },
+      ],
+    });
+    fireEvent.click(screen.getByLabelText('Show Later'));
+    // Open, the strip is gone and the column is a lane again — with the way back to the strip in its head.
+    expect(screen.queryByLabelText('Show Later')).toBeNull();
+    expect(screen.getByLabelText('Collapse Later')).toBeTruthy();
+
+    fireEvent.click(screen.getByLabelText('Collapse Later'));
+    expect(screen.getByLabelText('Show Later')).toBeTruthy();
+  });
+
   it('moves a card by keyboard, and reports the move once', async () => {
     const onMove = vi.fn();
     board({ onMove });

@@ -45,6 +45,10 @@ export interface BoardLabels {
   scrollBack: string;
   /** The control that scrolls it on by one column. */
   scrollOn: string;
+  /** The control that opens a column the consumer kept as a strip (ceebee-ui#25). */
+  expand: (column: string) => string;
+  /** The control that returns an opened column to its strip. */
+  collapse: (column: string) => string;
 }
 
 const DEFAULTS: BoardLabels = {
@@ -59,6 +63,8 @@ const DEFAULTS: BoardLabels = {
   over: (count, limit) => `${count} of ${limit}, over the limit`,
   scrollBack: 'Scroll back one column',
   scrollOn: 'Scroll on one column',
+  expand: (column) => `Show ${column}`,
+  collapse: (column) => `Collapse ${column}`,
 };
 
 export interface BoardProps {
@@ -115,6 +121,10 @@ function BoardRoot({
   const [announcement, setAnnouncement] = React.useState('');
   const [undoable, setUndoable] = React.useState<BoardMove | null>(null);
   const [lane, setLane] = React.useState(0);
+  // Which strips a reader has opened. Which columns *may* collapse is the consumer's, but whether one is
+  // open this minute is a view state, and a board that asked the consumer to hold it would make opening a
+  // column a round trip through a product that has nothing to say about it.
+  const [opened, setOpened] = React.useState<readonly string[]>([]);
   const surfaceRef = React.useRef<HTMLDivElement | null>(null);
   // Which edges hide a column. Measured rather than derived: it depends on the container's width, how many
   // columns there are, and the kit's own column width — and this component owns none of the three.
@@ -304,7 +314,21 @@ function BoardRoot({
         >
           <div ref={surfaceRef} className="cb-board__surface" role="group" aria-label={ariaLabel} data-lanes={lanes ? '' : undefined}>
             {shown.map((column) => (
-              <Column key={column.id} column={column} held={held} onCardKeyDown={onCardKeyDown} labels={text} handle={handle} onCardOpen={onCardOpen} />
+              <Column
+                key={column.id}
+                column={column}
+                held={held}
+                onCardKeyDown={onCardKeyDown}
+                labels={text}
+                handle={handle}
+                onCardOpen={onCardOpen}
+                open={opened.includes(column.id)}
+                onOpenChange={(open) =>
+                  setOpened((current) =>
+                    open ? [...current, column.id] : current.filter((id) => id !== column.id),
+                  )
+                }
+              />
             ))}
           </div>
           <DragOverlay>{dragging ? <div className="cb-board__card cb-board__card--lift">{cardTitle(view, dragging)}</div> : null}</DragOverlay>
@@ -359,6 +383,8 @@ function Column({
   labels,
   handle,
   onCardOpen,
+  open,
+  onOpenChange,
 }: {
   column: BoardColumn;
   held: { cardId: string; at: BoardPosition } | null;
@@ -366,10 +392,31 @@ function Column({
   labels: BoardLabels;
   handle: boolean;
   onCardOpen?: (cardId: string) => void;
+  /** Whether the reader has opened this column. A collapsed column ignores it until they have. */
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: column.id });
   const load = columnLoad(column);
   const holding = held?.at.columnId === column.id;
+  const name = column.label ?? textOf(column.name, column.id);
+
+  // The strip is still the column: it stays a drop target and keeps its count, because a column nobody has
+  // opened is exactly the sort of place a card is about to be sent.
+  if (column.collapsed === true && !open) {
+    return (
+      <section ref={setNodeRef} className="cb-board__column" data-strip="" data-over={isOver ? '' : undefined}>
+        <button type="button" className="cb-board__strip" aria-label={labels.expand(name)} onClick={() => onOpenChange(true)}>
+          <span className="cb-board__strip-name" aria-hidden>
+            {column.name}
+          </span>
+          <span className="cb-board__count" data-over-limit={load.over ? '' : undefined}>
+            {typeof column.limit === 'number' ? `${load.count}/${column.limit}` : load.count}
+          </span>
+        </button>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -384,6 +431,11 @@ function Column({
         <span className="cb-board__count" data-over-limit={load.over ? '' : undefined}>
           {typeof column.limit === 'number' ? `${load.count}/${column.limit}` : load.count}
         </span>
+        {column.collapsed === true ? (
+          <button type="button" className="cb-board__collapse" aria-label={labels.collapse(name)} onClick={() => onOpenChange(false)}>
+            ‹
+          </button>
+        ) : null}
       </header>
       <SortableContext items={column.cards.map((c) => c.id)} strategy={verticalListSortingStrategy}>
         <ol className="cb-board__list">

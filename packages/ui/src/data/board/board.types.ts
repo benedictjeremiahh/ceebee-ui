@@ -35,6 +35,12 @@ export interface BoardColumn {
   accepts?: boolean;
   /** Why this column refuses a card, announced and shown on an attempted drop. */
   refusal?: string;
+  /**
+   * May this column be kept as a narrow labelled strip, opened by the reader when they want it? The
+   * consumer decides *which* columns — an empty Stage, say — because that is a product decision; whether a
+   * person has opened one is the board's own view state, so opening a column is not a round trip.
+   */
+  collapsed?: boolean;
 }
 
 /** Where a card is, or is going. `index` is its position within the column, 0-based. */
