@@ -103,10 +103,13 @@ export type {
   ProgressCurveSkeletonProps,
 } from './data/progress-curve/index.js';
 export { curveRows, readingOn, toPoints } from './data/progress-curve/index.js';
-export { Diagram, DiagramEditor } from './data/diagram/index.js';
+export { Diagram, DiagramEditor, describeSelection, shapesInUse } from './data/diagram/index.js';
 export type {
   DiagramEdge,
   DiagramEditorProps,
+  DiagramLink,
+  DiagramSelection,
+  DiagramSelectionTarget,
   DiagramNode,
   DiagramPosition,
   DiagramProps,

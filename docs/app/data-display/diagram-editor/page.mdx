@@ -26,6 +26,13 @@ React Flow has no keyboard way to connect, so this component adds one: `C` on a 
 connection and `C` on another node commits it, announced through a status message; `C` on the starting
 node or `Escape` cancels. `F2` asks to rename the focused node or edge — the caller renders the input.
 
+A selected node says what it is through `renderInspector`: the editor hands it the selection described in
+a person's terms — the node with where it leads and what leads to it, or an edge with both ends — and draws
+the consumer's panel beside the canvas, or below it on a narrow screen. Put the actions there as real
+buttons (rename, connect, remove); the shortcuts stay as accelerators, and on a phone the panel is the only
+way to act. The diagram opens fitted, but never below a readable zoom; labels wrap to two lines with the full
+text as a tooltip; `legendLabels` names the node shapes in use.
+
 <Guidance
   do="Keep nodes and edges in state and apply each request, rejecting the ones your rules forbid."
   dont="Treat onRemove as already done, or put interactive controls inside a node's content."
@@ -47,6 +54,9 @@ node or `Escape` cancels. `F2` asks to rename the focused node or edge — the c
   { name: 'hint', type: 'string', description: 'Optional visible guidance above the viewport.' },
   { name: 'outlineLabel', type: 'string', default: 'Diagram outline', description: 'Accessible name for the outline list.' },
   { name: 'ariaLabels', type: 'Partial<AriaLabelConfig>', description: 'Localised names and keyboard descriptions for the runtime.' },
+  { name: 'renderInspector', type: '(selection: DiagramSelection | null) => ReactNode', description: 'The panel that says what is selected and offers its actions as buttons. null when nothing is selected.' },
+  { name: 'inspectorLabel', type: 'string', default: 'Selection', description: 'Accessible name for the inspector panel.' },
+  { name: 'legendLabels', type: 'Partial<Record<DiagramShape, string>>', description: 'Names for the node shapes; given, a legend lists the shapes in use.' },
 ]}/>
 
 ## Skeleton

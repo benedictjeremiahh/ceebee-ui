@@ -13,8 +13,9 @@ import {
   type OnSelectionChangeParams,
   type ReactFlowProps,
 } from '@xyflow/react';
-import { useCallback, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent } from 'react';
-import { DiagramOutline, NODE_TYPES, safeId, useCellSize } from './diagram-flow.js';
+import { useCallback, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
+import { DiagramLegend, DiagramOutline, FIT_VIEW, NODE_TYPES, safeId, useCellSize } from './diagram-flow.js';
+import { describeSelection, type DiagramSelection, type DiagramSelectionTarget } from './diagram.selection.js';
 import {
   applySelection,
   changedMoves,
@@ -29,7 +30,7 @@ import {
   type DiagramFlowNode,
 } from './diagram.math.js';
 import { DiagramSkeleton, type DiagramSkeletonProps } from './diagram.skeleton.js';
-import type { DiagramEdge, DiagramNode, DiagramPosition } from './diagram.types.js';
+import type { DiagramEdge, DiagramNode, DiagramPosition, DiagramShape } from './diagram.types.js';
 
 export interface DiagramRemoval {
   nodeIds: string[];
@@ -59,6 +60,16 @@ export interface DiagramEditorProps {
   outlineLabel?: string;
   /** Localised names for the substrate's own controls and keyboard descriptions. */
   ariaLabels?: ReactFlowProps['ariaLabelConfig'];
+  /**
+   * The panel beside the canvas (below it on a narrow screen) that says what is selected and offers what can
+   * be done with it as real buttons — the keyboard shortcuts stay as accelerators, not the only way. Given
+   * the selection described in a person's terms, or `null` when nothing is selected; render a hint then.
+   */
+  renderInspector?: (selection: DiagramSelection | null) => ReactNode;
+  /** Accessible name for the inspector panel. */
+  inspectorLabel?: string;
+  /** Names for the node shapes in use; given, a legend lists the shapes the diagram draws. */
+  legendLabels?: Partial<Record<DiagramShape, string>>;
 }
 
 const CONNECT_KEY = 'c';
@@ -84,7 +95,21 @@ function elementAt(target: EventTarget | null): DiagramRenameTarget | null {
  * fire again when they change, so a fresh function or array per render is enough to loop.
  */
 function DiagramEditorRoot(props: DiagramEditorProps) {
-  const { label, nodes, edges, hint, selectedId, connectingStatus = defaultConnectingStatus, outlineLabel = 'Diagram outline', ariaLabels } = props;
+  const {
+    label,
+    nodes,
+    edges,
+    hint,
+    selectedId,
+    connectingStatus = defaultConnectingStatus,
+    outlineLabel = 'Diagram outline',
+    ariaLabels,
+    renderInspector,
+    inspectorLabel = 'Selection',
+    legendLabels,
+  } = props;
+  // What the inspector describes: a node or an edge. The runtime selects both; only nodes are reported out.
+  const [inspected, setInspected] = useState<DiagramSelectionTarget>(selectedId ? { kind: 'node', id: selectedId } : null);
   const base = safeId(useId());
   const cellRef = useRef<HTMLSpanElement>(null);
   const cell = useCellSize(cellRef);
@@ -107,6 +132,7 @@ function DiagramEditorRoot(props: DiagramEditorProps) {
   useEffect(() => {
     if (selectedId === undefined) return;
     reportedSelection.current = selectedId;
+    setInspected(selectedId ? { kind: 'node', id: selectedId } : null);
     setFlowNodes((current) => applySelection(current, selectedId));
   }, [selectedId]);
   const flowEdges = useMemo(() => toFlowEdges(edges, nodes), [edges, nodes]);
@@ -137,7 +163,9 @@ function DiagramEditorRoot(props: DiagramEditorProps) {
     return false;
   }, []);
 
-  const onSelectionChange = useCallback(({ nodes: chosen }: OnSelectionChangeParams) => {
+  const onSelectionChange = useCallback(({ nodes: chosen, edges: chosenEdges }: OnSelectionChangeParams) => {
+    const edgeId = chosenEdges[0]?.id;
+    setInspected(chosen[0] ? { kind: 'node', id: chosen[0].id } : edgeId ? { kind: 'edge', id: edgeId } : null);
     const id = chosen[0]?.id;
     if (!id || id === reportedSelection.current) return;
     reportedSelection.current = id;
@@ -172,11 +200,13 @@ function DiagramEditorRoot(props: DiagramEditorProps) {
   );
 
   const labelOf = (id: string) => nodes.find((n) => n.id === id)?.label ?? '';
+  const selection = useMemo(() => describeSelection(inspected, nodes, edges), [inspected, nodes, edges]);
 
   return (
-    <div className="cb-diagram cb-diagram--editor">
+    <div className="cb-diagram cb-diagram--editor" data-inspector={renderInspector ? 'true' : undefined}>
       <span ref={cellRef} className="cb-diagram__cell" aria-hidden="true" />
       {hint ? <p className="cb-diagram__hint">{hint}</p> : null}
+      <div className="cb-diagram__body">
       <div className="cb-diagram__viewport" role="region" aria-label={label} aria-describedby={`${base}-outline`}>
         <ReactFlow
           nodes={flowNodes}
@@ -195,6 +225,7 @@ function DiagramEditorRoot(props: DiagramEditorProps) {
           snapGrid={snapGrid}
           deleteKeyCode={DELETE_KEYS}
           fitView
+          fitViewOptions={FIT_VIEW}
           minZoom={0.5}
           maxZoom={2}
           ariaLabelConfig={ariaLabels}
@@ -203,6 +234,13 @@ function DiagramEditorRoot(props: DiagramEditorProps) {
           <Controls showInteractive={false} />
         </ReactFlow>
       </div>
+      {renderInspector ? (
+        <aside className="cb-diagram__inspector" aria-label={inspectorLabel}>
+          {renderInspector(selection)}
+        </aside>
+      ) : null}
+      </div>
+      {legendLabels ? <DiagramLegend nodes={nodes} labels={legendLabels} /> : null}
       <p className="cb-diagram__status" role="status">
         {connectingFrom ? connectingStatus(labelOf(connectingFrom)) : ''}
       </p>

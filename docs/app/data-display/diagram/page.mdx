@@ -38,6 +38,7 @@ layout and gives nodes and edges no meaning: a shape and a Tone are visual treat
   { name: 'hint', type: 'string', description: 'Optional visible guidance above the viewport.' },
   { name: 'outlineLabel', type: 'string', default: 'Diagram outline', description: 'Accessible name for the outline list.' },
   { name: 'ariaLabels', type: 'Partial<AriaLabelConfig>', description: 'Localised names for the runtime’s own controls.' },
+  { name: 'legendLabels', type: 'Partial<Record<DiagramShape, string>>', description: 'Names for the node shapes; given, a legend lists the shapes in use.' },
 ]}/>
 
 ## Keyboard

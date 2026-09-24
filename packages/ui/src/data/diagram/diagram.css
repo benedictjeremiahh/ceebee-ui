@@ -148,10 +148,13 @@
 }
 
 .cb-diagram__label {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  line-height: var(--cb-leading-tight);
   max-inline-size: 100%;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .cb-diagram .cb-diagram__handle {
@@ -171,7 +174,55 @@
 
 .cb-diagram .react-flow__controls-button svg { fill: currentColor; }
 
+.cb-diagram .react-flow__controls { border: var(--cb-border-width) solid var(--cb-border); border-radius: var(--cb-radius-sm); overflow: hidden; }
+
+/* React Flow asks that its attribution stay unless the project is a Pro subscriber; it stays, quiet and themed. */
 .cb-diagram .react-flow__attribution { font-size: var(--cb-text-xs); }
+.cb-diagram .react-flow__attribution a { color: var(--cb-fg-subtle); }
+
+/* The canvas and the inspector: side by side where there is room, the inspector below the canvas on a narrow
+   screen, where it reads as a sheet under the drawing. */
+.cb-diagram__body { container-type: inline-size; display: grid; gap: var(--cb-space-3); }
+.cb-diagram[data-inspector="true"] .cb-diagram__body { grid-template-columns: minmax(0, 1fr); }
+@container (min-width: 48rem) {
+  .cb-diagram[data-inspector="true"] .cb-diagram__body { grid-template-columns: minmax(0, 1fr) minmax(16rem, 20rem); }
+}
+@supports not (container-type: inline-size) {
+  @media (min-width: 48rem) {
+    .cb-diagram[data-inspector="true"] .cb-diagram__body { grid-template-columns: minmax(0, 1fr) minmax(16rem, 20rem); }
+  }
+}
+
+.cb-diagram__inspector {
+  background: var(--cb-surface);
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-3);
+  min-inline-size: 0;
+  padding: var(--cb-space-4);
+}
+
+.cb-diagram__legend {
+  color: var(--cb-fg-muted);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--cb-text-xs);
+  gap: var(--cb-space-2) var(--cb-space-4);
+  list-style: none;
+  margin: var(--cb-space-2) 0 0;
+  padding: 0;
+}
+.cb-diagram__legend-item { align-items: center; display: inline-flex; gap: var(--cb-space-2); }
+.cb-diagram__legend-swatch {
+  block-size: var(--cb-space-3);
+  border: var(--cb-border-width) solid var(--cb-border-strong);
+  border-radius: var(--cb-radius-sm);
+  inline-size: var(--cb-space-4);
+}
+.cb-diagram__legend-swatch[data-shape="pill"] { border-radius: var(--cb-radius-full); }
+.cb-diagram__legend-swatch[data-shape="diamond"] { block-size: var(--cb-space-3); inline-size: var(--cb-space-3); rotate: 45deg; }
 
 .cb-diagram__outline,
 .cb-diagram__status {

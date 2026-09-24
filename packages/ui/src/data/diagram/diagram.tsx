@@ -2,10 +2,10 @@
 
 import { Background, ConnectionMode, Controls, ReactFlow, type ReactFlowProps } from '@xyflow/react';
 import { useId, useMemo, useRef } from 'react';
-import { DiagramOutline, NODE_TYPES, safeId, useCellSize } from './diagram-flow.js';
+import { DiagramLegend, DiagramOutline, FIT_VIEW, NODE_TYPES, safeId, useCellSize } from './diagram-flow.js';
 import { toFlowEdges, toFlowNodes } from './diagram.math.js';
 import { DiagramSkeleton, type DiagramSkeletonProps } from './diagram.skeleton.js';
-import type { DiagramEdge, DiagramNode } from './diagram.types.js';
+import type { DiagramEdge, DiagramNode, DiagramShape } from './diagram.types.js';
 
 export interface DiagramProps {
   /** Accessible name for the diagram viewport. */
@@ -17,6 +17,8 @@ export interface DiagramProps {
   outlineLabel?: string;
   /** Localised names for the substrate's own controls and descriptions. */
   ariaLabels?: ReactFlowProps['ariaLabelConfig'];
+  /** Names for the node shapes in use; given, a legend lists the shapes the diagram draws. */
+  legendLabels?: Partial<Record<DiagramShape, string>>;
 }
 
 /**
@@ -24,7 +26,7 @@ export interface DiagramProps {
  * viewport's; nothing in the drawing is focusable, draggable or selectable. The diagram is also given as an
  * outline list, which the viewport is described by.
  */
-function DiagramRoot({ label, nodes, edges, hint, outlineLabel = 'Diagram outline', ariaLabels }: DiagramProps) {
+function DiagramRoot({ label, nodes, edges, hint, outlineLabel = 'Diagram outline', ariaLabels, legendLabels }: DiagramProps) {
   const base = safeId(useId());
   const cellRef = useRef<HTMLSpanElement>(null);
   const cell = useCellSize(cellRef);
@@ -47,6 +49,7 @@ function DiagramRoot({ label, nodes, edges, hint, outlineLabel = 'Diagram outlin
           nodesFocusable={false}
           edgesFocusable={false}
           fitView
+          fitViewOptions={FIT_VIEW}
           minZoom={0.5}
           maxZoom={2}
           ariaLabelConfig={ariaLabels}
@@ -55,6 +58,7 @@ function DiagramRoot({ label, nodes, edges, hint, outlineLabel = 'Diagram outlin
           <Controls showInteractive={false} />
         </ReactFlow>
       </div>
+      {legendLabels ? <DiagramLegend nodes={nodes} labels={legendLabels} /> : null}
       <DiagramOutline id={`${base}-outline`} nodes={nodes} edges={edges} label={outlineLabel} />
     </div>
   );

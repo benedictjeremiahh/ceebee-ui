@@ -92,3 +92,47 @@ describe('DiagramEditor', () => {
     expect(screen.getByRole('status', { name: 'Loading editor' })).toBeInTheDocument();
   });
 });
+
+describe('DiagramEditor inspector and legend', () => {
+  it('renders the consumer inspector with the selected node described, and nothing selected as null', () => {
+    const seen: (string | null)[] = [];
+    const { rerender } = render(
+      <DiagramEditor
+        label="Flow"
+        nodes={nodes}
+        edges={edges}
+        renderInspector={(selection) => {
+          seen.push(selection?.kind === 'node' ? `${selection.node.label}:${selection.outgoing.map((l) => l.node.label).join(',')}` : null);
+          return <p>inspector</p>;
+        }}
+        inspectorLabel="Pilihan"
+      />,
+    );
+    expect(screen.getByRole('complementary', { name: 'Pilihan' })).toBeDefined();
+    expect(seen.at(-1)).toBeNull();
+    rerender(
+      <DiagramEditor
+        label="Flow"
+        nodes={nodes}
+        edges={edges}
+        selectedId="review"
+        renderInspector={(selection) => {
+          seen.push(selection?.kind === 'node' ? `${selection.node.label}:${selection.outgoing.map((l) => l.node.label).join(',')}` : null);
+          return null;
+        }}
+      />,
+    );
+    expect(seen.at(-1)).toBe('Review:Approved');
+  });
+
+  it('lists only the shapes in use that the consumer named', () => {
+    render(<Diagram label="Flow" nodes={nodes} edges={edges} legendLabels={{ rect: 'Tahap', diamond: 'Keputusan', pill: 'Selesai' }} />);
+    const legend = document.querySelector('.cb-diagram__legend');
+    expect(legend?.textContent).toBe('TahapKeputusan');
+  });
+
+  it('keeps the full label as a tooltip when it is clamped', () => {
+    render(<Diagram label="Flow" nodes={nodes} edges={edges} />);
+    expect(document.querySelector('.cb-diagram__label[title="Review"]')).not.toBeNull();
+  });
+});
