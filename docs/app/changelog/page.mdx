@@ -5,6 +5,17 @@
 Every released version, and what breaks when you move between them. Written from the changesets that
 shipped with each change.
 
+## 1.18.0
+
+### Minor Changes
+
+- 9d8bbc1: `Board` takes `onAddCard(columnId)`: every column that accepts cards then shows a footer action named for that column ("Add a card to Doing"), so work is added where a person is looking instead of from a toolbar that asks the destination again. A column with `accepts: false` never offers it. `Board.Skeleton` takes `addCard` so the placeholder matches the board's height.
+- ee4ebf6: Dates a person reads are written in the product's language. `TimeSeriesChart` (and every Composition over it — `BalanceCurve`, `ProgressCurve`) takes a `locale`, defaulting to the document's `lang`, and uses it for the time axis, the accessible table's day column, and `BalanceCurve`'s reading sentence. The axis is rounded outwards to ticks of 1, 2 or 5 times a power of ten, so a compact formatter is no longer handed a value it must answer with a trailing decimal.
+
+### Patch Changes
+
+- 8b10242: A card's title, when `onCardOpen` makes it a control, takes the 24px control floor rather than the one pixel under it a line box lands on — the card title is the only way to open a card, and it measured 23px. The drag handle takes the same floor.
+
 ## 1.17.0
 
 ### Minor Changes
