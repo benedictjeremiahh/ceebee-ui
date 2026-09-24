@@ -100,6 +100,43 @@ export function BoardDemo() {
   );
 }
 
+export function BoardOpenDemo() {
+  const [columns, setColumns] = useState(START);
+  const [opened, setOpened] = useState('');
+
+  const titleOf = (cardId: string) => {
+    const card = columns.flatMap((c) => c.cards).find((c) => c.id === cardId);
+    if (!card) return cardId;
+    if (card.label) return card.label;
+    return typeof card.title === 'string' ? card.title : cardId;
+  };
+
+  return (
+    <Demo
+      layout="block"
+      code={`<Board
+  columns={columns}
+  handle
+  // The card front is a title and badges; opening it is the card's own job, not a button's.
+  onCardOpen={(cardId) => open(cardId)}
+  onMove={(move) => setColumns((c) => apply(c, move))}
+/>`}
+    >
+      <Board
+        columns={columns}
+        handle
+        aria-label="Work with details"
+        onCardOpen={(cardId) => setOpened(cardId)}
+        onMove={(move) => {
+          setColumns((current) => apply(current, move));
+        }}
+      />
+      <p>Click a card's title, or focus it and press Enter, to open it. Drag it by its handle to move it.</p>
+      {opened ? <p>Opened “{titleOf(opened)}”.</p> : null}
+    </Demo>
+  );
+}
+
 export function BoardRefusalDemo() {
   const [columns, setColumns] = useState(START);
 

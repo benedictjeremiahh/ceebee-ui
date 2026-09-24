@@ -1,4 +1,4 @@
-import { BoardDemo, BoardRefusalDemo } from '../../../components/board-demo';
+import { BoardDemo, BoardOpenDemo, BoardRefusalDemo } from '../../../components/board-demo';
 import { PropsTable, Guidance } from '../../../components/props-table';
 
 # Board <span className="docs__label">Composition</span>
@@ -50,6 +50,23 @@ reachable, and the handle is the one thing that drags and takes the keyboard.
   dont="Leave the whole card grabbable and put controls inside it; those controls disappear from the accessibility tree."
 />
 
+## Opening a card
+
+A card front should be a title and small badges, not a row of buttons. Pass `onCardOpen` and the card's
+**title** becomes the open affordance — click it, or focus it and press <kbd>Enter</kbd>.
+
+The open lives on the title rather than the whole card for the same reason `handle` exists: a card that
+is itself a control has presentational children, so a `meta` button inside it would leave the
+accessibility tree. Putting the open on the title keeps the badges reachable and gives the card a name
+in the tree.
+
+<BoardOpenDemo />
+
+The keyboard keeps one path per job. <kbd>Enter</kbd> and <kbd>Space</kbd> open the focused title, and
+<kbd>Space</kbd> on the handle still picks the card up: the open button takes those two keys and stops
+them reaching the card's move path, so one press never opens *and* picks up. A card with no
+`onCardOpen` behaves exactly as before.
+
 ## A refused move goes back
 
 <BoardRefusalDemo />
@@ -81,6 +98,7 @@ arrives.
   { name: 'phoneQuery', type: 'string', default: "'(max-width: 640px)'", description: 'What auto calls narrow.' },
   { name: 'labels', type: 'Partial<BoardLabels>', description: 'Every announcement and the Undo label, for a product that does not speak English.' },
   { name: 'handle', type: 'boolean', default: 'false', description: 'Put the grab on a handle instead of the whole card. Required whenever a card carries its own controls, or they leave the accessibility tree.' },
+  { name: 'onCardOpen', type: '(cardId: string) => void', description: 'Open a card. The card title becomes a button — click it, or focus it and press Enter or Space — so the front can be a title and badges rather than a row of buttons.' },
   { name: 'motion', type: 'boolean', default: 'true', description: 'false drops the lift and the gap animation. Reduced motion does the same on its own; the drop marker always stays.' },
   { name: 'column.label', type: 'string', description: "The column's accessible name when name is a node rather than a string — a header carrying status tags still has to be nameable." },
   { name: 'column.limit', type: 'number', description: 'A work-in-progress limit. Going over marks the column — it never blocks a move.' },

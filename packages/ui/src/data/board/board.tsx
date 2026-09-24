@@ -65,6 +65,15 @@ export interface BoardProps {
    * keyboard.
    */
   handle?: boolean;
+  /**
+   * Open a card. When given, the card's **title** becomes a button, so the card front can be a title and
+   * small badges rather than a row of action buttons — the shape a Trello board has. The open lives on the
+   * title, never the whole card: a card that is itself a control has presentational children, so the
+   * `meta` buttons would leave the accessibility tree (the reason `handle` exists at all). Enter and Space
+   * activate the open button natively; the drag keeps its own path — Space picks up on the handle (with
+   * `handle`) or on the card, so the two do not share a key.
+   */
+  onCardOpen?: (cardId: string) => void;
   'aria-label'?: string;
 }
 
@@ -79,6 +88,7 @@ function BoardRoot({
   labels,
   motion = true,
   handle = false,
+  onCardOpen,
   'aria-label': ariaLabel = 'Board',
 }: BoardProps) {
   const text = { ...DEFAULTS, ...labels };
@@ -223,7 +233,7 @@ function BoardRoot({
       >
         <div className="cb-board__surface" role="group" aria-label={ariaLabel} data-lanes={lanes ? '' : undefined}>
           {shown.map((column) => (
-            <Column key={column.id} column={column} held={held} onCardKeyDown={onCardKeyDown} labels={text} handle={handle} />
+            <Column key={column.id} column={column} held={held} onCardKeyDown={onCardKeyDown} labels={text} handle={handle} onCardOpen={onCardOpen} />
           ))}
         </div>
         <DragOverlay>{dragging ? <div className="cb-board__card cb-board__card--lift">{cardTitle(view, dragging)}</div> : null}</DragOverlay>
@@ -266,12 +276,14 @@ function Column({
   onCardKeyDown,
   labels,
   handle,
+  onCardOpen,
 }: {
   column: BoardColumn;
   held: { cardId: string; at: BoardPosition } | null;
   onCardKeyDown: (event: React.KeyboardEvent, cardId: string) => void;
   labels: BoardLabels;
   handle: boolean;
+  onCardOpen?: (cardId: string) => void;
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: column.id });
   const load = columnLoad(column);
@@ -301,6 +313,7 @@ function Column({
               marker={holding && held?.at.index === index}
               onKeyDown={onCardKeyDown}
               handle={handle}
+              onCardOpen={onCardOpen}
               labels={labels}
             />
           ))}
@@ -322,6 +335,7 @@ function Card({
   marker,
   onKeyDown,
   handle,
+  onCardOpen,
   labels,
 }: {
   card: BoardColumn['cards'][number];
@@ -329,6 +343,7 @@ function Card({
   marker: boolean;
   onKeyDown: (event: React.KeyboardEvent, cardId: string) => void;
   handle: boolean;
+  onCardOpen?: (cardId: string) => void;
   labels: BoardLabels;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
@@ -373,7 +388,25 @@ function Card({
             <span aria-hidden>⠿</span>
           </button>
         ) : null}
-        <div className="cb-board__title">{card.title}</div>
+        {onCardOpen ? (
+          <button
+            type="button"
+            className="cb-board__title cb-board__open"
+            onClick={() => onCardOpen(card.id)}
+            disabled={card.disabled}
+            aria-label={typeof card.title === 'string' ? undefined : (card.label ?? card.id)}
+            // Enter/Space activate this button (open). Without a handle the card itself also answers those
+            // keys with pick-up, and a keydown on a focused child bubbles — so the card's move path is
+            // stopped here and the open stands alone. Arrows still bubble, so a held card still moves.
+            onKeyDown={(event) => {
+              if (event.key === ' ' || event.key === 'Enter') event.stopPropagation();
+            }}
+          >
+            {card.title}
+          </button>
+        ) : (
+          <div className="cb-board__title">{card.title}</div>
+        )}
         {card.meta ? <div className="cb-board__meta">{card.meta}</div> : null}
       </li>
     </>
