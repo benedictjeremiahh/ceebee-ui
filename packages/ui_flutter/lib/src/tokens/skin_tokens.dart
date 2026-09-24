@@ -59,6 +59,11 @@ class CbSkinTokens {
     required this.toneSuccess,
     required this.toneWarning,
     required this.toneDanger,
+    required this.toneBrandBg,
+    required this.toneInfoBg,
+    required this.toneSuccessBg,
+    required this.toneWarningBg,
+    required this.toneDangerBg,
     required this.decorViolet,
     required this.decorBlue,
     required this.decorTeal,
@@ -129,6 +134,12 @@ class CbSkinTokens {
   final CbOklch toneSuccess;
   final CbOklch toneWarning;
   final CbOklch toneDanger;
+  /// The quiet ground behind a tone's text (a filled tag, an alert), designed per mode.
+  final CbOklch toneBrandBg;
+  final CbOklch toneInfoBg;
+  final CbOklch toneSuccessBg;
+  final CbOklch toneWarningBg;
+  final CbOklch toneDangerBg;
 
   final CbOklch decorViolet;
   final CbOklch decorBlue;

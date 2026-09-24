@@ -114,6 +114,13 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
     colorSuccess: color('--cb-tone-success'),
     colorWarning: color('--cb-tone-warning'),
     colorError: color('--cb-tone-danger'),
+    /* The quiet ground behind a tone's text (a filled tag, an alert), designed per mode: Ant's palette
+       generator turns a dark seed into a muddy mid-tone the tone's own text cannot read on. */
+    colorPrimaryBg: color('--cb-tone-brand-bg'),
+    colorInfoBg: color('--cb-tone-info-bg'),
+    colorSuccessBg: color('--cb-tone-success-bg'),
+    colorWarningBg: color('--cb-tone-warning-bg'),
+    colorErrorBg: color('--cb-tone-danger-bg'),
     colorText: color('--cb-fg'),
     colorTextSecondary: color('--cb-fg-muted'),
     colorTextTertiary: color('--cb-fg-subtle'),

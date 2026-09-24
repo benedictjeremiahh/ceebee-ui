@@ -58,6 +58,15 @@ describe('tone contrast', () => {
     expect(failing).toEqual([]);
   });
 
+  it('reads every tone as text at WCAG AA 4.5:1 on its own quiet ground (a filled tag, an alert)', () => {
+    const failing = seeds.flatMap(({ name, seed }) =>
+      TONES.map((tone) => ({ tone, r: ratio(String(seed.token[tone]), String(seed.token[`${tone}Bg`])) }))
+        .filter(({ r }) => r < 4.5)
+        .map(({ tone, r }) => `${name} ${tone} on ${tone}Bg: ${r.toFixed(2)}`),
+    );
+    expect(failing).toEqual([]);
+  });
+
   it('keeps light text on the dark neutrals (tooltip, tour, image preview) in both modes', () => {
     const failing = seeds.flatMap(({ name, seed }) =>
       (['Tooltip', 'Tour', 'Image'] as const)
