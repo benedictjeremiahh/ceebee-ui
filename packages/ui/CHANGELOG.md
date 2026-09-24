@@ -1,5 +1,15 @@
 # @ceebee/ui
 
+## 1.15.0
+
+### Minor Changes
+
+- d5d9871: Every tone reads at WCAG AA both as text and as a fill, in every skin, theme and contrast mode. Light mode darkens the tones so they carry light text; dark mode lightens them so they read on a dark surface, and the text on a tone (`--cb-fg-on-brand`, `--cb-on-warning`) turns dark. Tooltip, Tour and Image preview keep light text through the new `--cb-fg-on-dark`. Filled tags and alerts sit on designed per-mode grounds (`--cb-tone-*-bg`) instead of the muddy tint Ant generated from a dark seed, and Ant's preset colours (`<Tag color="gold">`, a green badge) paint with designed per-mode steps that clear AA — Ant's own gold measured 2.76:1. Checked by `tone-contrast.spec.ts`.
+
+### Patch Changes
+
+- e9bd551: Link-style buttons use the theme's link colour, derived from the brand, instead of the info hue Ant derives links from — one accent per theme — and a spec holds every skin, theme and contrast mode to WCAG AA 4.5:1 on the surfaces a link sits on.
+
 ## 1.14.0
 
 ### Minor Changes
