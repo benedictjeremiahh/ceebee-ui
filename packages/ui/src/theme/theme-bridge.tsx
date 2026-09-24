@@ -163,6 +163,15 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
      disabled. Ceebee's own brand ramp already has the step Ant is reaching for, so the Slider reads
      it directly. */
   const components: NonNullable<ThemeConfig['components']> = {};
+  /* Tooltip, Tour and Image preview put Ant's light-solid text on a dark neutral rather than on a tone.
+     In dark mode the text on a tone turns dark (the tones have to be light to read as text), so these
+     three keep light text of their own. */
+  const onDark = color('--cb-fg-on-dark');
+  if (onDark) {
+    components.Tooltip = { colorTextLightSolid: onDark };
+    components.Tour = { colorTextLightSolid: onDark };
+    components.Image = { colorTextLightSolid: onDark };
+  }
   const trackBg = color('--cb-brand-300');
   const trackHoverBg = color('--cb-brand-400');
   if (trackBg && trackHoverBg) {

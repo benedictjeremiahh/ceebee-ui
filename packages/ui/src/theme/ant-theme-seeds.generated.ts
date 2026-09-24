@@ -8,14 +8,14 @@ export const generatedCeebeeAntSeeds = {
     "light": {
       "normal": {
         "token": {
-          "colorPrimary": "rgba(101, 116, 252, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorPrimary": "rgba(81, 93, 218, 1)",
+          "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(81, 93, 218, 1)",
-          "colorLinkHover": "rgba(101, 116, 252, 1)",
+          "colorLinkHover": "rgba(81, 93, 218, 1)",
           "colorLinkActive": "rgba(81, 93, 218, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(5, 119, 59, 1)",
+          "colorWarning": "rgba(175, 82, 52, 1)",
+          "colorError": "rgba(185, 32, 92, 1)",
           "colorText": "rgba(25, 26, 36, 1)",
           "colorTextSecondary": "rgba(83, 84, 97, 1)",
           "colorTextTertiary": "rgba(105, 107, 118, 1)",
@@ -40,6 +40,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(164, 183, 255, 1)",
             "trackHoverBg": "rgba(130, 150, 255, 1)",
@@ -50,14 +59,14 @@ export const generatedCeebeeAntSeeds = {
       },
       "more": {
         "token": {
-          "colorPrimary": "rgba(101, 116, 252, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorPrimary": "rgba(81, 93, 218, 1)",
+          "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(81, 93, 218, 1)",
-          "colorLinkHover": "rgba(101, 116, 252, 1)",
+          "colorLinkHover": "rgba(81, 93, 218, 1)",
           "colorLinkActive": "rgba(81, 93, 218, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(5, 119, 59, 1)",
+          "colorWarning": "rgba(175, 82, 52, 1)",
+          "colorError": "rgba(185, 32, 92, 1)",
           "colorText": "rgba(25, 26, 36, 1)",
           "colorTextSecondary": "rgba(56, 58, 69, 1)",
           "colorTextTertiary": "rgba(69, 71, 82, 1)",
@@ -82,6 +91,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(164, 183, 255, 1)",
             "trackHoverBg": "rgba(130, 150, 255, 1)",
@@ -95,18 +113,18 @@ export const generatedCeebeeAntSeeds = {
       "normal": {
         "token": {
           "colorPrimary": "rgba(130, 150, 255, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(130, 150, 255, 1)",
           "colorLinkHover": "rgba(130, 150, 255, 1)",
           "colorLinkActive": "rgba(130, 150, 255, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(99, 202, 132, 1)",
+          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorError": "rgba(248, 112, 152, 1)",
           "colorText": "rgba(241, 241, 246, 1)",
           "colorTextSecondary": "rgba(181, 183, 193, 1)",
           "colorTextTertiary": "rgba(144, 145, 157, 1)",
           "colorTextPlaceholder": "rgba(181, 183, 193, 1)",
-          "colorTextLightSolid": "rgba(252, 252, 252, 1)",
+          "colorTextLightSolid": "rgba(16, 17, 26, 1)",
           "colorBgBase": "rgba(11, 12, 22, 1)",
           "colorBgContainer": "rgba(31, 32, 45, 1)",
           "colorBgElevated": "rgba(45, 47, 61, 1)",
@@ -126,6 +144,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(164, 183, 255, 1)",
             "trackHoverBg": "rgba(130, 150, 255, 1)",
@@ -137,18 +164,18 @@ export const generatedCeebeeAntSeeds = {
       "more": {
         "token": {
           "colorPrimary": "rgba(130, 150, 255, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(130, 150, 255, 1)",
           "colorLinkHover": "rgba(130, 150, 255, 1)",
           "colorLinkActive": "rgba(130, 150, 255, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(99, 202, 132, 1)",
+          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorError": "rgba(248, 112, 152, 1)",
           "colorText": "rgba(241, 241, 246, 1)",
           "colorTextSecondary": "rgba(214, 215, 223, 1)",
           "colorTextTertiary": "rgba(181, 182, 194, 1)",
           "colorTextPlaceholder": "rgba(214, 215, 223, 1)",
-          "colorTextLightSolid": "rgba(252, 252, 252, 1)",
+          "colorTextLightSolid": "rgba(16, 17, 26, 1)",
           "colorBgBase": "rgba(11, 12, 22, 1)",
           "colorBgContainer": "rgba(31, 32, 45, 1)",
           "colorBgElevated": "rgba(45, 47, 61, 1)",
@@ -168,6 +195,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(164, 183, 255, 1)",
             "trackHoverBg": "rgba(130, 150, 255, 1)",
@@ -182,14 +218,14 @@ export const generatedCeebeeAntSeeds = {
     "light": {
       "normal": {
         "token": {
-          "colorPrimary": "rgba(111, 113, 251, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorPrimary": "rgba(90, 90, 217, 1)",
+          "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(90, 90, 217, 1)",
-          "colorLinkHover": "rgba(111, 113, 251, 1)",
+          "colorLinkHover": "rgba(90, 90, 217, 1)",
           "colorLinkActive": "rgba(90, 90, 217, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(5, 119, 59, 1)",
+          "colorWarning": "rgba(175, 82, 52, 1)",
+          "colorError": "rgba(185, 32, 92, 1)",
           "colorText": "rgba(25, 26, 36, 1)",
           "colorTextSecondary": "rgba(83, 84, 97, 1)",
           "colorTextTertiary": "rgba(105, 107, 118, 1)",
@@ -214,6 +250,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(170, 181, 255, 1)",
             "trackHoverBg": "rgba(139, 147, 255, 1)",
@@ -224,14 +269,14 @@ export const generatedCeebeeAntSeeds = {
       },
       "more": {
         "token": {
-          "colorPrimary": "rgba(111, 113, 251, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorPrimary": "rgba(90, 90, 217, 1)",
+          "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(90, 90, 217, 1)",
-          "colorLinkHover": "rgba(111, 113, 251, 1)",
+          "colorLinkHover": "rgba(90, 90, 217, 1)",
           "colorLinkActive": "rgba(90, 90, 217, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(5, 119, 59, 1)",
+          "colorWarning": "rgba(175, 82, 52, 1)",
+          "colorError": "rgba(185, 32, 92, 1)",
           "colorText": "rgba(25, 26, 36, 1)",
           "colorTextSecondary": "rgba(56, 58, 69, 1)",
           "colorTextTertiary": "rgba(69, 71, 82, 1)",
@@ -256,6 +301,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(170, 181, 255, 1)",
             "trackHoverBg": "rgba(139, 147, 255, 1)",
@@ -269,18 +323,18 @@ export const generatedCeebeeAntSeeds = {
       "normal": {
         "token": {
           "colorPrimary": "rgba(140, 147, 255, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(140, 147, 255, 1)",
           "colorLinkHover": "rgba(140, 147, 255, 1)",
           "colorLinkActive": "rgba(140, 147, 255, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(99, 202, 132, 1)",
+          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorError": "rgba(248, 112, 152, 1)",
           "colorText": "rgba(241, 241, 246, 1)",
           "colorTextSecondary": "rgba(181, 183, 193, 1)",
           "colorTextTertiary": "rgba(144, 145, 157, 1)",
           "colorTextPlaceholder": "rgba(181, 183, 193, 1)",
-          "colorTextLightSolid": "rgba(252, 252, 252, 1)",
+          "colorTextLightSolid": "rgba(16, 17, 26, 1)",
           "colorBgBase": "rgba(22, 21, 42, 1)",
           "colorBgContainer": "rgba(36, 35, 60, 1)",
           "colorBgElevated": "rgba(45, 47, 61, 1)",
@@ -300,6 +354,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(170, 181, 255, 1)",
             "trackHoverBg": "rgba(139, 147, 255, 1)",
@@ -311,18 +374,18 @@ export const generatedCeebeeAntSeeds = {
       "more": {
         "token": {
           "colorPrimary": "rgba(140, 147, 255, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(140, 147, 255, 1)",
           "colorLinkHover": "rgba(140, 147, 255, 1)",
           "colorLinkActive": "rgba(140, 147, 255, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(99, 202, 132, 1)",
+          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorError": "rgba(248, 112, 152, 1)",
           "colorText": "rgba(241, 241, 246, 1)",
           "colorTextSecondary": "rgba(214, 215, 223, 1)",
           "colorTextTertiary": "rgba(181, 182, 194, 1)",
           "colorTextPlaceholder": "rgba(214, 215, 223, 1)",
-          "colorTextLightSolid": "rgba(252, 252, 252, 1)",
+          "colorTextLightSolid": "rgba(16, 17, 26, 1)",
           "colorBgBase": "rgba(22, 21, 42, 1)",
           "colorBgContainer": "rgba(36, 35, 60, 1)",
           "colorBgElevated": "rgba(45, 47, 61, 1)",
@@ -342,6 +405,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(170, 181, 255, 1)",
             "trackHoverBg": "rgba(139, 147, 255, 1)",
@@ -356,14 +428,14 @@ export const generatedCeebeeAntSeeds = {
     "light": {
       "normal": {
         "token": {
-          "colorPrimary": "rgba(69, 124, 253, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorPrimary": "rgba(51, 100, 219, 1)",
+          "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(51, 100, 219, 1)",
-          "colorLinkHover": "rgba(69, 124, 253, 1)",
+          "colorLinkHover": "rgba(51, 100, 219, 1)",
           "colorLinkActive": "rgba(51, 100, 219, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(5, 119, 59, 1)",
+          "colorWarning": "rgba(175, 82, 52, 1)",
+          "colorError": "rgba(185, 32, 92, 1)",
           "colorText": "rgba(25, 26, 36, 1)",
           "colorTextSecondary": "rgba(83, 84, 97, 1)",
           "colorTextTertiary": "rgba(105, 107, 118, 1)",
@@ -388,6 +460,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(147, 188, 255, 1)",
             "trackHoverBg": "rgba(106, 157, 255, 1)",
@@ -398,14 +479,14 @@ export const generatedCeebeeAntSeeds = {
       },
       "more": {
         "token": {
-          "colorPrimary": "rgba(69, 124, 253, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorPrimary": "rgba(51, 100, 219, 1)",
+          "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(51, 100, 219, 1)",
-          "colorLinkHover": "rgba(69, 124, 253, 1)",
+          "colorLinkHover": "rgba(51, 100, 219, 1)",
           "colorLinkActive": "rgba(51, 100, 219, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(5, 119, 59, 1)",
+          "colorWarning": "rgba(175, 82, 52, 1)",
+          "colorError": "rgba(185, 32, 92, 1)",
           "colorText": "rgba(25, 26, 36, 1)",
           "colorTextSecondary": "rgba(56, 58, 69, 1)",
           "colorTextTertiary": "rgba(69, 71, 82, 1)",
@@ -430,6 +511,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(147, 188, 255, 1)",
             "trackHoverBg": "rgba(106, 157, 255, 1)",
@@ -443,18 +533,18 @@ export const generatedCeebeeAntSeeds = {
       "normal": {
         "token": {
           "colorPrimary": "rgba(102, 158, 255, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(102, 158, 255, 1)",
           "colorLinkHover": "rgba(102, 158, 255, 1)",
           "colorLinkActive": "rgba(102, 158, 255, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(99, 202, 132, 1)",
+          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorError": "rgba(248, 112, 152, 1)",
           "colorText": "rgba(241, 241, 246, 1)",
           "colorTextSecondary": "rgba(181, 183, 193, 1)",
           "colorTextTertiary": "rgba(144, 145, 157, 1)",
           "colorTextPlaceholder": "rgba(181, 183, 193, 1)",
-          "colorTextLightSolid": "rgba(252, 252, 252, 1)",
+          "colorTextLightSolid": "rgba(16, 17, 26, 1)",
           "colorBgBase": "rgba(5, 9, 19, 1)",
           "colorBgContainer": "rgba(17, 24, 38, 1)",
           "colorBgElevated": "rgba(26, 33, 49, 1)",
@@ -474,6 +564,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(147, 188, 255, 1)",
             "trackHoverBg": "rgba(106, 157, 255, 1)",
@@ -485,18 +584,18 @@ export const generatedCeebeeAntSeeds = {
       "more": {
         "token": {
           "colorPrimary": "rgba(102, 158, 255, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(102, 158, 255, 1)",
           "colorLinkHover": "rgba(102, 158, 255, 1)",
           "colorLinkActive": "rgba(102, 158, 255, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(99, 202, 132, 1)",
+          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorError": "rgba(248, 112, 152, 1)",
           "colorText": "rgba(241, 241, 246, 1)",
           "colorTextSecondary": "rgba(214, 215, 223, 1)",
           "colorTextTertiary": "rgba(181, 182, 194, 1)",
           "colorTextPlaceholder": "rgba(214, 215, 223, 1)",
-          "colorTextLightSolid": "rgba(252, 252, 252, 1)",
+          "colorTextLightSolid": "rgba(16, 17, 26, 1)",
           "colorBgBase": "rgba(5, 9, 19, 1)",
           "colorBgContainer": "rgba(17, 24, 38, 1)",
           "colorBgElevated": "rgba(26, 33, 49, 1)",
@@ -516,6 +615,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(147, 188, 255, 1)",
             "trackHoverBg": "rgba(106, 157, 255, 1)",
@@ -530,14 +638,14 @@ export const generatedCeebeeAntSeeds = {
     "light": {
       "normal": {
         "token": {
-          "colorPrimary": "rgba(214, 69, 155, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorPrimary": "rgba(183, 46, 130, 1)",
+          "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(183, 46, 130, 1)",
-          "colorLinkHover": "rgba(214, 69, 155, 1)",
+          "colorLinkHover": "rgba(183, 46, 130, 1)",
           "colorLinkActive": "rgba(183, 46, 130, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(5, 119, 59, 1)",
+          "colorWarning": "rgba(175, 82, 52, 1)",
+          "colorError": "rgba(185, 32, 92, 1)",
           "colorText": "rgba(52, 50, 65, 1)",
           "colorTextSecondary": "rgba(90, 88, 105, 1)",
           "colorTextTertiary": "rgba(110, 109, 123, 1)",
@@ -562,6 +670,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(251, 154, 204, 1)",
             "trackHoverBg": "rgba(235, 112, 180, 1)",
@@ -572,14 +689,14 @@ export const generatedCeebeeAntSeeds = {
       },
       "more": {
         "token": {
-          "colorPrimary": "rgba(214, 69, 155, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorPrimary": "rgba(183, 46, 130, 1)",
+          "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(183, 46, 130, 1)",
-          "colorLinkHover": "rgba(214, 69, 155, 1)",
+          "colorLinkHover": "rgba(183, 46, 130, 1)",
           "colorLinkActive": "rgba(183, 46, 130, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(5, 119, 59, 1)",
+          "colorWarning": "rgba(175, 82, 52, 1)",
+          "colorError": "rgba(185, 32, 92, 1)",
           "colorText": "rgba(52, 50, 65, 1)",
           "colorTextSecondary": "rgba(56, 58, 69, 1)",
           "colorTextTertiary": "rgba(69, 71, 82, 1)",
@@ -604,6 +721,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(251, 154, 204, 1)",
             "trackHoverBg": "rgba(235, 112, 180, 1)",
@@ -617,18 +743,18 @@ export const generatedCeebeeAntSeeds = {
       "normal": {
         "token": {
           "colorPrimary": "rgba(246, 107, 185, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(246, 107, 185, 1)",
           "colorLinkHover": "rgba(246, 107, 185, 1)",
           "colorLinkActive": "rgba(246, 107, 185, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(99, 202, 132, 1)",
+          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorError": "rgba(248, 112, 152, 1)",
           "colorText": "rgba(244, 238, 233, 1)",
           "colorTextSecondary": "rgba(192, 181, 172, 1)",
           "colorTextTertiary": "rgba(161, 150, 141, 1)",
           "colorTextPlaceholder": "rgba(192, 181, 172, 1)",
-          "colorTextLightSolid": "rgba(252, 252, 252, 1)",
+          "colorTextLightSolid": "rgba(16, 17, 26, 1)",
           "colorBgBase": "rgba(23, 24, 32, 1)",
           "colorBgContainer": "rgba(40, 40, 50, 1)",
           "colorBgElevated": "rgba(51, 45, 41, 1)",
@@ -648,6 +774,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(251, 154, 204, 1)",
             "trackHoverBg": "rgba(235, 112, 180, 1)",
@@ -659,18 +794,18 @@ export const generatedCeebeeAntSeeds = {
       "more": {
         "token": {
           "colorPrimary": "rgba(246, 107, 185, 1)",
-          "colorInfo": "rgba(0, 156, 192, 1)",
+          "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(246, 107, 185, 1)",
           "colorLinkHover": "rgba(246, 107, 185, 1)",
           "colorLinkActive": "rgba(246, 107, 185, 1)",
-          "colorSuccess": "rgba(37, 159, 86, 1)",
-          "colorWarning": "rgba(253, 137, 101, 1)",
-          "colorError": "rgba(214, 63, 115, 1)",
+          "colorSuccess": "rgba(99, 202, 132, 1)",
+          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorError": "rgba(248, 112, 152, 1)",
           "colorText": "rgba(244, 238, 233, 1)",
           "colorTextSecondary": "rgba(214, 215, 223, 1)",
           "colorTextTertiary": "rgba(181, 182, 194, 1)",
           "colorTextPlaceholder": "rgba(214, 215, 223, 1)",
-          "colorTextLightSolid": "rgba(252, 252, 252, 1)",
+          "colorTextLightSolid": "rgba(16, 17, 26, 1)",
           "colorBgBase": "rgba(23, 24, 32, 1)",
           "colorBgContainer": "rgba(40, 40, 50, 1)",
           "colorBgElevated": "rgba(51, 45, 41, 1)",
@@ -690,6 +825,15 @@ export const generatedCeebeeAntSeeds = {
           "boxShadowSecondary": "var(--cb-shadow-sm)"
         },
         "components": {
+          "Tooltip": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Tour": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
+          "Image": {
+            "colorTextLightSolid": "rgba(252, 252, 252, 1)"
+          },
           "Slider": {
             "trackBg": "rgba(251, 154, 204, 1)",
             "trackHoverBg": "rgba(235, 112, 180, 1)",

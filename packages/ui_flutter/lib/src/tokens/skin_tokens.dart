@@ -52,6 +52,7 @@ class CbSkinTokens {
     required this.fgSubtle,
     required this.fgLink,
     required this.fgOnBrand,
+    required this.fgOnDark,
     required this.toneNeutral,
     required this.toneBrand,
     required this.toneInfo,
@@ -119,6 +120,8 @@ class CbSkinTokens {
   final CbOklch fgSubtle;
   final CbOklch fgLink;
   final CbOklch fgOnBrand;
+  /// Light text on a dark neutral (a tooltip), which stays light in both modes.
+  final CbOklch fgOnDark;
 
   final CbOklch toneNeutral;
   final CbOklch toneBrand;

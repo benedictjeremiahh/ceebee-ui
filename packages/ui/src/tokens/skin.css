@@ -34,12 +34,19 @@
   /* A boundary has to be visible to be a boundary: border-strong carries the 3:1 WCAG asks of a
      control's edge, and border the quieter separation between panels. */
 
+  /* A tone is read two ways at once — as text on a surface (an outlined tag, a danger button's label)
+     and as a fill under light text (a primary button, a solid tag) — because the component library
+     uses one colour for both. In light mode one value serves both only when it is dark enough, so
+     every tone sits at the step that clears WCAG AA 4.5:1 each way (tone-contrast.spec.ts). */
   --cb-tone-neutral: var(--cb-fg-muted);
-  --cb-tone-brand: var(--cb-brand-500);
-  --cb-tone-info: oklch(0.62 0.16 var(--cb-hue-info));
-  --cb-tone-success: oklch(0.62 0.15 var(--cb-hue-success));
-  --cb-tone-warning: oklch(0.75 0.15 var(--cb-hue-warning));
-  --cb-tone-danger: oklch(0.6 0.19 var(--cb-hue-danger));
+  --cb-tone-brand: var(--cb-brand-600);
+  --cb-tone-info: oklch(0.49 0.15 var(--cb-hue-info));
+  --cb-tone-success: oklch(0.5 0.13 var(--cb-hue-success));
+  --cb-tone-warning: oklch(0.55 0.13 var(--cb-hue-warning));
+  --cb-tone-danger: oklch(0.52 0.19 var(--cb-hue-danger));
+  /* Light text on a dark neutral — a tooltip, a tour step, an image preview's controls. Not the text on
+     a tone: that is fg-on-brand, which turns dark with the tones in dark mode. */
+  --cb-fg-on-dark: oklch(0.99 0 0);
 
   /* Decorative hues: the pastel card set the board leans on. */
   --cb-decor-violet: oklch(0.68 0.17 292);
@@ -52,8 +59,9 @@
   /* The wash behind an overlay, and the dark field a coachmark cuts its hole out of. */
   --cb-scrim: oklch(0.15 0.02 280 / 0.45);
   --cb-scrim-strong: oklch(0.15 0.02 280 / 0.55);
-  /* Text that sits on the warning ramp, which is too light to carry white. */
-  --cb-on-warning: oklch(0.24 0.05 75);
+  /* Text that sits on the warning tone. It follows the text on every other tone: light while the tones
+     are dark enough to carry it, dark in dark mode where they are not. */
+  --cb-on-warning: var(--cb-fg-on-brand);
 
   --cb-shadow-none: 0 0 transparent;
   --cb-shadow-sm: 0 1px 2px oklch(0.3 0.03 280 / 0.06);
@@ -109,6 +117,15 @@
     --cb-brand-600: oklch(0.64 0.2 var(--cb-hue-brand));
     --cb-fg-link: var(--cb-brand-500);
 
+    /* In dark mode a tone has to be light to read as text on the dark surface, and a fill that light
+       cannot carry white: the text on a tone turns dark instead (tone-contrast.spec.ts). */
+    --cb-tone-brand: var(--cb-brand-500);
+    --cb-tone-info: oklch(0.76 0.13 var(--cb-hue-info));
+    --cb-tone-success: oklch(0.76 0.14 var(--cb-hue-success));
+    --cb-tone-warning: oklch(0.8 0.14 var(--cb-hue-warning));
+    --cb-tone-danger: oklch(0.72 0.17 var(--cb-hue-danger));
+    --cb-fg-on-brand: oklch(0.18 0.02 280);
+
     --cb-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.4);
     --cb-shadow-md: 0 6px 20px oklch(0 0 0 / 0.45);
     --cb-shadow-lg: 0 22px 56px oklch(0 0 0 / 0.55);
@@ -159,6 +176,15 @@
   --cb-brand-500: oklch(0.72 0.19 var(--cb-hue-brand));
   --cb-brand-600: oklch(0.64 0.2 var(--cb-hue-brand));
   --cb-fg-link: var(--cb-brand-500);
+
+  /* In dark mode a tone has to be light to read as text on the dark surface, and a fill that light
+     cannot carry white: the text on a tone turns dark instead (tone-contrast.spec.ts). */
+  --cb-tone-brand: var(--cb-brand-500);
+  --cb-tone-info: oklch(0.76 0.13 var(--cb-hue-info));
+  --cb-tone-success: oklch(0.76 0.14 var(--cb-hue-success));
+  --cb-tone-warning: oklch(0.8 0.14 var(--cb-hue-warning));
+  --cb-tone-danger: oklch(0.72 0.17 var(--cb-hue-danger));
+  --cb-fg-on-brand: oklch(0.18 0.02 280);
 
   --cb-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.4);
   --cb-shadow-md: 0 6px 20px oklch(0 0 0 / 0.45);
