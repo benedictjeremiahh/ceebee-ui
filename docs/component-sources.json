@@ -1825,6 +1825,26 @@
         "@xyflow/react"
       ]
     },
+    "Schedule": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/schedule/schedule.tsx",
+        "packages/ui/src/data/schedule/schedule.math.ts",
+        "packages/ui/src/data/schedule/schedule.types.ts",
+        "packages/ui/src/data/schedule/schedule.css"
+      ],
+      "demoPath": "docs/app/data/schedule",
+      "interactionContract": "read-only SVAR Gantt grid and timeline by default (the substrate's own scroll and zoom); a bar is a graphic whose accessible name is its item and its progress reading; today is named above the axis rather than marked on it, because the substrate's vertical markers and critical path are PRO features the free build ignores silently",
+      "runtime": {
+        "package": "@svar-ui/react-gantt",
+        "version": "2.7.3",
+        "license": "MIT"
+      },
+      "substrate": [
+        "react",
+        "@svar-ui/react-gantt"
+      ]
+    },
     "ProgressCurve": {
       "strategy": "ceebee",
       "source": [
