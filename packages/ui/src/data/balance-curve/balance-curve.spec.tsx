@@ -38,7 +38,7 @@ describe('BalanceCurve', () => {
   it('says the day it goes under and the lowest it gets, before drawing anything', () => {
     render(<BalanceCurve label="Kas 30 hari" balances={projection} format={rupiah} />);
     const reading = screen.getByText(/Below the line/);
-    expect(reading).toHaveTextContent('2026-09-23');
+    expect(reading).toHaveTextContent('Sep 23, 2026');
     expect(reading).toHaveTextContent('-2.810.000');
     expect(reading).toHaveAttribute('data-state', 'below');
   });
@@ -54,7 +54,7 @@ describe('BalanceCurve', () => {
     render(
       <BalanceCurve label="Kas" balances={projection} format={rupiah} threshold={{ value: 50_000_000, label: 'buffer 50 jt' }} />,
     );
-    expect(screen.getByText(/Below the line/)).toHaveTextContent('2026-09-22');
+    expect(screen.getByText(/Below the line/)).toHaveTextContent('Sep 22, 2026');
     expect(screen.getByText('buffer 50 jt')).toBeInTheDocument();
   });
 
@@ -63,7 +63,7 @@ describe('BalanceCurve', () => {
     expect(screen.getByRole('table', { name: 'Balance by day' })).toBeInTheDocument();
     expect(screen.getAllByRole('row')).toHaveLength(5); // header + four days
     expect(screen.getByRole('columnheader', { name: 'Sisa' })).toBeInTheDocument();
-    expect(screen.getByRole('rowheader', { name: '2026-09-30' })).toBeInTheDocument();
+    expect(screen.getByRole('rowheader', { name: 'Sep 30, 2026' })).toBeInTheDocument();
   });
 
   it('names the chart for a screen reader', () => {
@@ -117,6 +117,6 @@ describe('BalanceCurve', () => {
       />,
     );
     expect(screen.getByRole('table', { name: 'Saldo per hari' })).toBeInTheDocument();
-    expect(screen.getByText(/Kas minus mulai 2026-09-23/)).toBeInTheDocument();
+    expect(screen.getByText(/Kas minus mulai Sep 23, 2026/)).toBeInTheDocument();
   });
 });

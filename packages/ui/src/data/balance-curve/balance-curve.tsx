@@ -2,8 +2,9 @@
 
 import { useMemo } from 'react';
 import { cn } from '../../lib/cn.js';
+import { useDocumentLocale } from '../../lib/use-document-locale.js';
 import { TimeSeriesChart } from '../time-series/index.js';
-import { seriesPoints } from '../time-series/time-series.math.js';
+import { readableDay, seriesPoints } from '../time-series/time-series.math.js';
 import { balanceReading } from './balance-curve.math.js';
 import { BalanceCurveSkeleton } from './balance-curve.skeleton.js';
 import type { BalanceCurveProps } from './balance-curve.types.js';
@@ -31,9 +32,11 @@ function BalanceCurveRoot({
   tableLabel = 'Balance by day',
   belowLabel = (from, lowest, days) => `Below the line from ${from} — lowest ${lowest}, ${days} day(s) under.`,
   clearLabel = (lowest) => `Stays above the line. Lowest point ${lowest}.`,
+  locale: givenLocale,
   loading = false,
   className,
 }: BalanceCurveProps) {
+  const locale = useDocumentLocale(givenLocale);
   const points = useMemo(() => seriesPoints(balances), [balances]);
   const reading = useMemo(() => balanceReading(points, threshold.value), [points, threshold.value]);
 
@@ -56,7 +59,9 @@ function BalanceCurveRoot({
       {reading.lowest === null ? null : (
         <p className="cb-balance-curve__reading" data-state={breached ? 'below' : 'clear'}>
           {breached && reading.firstBelowDay
-            ? belowLabel(reading.firstBelowDay, format(reading.lowest), reading.daysBelow)
+            // The sentence is prose, so the day in it is written the way a person reads one — the table's
+            // row header and the axis are the same date in other shapes, not a different spelling of it.
+            ? belowLabel(readableDay(reading.firstBelowDay, locale), format(reading.lowest), reading.daysBelow)
             : clearLabel(format(reading.lowest))}
         </p>
       )}
@@ -66,6 +71,7 @@ function BalanceCurveRoot({
         series={series}
         format={format}
         baseline={threshold}
+        locale={locale}
         /* The low point is marked rather than today: a reader scanning a projection is looking for the
            worst day, and it is a day the series definitely reports, so the mark lands exactly on it. */
         mark={reading.lowestDay ? { day: reading.lowestDay, label: format(reading.lowest ?? 0) } : undefined}

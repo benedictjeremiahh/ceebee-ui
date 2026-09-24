@@ -3,8 +3,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { cn } from '../../lib/cn.js';
 import { createCssProbe, watchTokens } from '../../lib/css-probe.js';
+import { useDocumentLocale } from '../../lib/use-document-locale.js';
 import { mountTimeSeries, type MountedChart } from './time-series.chart.js';
-import { alignRows, nearestDay, seriesPoints } from './time-series.math.js';
+import { alignRows, nearestDay, readableDay, seriesPoints } from './time-series.math.js';
 import { TimeSeriesChartSkeleton } from './time-series.skeleton.js';
 import type { ChartPalette, TimeSeriesChartProps } from './time-series.types.js';
 
@@ -32,9 +33,11 @@ export function TimeSeriesChart({
   emptyLabel = 'Nothing has been reported yet.',
   tableLabel = 'Readings by day',
   dayLabel = 'Day',
+  locale: givenLocale,
   loading = false,
   className,
 }: TimeSeriesChartProps) {
+  const locale = useDocumentLocale(givenLocale);
   const host = useRef<HTMLDivElement>(null);
   const [forcedColors, setForcedColors] = useState(false);
 
@@ -76,7 +79,13 @@ export function TimeSeriesChart({
        arrive and the watcher below runs this again. */
     if (!palette) return;
 
-    void mountTimeSeries(element, { series: cleaned, format, range, baseline }, palette).then((mounted) => {
+    void mountTimeSeries(
+      element,
+      /* The axis and the table read the same days in the same language: two renderings of one chart that
+         disagreed about the date would be two charts. */
+      { series: cleaned, format, range, baseline, tickMark: (day) => readableDay(day, locale, 'short') },
+      palette,
+    ).then((mounted) => {
       if (cancelled) {
         mounted.destroy();
         return;
@@ -105,7 +114,7 @@ export function TimeSeriesChart({
       chart?.destroy();
       chart = null;
     };
-  }, [cleaned, tokens, format, range, baseline, markDay, mark, empty, forcedColors, loading]);
+  }, [cleaned, tokens, format, range, baseline, markDay, mark, empty, forcedColors, loading, locale]);
 
   if (loading) return <TimeSeriesChartSkeleton height={height} className={className} />;
 
@@ -136,7 +145,7 @@ export function TimeSeriesChart({
             <tbody>
               {rows.map((row) => (
                 <tr key={row.day} data-marked={row.day === markDay || undefined}>
-                  <th scope="row">{row.day}</th>
+                  <th scope="row">{readableDay(row.day, locale)}</th>
                   {cleaned.map((one) => {
                     const value = row.values[one.key];
                     return <td key={one.key}>{value === null || value === undefined ? '—' : format(value)}</td>;

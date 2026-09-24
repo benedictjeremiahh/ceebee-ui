@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { alignRows, asDay, nearestDay, round1, seriesPoints, seriesSpan, valueOn } from './time-series.math';
+import { alignRows, asDay, dayOf, nearestDay, niceRange, readableDay, round1, seriesPoints, seriesSpan, valueOn, valueSpan } from './time-series.math';
 
 const planned = [
   { day: '2026-09-01', value: 10 },
@@ -109,5 +109,68 @@ describe('round1', () => {
   it('keeps one decimal, because four is false precision on an estimate', () => {
     expect(round1(13.4999)).toBe(13.5);
     expect(round1(-5.04)).toBe(-5);
+  });
+});
+
+describe('readableDay', () => {
+  it('writes a calendar day for people, in the locale it is handed', () => {
+    expect(readableDay('2026-09-24', 'id-ID')).toBe('24 Sep 2026');
+    expect(readableDay('2026-09-24', 'en-GB')).toBe('24 Sept 2026');
+  });
+
+  it('drops the year where an axis has no room for it', () => {
+    expect(readableDay('2026-09-24', 'id-ID', 'short')).toBe('24 Sep');
+  });
+
+  it('never shifts a day across midnight — a calendar day has no time zone', () => {
+    expect(readableDay('2026-01-01', 'id-ID')).toBe('1 Jan 2026');
+  });
+
+  it('leaves anything that is not a day as it came', () => {
+    expect(readableDay('soon', 'id-ID')).toBe('soon');
+    expect(readableDay('2026-02-30', 'id-ID')).toBe('2026-02-30');
+  });
+});
+
+describe('niceRange', () => {
+  it('rounds outwards to a tick of 1, 2 or 5 times a power of ten', () => {
+    expect(niceRange(0, 97)).toEqual({ min: 0, max: 100, step: 20 });
+    expect(niceRange(0, 100)).toEqual({ min: 0, max: 100, step: 20 });
+    expect(niceRange(0, 0.9)).toEqual({ min: 0, max: 1, step: 0.2 });
+  });
+
+  it('keeps every reading inside the range it returns — the top is never clipped', () => {
+    const rounded = niceRange(-50, 80);
+    expect(rounded.min).toBeLessThanOrEqual(-50);
+    expect(rounded.max).toBeGreaterThanOrEqual(80);
+  });
+
+  it('answers a flat series rather than dividing by zero', () => {
+    expect(niceRange(3, 3)).toEqual({ min: 3, max: 3, step: 1 });
+    expect(niceRange(0, Number.POSITIVE_INFINITY)).toEqual({ min: 0, max: Number.POSITIVE_INFINITY, step: 1 });
+  });
+});
+
+describe('dayOf', () => {
+  it('reads all three shapes the substrate holds a time in', () => {
+    expect(dayOf('2026-09-24')).toBe('2026-09-24');
+    expect(dayOf(Date.UTC(2026, 8, 24) / 1000)).toBe('2026-09-24');
+    expect(dayOf({ year: 2026, month: 9, day: 24 })).toBe('2026-09-24');
+  });
+
+  it('pads a business day the substrate hands over unpadded', () => {
+    expect(dayOf({ year: 2026, month: 1, day: 5 })).toBe('2026-01-05');
+  });
+});
+
+describe('valueSpan', () => {
+  it('gathers the extremes of every series, and the baseline with them', () => {
+    expect(valueSpan([{ points: planned }, { points: [{ day: '2026-09-05', value: -4 }] }])).toEqual({ min: -4, max: 70 });
+    expect(valueSpan([{ points: planned }], -20)).toEqual({ min: -20, max: 70 });
+  });
+
+  it('is null when nothing was reported — an empty chart has no range to round', () => {
+    expect(valueSpan([])).toBeNull();
+    expect(valueSpan([{ points: [] }])).toBeNull();
   });
 });

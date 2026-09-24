@@ -1,4 +1,5 @@
-import type { SeriesPoint } from './time-series.math.js';
+import type { Time } from 'lightweight-charts';
+import { dayOf, niceRange, valueSpan, type SeriesPoint } from './time-series.math.js';
 import type { Baseline, ChartPalette, SeriesSpec, ValueRange } from './time-series.types.js';
 
 /**
@@ -22,6 +23,8 @@ export interface MountedChart {
 export interface ChartShape {
   series: readonly SeriesSpec[];
   format: (value: number) => string;
+  /** A tick's day in the product's words. Omitted, the substrate's own English date stands. */
+  tickMark?: (day: string) => string;
   range?: ValueRange;
   baseline?: Baseline;
 }
@@ -48,11 +51,25 @@ export async function mountTimeSeries(
        fitted and the viewport is fixed. */
     handleScroll: false,
     handleScale: false,
+    /* The axis names its days in the product's words rather than ISO, and in the product's language
+       (issue #26). The substrate holds a tick's time as one of three shapes, so it is read through
+       `dayOf` rather than assumed. */
+    ...(shape.tickMark
+      ? { timeScale: { tickMarkFormatter: (time: Time) => shape.tickMark?.(dayOf(time)) } }
+      : {}),
   });
 
+  /* The axis is rounded outwards to 1, 2 or 5 times a power of ten (issue #26). Autoscaling to the data's
+     own extremes is what hands a compact formatter a `97` it answers with `97,0` — a decimal that exists
+     only because the last reading happened to land there. A pinned range still wins: a percentage chart
+     that states 0–100 is saying something a rounded autoscale would talk over. */
+  const span = valueSpan(shape.series, shape.baseline?.value);
+  const rounded = span ? niceRange(span.min, span.max) : null;
   const scale = shape.range
     ? () => ({ priceRange: { minValue: shape.range?.min ?? 0, maxValue: shape.range?.max ?? 0 } })
-    : undefined;
+    : rounded
+      ? () => ({ priceRange: { minValue: rounded.min, maxValue: rounded.max } })
+      : undefined;
   const common = { priceLineVisible: false, lastValueVisible: false, autoscaleInfoProvider: scale };
 
   /* A baseline chart is one series read against a value, shaded above and below it; a line chart is any

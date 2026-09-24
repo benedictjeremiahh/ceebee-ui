@@ -21,6 +21,11 @@ export interface BalanceCurveProps {
   seriesLabel?: string;
   emptyLabel?: string;
   tableLabel?: string;
+  /**
+   * How the axis, the table and the reading's sentence name a date. Omitted, the document's `lang` is used
+   * — a library has no business choosing a language for somebody else's dashboard.
+   */
+  locale?: string;
   /** How the reading is worded. Each takes the formatted figures the component computed. */
   belowLabel?: (from: string, lowest: string, days: number) => string;
   clearLabel?: (lowest: string) => string;

@@ -100,3 +100,87 @@ export function nearestDay(days: readonly string[], day: string): string | null 
 export function round1(value: number): number {
   return Math.round(value * 10) / 10;
 }
+
+/**
+ * A `Time` as the `YYYY-MM-DD` this file speaks — the string it was given, the day an epoch second falls
+ * on, or a business day taken apart.
+ *
+ * The substrate hands an axis formatter whichever of the three it happens to hold the value as, so a
+ * formatter that assumes one of them writes `[object Object]` down the axis of every chart drawn from
+ * business days. Structural rather than an imported type, so this stays free of the substrate.
+ */
+export function dayOf(time: string | number | { year: number; month: number; day: number }): string {
+  if (typeof time === 'string') return time;
+  if (typeof time === 'number') return new Date(time * 1000).toISOString().slice(0, 10);
+  return `${time.year}-${String(time.month).padStart(2, '0')}-${String(time.day).padStart(2, '0')}`;
+}
+
+/**
+ * The lowest and highest value any series reports, with a baseline included, or null when none does.
+ *
+ * A chart that autoscales to what it drew hands its own extremes to the axis label, which is how an axis
+ * ends up asking a compact formatter for `97,0`. Its extremes are the axis's business, so they are
+ * gathered here rather than inside the drawing code — where, as the file's own header says, nothing can
+ * be checked.
+ */
+export function valueSpan(
+  series: readonly { points: readonly SeriesPoint[] }[],
+  baseline?: number,
+): { min: number; max: number } | null {
+  let min = Number.POSITIVE_INFINITY;
+  let max = Number.NEGATIVE_INFINITY;
+  for (const one of series) {
+    for (const point of one.points) {
+      if (point.value < min) min = point.value;
+      if (point.value > max) max = point.value;
+    }
+  }
+  if (baseline !== undefined) {
+    if (baseline < min) min = baseline;
+    if (baseline > max) max = baseline;
+  }
+  return Number.isFinite(min) && Number.isFinite(max) ? { min, max } : null;
+}
+
+/**
+ * A day as a person reads it — `24 Sep 2026`, or `24 Sep` for an axis with no room for the year.
+ *
+ * The locale is the caller's, because this library has no idea what language a product speaks, and the
+ * default belongs to whoever renders it: a component defaults to the document's `lang`.
+ *
+ * Formatted at UTC noon for the same reason `asDay` exists: a calendar day has no time zone, and reading
+ * one as local midnight would put 1 January on 31 December for anybody west of Greenwich.
+ */
+export function readableDay(day: string, locale: string, style: 'short' | 'medium' = 'medium'): string {
+  const value = asDay(day);
+  if (value === null) return day;
+  return new Intl.DateTimeFormat(locale, {
+    day: 'numeric',
+    month: 'short',
+    ...(style === 'medium' ? { year: 'numeric' } : {}),
+    timeZone: 'UTC',
+  })
+    .format(new Date(`${value}T12:00:00Z`))
+    .replace(/\./g, '');
+}
+
+/**
+ * A value range rounded out to ticks of 1, 2 or 5 times a power of ten.
+ *
+ * The axis hands its ends to a formatter, and a compact one answers an autoscaled `97` with `97,0` while
+ * it answers `100` with `100`: a decimal that is only there because the data happened to stop where it
+ * did. Rounding **outwards** is the point of this — rounding inwards would hide the top of the data, and
+ * a chart that quietly clips its own maximum is worse than one with an awkward label.
+ */
+export function niceRange(
+  min: number,
+  max: number,
+  target = 5,
+): { min: number; max: number; step: number } {
+  if (!Number.isFinite(min) || !Number.isFinite(max) || min === max) return { min, max, step: 1 };
+  const rough = (max - min) / Math.max(1, target);
+  const magnitude = 10 ** Math.floor(Math.log10(rough));
+  const steps = [1, 2, 5, 10].map((multiple) => multiple * magnitude);
+  const step = steps.find((candidate) => candidate >= rough) ?? magnitude * 10;
+  return { min: Math.floor(min / step) * step, max: Math.ceil(max / step) * step, step };
+}

@@ -42,7 +42,7 @@ describe('ProgressCurve', () => {
     const rows = screen.getAllByRole('row');
     // One header row plus the four days either series reports.
     expect(rows).toHaveLength(5);
-    expect(screen.getByRole('rowheader', { name: '2026-09-12' })).toBeInTheDocument();
+    expect(screen.getByRole('rowheader', { name: 'Sep 12, 2026' })).toBeInTheDocument();
     expect(screen.getByRole('table', { name: 'Progress by day' })).toBeInTheDocument();
   });
 
