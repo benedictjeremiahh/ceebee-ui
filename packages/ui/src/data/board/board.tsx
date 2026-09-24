@@ -15,7 +15,18 @@ import {
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { BoardSkeleton, type BoardSkeletonProps } from './board.skeleton.js';
-import { applyMove, canPickUp, columnLoad, isNoop, locate, nextTarget, refusalFor, type BoardDirection } from './board.math.js';
+import {
+  applyMove,
+  canPickUp,
+  columnLoad,
+  hiddenEdges,
+  isNoop,
+  locate,
+  nextTarget,
+  refusalFor,
+  type BoardDirection,
+  type BoardOverflow,
+} from './board.math.js';
 import type { BoardColumn, BoardMove, BoardMoveResult, BoardPosition } from './board.types.js';
 import './board.css';
 
@@ -30,6 +41,14 @@ export interface BoardLabels {
   undone: string;
   lanes: string;
   over: (count: number, limit: number) => string;
+  /** The control that scrolls a board wider than its page back by one column. */
+  scrollBack: string;
+  /** The control that scrolls it on by one column. */
+  scrollOn: string;
+  /** The control that opens a column the consumer kept as a strip (ceebee-ui#25). */
+  expand: (column: string) => string;
+  /** The control that returns an opened column to its strip. */
+  collapse: (column: string) => string;
 }
 
 const DEFAULTS: BoardLabels = {
@@ -42,6 +61,10 @@ const DEFAULTS: BoardLabels = {
   undone: 'Move undone.',
   lanes: 'Column',
   over: (count, limit) => `${count} of ${limit}, over the limit`,
+  scrollBack: 'Scroll back one column',
+  scrollOn: 'Scroll on one column',
+  expand: (column) => `Show ${column}`,
+  collapse: (column) => `Collapse ${column}`,
 };
 
 export interface BoardProps {
@@ -98,14 +121,56 @@ function BoardRoot({
   const [announcement, setAnnouncement] = React.useState('');
   const [undoable, setUndoable] = React.useState<BoardMove | null>(null);
   const [lane, setLane] = React.useState(0);
+  // Which strips a reader has opened. Which columns *may* collapse is the consumer's, but whether one is
+  // open this minute is a view state, and a board that asked the consumer to hold it would make opening a
+  // column a round trip through a product that has nothing to say about it.
+  const [opened, setOpened] = React.useState<readonly string[]>([]);
+  const surfaceRef = React.useRef<HTMLDivElement | null>(null);
+  // Which edges hide a column. Measured rather than derived: it depends on the container's width, how many
+  // columns there are, and the kit's own column width — and this component owns none of the three.
+  const [overflow, setOverflow] = React.useState<BoardOverflow | null>(null);
 
   // The board shown is the optimistic one while a move is in flight, so a card does not jump back and
   // forth on a slow consumer; props win again the moment the consumer answers.
   const view = optimistic ?? columns;
   React.useEffect(() => setOptimistic(null), [columns]);
 
-  const narrow = useNarrow(layout === 'auto' ? phoneQuery : null);
+  const narrow = useMediaQuery(layout === 'auto' ? phoneQuery : null);
   const lanes = layout === 'lanes' || (layout === 'auto' && narrow);
+  const calm = useMediaQuery('(prefers-reduced-motion: reduce)');
+  const still = !motion || calm;
+
+  /**
+   * One column, plus the gap beside it, read off the DOM. Scrolling by the surface's own width would skip
+   * columns on a wide screen, and a constant would drift the moment the kit retunes its spacing.
+   */
+  const step = (direction: -1 | 1) => {
+    const surface = surfaceRef.current;
+    if (!surface) return;
+    const [first, second] = Array.from(surface.querySelectorAll<HTMLElement>('.cb-board__column'));
+    const by = second && first ? second.offsetLeft - first.offsetLeft : (first?.offsetWidth ?? surface.clientWidth);
+    if (typeof surface.scrollBy !== 'function') return;
+    surface.scrollBy({ left: by * direction, behavior: still ? 'auto' : 'smooth' });
+  };
+
+  // Re-measured on scroll, when the surface is resized, and whenever the columns change — a card added to
+  // the last column can be what makes the one past it reachable, or the reverse.
+  React.useEffect(() => {
+    const surface = surfaceRef.current;
+    if (!surface || lanes) {
+      setOverflow(null);
+      return;
+    }
+    const read = () => setOverflow(hiddenEdges(surface));
+    read();
+    surface.addEventListener('scroll', read, { passive: true });
+    const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(read) : null;
+    observer?.observe(surface);
+    return () => {
+      surface.removeEventListener('scroll', read);
+      observer?.disconnect();
+    };
+  }, [lanes, view]);
 
   const nameOf = (columnId: string) => {
     const column = view.find((c) => c.id === columnId);
@@ -224,20 +289,61 @@ function BoardRoot({
         </div>
       ) : null}
 
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCorners}
-        onDragStart={(e: DragStartEvent) => setDragging(String(e.active.id))}
-        onDragCancel={() => setDragging(null)}
-        onDragEnd={onDragEnd}
-      >
-        <div className="cb-board__surface" role="group" aria-label={ariaLabel} data-lanes={lanes ? '' : undefined}>
-          {shown.map((column) => (
-            <Column key={column.id} column={column} held={held} onCardKeyDown={onCardKeyDown} labels={text} handle={handle} onCardOpen={onCardOpen} />
-          ))}
-        </div>
-        <DragOverlay>{dragging ? <div className="cb-board__card cb-board__card--lift">{cardTitle(view, dragging)}</div> : null}</DragOverlay>
-      </DndContext>
+      {/*
+        The frame is the board's chrome, laid over the surface rather than inside it: the scroll controls
+        and the edge shade are not content, so they must not join what the group announces, and the shade
+        must not scroll away from the edge it is pointing past.
+      */}
+      <div className="cb-board__frame" data-overflow={!lanes && overflow ? overflow : undefined}>
+        {!lanes && (overflow === 'start' || overflow === 'both') ? (
+          <button
+            type="button"
+            className="cb-board__scroll cb-board__scroll--back"
+            aria-label={text.scrollBack}
+            onClick={() => step(-1)}
+          >
+            ‹
+          </button>
+        ) : null}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCorners}
+          onDragStart={(e: DragStartEvent) => setDragging(String(e.active.id))}
+          onDragCancel={() => setDragging(null)}
+          onDragEnd={onDragEnd}
+        >
+          <div ref={surfaceRef} className="cb-board__surface" role="group" aria-label={ariaLabel} data-lanes={lanes ? '' : undefined}>
+            {shown.map((column) => (
+              <Column
+                key={column.id}
+                column={column}
+                held={held}
+                onCardKeyDown={onCardKeyDown}
+                labels={text}
+                handle={handle}
+                onCardOpen={onCardOpen}
+                open={opened.includes(column.id)}
+                onOpenChange={(open) =>
+                  setOpened((current) =>
+                    open ? [...current, column.id] : current.filter((id) => id !== column.id),
+                  )
+                }
+              />
+            ))}
+          </div>
+          <DragOverlay>{dragging ? <div className="cb-board__card cb-board__card--lift">{cardTitle(view, dragging)}</div> : null}</DragOverlay>
+        </DndContext>
+        {!lanes && (overflow === 'end' || overflow === 'both') ? (
+          <button
+            type="button"
+            className="cb-board__scroll cb-board__scroll--on"
+            aria-label={text.scrollOn}
+            onClick={() => step(1)}
+          >
+            ›
+          </button>
+        ) : null}
+      </div>
 
       {undoable ? (
         <div className="cb-board__undo">
@@ -277,6 +383,8 @@ function Column({
   labels,
   handle,
   onCardOpen,
+  open,
+  onOpenChange,
 }: {
   column: BoardColumn;
   held: { cardId: string; at: BoardPosition } | null;
@@ -284,10 +392,31 @@ function Column({
   labels: BoardLabels;
   handle: boolean;
   onCardOpen?: (cardId: string) => void;
+  /** Whether the reader has opened this column. A collapsed column ignores it until they have. */
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: column.id });
   const load = columnLoad(column);
   const holding = held?.at.columnId === column.id;
+  const name = column.label ?? textOf(column.name, column.id);
+
+  // The strip is still the column: it stays a drop target and keeps its count, because a column nobody has
+  // opened is exactly the sort of place a card is about to be sent.
+  if (column.collapsed === true && !open) {
+    return (
+      <section ref={setNodeRef} className="cb-board__column" data-strip="" data-over={isOver ? '' : undefined}>
+        <button type="button" className="cb-board__strip" aria-label={labels.expand(name)} onClick={() => onOpenChange(true)}>
+          <span className="cb-board__strip-name" aria-hidden>
+            {column.name}
+          </span>
+          <span className="cb-board__count" data-over-limit={load.over ? '' : undefined}>
+            {typeof column.limit === 'number' ? `${load.count}/${column.limit}` : load.count}
+          </span>
+        </button>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -302,6 +431,11 @@ function Column({
         <span className="cb-board__count" data-over-limit={load.over ? '' : undefined}>
           {typeof column.limit === 'number' ? `${load.count}/${column.limit}` : load.count}
         </span>
+        {column.collapsed === true ? (
+          <button type="button" className="cb-board__collapse" aria-label={labels.collapse(name)} onClick={() => onOpenChange(false)}>
+            ‹
+          </button>
+        ) : null}
       </header>
       <SortableContext items={column.cards.map((c) => c.id)} strategy={verticalListSortingStrategy}>
         <ol className="cb-board__list">
@@ -413,8 +547,8 @@ function Card({
   );
 }
 
-/** `auto` only: matches the phone query when the browser can answer, and stays false when it cannot. */
-function useNarrow(query: string | null): boolean {
+/** A media query's answer, or false wherever the browser cannot answer one — a server render, a test DOM. */
+function useMediaQuery(query: string | null): boolean {
   const [narrow, setNarrow] = React.useState(false);
   React.useEffect(() => {
     if (!query || typeof window === 'undefined' || !window.matchMedia) return;

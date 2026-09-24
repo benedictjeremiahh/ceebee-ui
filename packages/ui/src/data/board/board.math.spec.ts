@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applyMove, canPickUp, columnLoad, isNoop, locate, nextTarget, refusalFor } from './board.math.js';
+import { applyMove, canPickUp, columnLoad, hiddenEdges, isNoop, locate, nextTarget, refusalFor } from './board.math.js';
 import type { BoardShape } from './board.types.js';
 
 /** Card ids of one column, by id — indexing an array is not guaranteed to find one. */
@@ -115,5 +115,25 @@ describe('columnLoad', () => {
     expect(columnLoad({ id: 'todo', cards: [{ id: 'a' }, { id: 'b' }] })).toEqual({ count: 2, over: false });
     expect(columnLoad({ id: 'todo', cards: [{ id: 'a' }, { id: 'b' }], limit: 1 })).toEqual({ count: 2, over: true });
     expect(columnLoad({ id: 'todo', cards: [{ id: 'a' }], limit: 1 })).toEqual({ count: 1, over: false });
+  });
+});
+
+describe('hiddenEdges', () => {
+  it('says nothing when every column fits', () => {
+    expect(hiddenEdges({ scrollLeft: 0, clientWidth: 1200, scrollWidth: 1200 })).toBeNull();
+  });
+
+  it('names the edge the columns are hidden past', () => {
+    expect(hiddenEdges({ scrollLeft: 0, clientWidth: 600, scrollWidth: 1800 })).toBe('end');
+    expect(hiddenEdges({ scrollLeft: 1200, clientWidth: 600, scrollWidth: 1800 })).toBe('start');
+  });
+
+  it('names both while the board is mid-scroll — columns are hidden each way', () => {
+    expect(hiddenEdges({ scrollLeft: 600, clientWidth: 600, scrollWidth: 1800 })).toBe('both');
+  });
+
+  it('does not offer a scroll that moves nothing: a fractional layout leaves it a hair short', () => {
+    expect(hiddenEdges({ scrollLeft: 1199.5, clientWidth: 600, scrollWidth: 1800 })).toBe('start');
+    expect(hiddenEdges({ scrollLeft: 0, clientWidth: 1200, scrollWidth: 1201 })).toBeNull();
   });
 });

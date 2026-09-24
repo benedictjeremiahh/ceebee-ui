@@ -21,11 +21,79 @@
   overflow-x: visible;
 }
 
+/* ── a board wider than its page ── */
+
+/* The frame carries the chrome: the two scroll controls and the shade saying a column is hidden past an
+   edge. Both sit over the surface and neither is part of its content, so what the group announces is
+   still the columns themselves. */
+.cb-board__frame {
+  position: relative;
+}
+
+.cb-board__scroll {
+  position: absolute;
+  inset-block-start: 50%;
+  z-index: 2;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--cb-space-6);
+  min-block-size: var(--cb-space-6);
+  padding: 0;
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-full);
+  background: var(--cb-bg);
+  color: var(--cb-fg);
+  font: inherit;
+  line-height: var(--cb-leading-tight);
+  cursor: pointer;
+  box-shadow: var(--cb-shadow-sm);
+}
+
+.cb-board__scroll:hover { box-shadow: var(--cb-shadow-md); }
+
+.cb-board__scroll:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
+}
+
+.cb-board__scroll--back { inset-inline-start: var(--cb-space-2); }
+.cb-board__scroll--on { inset-inline-end: var(--cb-space-2); }
+
+/* The shade is the signal that survives a narrow window, where the controls can be scrolled away with the
+   columns. It is decoration over content, so it never takes a pointer. */
+.cb-board__frame[data-overflow='start']::before,
+.cb-board__frame[data-overflow='both']::before,
+.cb-board__frame[data-overflow='end']::after,
+.cb-board__frame[data-overflow='both']::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inline-size: var(--cb-space-6);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.cb-board__frame[data-overflow='start']::before,
+.cb-board__frame[data-overflow='both']::before {
+  inset-inline-start: 0;
+  background: linear-gradient(to right, var(--cb-bg), transparent);
+}
+
+.cb-board__frame[data-overflow='end']::after,
+.cb-board__frame[data-overflow='both']::after {
+  inset-inline-end: 0;
+  background: linear-gradient(to left, var(--cb-bg), transparent);
+}
+
 /* ── column ── */
 
 .cb-board__column {
   flex: 0 0 auto;
-  inline-size: 17rem;
+  /* How wide a lane is. The default is the width the board has always drawn; a product whose Stages are
+     narrow — or whose page is — sets the seam rather than restyling the column from outside. */
+  inline-size: var(--cb-board-column-inline-size, 17rem);
   max-inline-size: 100%;
   display: flex;
   flex-direction: column;
@@ -34,6 +102,12 @@
   border: var(--cb-border-width) solid var(--cb-border);
   border-radius: var(--cb-radius-lg);
   background: var(--cb-bg-subtle);
+  /* The ceiling the page that owns the height gives the board. With one, each column scrolls its own
+     cards and the header that names it never scrolls away; without one — the default — a column is as
+     tall as its cards. Either way the surface stays as tall as the tallest column, so the horizontal
+     scrollbar sits under the columns and not below a fixed region they do not fill. */
+  max-block-size: var(--cb-board-max-block-size, none);
+  min-block-size: 0;
 }
 
 .cb-board__surface[data-lanes] .cb-board__column {
@@ -51,6 +125,69 @@
 .cb-board__column[data-refuses] {
   background: var(--cb-bg);
   border-style: dashed;
+}
+
+/* ── a column kept as a strip ── */
+
+/* A column the consumer marks `collapsed` — an empty Stage, say — is a label rather than a lane, so a board
+   of mostly-empty Stages is not mostly empty space. It stays a column: a drop target that keeps its count,
+   because a Stage nobody has opened is exactly where a card is about to be sent. */
+.cb-board__column[data-strip] {
+  inline-size: auto;
+  padding: 0;
+}
+
+.cb-board__strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--cb-space-2);
+  block-size: 100%;
+  min-block-size: var(--cb-space-8);
+  padding: var(--cb-space-3) var(--cb-space-2);
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: var(--cb-fg);
+  font: inherit;
+  cursor: pointer;
+}
+
+.cb-board__strip:hover { background: var(--cb-bg); }
+
+.cb-board__strip:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
+}
+
+/* Read down the strip: a name beside a count in a lane this narrow has room for neither. */
+.cb-board__strip-name {
+  writing-mode: vertical-rl;
+  font-size: var(--cb-text-sm);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.cb-board__collapse {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--cb-space-5);
+  min-block-size: var(--cb-space-5);
+  padding: 0;
+  border: 0;
+  border-radius: var(--cb-radius-sm);
+  background: transparent;
+  color: var(--cb-fg-subtle);
+  font: inherit;
+  cursor: pointer;
+}
+
+.cb-board__collapse:hover { color: var(--cb-fg); }
+
+.cb-board__collapse:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
 }
 
 .cb-board__head {
@@ -100,6 +237,9 @@
   flex-direction: column;
   gap: var(--cb-space-2);
   min-block-size: var(--cb-space-8);
+  /* The one thing that scrolls when the column has a ceiling: the cards. The head stays, because it is
+     the column's name and count, and a long column is exactly when a person needs to know which one it is. */
+  overflow-y: auto;
 }
 
 .cb-board__card {
