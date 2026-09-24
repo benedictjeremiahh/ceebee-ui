@@ -63,7 +63,7 @@ describe('BalanceCurve', () => {
     expect(screen.getByRole('table', { name: 'Balance by day' })).toBeInTheDocument();
     expect(screen.getAllByRole('row')).toHaveLength(5); // header + four days
     expect(screen.getByRole('columnheader', { name: 'Sisa' })).toBeInTheDocument();
-    expect(screen.getByRole('rowheader', { name: '2026-09-30' })).toBeInTheDocument();
+    expect(screen.getByRole('rowheader', { name: 'Sep 30, 2026' })).toBeInTheDocument();
   });
 
   it('names the chart for a screen reader', () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { alignRows, asDay, nearestDay, niceRange, readableDay, round1, seriesPoints, seriesSpan, valueOn } from './time-series.math';
+import { alignRows, asDay, dayOf, nearestDay, niceRange, readableDay, round1, seriesPoints, seriesSpan, valueOn, valueSpan } from './time-series.math';
 
 const planned = [
   { day: '2026-09-01', value: 10 },
@@ -148,5 +148,29 @@ describe('niceRange', () => {
   it('answers a flat series rather than dividing by zero', () => {
     expect(niceRange(3, 3)).toEqual({ min: 3, max: 3, step: 1 });
     expect(niceRange(0, Number.POSITIVE_INFINITY)).toEqual({ min: 0, max: Number.POSITIVE_INFINITY, step: 1 });
+  });
+});
+
+describe('dayOf', () => {
+  it('reads all three shapes the substrate holds a time in', () => {
+    expect(dayOf('2026-09-24')).toBe('2026-09-24');
+    expect(dayOf(Date.UTC(2026, 8, 24) / 1000)).toBe('2026-09-24');
+    expect(dayOf({ year: 2026, month: 9, day: 24 })).toBe('2026-09-24');
+  });
+
+  it('pads a business day the substrate hands over unpadded', () => {
+    expect(dayOf({ year: 2026, month: 1, day: 5 })).toBe('2026-01-05');
+  });
+});
+
+describe('valueSpan', () => {
+  it('gathers the extremes of every series, and the baseline with them', () => {
+    expect(valueSpan([{ points: planned }, { points: [{ day: '2026-09-05', value: -4 }] }])).toEqual({ min: -4, max: 70 });
+    expect(valueSpan([{ points: planned }], -20)).toEqual({ min: -20, max: 70 });
+  });
+
+  it('is null when nothing was reported — an empty chart has no range to round', () => {
+    expect(valueSpan([])).toBeNull();
+    expect(valueSpan([{ points: [] }])).toBeNull();
   });
 });

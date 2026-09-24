@@ -102,6 +102,47 @@ export function round1(value: number): number {
 }
 
 /**
+ * A `Time` as the `YYYY-MM-DD` this file speaks — the string it was given, the day an epoch second falls
+ * on, or a business day taken apart.
+ *
+ * The substrate hands an axis formatter whichever of the three it happens to hold the value as, so a
+ * formatter that assumes one of them writes `[object Object]` down the axis of every chart drawn from
+ * business days. Structural rather than an imported type, so this stays free of the substrate.
+ */
+export function dayOf(time: string | number | { year: number; month: number; day: number }): string {
+  if (typeof time === 'string') return time;
+  if (typeof time === 'number') return new Date(time * 1000).toISOString().slice(0, 10);
+  return `${time.year}-${String(time.month).padStart(2, '0')}-${String(time.day).padStart(2, '0')}`;
+}
+
+/**
+ * The lowest and highest value any series reports, with a baseline included, or null when none does.
+ *
+ * A chart that autoscales to what it drew hands its own extremes to the axis label, which is how an axis
+ * ends up asking a compact formatter for `97,0`. Its extremes are the axis's business, so they are
+ * gathered here rather than inside the drawing code — where, as the file's own header says, nothing can
+ * be checked.
+ */
+export function valueSpan(
+  series: readonly { points: readonly SeriesPoint[] }[],
+  baseline?: number,
+): { min: number; max: number } | null {
+  let min = Number.POSITIVE_INFINITY;
+  let max = Number.NEGATIVE_INFINITY;
+  for (const one of series) {
+    for (const point of one.points) {
+      if (point.value < min) min = point.value;
+      if (point.value > max) max = point.value;
+    }
+  }
+  if (baseline !== undefined) {
+    if (baseline < min) min = baseline;
+    if (baseline > max) max = baseline;
+  }
+  return Number.isFinite(min) && Number.isFinite(max) ? { min, max } : null;
+}
+
+/**
  * A day as a person reads it — `24 Sep 2026`, or `24 Sep` for an axis with no room for the year.
  *
  * The locale is the caller's, because this library has no idea what language a product speaks, and the

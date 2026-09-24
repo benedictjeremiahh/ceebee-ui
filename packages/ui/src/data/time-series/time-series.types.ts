@@ -63,6 +63,12 @@ export interface TimeSeriesChartProps {
   baseline?: Baseline;
   /** A day to mark, and what to call it. The mark lands on the nearest day any series reports. */
   mark?: { day: string; label: string };
+  /**
+   * How the axis and the day column name a date. Omitted, the document's `lang` is used, and failing
+   * that English — a library has no business choosing a language, and English dates down the axis of a
+   * dashboard in another language is the defect this exists to end.
+   */
+  locale?: string;
   height?: number;
   emptyLabel?: string;
   tableLabel?: string;
