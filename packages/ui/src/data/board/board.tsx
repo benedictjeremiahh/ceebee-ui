@@ -49,6 +49,8 @@ export interface BoardLabels {
   expand: (column: string) => string;
   /** The control that returns an opened column to its strip. */
   collapse: (column: string) => string;
+  /** The footer action that adds a card to the named column (ceebee-ui#21). Takes the column's name. */
+  addCard: (column: string) => string;
 }
 
 const DEFAULTS: BoardLabels = {
@@ -65,6 +67,7 @@ const DEFAULTS: BoardLabels = {
   scrollOn: 'Scroll on one column',
   expand: (column) => `Show ${column}`,
   collapse: (column) => `Collapse ${column}`,
+  addCard: (column) => `Add a card to ${column}`,
 };
 
 export interface BoardProps {
@@ -97,6 +100,12 @@ export interface BoardProps {
    * `handle`) or on the card, so the two do not share a key.
    */
   onCardOpen?: (cardId: string) => void;
+  /**
+   * Add a card to a column, from that column. Given it, every column that takes cards grows a footer
+   * action naming itself — so work is added where a person is looking rather than from a toolbar and a
+   * dialog that asks the destination again (ceebee-ui#21). What it opens is the consumer's.
+   */
+  onAddCard?: (columnId: string) => void;
   'aria-label'?: string;
 }
 
@@ -112,6 +121,7 @@ function BoardRoot({
   motion = true,
   handle = false,
   onCardOpen,
+  onAddCard,
   'aria-label': ariaLabel = 'Board',
 }: BoardProps) {
   const text = { ...DEFAULTS, ...labels };
@@ -328,6 +338,7 @@ function BoardRoot({
                     open ? [...current, column.id] : current.filter((id) => id !== column.id),
                   )
                 }
+                onAddCard={onAddCard}
               />
             ))}
           </div>
@@ -385,6 +396,7 @@ function Column({
   onCardOpen,
   open,
   onOpenChange,
+  onAddCard,
 }: {
   column: BoardColumn;
   held: { cardId: string; at: BoardPosition } | null;
@@ -395,6 +407,8 @@ function Column({
   /** Whether the reader has opened this column. A collapsed column ignores it until they have. */
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** Present when the board was given one. A column that refuses cards never offers it. */
+  onAddCard?: (columnId: string) => void;
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: column.id });
   const load = columnLoad(column);
@@ -454,6 +468,14 @@ function Column({
           {holding && held.at.index >= column.cards.length ? <li className="cb-board__marker" aria-hidden /> : null}
         </ol>
       </SortableContext>
+      {/* A footer, after the cards, so it stays put as they are added — and only where a card can land,
+          because a column that refuses them has nothing to invite. It names its column, so a screen reader
+          hears as many different actions as there are columns rather than "Add" repeated. */}
+      {onAddCard && column.accepts !== false ? (
+        <button type="button" className="cb-board__add" onClick={() => onAddCard(column.id)}>
+          {labels.addCard(name)}
+        </button>
+      ) : null}
       {column.cards.length === 0 ? <div className="cb-board__empty">{column.empty ?? null}</div> : null}
       {column.accepts === false && column.refusal ? <p className="cb-board__refusal">{column.refusal}</p> : null}
       {load.over && typeof column.limit === 'number' ? (

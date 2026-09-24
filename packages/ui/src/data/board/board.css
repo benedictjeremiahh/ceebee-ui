@@ -313,6 +313,32 @@
   min-block-size: var(--cb-control-floor);
 }
 
+/* The column's own way to add a card: a footer, after the cards, so it does not move as they arrive. It is
+   not a drop target — the card it stands for does not exist yet — and it names its column, so a screen
+   reader hears as many different actions as there are columns (ceebee-ui#21). */
+.cb-board__add {
+  min-block-size: var(--cb-control-floor);
+  padding: 0 var(--cb-space-2);
+  border: 0;
+  border-radius: var(--cb-radius-sm);
+  background: transparent;
+  color: var(--cb-fg-muted);
+  font: inherit;
+  font-size: var(--cb-text-xs);
+  text-align: start;
+  cursor: pointer;
+}
+
+.cb-board__add:hover {
+  background: var(--cb-bg);
+  color: var(--cb-fg);
+}
+
+.cb-board__add:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
+}
+
 /* Where the held card would land. It is the one affordance that must survive reduced motion. */
 .cb-board__marker {
   block-size: var(--cb-space-1);
@@ -405,6 +431,7 @@
 
 .cb-board__ghost--name { inline-size: var(--cb-space-8); block-size: var(--cb-space-3); }
 .cb-board__ghost--count { inline-size: var(--cb-space-4); block-size: var(--cb-space-3); }
+.cb-board__ghost--add { block-size: var(--cb-control-floor); }
 .cb-board__ghost-card { block-size: var(--cb-space-8); border: 0; box-shadow: var(--cb-shadow-none); }
 
 /* ── renderings that are not decoration ── */
