@@ -306,6 +306,13 @@
   color: var(--cb-fg-muted);
 }
 
+/* When a card's title is the open control it is a control, not a caption, and it takes the control floor
+   rather than the one pixel under it a line box lands on (UX-12.3, ceebee-ui#32). A title that is *not* a
+   control — no `onCardOpen` — stays a title and is not given a button's box. */
+.cb-board__open {
+  min-block-size: var(--cb-control-floor);
+}
+
 /* Where the held card would land. It is the one affordance that must survive reduced motion. */
 .cb-board__marker {
   block-size: var(--cb-space-1);
@@ -439,7 +446,8 @@
   align-items: center;
   justify-content: center;
   min-inline-size: var(--cb-space-5);
-  min-block-size: var(--cb-space-5);
+  /* The grab is a pointer target like any other: the floor, not a spacing step that happens to be near it. */
+  min-block-size: var(--cb-control-floor);
   padding: 0;
   border: 0;
   border-radius: var(--cb-radius-sm);
