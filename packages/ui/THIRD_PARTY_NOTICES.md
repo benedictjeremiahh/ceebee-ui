@@ -36,6 +36,21 @@ Copyright © 2018-present iamkun
 Date and time components use `dayjs` 1.11.18 as their date engine. It is licensed under the MIT
 License.
 
+## SVAR React Gantt
+
+Copyright © 2025 XB Software Sp. z o.o
+
+`Schedule` in `@ceebee/ui/client` draws its grid and bars with `@svar-ui/react-gantt` 2.7.3, a
+dependency. Its base stylesheet is included in `styles.css`, and its appearance is set by Ceebee's
+Tokens through the substrate's `--wx-*` custom properties. It is licensed under the MIT License, and
+its copyright notice is retained here.
+
+The package manifest carries `"productTrial": true`, but that is build metadata: the published licence
+is MIT, there is no runtime licence key, and no trial watermark is present in the bundle. Its **PRO**
+edition gates other features — vertical markers, critical path, baselines, auto-scheduling — and
+`Schedule` does not use them; see the component's documentation page for what the free build does not
+draw.
+
 ## @dnd-kit
 
 Copyright © 2021, Claudéric Demers

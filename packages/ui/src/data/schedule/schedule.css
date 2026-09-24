@@ -1,0 +1,119 @@
+/* Schedule runs on SVAR Gantt. Its base stylesheet (bundled before this file) owns layout and reads its
+   colours, type and radii from `--wx-*` custom properties; here those are pointed at Tokens, so a Skin
+   or a theme moves the schedule with everything else and no consumer imports the substrate's CSS. */
+
+.cb-schedule {
+  /* ── surfaces and type ── */
+  --wx-background: var(--cb-surface);
+  --wx-background-alt: var(--cb-bg-subtle);
+  --wx-border: var(--cb-border);
+  --wx-color-font: var(--cb-fg);
+  --wx-color-font-disabled: var(--cb-fg-subtle);
+  --wx-color-secondary-font: var(--cb-fg-muted);
+  --wx-color-link: var(--cb-fg-link);
+  --wx-color-primary: var(--cb-tone-brand);
+  --wx-color-danger: var(--cb-tone-danger);
+  --wx-font-family: var(--cb-font-family, inherit);
+  --wx-font-size: var(--cb-text-sm);
+  --wx-font-size-sm: var(--cb-text-xs);
+
+  /* ── the grid that lists the rows ── */
+  --wx-grid-body-font-color: var(--cb-fg);
+  --wx-grid-body-cell-border: var(--cb-border);
+  --wx-grid-body-row-border: var(--cb-border);
+  --wx-grid-header-font-color: var(--cb-fg-muted);
+  --wx-grid-header-shadow: none;
+  --wx-table-header-background: var(--cb-bg-subtle);
+  --wx-table-header-border: var(--cb-border);
+  --wx-table-header-cell-border: var(--cb-border);
+  --wx-table-cell-border: var(--cb-border);
+  --wx-table-select-background: var(--cb-tone-brand);
+  --wx-table-select-border: var(--cb-tone-brand);
+  --wx-table-select-focus-background: var(--cb-tone-brand);
+
+  /* ── the time axis ── */
+  --wx-timescale-border: var(--cb-border);
+  --wx-timescale-font-color: var(--cb-fg-muted);
+  --wx-timescale-shadow: none;
+  --wx-gantt-holiday-background: var(--cb-bg-subtle);
+  --wx-gantt-holiday-color: var(--cb-fg-subtle);
+
+  /* ── the bars ── */
+  --wx-gantt-task-color: var(--cb-tone-brand);
+  --wx-gantt-task-fill-color: var(--cb-tone-brand);
+  --wx-gantt-task-border-color: var(--cb-tone-brand);
+  --wx-gantt-task-font-color: var(--cb-fg-on-brand);
+  --wx-gantt-bar-border-radius: var(--cb-radius-sm);
+  --wx-gantt-bar-shadow: none;
+  /* A late bar is a bar that needs attention: it takes the danger tone, and the weight decides how
+     loud it is — a bar at 20% of the plan is drawn quietly, one at 200% is not. */
+  --wx-gantt-task-critical-color: var(--cb-tone-danger);
+  --wx-gantt-task-critical-fill-color: var(--cb-tone-danger);
+  --wx-gantt-critical-color: var(--cb-tone-danger);
+  --wx-gantt-progress-border-color: var(--cb-surface);
+  --wx-gantt-summary-color: var(--cb-fg-muted);
+  --wx-gantt-summary-fill-color: var(--cb-fg-muted);
+  --wx-gantt-summary-border-color: var(--cb-fg-muted);
+  --wx-gantt-summary-font-color: var(--cb-fg-on-brand);
+
+  /* ── links and milestones ── */
+  --wx-gantt-link-color: var(--cb-fg-subtle);
+  --wx-gantt-link-color-hovered: var(--cb-fg);
+  --wx-gantt-milestone-color: var(--cb-tone-brand);
+  --wx-gantt-milestone-border-radius: var(--cb-radius-sm);
+
+  /* ── the today marker ── */
+  --wx-gantt-marker-color: var(--cb-tone-warning);
+  --wx-gantt-marker-font-color: var(--cb-on-warning);
+  --wx-gantt-marker-font: var(--cb-text-xs);
+}
+
+.cb-schedule {
+  background: var(--cb-surface);
+  border: 1px solid var(--cb-border);
+  border-radius: var(--cb-radius-md);
+  overflow: hidden;
+}
+
+/* The bar's content, drawn inside the substrate's positioned bar: the fill is how much is reported done,
+   and a late bar is toned danger. The grid row carries the name, so the bar carries no text. */
+.cb-schedule__bar {
+  block-size: 100%;
+  display: block;
+  inline-size: 100%;
+}
+
+.cb-schedule__bar-fill {
+  background: var(--cb-tone-brand);
+  block-size: 100%;
+  display: block;
+}
+
+.cb-schedule__bar[data-late] .cb-schedule__bar-fill {
+  background: var(--cb-tone-danger);
+}
+
+/* Today, stated above the axis. The substrate's own vertical marker is a PRO feature, so this is the
+   product's own layer saying it — a wash and a label, readable and reachable by assistive technology. */
+.cb-schedule__today {
+  align-items: baseline;
+  background: color-mix(in oklab, var(--cb-tone-warning) 12%, transparent);
+  color: var(--cb-fg);
+  display: flex;
+  font-size: var(--cb-text-xs);
+  gap: var(--cb-space-2);
+  margin: 0;
+  padding: var(--cb-space-2) var(--cb-space-3);
+}
+
+.cb-schedule__today-label {
+  color: var(--cb-fg-muted);
+}
+
+.cb-schedule__empty {
+  color: var(--cb-fg-muted);
+  font-size: var(--cb-text-sm);
+  margin: 0;
+  padding: var(--cb-space-4);
+  text-align: center;
+}

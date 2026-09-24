@@ -1,0 +1,56 @@
+import { ScheduleDemo } from '../../../components/schedule-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Schedule <span className="docs__label">Composition</span>
+
+One row per item, drawn against a time axis, with today marked. A **timeline**, not a list: the point is
+*which task runs which week*, *what overlaps*, and *what is late*.
+
+## Usage
+
+<ScheduleDemo />
+
+<Guidance
+  do="Give each item a planned start and end and let the schedule draw them. A schedule is a view of a plan, not the plan itself."
+  dont="Reach for a Schedule when the items have no dates — a list with a progress bar is a list."
+/>
+
+## What the bar says
+
+The bar runs from `start` to `end`, both **calendar days** (`YYYY-MM-DD`, inclusive — a one-day item
+starts and ends on the same day). The fill is `progress`, 0–1; an item with no reported progress draws
+empty rather than full, because absent is not done.
+
+`today` decides what is **late**: an item whose end is behind it and whose progress is under 1. A
+finished item is never late, however old. `weight` (basis points) is what makes a late item count for
+more than a trivial one — the schedule draws it, and `lateWeightShare` reads it as a share of the plan.
+
+## Where the drawing comes from
+
+The grid and the bars are [SVAR React Gantt](https://svar.dev/react/gantt/) (`@svar-ui/react-gantt`,
+MIT), bundled into `styles.css` the way React Flow is for `Diagram`. Its `--wx-*` custom properties are
+pointed at Tokens in `schedule.css`, so a Skin or a theme moves the schedule with everything else and a
+consumer never imports the substrate's CSS.
+
+### What the free edition does not do
+
+An on-axis **vertical marker** is a PRO feature: the free build accepts `markers`, and a scale cell's
+`css`, and silently ignores both — so today is named **above the axis**, in this library's own layer,
+where it is readable and reaches assistive technology. Lateness is this library's own reading too, from
+`start`/`end`/`progress`, rather than the substrate's critical path, which is also PRO.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'items', type: 'ScheduleItem[]', description: 'id, label, start and end (YYYY-MM-DD), and optionally progress (0–1) and weight (basis points).' },
+  { name: 'today', type: 'string', description: 'YYYY-MM-DD. Marked on the axis, and what decides which bars are late. Absent marks nothing and calls nothing late.' },
+  { name: 'labels', type: 'Partial<ScheduleLabels>', description: 'Every string the schedule says — today, late, empty, the item column header and the progress reading — for a product that does not speak English.' },
+  { name: 'editable', type: 'boolean', default: 'false', description: 'false (the default) draws the plan read-only. A schedule is a view of someone else\'s plan, not a plan editor.' },
+  { name: 'height', type: 'number', default: '320', description: 'The drawing area\'s height in pixels.' },
+]} />
+
+## Tokens
+
+Surfaces `--cb-surface` / `--cb-bg-subtle`, borders `--cb-border`, text `--cb-fg` and `--cb-fg-muted`,
+`--cb-tone-brand` for a bar, `--cb-tone-danger` for a late one, `--cb-tone-warning` for the today
+marker, and `--cb-radius-*` / `--cb-text-*` throughout.

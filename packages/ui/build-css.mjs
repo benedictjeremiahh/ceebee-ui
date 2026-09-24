@@ -45,12 +45,16 @@ for (const file of files.slice(0, TOKEN_ORDER.length)) {
   chunks.push(`/* ${file.slice(SRC.length)} */\n${await readFile(file, 'utf8')}`);
 }
 
-/* Diagram and DiagramEditor run on React Flow, whose layout rules (viewport, node wrappers, handles, edge
-   paths) live in its base stylesheet. It is structural only — no colour — and is included once, after the
-   Tokens and before the components, so `cb-diagram` rules skin it and a consumer never imports the
-   substrate's CSS directly. */
+/* Diagram and DiagramEditor run on React Flow, and Schedule on SVAR Gantt, whose layout rules
+   (viewport, node wrappers, handles, edge paths; grid rows, timeline cells, bars) live in their base
+   stylesheets. They are structural only — no colour of ours — and are included once, after the Tokens
+   and before the components, so `cb-diagram` and `cb-schedule` rules skin them and a consumer never
+   imports a substrate's CSS directly. */
 const require = createRequire(import.meta.url);
-const substrateCss = [['@xyflow/react/dist/base.css', require.resolve('@xyflow/react/dist/base.css')]];
+const substrateCss = [
+  ['@xyflow/react/dist/base.css', require.resolve('@xyflow/react/dist/base.css')],
+  ['@svar-ui/react-gantt/style.css', require.resolve('@svar-ui/react-gantt/style.css')],
+];
 for (const [name, path] of substrateCss) {
   chunks.push(`/* ${name} (MIT, see THIRD_PARTY_NOTICES.md) */\n${await readFile(path, 'utf8')}`);
 }
