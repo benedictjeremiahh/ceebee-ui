@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { cn } from '../../lib/cn.js';
 import { createCssProbe, watchTokens } from '../../lib/css-probe.js';
+import { useDocumentLocale } from '../../lib/use-document-locale.js';
 import { mountTimeSeries, type MountedChart } from './time-series.chart.js';
 import { alignRows, nearestDay, readableDay, seriesPoints } from './time-series.math.js';
 import { TimeSeriesChartSkeleton } from './time-series.skeleton.js';
@@ -157,19 +158,6 @@ export function TimeSeriesChart({
       )}
     </div>
   );
-}
-
-/**
- * The language to write dates in: the prop when a consumer gives one, otherwise the document's `lang`.
- *
- * Read after mount rather than during render, because a server render has no document — choosing one there
- * would hydrate a different string from the one the page was rendered with, and a day column that changes
- * its words on hydration is the kind of mismatch React reports by throwing the tree away.
- */
-function useDocumentLocale(given?: string): string {
-  const [lang, setLang] = useState('en');
-  useEffect(() => setLang(document.documentElement.lang || 'en'), []);
-  return given ?? lang;
 }
 
 /**
