@@ -65,8 +65,14 @@ export function ThemeBridge({
     ...theme,
     algorithm: theme?.algorithm ?? (mode === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm),
     cssVar: theme?.cssVar ?? { prefix: 'cb-ant' },
-    token: { ...skinToken.token, ...antPresetTokens(mode === 'dark' ? 'dark' : 'light'), ...theme?.token },
-    components: mergeComponents(skinToken.components, theme?.components),
+    token: { ...skinToken.token, ...theme?.token },
+    /* Preset colours go on the components that paint them, not on the global token: Ant regenerates its
+       palette steps from the preset seeds after merging the global token, so a global `gold7` is
+       overwritten, while a component's own tokens are applied after that derivation. */
+    components: mergeComponents(
+      mergeComponents(skinToken.components, presetComponents(mode === 'dark' ? 'dark' : 'light')),
+      theme?.components,
+    ),
   }), [mode, skinToken, theme]);
 
   // Ant's static methods — `Modal.confirm`, `message.info`, `notification.open` — render into their
@@ -85,6 +91,11 @@ export function ThemeBridge({
 export interface CeebeeTheme {
   token: NonNullable<ThemeConfig['token']>;
   components: NonNullable<ThemeConfig['components']>;
+}
+
+function presetComponents(mode: 'light' | 'dark'): NonNullable<ThemeConfig['components']> {
+  const presets = antPresetTokens(mode);
+  return { Tag: presets, Badge: presets };
 }
 
 function mergeComponents(

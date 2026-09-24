@@ -71,8 +71,9 @@ describe('tone contrast', () => {
     const presets = ['blue', 'geekblue', 'purple', 'magenta', 'pink', 'red', 'volcano', 'orange', 'gold', 'yellow', 'lime', 'green', 'cyan'];
     const failing = seeds.flatMap(({ name, seed }) =>
       presets.flatMap((p) => {
-        const text = ratio(String(seed.token[`${p}7`]), String(seed.token[`${p}1`]));
-        const fill = ratio(String(seed.token.colorTextLightSolid), String(seed.token[`${p}6`]));
+        const tag = seed.components?.Tag ?? {};
+        const text = ratio(String(tag[`${p}7`]), String(tag[`${p}1`]));
+        const fill = ratio(String(seed.token.colorTextLightSolid), String(tag[`${p}6`]));
         return [
           ...(text < 4.5 ? [`${name} ${p}7 on ${p}1: ${text.toFixed(2)}`] : []),
           ...(fill < 4.5 ? [`${name} text on ${p}6: ${fill.toFixed(2)}`] : []),

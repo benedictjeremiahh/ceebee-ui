@@ -575,7 +575,6 @@ function emitAntThemeSeeds() {
         const resolvedTokens = new Map([...structureTokens, ...tokens]);
         const value = (name) => deref(resolvedTokens.get(name), resolvedTokens).trim();
         const token = {
-          ...antPresetTokens(brightness),
           ...Object.fromEntries(Object.entries(ANT_COLOR_TOKENS)
             .map(([field, name]) => [field, antColor(value(name), `${skin.name}/${brightness}/${contrast}/${name}`)])),
           ...Object.fromEntries(Object.entries(ANT_LENGTH_TOKENS)
@@ -590,6 +589,10 @@ function emitAntThemeSeeds() {
         registry[skin.name][brightness][contrast] = {
           token,
           components: {
+            // Ant regenerates preset palette steps after merging the global token, so the designed steps
+            // go on the components that paint presets, whose tokens apply after that derivation.
+            Tag: antPresetTokens(brightness),
+            Badge: antPresetTokens(brightness),
             Tooltip: { colorTextLightSolid: onDark },
             Tour: { colorTextLightSolid: onDark },
             Image: { colorTextLightSolid: onDark },
