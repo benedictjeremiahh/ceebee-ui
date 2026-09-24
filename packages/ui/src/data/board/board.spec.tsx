@@ -47,6 +47,24 @@ describe('Board', () => {
     expect(screen.getByText('Nothing in progress')).toBeTruthy();
   });
 
+  it('says so, and offers a control, when a column is hidden past an edge', () => {
+    board();
+    const surface = root.querySelector('.cb-board__surface') as HTMLElement;
+    // jsdom's scroll box has no size. These three numbers are what a real one reports when the columns
+    // overflow, and they are the whole input to the decision this spec is about.
+    Object.defineProperty(surface, 'scrollWidth', { value: 1800, configurable: true });
+    Object.defineProperty(surface, 'clientWidth', { value: 600, configurable: true });
+    fireEvent.scroll(surface);
+    // At the start there is nothing behind and a column ahead: one control, and not the other.
+    expect(screen.getByLabelText('Scroll on one column')).toBeTruthy();
+    expect(screen.queryByLabelText('Scroll back one column')).toBeNull();
+
+    Object.defineProperty(surface, 'scrollLeft', { value: 1200, configurable: true });
+    fireEvent.scroll(surface);
+    expect(screen.getByLabelText('Scroll back one column')).toBeTruthy();
+    expect(screen.queryByLabelText('Scroll on one column')).toBeNull();
+  });
+
   it('moves a card by keyboard, and reports the move once', async () => {
     const onMove = vi.fn();
     board({ onMove });

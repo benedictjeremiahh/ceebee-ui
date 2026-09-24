@@ -21,6 +21,72 @@
   overflow-x: visible;
 }
 
+/* ── a board wider than its page ── */
+
+/* The frame carries the chrome: the two scroll controls and the shade saying a column is hidden past an
+   edge. Both sit over the surface and neither is part of its content, so what the group announces is
+   still the columns themselves. */
+.cb-board__frame {
+  position: relative;
+}
+
+.cb-board__scroll {
+  position: absolute;
+  inset-block-start: 50%;
+  z-index: 2;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--cb-space-6);
+  min-block-size: var(--cb-space-6);
+  padding: 0;
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-full);
+  background: var(--cb-bg);
+  color: var(--cb-fg);
+  font: inherit;
+  line-height: var(--cb-leading-tight);
+  cursor: pointer;
+  box-shadow: var(--cb-shadow-sm);
+}
+
+.cb-board__scroll:hover { box-shadow: var(--cb-shadow-md); }
+
+.cb-board__scroll:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
+}
+
+.cb-board__scroll--back { inset-inline-start: var(--cb-space-2); }
+.cb-board__scroll--on { inset-inline-end: var(--cb-space-2); }
+
+/* The shade is the signal that survives a narrow window, where the controls can be scrolled away with the
+   columns. It is decoration over content, so it never takes a pointer. */
+.cb-board__frame[data-overflow='start']::before,
+.cb-board__frame[data-overflow='both']::before,
+.cb-board__frame[data-overflow='end']::after,
+.cb-board__frame[data-overflow='both']::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inline-size: var(--cb-space-6);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.cb-board__frame[data-overflow='start']::before,
+.cb-board__frame[data-overflow='both']::before {
+  inset-inline-start: 0;
+  background: linear-gradient(to right, var(--cb-bg), transparent);
+}
+
+.cb-board__frame[data-overflow='end']::after,
+.cb-board__frame[data-overflow='both']::after {
+  inset-inline-end: 0;
+  background: linear-gradient(to left, var(--cb-bg), transparent);
+}
+
 /* ── column ── */
 
 .cb-board__column {

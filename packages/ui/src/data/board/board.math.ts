@@ -110,3 +110,23 @@ export function columnLoad(column: BoardShape & { limit?: number }): { count: nu
   const count = column.cards.length;
   return { count, over: typeof column.limit === 'number' && count > column.limit };
 }
+
+/** Which edges of the scrolling surface hide a column: the one behind, the one ahead, or both. */
+export type BoardOverflow = 'start' | 'end' | 'both';
+
+/**
+ * Which edges have columns hidden past them, from the three numbers a scroll box reports. `null` when
+ * nothing is hidden — the board fits, and there is nothing to point at.
+ *
+ * The one-pixel tolerance is not defensive padding. A fractional or zoomed layout routinely leaves the
+ * scroll a hair short of its own end, and without it the board offers a "scroll right" that moves nothing,
+ * which is worse than no control at all.
+ */
+export function hiddenEdges(box: { scrollLeft: number; clientWidth: number; scrollWidth: number }): BoardOverflow | null {
+  const hidden = box.scrollWidth - box.clientWidth;
+  if (hidden <= 1) return null;
+  const behind = box.scrollLeft > 1;
+  const ahead = box.scrollLeft < hidden - 1;
+  if (behind && ahead) return 'both';
+  return behind ? 'start' : 'end';
+}
