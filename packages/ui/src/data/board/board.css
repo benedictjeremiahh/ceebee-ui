@@ -34,6 +34,12 @@
   border: var(--cb-border-width) solid var(--cb-border);
   border-radius: var(--cb-radius-lg);
   background: var(--cb-bg-subtle);
+  /* The ceiling the page that owns the height gives the board. With one, each column scrolls its own
+     cards and the header that names it never scrolls away; without one — the default — a column is as
+     tall as its cards. Either way the surface stays as tall as the tallest column, so the horizontal
+     scrollbar sits under the columns and not below a fixed region they do not fill. */
+  max-block-size: var(--cb-board-max-block-size, none);
+  min-block-size: 0;
 }
 
 .cb-board__surface[data-lanes] .cb-board__column {
@@ -100,6 +106,9 @@
   flex-direction: column;
   gap: var(--cb-space-2);
   min-block-size: var(--cb-space-8);
+  /* The one thing that scrolls when the column has a ceiling: the cards. The head stays, because it is
+     the column's name and count, and a long column is exactly when a person needs to know which one it is. */
+  overflow-y: auto;
 }
 
 .cb-board__card {
