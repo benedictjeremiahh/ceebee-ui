@@ -1087,10 +1087,15 @@
         "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
       },
       "license": "MIT",
-      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "adapter": "packages/ui/src/entry/select.tsx",
       "demoPath": "docs/components/data-entry/select",
       "parityGaps": [],
-      "proof": "docs/parity.generated.json#Select"
+      "proof": "docs/parity.generated.json#Select",
+      "additiveExtensions": [
+        "Field width follows the longest option (12rem–28rem, never wider than its container)",
+        "Dropdown may be wider than the field, up to 32rem",
+        "Ellipsis with a tooltip on a cut value or option, full text kept as the accessible name"
+      ]
     },
     "Avatar": {
       "strategy": "antd-runtime",

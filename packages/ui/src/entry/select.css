@@ -1,0 +1,9 @@
+/* A Select never outgrows its container: on a phone it takes the full width, whatever its options ask for. */
+.cb-select { max-inline-size: 100%; }
+.cb-select__label {
+  display: block;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

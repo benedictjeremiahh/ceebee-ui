@@ -15,6 +15,21 @@ A dropdown menu for displaying choices.
 
 <SelectShowcase />
 
+## Width and long options
+
+Long options — a job, a vendor, a stock location path — used to be cut off in a field narrower than the
+space it had. The CeeBee `Select` sets three defaults on Ant's contract:
+
+- **The field is as wide as its longest option**, between 12rem and 28rem, measured from the labels in
+  `ch` so the server and the client agree. It never outgrows its container, so it takes the full width on
+  a phone. Set `style={{ width }}` and your width is kept.
+- **The dropdown may be wider than the field**, up to 32rem (`popupMatchSelectWidth` defaults to `false`),
+  so options are read whole where there is room.
+- **What still does not fit ellipsises**, and the selected value and each option show their whole text
+  in a tooltip when, and only when, they are cut. The full text stays the element's content, so the
+  accessible name is never the shortened one. A consumer's own `labelRender` or `optionRender` replaces
+  this for what it renders.
+
 ## Sizes
 
 `small`, `middle` (the default), and `large` map to `--cb-control-height-sm`, `--cb-control-height-md`,
