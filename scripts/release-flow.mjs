@@ -54,6 +54,15 @@ export function toMain(cwd) {
   return target;
 }
 
+/**
+ * Whether npm will accept a publish from this machine. A stale token in ~/.npmrc does not trigger browser
+ * authentication — npm answers E401 and gives up — so this is checked before anything is merged or versioned.
+ */
+export function npmUser() {
+  const result = spawnSync('npm', ['whoami', '--registry', 'https://registry.npmjs.org/'], { encoding: 'utf8' });
+  return result.status === 0 ? result.stdout.trim() : null;
+}
+
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function published(name, version) {

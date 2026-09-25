@@ -23,7 +23,7 @@ import { spawn } from 'node:child_process';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chdir, platform } from 'node:process';
-import { toMain, waitUntilPublished } from './release-flow.mjs';
+import { npmUser, toMain, waitUntilPublished } from './release-flow.mjs';
 
 const DRY = process.argv.includes('--dry');
 
@@ -110,7 +110,16 @@ Release @ceebee/ui — what happens, and the two things you may be asked:
   4. wait until the version is installable, then push main with its tag         (automatic)
 `);
 
-if (!DRY) chdir(toMain(process.cwd()));
+if (!DRY) {
+  const user = npmUser();
+  if (!user) {
+    console.error('npm is not logged in (or its saved token has expired), so the publish would fail with E401.\n'
+      + 'Log in first, then run pnpm release again:\n\n    npm login --auth-type=web\n');
+    process.exit(1);
+  }
+  console.log(`  npm: logged in as ${user}`);
+  chdir(toMain(process.cwd()));
+}
 
 /* A release built from a tree that does not match the commit is a release
    nobody can reproduce. */
