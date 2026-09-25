@@ -12,12 +12,18 @@
  * side of that — versioning, the release commit, the build, the publish, the
  * push with tags — happens without asking.
  *
+ * Run from a feature branch, it first merges that branch into `main` (in the worktree that has `main`)
+ * and releases from there. After the publish it waits until the version is installable — approving a
+ * staged version on npmjs.com is the second click a person may be asked for.
+ *
  * Usage:  pnpm release
  *         pnpm release --dry     (everything except publish and push)
  */
 import { spawn } from 'node:child_process';
-import { readdirSync } from 'node:fs';
-import { platform } from 'node:process';
+import { readdirSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { chdir, platform } from 'node:process';
+import { toMain, waitUntilPublished } from './release-flow.mjs';
 
 const DRY = process.argv.includes('--dry');
 
@@ -96,6 +102,16 @@ async function stdout(command, args) {
 
 const step = (message) => console.log(`\n▸ ${message}`);
 
+console.log(`
+Release @ceebee/ui — what happens, and the two things you may be asked:
+  1. merge this branch into main, version from the changesets, commit, build   (automatic)
+  2. publish — a browser tab opens: click Authorize                             (you)
+  3. if npm stages the version, the package page opens: approve it              (you)
+  4. wait until the version is installable, then push main with its tag         (automatic)
+`);
+
+if (!DRY) chdir(toMain(process.cwd()));
+
 /* A release built from a tree that does not match the commit is a release
    nobody can reproduce. */
 const dirty = (await stdout('git', ['status', '--porcelain'])).trim();
@@ -105,14 +121,15 @@ if (dirty) {
   process.exit(1);
 }
 
-const pending = readdirSync(new URL('../.changeset/', import.meta.url))
+/* Read from the directory being released — after `toMain` that is main's worktree, not this file's. */
+const uiVersion = () => JSON.parse(readFileSync(join(process.cwd(), 'packages/ui/package.json'), 'utf8')).version;
+const pending = readdirSync(join(process.cwd(), '.changeset'))
   .filter((name) => name.endsWith('.md') && name !== 'README.md');
 
 if (pending.length) {
   step(`Versioning (${pending.length} changeset${pending.length === 1 ? '' : 's'})`);
   await run('pnpm', ['exec', 'changeset', 'version']);
-  const { version } = await import('../packages/ui/package.json', { with: { type: 'json' } })
-    .then((module) => module.default);
+  const version = uiVersion();
   /* The docs changelog is generated from CHANGELOG.md, which only exists in its new
      shape after versioning — so regenerate it before the release commit is taken. */
   await run('node', ['docs/changelog.mjs']);
@@ -134,7 +151,14 @@ if (DRY) {
 step('Publishing to npm');
 await run(...publishCommand(), { capture: true });
 
+const released = uiVersion();
+step(`Waiting until @ceebee/ui@${released} is installable`);
+if (!(await waitUntilPublished('@ceebee/ui', released))) {
+  console.error(`@ceebee/ui@${released} did not become installable in 20 minutes. Approve it on npmjs.com, then run: git push --follow-tags`);
+  process.exit(1);
+}
+
 step('Pushing');
 await run('git', ['push', '--follow-tags']);
 
-console.log('\n✓ Released and pushed.\n');
+console.log(`\n✓ @ceebee/ui@${released} is on npm, and main is pushed with its tag.\n`);
