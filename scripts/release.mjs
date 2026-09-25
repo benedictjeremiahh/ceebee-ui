@@ -75,17 +75,18 @@ function run(command, args, { capture = false } = {}) {
  * `script -q /dev/null <command>` is the BSD way to hand a child a pty; the
  * Linux one takes its arguments the other way round. Only used when there is no
  * terminal already, so a person running this by hand gets the plain command. */
-function publishCommand() {
-  const publish = ['pnpm', 'exec', 'changeset', 'publish'];
-  if (process.stdout.isTTY) return [publish[0], publish.slice(1)];
+function ptyCommand(command) {
+  if (process.stdout.isTTY) return [command[0], command.slice(1)];
   return platform === 'darwin'
-    ? ['script', ['-q', '/dev/null', ...publish]]
-    : ['script', ['-qfec', publish.join(' '), '/dev/null']];
+    ? ['script', ['-q', '/dev/null', ...command]]
+    : ['script', ['-qfec', command.join(' '), '/dev/null']];
 }
+
+const publishCommand = () => ptyCommand(['pnpm', 'exec', 'changeset', 'publish']);
 
 function openInBrowser(url) {
   const opener = platform === 'darwin' ? 'open' : 'xdg-open';
-  console.log(`\n  → opening ${url}\n    Click Authorize there; the publish carries on by itself.\n`);
+  console.log(`\n  → opening ${url}\n    Click Authorize there; the release carries on by itself.\n`);
   spawn(opener, [url], { stdio: 'ignore', detached: true }).unref();
 }
 
@@ -103,7 +104,8 @@ async function stdout(command, args) {
 const step = (message) => console.log(`\n▸ ${message}`);
 
 console.log(`
-Release @ceebee/ui — what happens, and the two things you may be asked:
+Release @ceebee/ui — what happens, and the clicks you may be asked for:
+  0. if npm is not logged in, the npm login page opens: click Authorize          (you)
   1. merge this branch into main, version from the changesets, commit, build   (automatic)
   2. publish — a browser tab opens: click Authorize                             (you)
   3. if npm stages the version, the package page opens: approve it              (you)
@@ -111,11 +113,17 @@ Release @ceebee/ui — what happens, and the two things you may be asked:
 `);
 
 if (!DRY) {
-  const user = npmUser();
+  let user = npmUser();
   if (!user) {
-    console.error('npm is not logged in (or its saved token has expired), so the publish would fail with E401.\n'
-      + 'Log in first, then run pnpm release again:\n\n    npm login --auth-type=web\n');
-    process.exit(1);
+    /* A missing or expired token does not start browser authentication on publish — npm answers E401 and
+       gives up. So log in here the same way the publish authenticates: under a pty, with the URL opened. */
+    step('npm is not logged in — opening the npm login page; click Authorize there');
+    await run(...ptyCommand(['npm', 'login', '--auth-type=web', '--registry', 'https://registry.npmjs.org/']), { capture: true });
+    user = npmUser();
+    if (!user) {
+      console.error('npm login did not complete. Run pnpm release again to retry.');
+      process.exit(1);
+    }
   }
   console.log(`  npm: logged in as ${user}`);
   chdir(toMain(process.cwd()));
