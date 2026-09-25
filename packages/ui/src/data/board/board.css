@@ -254,7 +254,29 @@
    control — no `onCardOpen` — stays a title and is not given a button's box. */
 .cb-board__open {
   min-block-size: var(--cb-control-floor);
+  /* A title, not a grey button box: the browser's button chrome is reset, and hover and focus say it opens. */
+  inline-size: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--cb-fg);
+  font: inherit;
+  font-size: var(--cb-text-sm);
+  font-weight: 600;
+  text-align: start;
+  cursor: pointer;
 }
+
+.cb-board__open:hover:not(:disabled) { text-decoration: underline; }
+
+.cb-board__open:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
+  border-radius: var(--cb-radius-sm);
+}
+
+.cb-board__open:disabled { cursor: not-allowed; color: var(--cb-fg-muted); }
 
 /* The column's own way to add a card: a footer, after the cards, so it does not move as they arrive. It is
    not a drop target — the card it stands for does not exist yet — and it names its column, so a screen
@@ -320,6 +342,20 @@
   font: inherit;
   font-size: var(--cb-text-sm);
   cursor: pointer;
+}
+
+/* A lane is one line: a long Stage name ellipsises with its whole name as the tooltip, rather than wrapping
+   a pill into a bubble three lines tall. */
+.cb-board__lane {
+  flex: 0 0 auto;
+  max-inline-size: 14rem;
+  white-space: nowrap;
+}
+
+.cb-board__lane-name {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cb-board__lane[aria-selected='true'] {

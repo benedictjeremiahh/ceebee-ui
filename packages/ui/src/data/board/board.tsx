@@ -290,9 +290,12 @@ function BoardRoot({
               role="tab"
               aria-selected={i === lane}
               className="cb-board__lane"
+              title={column.label ?? (typeof column.name === 'string' ? column.name : undefined)}
               onClick={() => setLane(i)}
             >
-              {column.name} <span className="cb-board__count">{column.cards.length}</span>
+              {/* A tab names its column in one line: the plain label when the header is a richer node. */}
+              <span className="cb-board__lane-name">{column.label ?? column.name}</span>{' '}
+              <span className="cb-board__count">{column.cards.length}</span>
             </button>
           ))}
         </div>

@@ -341,4 +341,9 @@ describe('Board', () => {
     container.remove();
     expect(mismatch).toBe(false);
   });
+
+  it('names a lane in one line with its whole name as a tooltip', () => {
+    render(<Board columns={[{ id: 'a', name: 'Pengecekan Gambar Arsitek dan Struktur', cards: [] }]} onMove={vi.fn()} layout="lanes" />);
+    expect(screen.getByRole('tab')).toHaveAttribute('title', 'Pengecekan Gambar Arsitek dan Struktur');
+  });
 });
