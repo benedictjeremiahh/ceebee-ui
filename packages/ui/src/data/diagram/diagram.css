@@ -183,8 +183,11 @@
 .cb-diagram .react-flow__attribution a { color: var(--cb-fg-subtle); }
 
 /* The canvas and the inspector: side by side where there is room, the inspector below the canvas on a narrow
-   screen, where it reads as a sheet under the drawing. */
-.cb-diagram__body { container-type: inline-size; display: grid; gap: var(--cb-space-3); }
+   screen, where it reads as a sheet under the drawing. The editor is the container, not the body: an element
+   cannot query its own size, so with the body as both the query never matched and the inspector sat below the
+   canvas at any width. */
+.cb-diagram--editor[data-inspector="true"] { container-type: inline-size; }
+.cb-diagram__body { display: grid; gap: var(--cb-space-3); }
 .cb-diagram[data-inspector="true"] .cb-diagram__body { grid-template-columns: minmax(0, 1fr); }
 @container (min-width: 48rem) {
   .cb-diagram[data-inspector="true"] .cb-diagram__body { grid-template-columns: minmax(0, 1fr) minmax(16rem, 20rem); }
