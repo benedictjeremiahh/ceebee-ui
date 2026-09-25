@@ -38,8 +38,11 @@ pnpm typecheck
 ```
 
 Releases go through Changesets: `pnpm changeset` describes a change, and the Release workflow keeps
-the generated "Version Packages" PR current. After that PR is merged, an operator runs
-`pnpm release` from a clean `main` checkout to publish to npm and push the release tag. Automated
+the generated "Version Packages" PR current. An operator runs `pnpm release` from a clean checkout —
+on `main`, or on a feature branch, which it first merges into `main` in the worktree that has `main`.
+It versions, builds and publishes, opens the npm Authorize page, opens the package page if npm stages
+the version for approval, waits until the version is installable, and only then pushes `main` with its
+tag. Automated
 publishing stays disabled until npm trusted publishing is configured; CI has no interactive browser
 session and must not pretend that browser authentication can work there.
 

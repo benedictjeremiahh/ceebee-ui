@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { cn } from '../../lib/cn.js';
-import { barSpan, positionOf, targetBarsScale, verdictOf, type TargetBarsScale } from './target-bars.math.js';
+import { barSpan, deviationOf, deviationScale, positionOf, targetBarsScale, verdictOf, type TargetBarsScale } from './target-bars.math.js';
 
 export interface TargetBarsRow {
   id: string;
@@ -21,6 +21,12 @@ export interface TargetBarsProps {
   format: (value: number) => string;
   /** Whether reaching above the target is good (a margin) or bad (a cost). */
   better?: 'higher' | 'lower';
+  /**
+   * `bullet` (default) draws each actual from zero with its target as a mark. `deviation` draws how far each
+   * row landed from its own target, from a centre line that *is* the target — right when it beat it, left
+   * when it missed — for rows whose targets differ, where reading the gap off a bullet takes subtraction.
+   */
+  variant?: 'bullet' | 'deviation';
   actualLabel?: string;
   targetLabel?: string;
   /** Written where a figure cannot be known yet. */
@@ -43,6 +49,7 @@ export function TargetBars({
   rows,
   format,
   better = 'higher',
+  variant = 'bullet',
   actualLabel = 'Actual',
   targetLabel = 'Target',
   unknownLabel = 'unknown',
@@ -50,11 +57,14 @@ export function TargetBars({
   className,
 }: TargetBarsProps) {
   if (rows.length === 0) return <p className={cn('cb-target-bars__empty', className)}>{emptyLabel}</p>;
-  const scale = targetBarsScale(rows.flatMap((row) => [row.target, row.actual]));
+  const deviation = variant === 'deviation';
+  const scale = deviation
+    ? deviationScale(rows.map((row) => deviationOf(row.target, row.actual, better)))
+    : targetBarsScale(rows.flatMap((row) => [row.target, row.actual]));
   const written = (value: number | null) => (value === null ? unknownLabel : format(value));
 
   return (
-    <ul className={cn('cb-target-bars', className)} aria-label={label}>
+    <ul className={cn('cb-target-bars', className)} aria-label={label} data-variant={variant}>
       {rows.map((row) => (
         <li key={row.id} className="cb-target-bars__row" data-verdict={verdictOf(row.target, row.actual, better)}>
           <div className="cb-target-bars__head">
@@ -66,7 +76,7 @@ export function TargetBars({
             </span>
           </div>
           {row.detail ? <div className="cb-target-bars__detail">{row.detail}</div> : null}
-          <Track row={row} scale={scale} />
+          {deviation ? <DeviationTrack gap={deviationOf(row.target, row.actual, better)} scale={scale} /> : <Track row={row} scale={scale} />}
         </li>
       ))}
     </ul>
@@ -84,6 +94,18 @@ function Track({ row, scale }: { row: TargetBarsRow; scale: TargetBarsScale }) {
       {row.target === null ? null : (
         <span className="cb-target-bars__target" style={{ insetInlineStart: `${positionOf(row.target, scale)}%` }} />
       )}
+    </div>
+  );
+}
+
+function DeviationTrack({ gap, scale }: { gap: number | null; scale: TargetBarsScale }) {
+  const span = gap === null ? null : barSpan(gap, scale);
+  return (
+    <div className="cb-target-bars__track" aria-hidden="true">
+      <span className="cb-target-bars__zero cb-target-bars__zero--target" style={{ insetInlineStart: '50%' }} />
+      {span ? (
+        <span className="cb-target-bars__fill" style={{ insetInlineStart: `${span.start}%`, inlineSize: `${span.width}%` }} />
+      ) : null}
     </div>
   );
 }

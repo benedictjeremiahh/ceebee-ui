@@ -52,4 +52,18 @@ describe('TargetBars', () => {
     expect(screen.getByText('Belum ada pekerjaan selesai.')).toBeInTheDocument();
     expect(screen.queryByRole('list')).toBeNull();
   });
+
+  it('draws a deviation from the target line when asked, with both figures still written', () => {
+    const { container } = render(<TargetBars label="Final margin" rows={ROWS} format={percent} variant="deviation" />);
+    const [beat, missed, unknown] = container.querySelectorAll('.cb-target-bars__row');
+    const fill = (row: Element | undefined) => row?.querySelector<HTMLElement>('.cb-target-bars__fill')?.style;
+    // Deviations +3.2 and -18.5 on a ±18.5 scale: the miss runs from the left edge to the centre line.
+    expect(fill(missed)?.insetInlineStart).toBe('0%');
+    expect(fill(missed)?.inlineSize).toBe('50%');
+    expect(fill(beat)?.insetInlineStart).toBe('50%');
+    expect(beat).toHaveTextContent('Actual 18,2%');
+    expect(unknown?.querySelector('.cb-target-bars__fill')).toBeNull();
+    expect(container.querySelector('.cb-target-bars__target')).toBeNull();
+    expect(container.querySelector('.cb-target-bars')?.getAttribute('data-variant')).toBe('deviation');
+  });
 });

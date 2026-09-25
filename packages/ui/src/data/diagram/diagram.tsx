@@ -2,7 +2,7 @@
 
 import { Background, ConnectionMode, Controls, ReactFlow, type ReactFlowProps } from '@xyflow/react';
 import { useId, useMemo, useRef } from 'react';
-import { DiagramLegend, DiagramOutline, FIT_VIEW, NODE_TYPES, safeId, useCellSize } from './diagram-flow.js';
+import { DiagramLegend, type DiagramLegendEntry, DiagramOutline, FIT_VIEW, NODE_TYPES, safeId, useCellSize } from './diagram-flow.js';
 import { toFlowEdges, toFlowNodes } from './diagram.math.js';
 import { DiagramSkeleton, type DiagramSkeletonProps } from './diagram.skeleton.js';
 import type { DiagramEdge, DiagramNode, DiagramShape } from './diagram.types.js';
@@ -19,6 +19,13 @@ export interface DiagramProps {
   ariaLabels?: ReactFlowProps['ariaLabelConfig'];
   /** Names for the node shapes in use; given, a legend lists the shapes the diagram draws. */
   legendLabels?: Partial<Record<DiagramShape, string>>;
+  /** An explicit legend — shape, tone and meaning — for a diagram whose shapes alone do not tell nodes apart. */
+  legend?: readonly DiagramLegendEntry[];
+  /**
+   * The smallest zoom the opening fit may use. Defaults to a readable 0.8, which pans a long diagram; an
+   * overview that must show the whole thing at once (a process map) passes something lower.
+   */
+  fitMinZoom?: number;
 }
 
 /**
@@ -26,7 +33,8 @@ export interface DiagramProps {
  * viewport's; nothing in the drawing is focusable, draggable or selectable. The diagram is also given as an
  * outline list, which the viewport is described by.
  */
-function DiagramRoot({ label, nodes, edges, hint, outlineLabel = 'Diagram outline', ariaLabels, legendLabels }: DiagramProps) {
+function DiagramRoot({ label, nodes, edges, hint, outlineLabel = 'Diagram outline', ariaLabels, legendLabels, legend, fitMinZoom }: DiagramProps) {
+  const fitView = useMemo(() => (fitMinZoom === undefined ? FIT_VIEW : { ...FIT_VIEW, minZoom: fitMinZoom }), [fitMinZoom]);
   const base = safeId(useId());
   const cellRef = useRef<HTMLSpanElement>(null);
   const cell = useCellSize(cellRef);
@@ -49,8 +57,8 @@ function DiagramRoot({ label, nodes, edges, hint, outlineLabel = 'Diagram outlin
           nodesFocusable={false}
           edgesFocusable={false}
           fitView
-          fitViewOptions={FIT_VIEW}
-          minZoom={0.5}
+          fitViewOptions={fitView}
+          minZoom={Math.min(0.5, fitMinZoom ?? 0.5)}
           maxZoom={2}
           ariaLabelConfig={ariaLabels}
         >
@@ -58,7 +66,7 @@ function DiagramRoot({ label, nodes, edges, hint, outlineLabel = 'Diagram outlin
           <Controls showInteractive={false} />
         </ReactFlow>
       </div>
-      {legendLabels ? <DiagramLegend nodes={nodes} labels={legendLabels} /> : null}
+      {legend || legendLabels ? <DiagramLegend nodes={nodes} labels={legendLabels} entries={legend} /> : null}
       <DiagramOutline id={`${base}-outline`} nodes={nodes} edges={edges} label={outlineLabel} />
     </div>
   );

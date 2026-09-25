@@ -136,3 +136,22 @@ describe('DiagramEditor inspector and legend', () => {
     expect(document.querySelector('.cb-diagram__label[title="Review"]')).not.toBeNull();
   });
 });
+
+describe('Diagram explicit legend', () => {
+  it('lists each given entry with its tone, so two pills can mean different ends', () => {
+    render(
+      <Diagram
+        label="Flow"
+        nodes={nodes}
+        edges={edges}
+        legend={[
+          { shape: 'pill', tone: 'success', label: 'Selesai' },
+          { shape: 'pill', tone: 'danger', label: 'Kalah' },
+        ]}
+      />,
+    );
+    const swatches = [...document.querySelectorAll('.cb-diagram__legend-swatch')].map((s) => s.getAttribute('data-tone'));
+    expect(swatches).toEqual(['success', 'danger']);
+    expect(document.querySelector('.cb-diagram__legend')?.textContent).toBe('SelesaiKalah');
+  });
+});

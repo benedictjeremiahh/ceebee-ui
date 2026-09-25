@@ -66,6 +66,21 @@ export function edgeHandles(from: DiagramNode, to: DiagramNode): { sourceHandle:
 }
 
 /** An edge naming a node that is not in the diagram is left out rather than drawn to nowhere. */
+/**
+ * A weighted edge's thickness as a multiple of the border width: 1.5× for a trickle, up to 8× for the busiest
+ * path. Linear in the weight, so twice the traffic reads as a visibly thicker line; clamped so a weight
+ * outside 0–1 cannot draw a hairline or a slab.
+ */
+export function edgeThickness(weight: number): number {
+  const clamped = Math.min(1, Math.max(0, weight));
+  return Math.round((1.5 + clamped * 6.5) * 100) / 100;
+}
+
+/** The marker size, in stroke widths, that keeps a weighted edge's arrowhead as large as a plain one's. */
+export function arrowSize(weight: number): number {
+  return Math.round((12.5 / edgeThickness(weight)) * 100) / 100;
+}
+
 export function toFlowEdges(edges: readonly DiagramEdge[], nodes: readonly DiagramNode[]): Edge[] {
   const byId = new Map(nodes.map((node) => [node.id, node]));
   return edges.flatMap((edge) => {
@@ -79,8 +94,21 @@ export function toFlowEdges(edges: readonly DiagramEdge[], nodes: readonly Diagr
         target: edge.to,
         ...edgeHandles(from, to),
         label: edge.label,
-        className: edge.tone ? `cb-diagram__edge cb-diagram__edge--${edge.tone}` : 'cb-diagram__edge',
+        // The default head first: a weighted edge replaces it below with one sized back down.
         markerEnd: { type: MarkerType.ArrowClosed },
+        className: [
+          'cb-diagram__edge',
+          edge.tone ? `cb-diagram__edge--${edge.tone}` : null,
+          edge.weight === 0 ? 'cb-diagram__edge--unused' : null,
+        ].filter(Boolean).join(' '),
+        ...(edge.weight !== undefined && edge.weight > 0
+          ? {
+              style: { strokeWidth: `calc(var(--cb-border-width) * ${edgeThickness(edge.weight)})` },
+              // React Flow sizes a marker in stroke widths, so a thick line would carry a huge head; divide it
+              // back out so every arrowhead is the same size whatever the traffic.
+              markerEnd: { type: MarkerType.ArrowClosed, width: arrowSize(edge.weight), height: arrowSize(edge.weight) },
+            }
+          : {}),
       },
     ];
   });

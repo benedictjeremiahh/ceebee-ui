@@ -65,6 +65,8 @@
 .cb-diagram .cb-diagram__edge--success .react-flow__edge-path { stroke: var(--cb-tone-success); }
 .cb-diagram .cb-diagram__edge--warning .react-flow__edge-path { stroke: var(--cb-tone-warning); }
 .cb-diagram .cb-diagram__edge--danger .react-flow__edge-path { stroke: var(--cb-tone-danger); }
+/* A path the diagram allows that nothing has taken: present, but it must not read as traffic. */
+.cb-diagram .cb-diagram__edge--unused .react-flow__edge-path { stroke: var(--cb-border); stroke-dasharray: var(--cb-space-1) var(--cb-space-1); }
 
 .cb-diagram .react-flow__node:focus-visible,
 .cb-diagram .react-flow__edge:focus-visible {
@@ -216,13 +218,23 @@
 }
 .cb-diagram__legend-item { align-items: center; display: inline-flex; gap: var(--cb-space-2); }
 .cb-diagram__legend-swatch {
+  /* A span is inline, where width and height do not apply — the swatch collapsed to a dot of border. */
+  display: inline-block;
+  flex-shrink: 0;
   block-size: var(--cb-space-3);
   border: var(--cb-border-width) solid var(--cb-border-strong);
-  border-radius: var(--cb-radius-sm);
+  /* A quarter of the small radius: at 16×12 the full one draws the rectangle as an oval. */
+  border-radius: calc(var(--cb-radius-sm) / 4);
   inline-size: var(--cb-space-4);
 }
 .cb-diagram__legend-swatch[data-shape="pill"] { border-radius: var(--cb-radius-full); }
 .cb-diagram__legend-swatch[data-shape="diamond"] { block-size: var(--cb-space-3); inline-size: var(--cb-space-3); rotate: 45deg; }
+.cb-diagram__legend-swatch[data-tone="neutral"] { border-color: var(--cb-tone-neutral); }
+.cb-diagram__legend-swatch[data-tone="brand"] { border-color: var(--cb-tone-brand); }
+.cb-diagram__legend-swatch[data-tone="info"] { border-color: var(--cb-tone-info); }
+.cb-diagram__legend-swatch[data-tone="success"] { border-color: var(--cb-tone-success); }
+.cb-diagram__legend-swatch[data-tone="warning"] { border-color: var(--cb-tone-warning); }
+.cb-diagram__legend-swatch[data-tone="danger"] { border-color: var(--cb-tone-danger); }
 
 .cb-diagram__outline,
 .cb-diagram__status {

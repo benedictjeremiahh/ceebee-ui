@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { barSpan, positionOf, targetBarsScale, verdictOf } from './target-bars.math.js';
+import { barSpan, deviationOf, deviationScale, positionOf, targetBarsScale, verdictOf } from './target-bars.math.js';
 
 describe('targetBarsScale', () => {
   it('always includes zero, so a bar is measured from nothing rather than from the smallest row', () => {
@@ -45,5 +45,24 @@ describe('verdictOf', () => {
   it('says unknown rather than guessing when either figure is missing', () => {
     expect(verdictOf(null, 12)).toBe('unknown');
     expect(verdictOf(15, null)).toBe('unknown');
+  });
+});
+
+describe('deviationOf and deviationScale', () => {
+  it('measures how far past the target a row landed, positive when that is good', () => {
+    expect(deviationOf(15, 18)).toBe(3);
+    expect(deviationOf(15, 12)).toBe(-3);
+    expect(deviationOf(10, 8, 'lower')).toBe(2);
+    expect(deviationOf(null, 8)).toBeNull();
+    expect(deviationOf(10, null)).toBeNull();
+  });
+
+  it('is symmetric around the target, so a miss and a beat of the same size draw the same length', () => {
+    expect(deviationScale([3, -8, null])).toEqual({ min: -8, max: 8 });
+    expect(barSpan(-8, deviationScale([3, -8]))).toEqual({ start: 0, width: 50 });
+  });
+
+  it('gives a set with no deviation a unit span instead of dividing by nothing', () => {
+    expect(deviationScale([0, null])).toEqual({ min: -1, max: 1 });
   });
 });

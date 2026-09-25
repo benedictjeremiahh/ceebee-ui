@@ -25,6 +25,12 @@ export interface DiagramEdge {
   to: string;
   label?: string;
   tone?: Tone;
+  /**
+   * How much travels this edge, relative to the busiest one: 0–1. Drawn as the line's thickness, the way a
+   * process map shows its main path. `0` is a path the diagram allows that nothing has taken — drawn dashed
+   * and quiet. Omit it for a plain diagram.
+   */
+  weight?: number;
 }
 
 /** What a node carries into the React Flow renderer. Internal; the public shape is `DiagramNode`. */

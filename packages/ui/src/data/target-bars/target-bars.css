@@ -54,3 +54,5 @@
   .cb-target-bars__zero { background: GrayText; }
   .cb-target-bars__target { background: CanvasText; }
 }
+/* Deviation: the centre line is the target, drawn as strongly as the bullet's target mark. */
+.cb-target-bars__zero--target { inline-size: calc(var(--cb-border-width) * 2); background: var(--cb-fg); transform: translateX(-50%); }
