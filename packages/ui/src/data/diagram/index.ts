@@ -3,3 +3,4 @@ export { DiagramEditor, type DiagramEditorProps, type DiagramRemoval, type Diagr
 export type { DiagramEdge, DiagramNode, DiagramPosition, DiagramShape } from './diagram.types.js';
 export type { DiagramLegendEntry } from './diagram-flow.js';
 export { describeSelection, shapesInUse, type DiagramLink, type DiagramSelection, type DiagramSelectionTarget } from './diagram.selection.js';
+export type { DiagramAddRequest, DiagramPaletteItem } from './diagram.palette.js';

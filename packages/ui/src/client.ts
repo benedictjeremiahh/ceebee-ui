@@ -120,6 +120,8 @@ export type {
   DiagramProps,
   DiagramRemoval,
   DiagramRenameTarget,
+  DiagramAddRequest,
+  DiagramPaletteItem,
   DiagramShape,
   DiagramSkeletonProps,
 } from './data/diagram/index.js';

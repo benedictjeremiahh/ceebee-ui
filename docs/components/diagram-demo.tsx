@@ -17,6 +17,12 @@ const START_EDGES: DiagramEdge[] = [
   { id: 'review-rework', from: 'review', to: 'rework', label: 'No' },
 ];
 
+const PALETTE = [
+  { kind: 'step', label: 'Step', shape: 'rect' as const, description: 'Work stands here until it moves on.' },
+  { kind: 'decision', label: 'Decision', shape: 'diamond' as const, description: 'A question with an answer per branch.' },
+  { kind: 'end', label: 'End', shape: 'pill' as const, tone: 'success' as const, description: 'Where the work finishes.' },
+];
+
 export function DiagramDemo() {
   return (
     <Demo
@@ -27,7 +33,7 @@ export function DiagramDemo() {
   edges={edges}
 />`}
     >
-      <Diagram label="Approval process" hint="Drag the background to pan. Scroll, pinch or use the controls to zoom." nodes={START_NODES} edges={START_EDGES} />
+      <Diagram label="Approval process" hint="Scroll or drag the background to pan. Pinch, Ctrl + scroll or the controls zoom." nodes={START_NODES} edges={START_EDGES} />
     </Demo>
   );
 }
@@ -36,7 +42,7 @@ export function DiagramEditorDemo() {
   const [nodes, setNodes] = useState(START_NODES);
   const [edges, setEdges] = useState(START_EDGES);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [request, setRequest] = useState('');
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   return (
     <Demo
@@ -50,12 +56,30 @@ export function DiagramEditorDemo() {
   onMoveNode={(id, position) => setNodes(moveNode(nodes, id, position))}
   onConnect={(from, to) => setEdges([...edges, { id: \`\${from}-\${to}\`, from, to }])}
   onRemove={({ nodeIds, edgeIds }) => remove(nodeIds, edgeIds)}
-  onRename={(target) => openRename(target)}
+  palette={[{ kind: 'step', label: 'Step', shape: 'rect' }, …]}
+  onAddNode={({ kind, position }) => addAndRename(kind, position)}
+  editingId={editingId}
+  onRenameSubmit={(id, label) => rename(id, label)}
+  onRenameCancel={() => setEditingId(null)}
 />`}
     >
       <DiagramEditor
         label="Approval process"
-        hint="Drag to move. Drag or click between handles to connect. From the keyboard, C then C connects."
+        hint="Drag a kind in, or tap it. Drag or click between handles to connect; from the keyboard, C then C. F2 renames."
+        palette={PALETTE}
+        paletteLabel="Add a node"
+        onAddNode={({ kind, position }) => {
+          const item = PALETTE.find((p) => p.kind === kind);
+          const id = `${kind}-${Date.now()}`;
+          setNodes((current) => [...current, { id, label: item?.label ?? kind, position, shape: item?.shape, tone: item?.tone }]);
+          setEditingId(id);
+        }}
+        editingId={editingId}
+        onRenameSubmit={(id, label) => {
+          setNodes((current) => current.map((n) => (n.id === id ? { ...n, label } : n)));
+          setEditingId(null);
+        }}
+        onRenameCancel={() => setEditingId(null)}
         nodes={nodes}
         edges={edges}
         selectedId={selectedId}
@@ -68,9 +92,8 @@ export function DiagramEditorDemo() {
           setNodes((current) => current.filter((n) => !nodeIds.includes(n.id)));
           setEdges((current) => current.filter((e) => !edgeIds.includes(e.id)));
         }}
-        onRename={(target) => setRequest(`Rename requested for ${target.kind} ${target.id}.`)}
+        onRename={(target) => (target.kind === 'node' ? setEditingId(target.id) : undefined)}
       />
-      {request ? <p>{request}</p> : null}
     </Demo>
   );
 }

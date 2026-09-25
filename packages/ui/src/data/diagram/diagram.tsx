@@ -2,7 +2,7 @@
 
 import { Background, ConnectionMode, Controls, ReactFlow, type ReactFlowProps } from '@xyflow/react';
 import { useId, useMemo, useRef } from 'react';
-import { DiagramLegend, type DiagramLegendEntry, DiagramOutline, FIT_VIEW, NODE_TYPES, safeId, useCellSize } from './diagram-flow.js';
+import { DiagramLegend, type DiagramLegendEntry, DiagramOutline, FIT_VIEW, NODE_TYPES, safeId, useCellSize, SCROLL_PANS } from './diagram-flow.js';
 import { toFlowEdges, toFlowNodes } from './diagram.math.js';
 import { DiagramSkeleton, type DiagramSkeletonProps } from './diagram.skeleton.js';
 import type { DiagramEdge, DiagramNode, DiagramShape } from './diagram.types.js';
@@ -56,6 +56,7 @@ function DiagramRoot({ label, nodes, edges, hint, outlineLabel = 'Diagram outlin
           elementsSelectable={false}
           nodesFocusable={false}
           edgesFocusable={false}
+          {...SCROLL_PANS}
           fitView
           fitViewOptions={fitView}
           minZoom={Math.min(0.5, fitMinZoom ?? 0.5)}

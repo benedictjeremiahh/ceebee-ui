@@ -41,4 +41,6 @@ export interface DiagramFlowNodeData extends Record<string, unknown> {
   tone?: Tone;
   connecting: boolean;
   connectable: boolean;
+  /** Being renamed in place: the node shows an input instead of its label. */
+  editing: boolean;
 }

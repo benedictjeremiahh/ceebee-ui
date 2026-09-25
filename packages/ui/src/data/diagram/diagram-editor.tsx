@@ -5,7 +5,9 @@ import {
   ConnectionMode,
   Controls,
   ReactFlow,
+  ReactFlowProvider,
   applyNodeChanges,
+  useReactFlow,
   type Connection,
   type Node,
   type NodeChange,
@@ -13,8 +15,11 @@ import {
   type OnSelectionChangeParams,
   type ReactFlowProps,
 } from '@xyflow/react';
-import { useCallback, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
-import { DiagramLegend, type DiagramLegendEntry, DiagramOutline, FIT_VIEW, NODE_TYPES, safeId, useCellSize } from './diagram-flow.js';
+import { useCallback, useEffect, useId, useMemo, useRef, useState, type DragEvent, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
+import { DiagramLegend, type DiagramLegendEntry, DiagramOutline, FIT_VIEW, NODE_TYPES, SCROLL_PANS, safeId, useCellSize } from './diagram-flow.js';
+import { DiagramRenameContext, type DiagramRenameHandlers } from './diagram-node.js';
+import { DiagramPalette } from './diagram-palette.js';
+import { PALETTE_MIME, landingCell, type DiagramAddRequest, type DiagramPaletteItem } from './diagram.palette.js';
 import { describeSelection, type DiagramSelection, type DiagramSelectionTarget } from './diagram.selection.js';
 import {
   applySelection,
@@ -72,6 +77,25 @@ export interface DiagramEditorProps {
   legendLabels?: Partial<Record<DiagramShape, string>>;
   /** An explicit legend — shape, tone and meaning — for a diagram whose shapes alone do not tell nodes apart. */
   legend?: readonly DiagramLegendEntry[];
+  /**
+   * The kinds of node a person can add (ceebee-ui#44). Dragged onto the canvas, or tapped / Enter for the
+   * middle of what is visible, each asks `onAddNode` for a node there; it appears when the caller adds it.
+   */
+  palette?: readonly DiagramPaletteItem[];
+  onAddNode?: (request: DiagramAddRequest) => void;
+  /** The palette's accessible name, and an optional one-line hint shown in it. */
+  paletteLabel?: string;
+  paletteHint?: string;
+  /**
+   * The node being renamed in place: it shows an input where its label was. Set it to the id of a node the
+   * caller just added, so a new node is named where it sits. Enter or leaving the input calls
+   * `onRenameSubmit`; Escape, or an empty or unchanged name, calls `onRenameCancel`.
+   */
+  editingId?: string | null;
+  onRenameSubmit?: (id: string, label: string) => void;
+  onRenameCancel?: () => void;
+  /** The rename input's accessible name, given the node's current label. */
+  renameLabel?: (label: string) => string;
 }
 
 const CONNECT_KEY = 'c';
@@ -96,7 +120,7 @@ function elementAt(target: EventTarget | null): DiagramRenameTarget | null {
  * identity changed into its store after each render, and some of those — the selection callback among them —
  * fire again when they change, so a fresh function or array per render is enough to loop.
  */
-function DiagramEditorRoot(props: DiagramEditorProps) {
+function DiagramEditorCanvas(props: DiagramEditorProps) {
   const {
     label,
     nodes,
@@ -110,6 +134,10 @@ function DiagramEditorRoot(props: DiagramEditorProps) {
     inspectorLabel = 'Selection',
     legendLabels,
     legend,
+    palette,
+    paletteLabel = 'Add a node',
+    paletteHint,
+    editingId = null,
   } = props;
   // What the inspector describes: a node or an edge. The runtime selects both; only nodes are reported out.
   const [inspected, setInspected] = useState<DiagramSelectionTarget>(selectedId ? { kind: 'node', id: selectedId } : null);
@@ -128,10 +156,10 @@ function DiagramEditorRoot(props: DiagramEditorProps) {
      mirror whenever they change — and after every reported move, so a move the caller declines snaps back —
      keeping what the runtime owns. The caller's `selectedId` is applied once when it changes. */
   const [resync, setResync] = useState(0);
-  const [flowNodes, setFlowNodes] = useState<DiagramFlowNode[]>(() => toFlowNodes(nodes, cell, { selectedId, connectable: true }));
+  const [flowNodes, setFlowNodes] = useState<DiagramFlowNode[]>(() => toFlowNodes(nodes, cell, { selectedId, connectable: true, editingId }));
   useEffect(() => {
-    setFlowNodes((current) => mergeFlowNodes(current, toFlowNodes(nodes, cell, { connectingFrom, connectable: true })));
-  }, [nodes, cell, connectingFrom, resync]);
+    setFlowNodes((current) => mergeFlowNodes(current, toFlowNodes(nodes, cell, { connectingFrom, connectable: true, editingId })));
+  }, [nodes, cell, connectingFrom, editingId, resync]);
   useEffect(() => {
     if (selectedId === undefined) return;
     reportedSelection.current = selectedId;
@@ -202,6 +230,45 @@ function DiagramEditorRoot(props: DiagramEditorProps) {
     [step],
   );
 
+  // The runtime's store, which turns a point on the screen into a point in the diagram. Read from the
+  // provider rather than `onInit`, which waits for every node to be measured.
+  const flow = useReactFlow<DiagramFlowNode>();
+  const toDiagram = useRef(flow.screenToFlowPosition);
+  toDiagram.current = flow.screenToFlowPosition;
+  const viewportRef = useRef<HTMLDivElement>(null);
+
+  /** Ask for a node of `item`'s kind centred on a screen point — the drop, or the middle of the view. */
+  const requestAt = useCallback((item: DiagramPaletteItem, screen: { x: number; y: number }) => {
+    const { props: current, cell: size } = latest.current;
+    if (!current.onAddNode) return;
+    current.onAddNode({ kind: item.kind, position: landingCell(toDiagram.current(screen), size, item.shape) });
+  }, []);
+
+  const pick = useCallback((item: DiagramPaletteItem) => {
+    const box = viewportRef.current?.getBoundingClientRect();
+    if (box) requestAt(item, { x: box.left + box.width / 2, y: box.top + box.height / 2 });
+  }, [requestAt]);
+
+  const onDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
+    if (!event.dataTransfer.types.includes(PALETTE_MIME)) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'copy';
+  }, []);
+
+  const onDrop = useCallback((event: DragEvent<HTMLDivElement>) => {
+    const kind = event.dataTransfer.getData(PALETTE_MIME);
+    const item = latest.current.props.palette?.find((candidate) => candidate.kind === kind);
+    if (!item) return;
+    event.preventDefault();
+    requestAt(item, { x: event.clientX, y: event.clientY });
+  }, [requestAt]);
+
+  const rename = useMemo<DiagramRenameHandlers>(() => ({
+    submit: (id, name) => latest.current.props.onRenameSubmit?.(id, name),
+    cancel: () => latest.current.props.onRenameCancel?.(),
+    inputLabel: (current) => latest.current.props.renameLabel?.(current) ?? `Rename ${current}`,
+  }), []);
+
   const labelOf = (id: string) => nodes.find((n) => n.id === id)?.label ?? '';
   const selection = useMemo(() => describeSelection(inspected, nodes, edges), [inspected, nodes, edges]);
 
@@ -209,8 +276,18 @@ function DiagramEditorRoot(props: DiagramEditorProps) {
     <div className="cb-diagram cb-diagram--editor" data-inspector={renderInspector ? 'true' : undefined}>
       <span ref={cellRef} className="cb-diagram__cell" aria-hidden="true" />
       {hint ? <p className="cb-diagram__hint">{hint}</p> : null}
+      {palette && palette.length > 0 ? <DiagramPalette items={palette} label={paletteLabel} hint={paletteHint} onPick={pick} /> : null}
       <div className="cb-diagram__body">
-      <div className="cb-diagram__viewport" role="region" aria-label={label} aria-describedby={`${base}-outline`}>
+      <DiagramRenameContext.Provider value={rename}>
+      <div
+        ref={viewportRef}
+        className="cb-diagram__viewport"
+        role="region"
+        aria-label={label}
+        aria-describedby={`${base}-outline`}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
+      >
         <ReactFlow
           nodes={flowNodes}
           edges={flowEdges}
@@ -222,6 +299,7 @@ function DiagramEditorRoot(props: DiagramEditorProps) {
           onNodeClick={onNodeClick}
           onPaneClick={onPaneClick}
           onKeyDown={onKeyDown}
+          {...SCROLL_PANS}
           connectionMode={ConnectionMode.Loose}
           connectOnClick
           snapToGrid
@@ -237,6 +315,7 @@ function DiagramEditorRoot(props: DiagramEditorProps) {
           <Controls showInteractive={false} />
         </ReactFlow>
       </div>
+      </DiagramRenameContext.Provider>
       {renderInspector ? (
         <aside className="cb-diagram__inspector" aria-label={inspectorLabel}>
           {renderInspector(selection)}
@@ -249,6 +328,15 @@ function DiagramEditorRoot(props: DiagramEditorProps) {
       </p>
       <DiagramOutline id={`${base}-outline`} nodes={nodes} edges={edges} label={outlineLabel} />
     </div>
+  );
+}
+
+/** The canvas inside its own runtime store, so the palette can place a node before the first measure. */
+function DiagramEditorRoot(props: DiagramEditorProps) {
+  return (
+    <ReactFlowProvider>
+      <DiagramEditorCanvas {...props} />
+    </ReactFlowProvider>
   );
 }
 
