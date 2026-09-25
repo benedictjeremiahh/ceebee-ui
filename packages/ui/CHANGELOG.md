@@ -1,5 +1,13 @@
 # @ceebee/ui
 
+## 1.19.0
+
+### Minor Changes
+
+- 052c91c: `CashFlowChart`: money in and out per period with the running balance over them. Inflow bars up, outflow bars down, the balance as a line from an opening balance; a period that closes below the line is shaded and the lowest point marked, and one sentence states when it goes under and how far. Periods become buttons when `onSelectPeriod` is given; a hidden table carries every figure.
+- 05af6dc: Diagram edges take a `weight` (0–1): the line thickens with the traffic it carries and its arrowhead stays the same size; a weight of 0 draws a path nothing has taken, dashed and quiet. `legend` lists explicit entries (shape, tone, meaning) so two pills can mean different ends, and legend swatches now render at their size. `Diagram` takes `fitMinZoom` for an overview that must show the whole diagram at once.
+- cd88b08: `TargetBars` takes `variant="deviation"`: each row draws how far it landed from its own target, from a centre line that is the target — right when it beat it, left when it missed, on a symmetric scale. For rows whose targets differ, where a bullet makes the reader subtract. `deviationOf` and `deviationScale` are exported beside the existing scale helpers.
+
 ## 1.18.0
 
 ### Minor Changes
