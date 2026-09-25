@@ -15,6 +15,12 @@ describe('Select width', () => {
     expect(root?.style.inlineSize).toBe('clamp(12rem, calc(35ch + 4.5rem), 28rem)');
   });
 
+  it('only widens as options change, so a searching select does not jump', () => {
+    const { container, rerender } = render(<Select options={OPTIONS} value="a" />);
+    rerender(<Select options={[{ value: 'a', label: 'Gudang' }]} value="a" />);
+    expect(container.querySelector<HTMLElement>('.cb-select')?.style.inlineSize).toBe('clamp(12rem, calc(35ch + 4.5rem), 28rem)');
+  });
+
   it('keeps a width the consumer set', () => {
     const { container } = render(<Select options={OPTIONS} value="a" style={{ width: '100%' }} />);
     const root = container.querySelector<HTMLElement>('.cb-select');
