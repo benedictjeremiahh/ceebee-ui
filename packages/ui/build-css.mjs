@@ -4,6 +4,7 @@
 import { readdir, readFile, writeFile, mkdir, copyFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { createRequire } from 'node:module';
+import { CSS_GROUPS } from './css-groups.mjs';
 
 const SRC = new URL('./src/', import.meta.url).pathname;
 const DIST = new URL('./dist/', import.meta.url).pathname;
@@ -16,7 +17,7 @@ const TOKEN_ORDER = [
   'data-visualization.css',
   'skeleton.css',
 ];
-const GROUPS = ['foundation', 'form', 'feedback', 'overlay', 'data', 'media', 'nav', 'motion', 'onboarding', 'theme'];
+const GROUPS = CSS_GROUPS;
 
 async function cssFilesIn(dir) {
   const root = join(SRC, dir);
