@@ -95,6 +95,8 @@ export {
 export { BalanceCurve, BalanceCurveSkeleton } from './data/balance-curve/index.js';
 export type { BalanceCurveProps, BalanceCurveSkeletonProps, BalanceReading } from './data/balance-curve/index.js';
 export { balanceReading } from './data/balance-curve/index.js';
+export { CashFlowChart, cashFlowRows, cashFlowReading, cashFlowScale } from './data/cash-flow/index.js';
+export type { CashFlowChartProps, CashFlowPeriod, CashFlowRow, CashFlowReading, CashFlowScale } from './data/cash-flow/index.js';
 export { ProgressCurve, ProgressCurveSkeleton } from './data/progress-curve/index.js';
 export type {
   CurvePoint,

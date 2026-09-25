@@ -1,0 +1,122 @@
+.cb-cash-flow {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-3);
+  font-family: var(--cb-font-sans);
+  color: var(--cb-fg);
+  container-type: inline-size;
+  --cb-cash-flow-in: var(--cb-tone-success);
+  --cb-cash-flow-out: color-mix(in oklch, var(--cb-tone-danger) 70%, var(--cb-fg-subtle));
+  --cb-cash-flow-balance: var(--cb-tone-brand);
+}
+.cb-cash-flow__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--cb-space-2) var(--cb-space-4);
+}
+.cb-cash-flow__label { font-weight: 600; }
+.cb-cash-flow__legend { display: flex; flex-wrap: wrap; gap: var(--cb-space-3); font-size: var(--cb-text-xs); color: var(--cb-fg-muted); }
+.cb-cash-flow__key { display: inline-flex; align-items: center; gap: var(--cb-space-1); }
+.cb-cash-flow__key::before { content: ""; display: inline-block; inline-size: var(--cb-space-3); block-size: var(--cb-space-3); border-radius: var(--cb-radius-sm); }
+.cb-cash-flow__key--in::before { background: var(--cb-cash-flow-in); }
+.cb-cash-flow__key--out::before { background: var(--cb-cash-flow-out); }
+.cb-cash-flow__key--balance::before { block-size: var(--cb-border-width); border-block-start: calc(var(--cb-border-width) * 2) solid var(--cb-cash-flow-balance); border-radius: 0; }
+.cb-cash-flow__reading { margin: 0; font-size: var(--cb-text-sm); font-variant-numeric: tabular-nums; }
+/* The sentence carries the same meaning as the shaded periods, so the colour reinforces rather than signals. */
+.cb-cash-flow__reading[data-state="below"] { color: var(--cb-tone-danger); font-weight: 600; }
+.cb-cash-flow__reading[data-state="clear"] { color: var(--cb-tone-success); }
+.cb-cash-flow__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: var(--cb-space-2);
+  row-gap: var(--cb-space-1);
+}
+.cb-cash-flow__plot { position: relative; }
+.cb-cash-flow__grid { position: absolute; inset-inline: 0; block-size: 0; border-block-start: var(--cb-border-width) solid var(--cb-border); }
+/* Zero is the line the whole chart is read against, so it is drawn stronger than the grid. */
+.cb-cash-flow__grid--zero { border-block-start: calc(var(--cb-border-width) * 2) solid var(--cb-fg-muted); z-index: 1; }
+.cb-cash-flow__columns { position: absolute; inset: 0; display: flex; }
+.cb-cash-flow__column {
+  position: relative;
+  flex: 1 1 0;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+button.cb-cash-flow__column { cursor: pointer; }
+button.cb-cash-flow__column:hover { background: color-mix(in oklch, var(--cb-fg) 6%, transparent); }
+button.cb-cash-flow__column:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: calc(var(--cb-focus-width) * -1); }
+.cb-cash-flow__column[data-selected="true"] { background: color-mix(in oklch, var(--cb-tone-brand) 12%, transparent); }
+/* A period that closes below the line is shaded: the trouble reads by fill and position, not colour alone. */
+.cb-cash-flow__column[data-below="true"] { background: color-mix(in oklch, var(--cb-tone-danger) 10%, transparent); }
+.cb-cash-flow__bar {
+  position: absolute;
+  inset-inline: 22%;
+  transition: block-size var(--cb-duration-deliberate) var(--cb-ease-entrance);
+}
+.cb-cash-flow__bar--in { background: var(--cb-cash-flow-in); border-start-start-radius: var(--cb-radius-sm); border-start-end-radius: var(--cb-radius-sm); }
+.cb-cash-flow__bar--out { background: var(--cb-cash-flow-out); border-end-start-radius: var(--cb-radius-sm); border-end-end-radius: var(--cb-radius-sm); }
+.cb-cash-flow__line { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; overflow: visible; pointer-events: none; z-index: 2; }
+.cb-cash-flow__line polyline { fill: none; stroke: var(--cb-cash-flow-balance); stroke-width: calc(var(--cb-border-width) * 2.5); stroke-linejoin: round; stroke-linecap: round; }
+.cb-cash-flow__low {
+  position: absolute;
+  inline-size: var(--cb-space-2);
+  block-size: var(--cb-space-2);
+  border-radius: 50%;
+  background: var(--cb-cash-flow-balance);
+  box-shadow: 0 0 0 calc(var(--cb-border-width) * 2) var(--cb-bg);
+  transform: translate(-50%, 50%);
+  pointer-events: none;
+  z-index: 3;
+}
+.cb-cash-flow__low-label {
+  position: absolute;
+  inset-block-start: calc(100% + var(--cb-space-1));
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  padding: 0 var(--cb-space-1);
+  border-radius: var(--cb-radius-sm);
+  background: var(--cb-bg);
+  color: var(--cb-fg);
+  font-size: var(--cb-text-xs);
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.cb-cash-flow__ticks { position: relative; min-inline-size: 3.5rem; font-size: var(--cb-text-xs); color: var(--cb-fg-muted); font-variant-numeric: tabular-nums; }
+.cb-cash-flow__ticks > span { position: absolute; inset-inline-start: 0; transform: translateY(50%); white-space: nowrap; }
+.cb-cash-flow__periods { display: grid; font-size: var(--cb-text-xs); color: var(--cb-fg-muted); text-align: center; }
+.cb-cash-flow__periods > span { white-space: nowrap; }
+/* Narrow: every other period is named, so the names never run into each other. The period's bar and the
+   table still carry every one. */
+@container (max-width: 32rem) {
+  .cb-cash-flow__periods > span:nth-child(even) { visibility: hidden; }
+}
+.cb-cash-flow__rows {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.cb-cash-flow__empty { margin: 0; color: var(--cb-fg-muted); font-family: var(--cb-font-sans); }
+@media (prefers-reduced-motion: reduce) {
+  .cb-cash-flow__bar { transition: none; }
+}
+/* Forced colours: fills are repainted, so bars and line keep system colours and the table comes back. */
+@media (forced-colors: active) {
+  .cb-cash-flow__bar, .cb-cash-flow__low { forced-color-adjust: none; background: Highlight; }
+  .cb-cash-flow__bar--out { background: GrayText; }
+  .cb-cash-flow__line polyline { stroke: CanvasText; }
+  .cb-cash-flow__rows { position: static; inline-size: auto; block-size: auto; margin: 0; overflow: visible; clip-path: none; white-space: normal; }
+}

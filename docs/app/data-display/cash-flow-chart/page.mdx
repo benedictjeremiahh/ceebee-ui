@@ -1,0 +1,76 @@
+import { CashFlowChartDemo } from '../../../components/cash-flow-chart-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# CashFlowChart <span className="docs__label">Composition</span>
+
+Money in and out per period, with the running balance over them. `BalanceCurve` shows *that* cash dips;
+this shows *why* — which week's bills pull it under and which receipt brings it back. It is the shape
+cash-forecast dashboards converge on: inflow bars up, outflow bars down, the balance as a line across both.
+
+## Usage
+
+<CashFlowChartDemo />
+
+## Start from the real balance
+
+`opening` is the balance before the first period — today's cash. The line starts there and runs through
+each period's close. Starting from zero draws a projection of *change*, which reads like a projection of
+cash and is not one.
+
+## What it states
+
+Above the plot, one sentence gives the two figures a decision needs: the first period that closes below the
+line and the lowest balance. A period that closes below the line is shaded, and the lowest point carries a
+small dot with its figure, so the trouble reads by position and fill as well as by colour. The zero line is
+drawn stronger than the grid, and axis ticks fall on round numbers.
+
+## Periods are the consumer's
+
+The chart does not bucket. Pass days, weeks or months, each with its `start` day, `inflow` and `outflow`
+(positive; a negative outflow is read as the same amount). `formatPeriod` names a period; by default it is
+its start day in the document's language. With many periods, every *n*-th label is shown so none overlap.
+
+## Interaction contract
+
+Read-only unless `onSelectPeriod` is given. Then each period is a button named with its date and all three
+figures, `aria-pressed` for `selectedPeriod`, so the consumer can list what is behind it beside the chart.
+
+## Accessibility
+
+A visually hidden table gives every period's in, out and balance; the drawing is `aria-hidden`. Under
+`forced-colors: active` the bars and line keep system colours and the table comes into view; under
+`prefers-reduced-motion: reduce` the bars do not grow into place.
+
+<Guidance
+  do="Use it for a forecast where the reader has to see which flows cause a dip."
+  dont="Use it for a plain balance with no flows to explain — that is BalanceCurve."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'label', type: 'string', description: 'Visible title and accessible name. Required.' },
+  { name: 'opening', type: 'number', description: 'The balance before the first period. Required.' },
+  { name: 'periods', type: 'CashFlowPeriod[]', description: '`{ id, start, inflow, outflow }` in order.' },
+  { name: 'format', type: '(value: number) => string', description: 'How a value is written. The product owns this.' },
+  { name: 'formatPeriod', type: '(start: string) => string', description: 'How a period is named. Defaults to its start day.' },
+  { name: 'threshold', type: '{ value: number; label?: string }', default: '{ value: 0 }', description: 'The line the balance is read against.' },
+  { name: 'onSelectPeriod', type: '(id: string) => void', description: 'Makes each period a button.' },
+  { name: 'selectedPeriod', type: 'string', description: 'The period whose detail the consumer is showing.' },
+  { name: 'height', type: 'number', default: '240', description: 'Plot height in pixels.' },
+  { name: 'inflowLabel / outflowLabel / balanceLabel', type: 'string', default: "'In' / 'Out' / 'Balance'", description: 'Legend, table and button words.' },
+  { name: 'belowLabel', type: '(from, lowest, periods) => string', description: 'The sentence when the balance goes below the line.' },
+  { name: 'clearLabel', type: '(lowest) => string', description: 'The sentence when it never does.' },
+  { name: 'tableLabel', type: 'string', default: "'Cash flow by period'", description: 'Caption of the hidden table.' },
+  { name: 'emptyLabel', type: 'string', default: "'Nothing to project yet.'", description: 'Shown when there are no periods.' },
+  { name: 'locale', type: 'string', description: 'Language for default period names; the document\'s `lang` when omitted.' },
+  { name: 'className', type: 'string', description: 'Added to the root element.' },
+]}/>
+
+## Tokens
+
+`--cb-tone-success` fills inflows, `--cb-tone-danger` mixed with `--cb-fg-subtle` fills outflows,
+`--cb-tone-brand` draws the balance and the low point, `--cb-tone-danger` shades a period below the line and
+colours the breach sentence, `--cb-border` the grid, `--cb-fg-muted` the zero line and the axis text,
+`--cb-focus-width` the focus ring, `--cb-radius-sm`, `--cb-space-*`, `--cb-text-xs`, `--cb-text-sm`, and
+`--cb-duration-deliberate` with `--cb-ease-entrance` for the bars growing in.

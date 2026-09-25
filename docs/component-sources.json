@@ -1900,6 +1900,20 @@
         "TimeSeriesChart"
       ]
     },
+    "CashFlowChart": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/cash-flow/cash-flow.tsx",
+        "packages/ui/src/data/cash-flow/cash-flow.math.ts",
+        "packages/ui/src/data/cash-flow/cash-flow.types.ts",
+        "packages/ui/src/data/cash-flow/cash-flow.css"
+      ],
+      "demoPath": "docs/app/data-display/cash-flow-chart",
+      "interactionContract": "inflow bars above zero and outflow bars below per period, the running balance as a line from the opening balance; a period closing below the threshold is shaded and the lowest point marked; the breach and the lowest figure are stated in words above the plot. Periods become buttons (aria-pressed) only when onSelectPeriod is given; a visually hidden table carries every figure.",
+      "substrate": [
+        "react"
+      ]
+    },
     "TargetBars": {
       "strategy": "ceebee",
       "source": [
