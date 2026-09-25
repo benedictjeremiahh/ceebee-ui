@@ -44,7 +44,7 @@ export function CashFlowChart({
   const locale = useDocumentLocale(givenLocale);
   const rows = useMemo(() => cashFlowRows(opening, periods), [opening, periods]);
   const reading = useMemo(() => cashFlowReading(rows, threshold.value), [rows, threshold.value]);
-  const scale = useMemo(() => cashFlowScale([...rows, { id: '', start: '', inflow: 0, outflow: 0, net: 0, balance: opening }]), [rows, opening]);
+  const scale = useMemo(() => cashFlowScale([...rows, { id: '', start: '', inflow: 0, outflow: 0, net: 0, balance: opening, lowest: opening }]), [rows, opening]);
   const name = formatPeriod ?? ((start: string) => readableDay(start, locale, 'short'));
 
   if (rows.length === 0) return <p className={cn('cb-cash-flow__empty', className)}>{emptyLabel}</p>;
@@ -122,7 +122,7 @@ function Column({ row, scale, threshold, selected, describe, onSelect }: {
       <span aria-hidden="true" className="cb-cash-flow__bar cb-cash-flow__bar--out" style={{ insetBlockEnd: `${heightOf(-row.outflow, scale)}%`, blockSize: `${zero - heightOf(-row.outflow, scale)}%` }} />
     </>
   );
-  const props = { className: 'cb-cash-flow__column', 'data-below': row.balance < threshold ? 'true' : undefined, 'data-selected': selected ? 'true' : undefined };
+  const props = { className: 'cb-cash-flow__column', 'data-below': row.lowest < threshold ? 'true' : undefined, 'data-selected': selected ? 'true' : undefined };
   // The bars are decoration (the table says every figure); a pressable period is a button named in full.
   return onSelect ? (
     <button type="button" {...props} aria-label={describe} aria-pressed={selected} onClick={() => onSelect(row.id)}>{bars}</button>

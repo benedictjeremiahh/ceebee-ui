@@ -16,6 +16,11 @@ export interface CashFlowPeriod {
   inflow: number;
   /** Money out during the period, as a positive amount (a negative one is read as the same outflow). */
   outflow: number;
+  /**
+   * The lowest balance *within* the period, when the consumer knows it — a week bucketed from daily figures
+   * can dip mid-week and recover by its close. Read against the line in place of the close when lower.
+   */
+  low?: number;
 }
 
 export interface CashFlowRow extends CashFlowPeriod {
@@ -23,6 +28,8 @@ export interface CashFlowRow extends CashFlowPeriod {
   net: number;
   /** The balance at the end of the period. */
   balance: number;
+  /** The lowest balance in the period: its `low` when given and lower, otherwise its close. */
+  lowest: number;
 }
 
 export interface CashFlowReading {
@@ -48,23 +55,23 @@ export function cashFlowRows(opening: number, periods: readonly CashFlowPeriod[]
     const outflow = Math.abs(period.outflow);
     const net = period.inflow - outflow;
     balance += net;
-    return { ...period, outflow, net, balance };
+    return { ...period, outflow, net, balance, lowest: Math.min(balance, period.low ?? balance) };
   });
 }
 
-/** The lowest closing balance and where the balance first goes below the line. "Below" is strict. */
+/** The lowest balance (a period's `low` counts) and where it first goes below the line. "Below" is strict. */
 export function cashFlowReading(rows: readonly CashFlowRow[], threshold = 0): CashFlowReading {
   if (rows.length === 0) return { lowest: null, lowestIndex: null, firstBelowIndex: null, periodsBelow: 0, closing: null };
   let lowestIndex = 0;
   rows.forEach((row, index) => {
-    if (row.balance < (rows[lowestIndex]?.balance ?? row.balance)) lowestIndex = index;
+    if (row.lowest < (rows[lowestIndex]?.lowest ?? row.lowest)) lowestIndex = index;
   });
-  const firstBelow = rows.findIndex((row) => row.balance < threshold);
+  const firstBelow = rows.findIndex((row) => row.lowest < threshold);
   return {
-    lowest: rows[lowestIndex]?.balance ?? null,
+    lowest: rows[lowestIndex]?.lowest ?? null,
     lowestIndex,
     firstBelowIndex: firstBelow === -1 ? null : firstBelow,
-    periodsBelow: rows.filter((row) => row.balance < threshold).length,
+    periodsBelow: rows.filter((row) => row.lowest < threshold).length,
     closing: rows.at(-1)?.balance ?? null,
   };
 }
@@ -74,7 +81,7 @@ export function cashFlowReading(rows: readonly CashFlowRow[], threshold = 0): Ca
  * balance crosses it. Rounded outwards to ticks of 1, 2 or 5 × 10ⁿ so no label carries a trivial decimal.
  */
 export function cashFlowScale(rows: readonly CashFlowRow[], target = 4): CashFlowScale {
-  const values = rows.flatMap((row) => [row.inflow, -row.outflow, row.balance]);
+  const values = rows.flatMap((row) => [row.inflow, -row.outflow, row.balance, row.lowest]);
   const low = Math.min(0, ...values);
   const high = Math.max(0, ...values);
   const { min, max, step } = high === low ? { min: low, max: low + 1, step: 1 } : niceRange(low, high, target);

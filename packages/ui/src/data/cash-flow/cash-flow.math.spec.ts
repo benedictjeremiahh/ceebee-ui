@@ -59,3 +59,16 @@ describe('heightOf', () => {
     expect(heightOf(150, scale)).toBe(100);
   });
 });
+
+describe('a dip inside a period', () => {
+  it('reads a period\'s low against the line even when it closes above it', () => {
+    const rows = cashFlowRows(50, [{ id: 'w1', start: '2026-09-28', inflow: 40, outflow: 30, low: -5 }]);
+    expect(rows[0]).toMatchObject({ balance: 60, lowest: -5 });
+    expect(cashFlowReading(rows, 0)).toMatchObject({ lowest: -5, firstBelowIndex: 0, periodsBelow: 1 });
+    expect(cashFlowScale(rows).min).toBeLessThanOrEqual(-5);
+  });
+
+  it('ignores a low that is not lower than the close', () => {
+    expect(cashFlowRows(50, [{ id: 'w1', start: '2026-09-28', inflow: 0, outflow: 10, low: 45 }])[0]?.lowest).toBe(40);
+  });
+});
