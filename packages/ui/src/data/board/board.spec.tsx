@@ -1,4 +1,6 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { hydrateRoot } from 'react-dom/client';
+import { renderToString } from 'react-dom/server';
 import { describe, expect, it, vi } from 'vitest';
 import { Board } from './board.js';
 import type { BoardColumn } from './board.types.js';
@@ -65,20 +67,24 @@ describe('Board', () => {
     expect(screen.queryByLabelText('Scroll on one column')).toBeNull();
   });
 
-  it('keeps a column the consumer collapsed as a labelled strip, and opens it when asked', () => {
+  it('ignores the deprecated collapsed prop: an empty column is a full column with its empty content', () => {
     board({
       columns: [
-        { id: 'later', name: 'Later', cards: [], collapsed: true },
+        { id: 'later', name: 'Later', cards: [], collapsed: true, empty: 'Nothing here yet' },
         { id: 'todo', name: 'To do', cards: [{ id: 'a', title: 'Pour the slab' }] },
       ],
     });
-    fireEvent.click(screen.getByLabelText('Show Later'));
-    // Open, the strip is gone and the column is a lane again — with the way back to the strip in its head.
     expect(screen.queryByLabelText('Show Later')).toBeNull();
-    expect(screen.getByLabelText('Collapse Later')).toBeTruthy();
+    expect(screen.getByRole('region', { name: 'Later' })).toBeTruthy();
+    expect(screen.getByText('Nothing here yet')).toBeTruthy();
+  });
 
-    fireEvent.click(screen.getByLabelText('Collapse Later'));
-    expect(screen.getByLabelText('Show Later')).toBeTruthy();
+  it('gives a title clamped to two lines its whole text as a tooltip, and keeps it as the content', () => {
+    const long = 'Pekerjaan pondasi dan sloof untuk rumah dua lantai di Cluster Melati blok C nomor 12';
+    board({ columns: [{ id: 'todo', name: 'To do', cards: [{ id: 'a', title: long }] }], onCardOpen: vi.fn() });
+    const title = screen.getByText(long);
+    expect(title).toHaveClass('cb-board__title');
+    expect(title).toHaveAttribute('title', long);
   });
 
   it('gives each column its own way to add a card, and none to a column that refuses them', () => {
@@ -318,5 +324,21 @@ describe('Board', () => {
     const { container } = render(<Board.Skeleton columns={2} cards={2} />);
     expect(container.querySelectorAll('.cb-board__column')).toHaveLength(2);
     expect(container.querySelectorAll('.cb-board__ghost-card')).toHaveLength(4);
+  });
+
+  it('hydrates a server render without a mismatch in its describedby ids', async () => {
+    const tree = <Board columns={columns()} onMove={vi.fn()} layout="board" />;
+    const container = document.createElement('div');
+    container.innerHTML = renderToString(tree);
+    document.body.appendChild(container);
+    // React 19 reports an attribute mismatch through console.error, not as a recoverable error.
+    const errors = vi.spyOn(console, 'error').mockImplementation(() => {});
+    await act(async () => {
+      hydrateRoot(container, tree);
+    });
+    const mismatch = errors.mock.calls.some((call) => String(call[0]).includes("didn't match"));
+    errors.mockRestore();
+    container.remove();
+    expect(mismatch).toBe(false);
   });
 });

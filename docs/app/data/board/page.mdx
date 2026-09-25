@@ -1,4 +1,4 @@
-import { BoardDemo, BoardOpenDemo, BoardRefusalDemo } from '../../../components/board-demo';
+import { BoardDemo, BoardOpenDemo, BoardRefusalDemo, BoardWideDemo } from '../../../components/board-demo';
 import { PropsTable, Guidance } from '../../../components/props-table';
 
 # Board <span className="docs__label">Composition</span>
@@ -82,7 +82,24 @@ switcher, which is a deliberate rendering rather than a board squeezed until its
 Force it with `layout="lanes"` to see it, or `layout="board"` to keep the columns.
 
 A card title clamps to two lines, so one long name cannot stretch its own card or the cards beside it.
-Wrap the title in a tooltip when the full name matters.
+The whole title is the element's tooltip and stays its content, so the accessible name is never the cut
+one. Badges in `meta` wrap onto another line rather than being clipped.
+
+## A long board
+
+A board of fourteen Stages is wider and taller than its page. Columns are 20rem wide
+(`--cb-board-column-inline-size`). Each column is as tall as its cards up to the viewport less the page
+chrome above the board — `--cb-board-offset`, 14rem by default — and then its cards scroll under a header
+that stays, so the page itself does not scroll to reach the bottom of a column. Set
+`--cb-board-max-block-size` to give the columns a ceiling outright. The scroll surface hugs the columns,
+so the horizontal scrollbar sits right under them, with a fade on the side that hides columns and
+‹ › controls that move one column at a time.
+
+<BoardWideDemo />
+
+An empty column is a full column with its `empty` content. The `collapsed` column prop, which kept a
+column as a narrow labelled strip, is deprecated and ignored: the strip read worse than the empty column
+it replaced.
 
 ## Loading
 
@@ -102,6 +119,7 @@ arrives.
   { name: 'motion', type: 'boolean', default: 'true', description: 'false drops the lift and the gap animation. Reduced motion does the same on its own; the drop marker always stays.' },
   { name: 'column.label', type: 'string', description: "The column's accessible name when name is a node rather than a string — a header carrying status tags still has to be nameable." },
   { name: 'column.limit', type: 'number', description: 'A work-in-progress limit. Going over marks the column — it never blocks a move.' },
+  { name: 'column.collapsed', type: 'boolean', description: 'Deprecated and ignored; removed in the next major. An empty column renders at full width.' },
   { name: 'column.accepts', type: 'boolean', description: 'false refuses drops and is stepped over by the keyboard, with refusal as the reason shown.' },
   { name: 'card.label', type: 'string', description: 'The card’s name in announcements and on the drag handle, when title is a node. Without it a node-titled card is announced by its id — a uuid read aloud.' },
   { name: 'card.disabled', type: 'boolean', description: 'The card stays visible and cannot be picked up; disabledReason is announced when someone tries.' },
@@ -111,4 +129,5 @@ arrives.
 
 Spacing `--cb-space-*`, radii `--cb-radius-*`, `--cb-shadow-sm|md|lg` for the rest, hover and carried
 card, `--cb-tone-brand` for the drop marker and the held card, `--cb-tone-warning` for a column over
-its limit, and `--cb-control-floor` so the lane switcher and Undo stay touch-sized.
+its limit, and `--cb-control-floor` so the lane switcher and Undo stay touch-sized. The layout seams are
+`--cb-board-column-inline-size` (20rem), `--cb-board-offset` (14rem) and `--cb-board-max-block-size`.
