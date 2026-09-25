@@ -1,4 +1,4 @@
-import { TargetBarsDemo, TargetBarsLowerDemo } from '../../../components/target-bars-demo';
+import { TargetBarsDemo, TargetBarsLowerDemo, TargetBarsDeviationDemo } from '../../../components/target-bars-demo';
 import { PropsTable, Guidance } from '../../../components/props-table';
 
 # TargetBars <span className="docs__label">Composition</span>
@@ -33,6 +33,16 @@ Pass `lower` for a cost, a delay, a defect rate. Meeting the target exactly coun
 
 <TargetBarsLowerDemo />
 
+## Deviation from each row's own target
+
+When the rows have different targets, the bullet makes the reader subtract to see who missed by most.
+`variant="deviation"` draws the gap instead: the centre line **is** the target, a bar runs right when the
+row beat it and left when it missed, and the scale is symmetric so a 5-point miss and a 5-point beat are
+the same length. Sort the rows worst first when the question is "which ones do I look at". Both figures
+are still written; a row with either figure unknown draws no bar.
+
+<TargetBarsDeviationDemo />
+
 ## No currency
 
 The library holds no unit, currency or locale. `format` is a function the product passes, so the same
@@ -63,6 +73,7 @@ percent width" adds noise, not information. Under `forced-colors: active` the ba
   { name: 'rows', type: 'TargetBarsRow[]', description: 'One row per category, drawn in the order given.' },
   { name: 'format', type: '(value: number) => string', description: 'How a figure is written. The product owns this.' },
   { name: 'better', type: "'higher' | 'lower'", default: "'higher'", description: 'Which side of the target counts as met.' },
+  { name: 'variant', type: "'bullet' | 'deviation'", default: "'bullet'", description: 'Actual from zero with a target mark, or the gap from each row\'s own target.' },
   { name: 'actualLabel', type: 'string', default: "'Actual'", description: 'Word before the actual figure.' },
   { name: 'targetLabel', type: 'string', default: "'Target'", description: 'Word before the target figure.' },
   { name: 'unknownLabel', type: 'string', default: "'unknown'", description: 'Written where a figure is `null`.' },
@@ -83,7 +94,7 @@ percent width" adds noise, not information. Under `forced-colors: active` the ba
 ## Tokens
 
 `--cb-tone-success` and `--cb-tone-danger` fill a met or missed bar, `--cb-fg-subtle` an unknown
-verdict, `--cb-fg` the target mark and the actual figure, `--cb-fg-muted` the other text, `--cb-border`
+verdict, `--cb-fg` the target mark (and the deviation centre line) and the actual figure, `--cb-fg-muted` the other text, `--cb-border`
 the zero line, `--cb-mini-chart-track-strength` the track, `--cb-radius-sm`, `--cb-border-width`,
 `--cb-font-sans`, `--cb-text-sm`, `--cb-text-xs`, `--cb-space-*`, and `--cb-duration-deliberate` with
 `--cb-ease-entrance` for the bars growing in.

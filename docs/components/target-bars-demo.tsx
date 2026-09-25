@@ -56,3 +56,27 @@ export function TargetBarsLowerDemo() {
     </Demo>
   );
 }
+
+/* Each job was priced at its own margin, so the question is who missed their own target by most. */
+const priced = [
+  { id: 'b', label: 'Shophouse fit-out, Block C', target: 15, actual: -3.5 },
+  { id: 'c', label: 'Warehouse roof', target: 20, actual: 11.4 },
+  { id: 'e', label: 'Office partition', target: 12, actual: 12.6 },
+  { id: 'a', label: 'House extension, Jl. Melati', target: 15, actual: 18.2 },
+];
+
+export function TargetBarsDeviationDemo() {
+  return (
+    <Demo
+      layout="block"
+      code={`<TargetBars
+  label="Margin against each job's own target"
+  rows={priced}
+  format={percent}
+  variant="deviation"
+/>`}
+    >
+      <TargetBars label="Margin against each job's own target" rows={priced} format={percent} variant="deviation" />
+    </Demo>
+  );
+}

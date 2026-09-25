@@ -36,3 +36,22 @@ export function verdictOf(target: number | null, actual: number | null, better: 
   const met = better === 'higher' ? actual >= target : actual <= target;
   return met ? 'met' : 'missed';
 }
+
+/**
+ * How far a row landed past its target, signed so that positive is good: `actual − target` when higher is
+ * better, the reverse when lower is. Unknown when either figure is.
+ */
+export function deviationOf(target: number | null, actual: number | null, better: 'higher' | 'lower' = 'higher'): number | null {
+  if (target === null || actual === null) return null;
+  return better === 'higher' ? actual - target : target - actual;
+}
+
+/**
+ * The deviation scale is symmetric around zero — the target line sits in the middle — so a miss and a beat
+ * of the same size draw the same length on either side.
+ */
+export function deviationScale(values: readonly (number | null)[]): TargetBarsScale {
+  const known = values.filter((value): value is number => value !== null && Number.isFinite(value));
+  const reach = Math.max(0, ...known.map(Math.abs));
+  return reach === 0 ? { min: -1, max: 1 } : { min: -reach, max: reach };
+}
