@@ -29,8 +29,9 @@
   --cb-fg-on-brand: oklch(0.99 0 0);
   /* Brand-coloured text on a surface. The brand ramp step that carries body text at WCAG AA is
      not the same step in both modes, so link colour is a token rather than a ramp reference a
-     product has to pick per theme. */
-  --cb-fg-link: var(--cb-brand-600);
+     product has to pick per theme. In light mode that step is 700, not 600: links also sit on the
+     subtle surface cards paint, and 600 reads 4.48–4.49:1 there (link-contrast.spec.ts). */
+  --cb-fg-link: var(--cb-brand-700);
   /* A boundary has to be visible to be a boundary: border-strong carries the 3:1 WCAG asks of a
      control's edge, and border the quieter separation between panels. */
 

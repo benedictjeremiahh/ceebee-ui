@@ -10,9 +10,9 @@ export const generatedCeebeeAntSeeds = {
         "token": {
           "colorPrimary": "rgba(81, 93, 218, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
-          "colorLink": "rgba(81, 93, 218, 1)",
+          "colorLink": "rgba(61, 71, 172, 1)",
           "colorLinkHover": "rgba(81, 93, 218, 1)",
-          "colorLinkActive": "rgba(81, 93, 218, 1)",
+          "colorLinkActive": "rgba(61, 71, 172, 1)",
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
@@ -174,9 +174,9 @@ export const generatedCeebeeAntSeeds = {
         "token": {
           "colorPrimary": "rgba(81, 93, 218, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
-          "colorLink": "rgba(81, 93, 218, 1)",
+          "colorLink": "rgba(61, 71, 172, 1)",
           "colorLinkHover": "rgba(81, 93, 218, 1)",
-          "colorLinkActive": "rgba(81, 93, 218, 1)",
+          "colorLinkActive": "rgba(61, 71, 172, 1)",
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
@@ -672,9 +672,9 @@ export const generatedCeebeeAntSeeds = {
         "token": {
           "colorPrimary": "rgba(90, 90, 217, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
-          "colorLink": "rgba(90, 90, 217, 1)",
+          "colorLink": "rgba(69, 68, 171, 1)",
           "colorLinkHover": "rgba(90, 90, 217, 1)",
-          "colorLinkActive": "rgba(90, 90, 217, 1)",
+          "colorLinkActive": "rgba(69, 68, 171, 1)",
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
@@ -836,9 +836,9 @@ export const generatedCeebeeAntSeeds = {
         "token": {
           "colorPrimary": "rgba(90, 90, 217, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
-          "colorLink": "rgba(90, 90, 217, 1)",
+          "colorLink": "rgba(69, 68, 171, 1)",
           "colorLinkHover": "rgba(90, 90, 217, 1)",
-          "colorLinkActive": "rgba(90, 90, 217, 1)",
+          "colorLinkActive": "rgba(69, 68, 171, 1)",
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
@@ -1334,9 +1334,9 @@ export const generatedCeebeeAntSeeds = {
         "token": {
           "colorPrimary": "rgba(51, 100, 219, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
-          "colorLink": "rgba(51, 100, 219, 1)",
+          "colorLink": "rgba(37, 77, 172, 1)",
           "colorLinkHover": "rgba(51, 100, 219, 1)",
-          "colorLinkActive": "rgba(51, 100, 219, 1)",
+          "colorLinkActive": "rgba(37, 77, 172, 1)",
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
@@ -1498,9 +1498,9 @@ export const generatedCeebeeAntSeeds = {
         "token": {
           "colorPrimary": "rgba(51, 100, 219, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
-          "colorLink": "rgba(51, 100, 219, 1)",
+          "colorLink": "rgba(37, 77, 172, 1)",
           "colorLinkHover": "rgba(51, 100, 219, 1)",
-          "colorLinkActive": "rgba(51, 100, 219, 1)",
+          "colorLinkActive": "rgba(37, 77, 172, 1)",
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
@@ -1996,9 +1996,9 @@ export const generatedCeebeeAntSeeds = {
         "token": {
           "colorPrimary": "rgba(183, 46, 130, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
-          "colorLink": "rgba(183, 46, 130, 1)",
+          "colorLink": "rgba(143, 33, 101, 1)",
           "colorLinkHover": "rgba(183, 46, 130, 1)",
-          "colorLinkActive": "rgba(183, 46, 130, 1)",
+          "colorLinkActive": "rgba(143, 33, 101, 1)",
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
@@ -2160,9 +2160,9 @@ export const generatedCeebeeAntSeeds = {
         "token": {
           "colorPrimary": "rgba(183, 46, 130, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
-          "colorLink": "rgba(183, 46, 130, 1)",
+          "colorLink": "rgba(143, 33, 101, 1)",
           "colorLinkHover": "rgba(183, 46, 130, 1)",
-          "colorLinkActive": "rgba(183, 46, 130, 1)",
+          "colorLinkActive": "rgba(143, 33, 101, 1)",
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
@@ -2653,3 +2653,47 @@ export const generatedCeebeeAntSeeds = {
     }
   }
 } as const satisfies CeebeeAntSeedRegistry;
+
+/** The subtle surface per Skin, theme and contrast mode — what cards paint, which links sit on. */
+export const generatedSubtleSurfaces = {
+  "ceebee": {
+    "light": {
+      "normal": "rgba(235, 236, 244, 1)",
+      "more": "rgba(235, 236, 244, 1)"
+    },
+    "dark": {
+      "normal": "rgba(25, 27, 39, 1)",
+      "more": "rgba(25, 27, 39, 1)"
+    }
+  },
+  "astra": {
+    "light": {
+      "normal": "rgba(230, 233, 255, 1)",
+      "more": "rgba(230, 233, 255, 1)"
+    },
+    "dark": {
+      "normal": "rgba(31, 30, 54, 1)",
+      "more": "rgba(31, 30, 54, 1)"
+    }
+  },
+  "clarity": {
+    "light": {
+      "normal": "rgba(226, 238, 255, 1)",
+      "more": "rgba(226, 238, 255, 1)"
+    },
+    "dark": {
+      "normal": "rgba(12, 19, 35, 1)",
+      "more": "rgba(12, 19, 35, 1)"
+    }
+  },
+  "moodboard": {
+    "light": {
+      "normal": "rgba(255, 244, 223, 1)",
+      "more": "rgba(255, 244, 223, 1)"
+    },
+    "dark": {
+      "normal": "rgba(40, 40, 50, 1)",
+      "more": "rgba(40, 40, 50, 1)"
+    }
+  }
+} as const;

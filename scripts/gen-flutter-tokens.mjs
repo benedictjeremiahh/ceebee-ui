@@ -561,6 +561,7 @@ function emitAntThemeSeeds() {
     { brightness: 'light', contrast: 'normal' },
   );
   const registry = {};
+  const subtle = {};
 
   for (const skin of SKINS) {
     let rules = baseRules;
@@ -568,12 +569,15 @@ function emitAntThemeSeeds() {
       rules = [...baseRules, ...readRules(readFileSync(resolve(root, skin.file), 'utf8'), skin.file)];
     }
     registry[skin.name] = {};
+    subtle[skin.name] = {};
     for (const brightness of ['light', 'dark']) {
       registry[skin.name][brightness] = {};
+      subtle[skin.name][brightness] = {};
       for (const contrast of ['normal', 'more']) {
         const tokens = resolveTokens(rules, { brightness, contrast });
         const resolvedTokens = new Map([...structureTokens, ...tokens]);
         const value = (name) => deref(resolvedTokens.get(name), resolvedTokens).trim();
+        subtle[skin.name][brightness][contrast] = antColor(value('--cb-bg-subtle'), `${skin.name}/${brightness}/${contrast}/--cb-bg-subtle`);
         const token = {
           ...Object.fromEntries(Object.entries(ANT_COLOR_TOKENS)
             .map(([field, name]) => [field, antColor(value(name), `${skin.name}/${brightness}/${contrast}/${name}`)])),
@@ -614,6 +618,9 @@ function emitAntThemeSeeds() {
 import type { CeebeeAntSeedRegistry } from './server-theme.js';
 
 export const generatedCeebeeAntSeeds = ${JSON.stringify(registry, null, 2)} as const satisfies CeebeeAntSeedRegistry;
+
+/** The subtle surface per Skin, theme and contrast mode — what cards paint, which links sit on. */
+export const generatedSubtleSurfaces = ${JSON.stringify(subtle, null, 2)} as const;
 `;
 }
 

@@ -1,11 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { generatedCeebeeAntSeeds } from './ant-theme-seeds.generated.js';
+import { generatedCeebeeAntSeeds, generatedSubtleSurfaces } from './ant-theme-seeds.generated.js';
 
 /**
  * Link-style buttons carry the row actions of every data table, so their colour is read dozens of times
  * a page. Two things went wrong at once before this spec: Ant derived the link colour from the info hue
  * (a second accent beside the brand), and on dark surfaces it measured ~4.1–4.5:1 — at or under WCAG AA.
- * Every skin, theme and contrast mode is checked against the surfaces a link sits on.
+ * Every skin, theme and contrast mode is checked against the surfaces a link sits on — including the
+ * subtle surface cards paint, after a consumer measured 4.49:1 on a board card the seed surfaces all
+ * passed. A surface a link sits on belongs in that check, not in a reviewer's memory.
  */
 const channels = (rgba: string) => (rgba.match(/[\d.]+/g) ?? []).slice(0, 3).map(Number);
 const luminance = (rgba: string) => {
@@ -45,6 +47,17 @@ describe('link colour', () => {
         .filter(({ r }) => r < 4.5)
         .map(({ bg, r }) => `${s.name} on ${bg}: ${r.toFixed(2)}`),
     );
+    expect(failing).toEqual([]);
+  });
+
+  it('meets WCAG AA 4.5:1 on the subtle surface cards paint (consumer finding: 4.49:1 on a board card)', () => {
+    const failing = seeds.flatMap((s) => {
+      const [skin, theme, mode] = s.name.split('/');
+      const subtle = generatedSubtleSurfaces[skin as keyof typeof generatedSubtleSurfaces]?.[theme as 'light' | 'dark']?.[mode as 'normal' | 'more'];
+      if (!subtle) return [`${s.name}: no subtle surface generated`];
+      const r = ratio(String(s.token.colorLink), subtle);
+      return r < 4.5 ? [`${s.name} on subtle: ${r.toFixed(2)}`] : [];
+    });
     expect(failing).toEqual([]);
   });
 });
