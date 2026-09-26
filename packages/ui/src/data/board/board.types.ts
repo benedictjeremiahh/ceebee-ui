@@ -36,9 +36,8 @@ export interface BoardColumn {
   /** Why this column refuses a card, announced and shown on an attempted drop. */
   refusal?: string;
   /**
-   * May this column be kept as a narrow labelled strip, opened by the reader when they want it? The
-   * consumer decides *which* columns — an empty Stage, say — because that is a product decision; whether a
-   * person has opened one is the board's own view state, so opening a column is not a round trip.
+   * @deprecated Ignored since ceebee-ui#43 and removed in the next major: a narrow labelled strip read worse
+   * than a full-width empty column, so every column renders at full width with its `empty` content.
    */
   collapsed?: boolean;
 }

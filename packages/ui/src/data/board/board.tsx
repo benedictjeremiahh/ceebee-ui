@@ -45,9 +45,9 @@ export interface BoardLabels {
   scrollBack: string;
   /** The control that scrolls it on by one column. */
   scrollOn: string;
-  /** The control that opens a column the consumer kept as a strip (ceebee-ui#25). */
+  /** @deprecated Columns no longer collapse to a strip (ceebee-ui#43); unused, removed in the next major. */
   expand: (column: string) => string;
-  /** The control that returns an opened column to its strip. */
+  /** @deprecated Columns no longer collapse to a strip (ceebee-ui#43); unused, removed in the next major. */
   collapse: (column: string) => string;
   /** The footer action that adds a card to the named column (ceebee-ui#21). Takes the column's name. */
   addCard: (column: string) => string;
@@ -131,11 +131,10 @@ function BoardRoot({
   const [announcement, setAnnouncement] = React.useState('');
   const [undoable, setUndoable] = React.useState<BoardMove | null>(null);
   const [lane, setLane] = React.useState(0);
-  // Which strips a reader has opened. Which columns *may* collapse is the consumer's, but whether one is
-  // open this minute is a view state, and a board that asked the consumer to hold it would make opening a
-  // column a round trip through a product that has nothing to say about it.
-  const [opened, setOpened] = React.useState<readonly string[]>([]);
   const surfaceRef = React.useRef<HTMLDivElement | null>(null);
+  // dnd-kit numbers its describedby ids from a module counter, so a server render and the client disagree
+  // and React throws the hydration away. React's id is the same on both sides.
+  const dndId = React.useId();
   // Which edges hide a column. Measured rather than derived: it depends on the container's width, how many
   // columns there are, and the kit's own column width — and this component owns none of the three.
   const [overflow, setOverflow] = React.useState<BoardOverflow | null>(null);
@@ -291,9 +290,12 @@ function BoardRoot({
               role="tab"
               aria-selected={i === lane}
               className="cb-board__lane"
+              title={column.label ?? (typeof column.name === 'string' ? column.name : undefined)}
               onClick={() => setLane(i)}
             >
-              {column.name} <span className="cb-board__count">{column.cards.length}</span>
+              {/* A tab names its column in one line: the plain label when the header is a richer node. */}
+              <span className="cb-board__lane-name">{column.label ?? column.name}</span>{' '}
+              <span className="cb-board__count">{column.cards.length}</span>
             </button>
           ))}
         </div>
@@ -316,6 +318,7 @@ function BoardRoot({
           </button>
         ) : null}
         <DndContext
+          id={dndId}
           sensors={sensors}
           collisionDetection={closestCorners}
           onDragStart={(e: DragStartEvent) => setDragging(String(e.active.id))}
@@ -332,12 +335,6 @@ function BoardRoot({
                 labels={text}
                 handle={handle}
                 onCardOpen={onCardOpen}
-                open={opened.includes(column.id)}
-                onOpenChange={(open) =>
-                  setOpened((current) =>
-                    open ? [...current, column.id] : current.filter((id) => id !== column.id),
-                  )
-                }
                 onAddCard={onAddCard}
               />
             ))}
@@ -378,6 +375,12 @@ function BoardRoot({
   );
 }
 
+/**
+ * A card's whole title, for the tooltip on a title clamped to two lines (ceebee-ui#43). The clamp only hides
+ * pixels; the element's content — and so its accessible name — is still the full text.
+ */
+const fullTitle = (card: BoardColumn['cards'][number]) => card.label ?? (typeof card.title === 'string' ? card.title : undefined);
+
 const cardTitle = (columns: BoardColumn[], cardId: string) =>
   columns.flatMap((c) => c.cards).find((c) => c.id === cardId)?.title ?? null;
 
@@ -394,8 +397,6 @@ function Column({
   labels,
   handle,
   onCardOpen,
-  open,
-  onOpenChange,
   onAddCard,
 }: {
   column: BoardColumn;
@@ -404,9 +405,6 @@ function Column({
   labels: BoardLabels;
   handle: boolean;
   onCardOpen?: (cardId: string) => void;
-  /** Whether the reader has opened this column. A collapsed column ignores it until they have. */
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
   /** Present when the board was given one. A column that refuses cards never offers it. */
   onAddCard?: (columnId: string) => void;
 }) {
@@ -414,23 +412,6 @@ function Column({
   const load = columnLoad(column);
   const holding = held?.at.columnId === column.id;
   const name = column.label ?? textOf(column.name, column.id);
-
-  // The strip is still the column: it stays a drop target and keeps its count, because a column nobody has
-  // opened is exactly the sort of place a card is about to be sent.
-  if (column.collapsed === true && !open) {
-    return (
-      <section ref={setNodeRef} className="cb-board__column" data-strip="" data-over={isOver ? '' : undefined}>
-        <button type="button" className="cb-board__strip" aria-label={labels.expand(name)} onClick={() => onOpenChange(true)}>
-          <span className="cb-board__strip-name" aria-hidden>
-            {column.name}
-          </span>
-          <span className="cb-board__count" data-over-limit={load.over ? '' : undefined}>
-            {typeof column.limit === 'number' ? `${load.count}/${column.limit}` : load.count}
-          </span>
-        </button>
-      </section>
-    );
-  }
 
   return (
     <section
@@ -445,11 +426,6 @@ function Column({
         <span className="cb-board__count" data-over-limit={load.over ? '' : undefined}>
           {typeof column.limit === 'number' ? `${load.count}/${column.limit}` : load.count}
         </span>
-        {column.collapsed === true ? (
-          <button type="button" className="cb-board__collapse" aria-label={labels.collapse(name)} onClick={() => onOpenChange(false)}>
-            ‹
-          </button>
-        ) : null}
       </header>
       <SortableContext items={column.cards.map((c) => c.id)} strategy={verticalListSortingStrategy}>
         <ol className="cb-board__list">
@@ -548,6 +524,7 @@ function Card({
           <button
             type="button"
             className="cb-board__title cb-board__open"
+            title={fullTitle(card)}
             onClick={() => onCardOpen(card.id)}
             disabled={card.disabled}
             aria-label={typeof card.title === 'string' ? undefined : (card.label ?? card.id)}
@@ -561,7 +538,7 @@ function Card({
             {card.title}
           </button>
         ) : (
-          <div className="cb-board__title">{card.title}</div>
+          <div className="cb-board__title" title={fullTitle(card)}>{card.title}</div>
         )}
         {card.meta ? <div className="cb-board__meta">{card.meta}</div> : null}
       </li>

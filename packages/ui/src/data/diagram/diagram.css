@@ -183,8 +183,11 @@
 .cb-diagram .react-flow__attribution a { color: var(--cb-fg-subtle); }
 
 /* The canvas and the inspector: side by side where there is room, the inspector below the canvas on a narrow
-   screen, where it reads as a sheet under the drawing. */
-.cb-diagram__body { container-type: inline-size; display: grid; gap: var(--cb-space-3); }
+   screen, where it reads as a sheet under the drawing. The editor is the container, not the body: an element
+   cannot query its own size, so with the body as both the query never matched and the inspector sat below the
+   canvas at any width. */
+.cb-diagram--editor[data-inspector="true"] { container-type: inline-size; }
+.cb-diagram__body { display: grid; gap: var(--cb-space-3); }
 .cb-diagram[data-inspector="true"] .cb-diagram__body { grid-template-columns: minmax(0, 1fr); }
 @container (min-width: 48rem) {
   .cb-diagram[data-inspector="true"] .cb-diagram__body { grid-template-columns: minmax(0, 1fr) minmax(16rem, 20rem); }
@@ -254,3 +257,47 @@
   .cb-diagram .cb-diagram__handle { border-color: CanvasText; }
   .cb-diagram .react-flow__edge-path { stroke: CanvasText; }
 }
+
+/* The palette (ceebee-ui#44): the kinds a person can add, above the canvas so it works on a phone too, each
+   drawn in its node shape. An item is a button — tapped or Enter asks for the node — and draggable. */
+.cb-diagram__palette {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cb-space-2);
+}
+.cb-diagram__palette-hint { font-size: var(--cb-text-sm); color: var(--cb-fg-muted); }
+.cb-diagram__palette-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cb-space-2);
+  min-block-size: var(--cb-control-floor);
+  padding: 0 var(--cb-space-3);
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-md);
+  background: var(--cb-bg);
+  color: var(--cb-fg);
+  font: inherit;
+  font-size: var(--cb-text-sm);
+  cursor: grab;
+}
+.cb-diagram__palette-item:hover { border-color: var(--cb-tone-brand); }
+.cb-diagram__palette-item:active { cursor: grabbing; }
+.cb-diagram__palette-item:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
+}
+
+/* A node renamed in place: the input takes the label's place and width. */
+.cb-diagram__rename {
+  inline-size: 100%;
+  min-inline-size: 0;
+  padding: var(--cb-space-1);
+  border: var(--cb-border-width) solid var(--cb-tone-brand);
+  border-radius: var(--cb-radius-sm);
+  background: var(--cb-bg);
+  color: var(--cb-fg);
+  font: inherit;
+  text-align: center;
+}
+.cb-diagram__rename:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: 0; }

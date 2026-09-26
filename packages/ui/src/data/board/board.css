@@ -93,7 +93,7 @@
   flex: 0 0 auto;
   /* How wide a lane is. The default is the width the board has always drawn; a product whose Stages are
      narrow — or whose page is — sets the seam rather than restyling the column from outside. */
-  inline-size: var(--cb-board-column-inline-size, 17rem);
+  inline-size: var(--cb-board-column-inline-size, 20rem);
   max-inline-size: 100%;
   display: flex;
   flex-direction: column;
@@ -102,11 +102,12 @@
   border: var(--cb-border-width) solid var(--cb-border);
   border-radius: var(--cb-radius-lg);
   background: var(--cb-bg-subtle);
-  /* The ceiling the page that owns the height gives the board. With one, each column scrolls its own
-     cards and the header that names it never scrolls away; without one — the default — a column is as
-     tall as its cards. Either way the surface stays as tall as the tallest column, so the horizontal
-     scrollbar sits under the columns and not below a fixed region they do not fill. */
-  max-block-size: var(--cb-board-max-block-size, none);
+  /* A column is as tall as its cards up to the viewport less the page chrome above the board, and then its
+     cards scroll inside it, under a header that never scrolls away — so the page does not scroll to reach
+     the bottom of a long column (ceebee-ui#43). A page sets `--cb-board-offset` to the chrome it has, or
+     `--cb-board-max-block-size` outright. The surface is only as tall as its tallest column, so the
+     horizontal scrollbar sits right under the columns rather than below a region they do not fill. */
+  max-block-size: var(--cb-board-max-block-size, calc(100dvh - var(--cb-board-offset, 14rem)));
   min-block-size: 0;
 }
 
@@ -125,69 +126,6 @@
 .cb-board__column[data-refuses] {
   background: var(--cb-bg);
   border-style: dashed;
-}
-
-/* ── a column kept as a strip ── */
-
-/* A column the consumer marks `collapsed` — an empty Stage, say — is a label rather than a lane, so a board
-   of mostly-empty Stages is not mostly empty space. It stays a column: a drop target that keeps its count,
-   because a Stage nobody has opened is exactly where a card is about to be sent. */
-.cb-board__column[data-strip] {
-  inline-size: auto;
-  padding: 0;
-}
-
-.cb-board__strip {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--cb-space-2);
-  block-size: 100%;
-  min-block-size: var(--cb-space-8);
-  padding: var(--cb-space-3) var(--cb-space-2);
-  border: 0;
-  border-radius: inherit;
-  background: transparent;
-  color: var(--cb-fg);
-  font: inherit;
-  cursor: pointer;
-}
-
-.cb-board__strip:hover { background: var(--cb-bg); }
-
-.cb-board__strip:focus-visible {
-  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
-  outline-offset: var(--cb-focus-offset);
-}
-
-/* Read down the strip: a name beside a count in a lane this narrow has room for neither. */
-.cb-board__strip-name {
-  writing-mode: vertical-rl;
-  font-size: var(--cb-text-sm);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.cb-board__collapse {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-inline-size: var(--cb-space-5);
-  min-block-size: var(--cb-space-5);
-  padding: 0;
-  border: 0;
-  border-radius: var(--cb-radius-sm);
-  background: transparent;
-  color: var(--cb-fg-subtle);
-  font: inherit;
-  cursor: pointer;
-}
-
-.cb-board__collapse:hover { color: var(--cb-fg); }
-
-.cb-board__collapse:focus-visible {
-  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
-  outline-offset: var(--cb-focus-offset);
 }
 
 .cb-board__head {
@@ -293,8 +231,8 @@
   font-size: var(--cb-text-sm);
   color: var(--cb-fg);
   line-height: var(--cb-leading-tight);
-  /* A long title clamps rather than stretching its own card and the cards beside it. The full name
-     belongs in a tooltip the consumer supplies around the title. */
+  /* A long title clamps to two lines rather than stretching its own card and the cards beside it; the whole
+     title is the element's `title` tooltip and still its content, so the accessible name is never cut. */
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -304,6 +242,11 @@
 .cb-board__meta {
   font-size: var(--cb-text-xs);
   color: var(--cb-fg-muted);
+  /* Badges wrap onto another line rather than being clipped at the card's edge. */
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cb-space-1);
+  min-inline-size: 0;
 }
 
 /* When a card's title is the open control it is a control, not a caption, and it takes the control floor
@@ -311,7 +254,29 @@
    control — no `onCardOpen` — stays a title and is not given a button's box. */
 .cb-board__open {
   min-block-size: var(--cb-control-floor);
+  /* A title, not a grey button box: the browser's button chrome is reset, and hover and focus say it opens. */
+  inline-size: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--cb-fg);
+  font: inherit;
+  font-size: var(--cb-text-sm);
+  font-weight: 600;
+  text-align: start;
+  cursor: pointer;
 }
+
+.cb-board__open:hover:not(:disabled) { text-decoration: underline; }
+
+.cb-board__open:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+  outline-offset: var(--cb-focus-offset);
+  border-radius: var(--cb-radius-sm);
+}
+
+.cb-board__open:disabled { cursor: not-allowed; color: var(--cb-fg-muted); }
 
 /* The column's own way to add a card: a footer, after the cards, so it does not move as they arrive. It is
    not a drop target — the card it stands for does not exist yet — and it names its column, so a screen
@@ -377,6 +342,20 @@
   font: inherit;
   font-size: var(--cb-text-sm);
   cursor: pointer;
+}
+
+/* A lane is one line: a long Stage name ellipsises with its whole name as the tooltip, rather than wrapping
+   a pill into a bubble three lines tall. */
+.cb-board__lane {
+  flex: 0 0 auto;
+  max-inline-size: 14rem;
+  white-space: nowrap;
+}
+
+.cb-board__lane-name {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cb-board__lane[aria-selected='true'] {

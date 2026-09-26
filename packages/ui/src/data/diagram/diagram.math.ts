@@ -23,7 +23,7 @@ export function toCells(position: DiagramPosition, cell: number): DiagramPositio
 export function toFlowNodes(
   nodes: readonly DiagramNode[],
   cell: number,
-  state: { selectedId?: string | null; connectingFrom?: string | null; connectable: boolean },
+  state: { selectedId?: string | null; connectingFrom?: string | null; connectable: boolean; editingId?: string | null },
 ): DiagramFlowNode[] {
   return nodes.map((node) => ({
     id: node.id,
@@ -37,6 +37,7 @@ export function toFlowNodes(
       tone: node.tone,
       connecting: state.connectingFrom === node.id,
       connectable: state.connectable,
+      editing: state.editingId === node.id,
     },
   }));
 }
@@ -163,7 +164,8 @@ export function mergeFlowNodes(current: DiagramFlowNode[], next: readonly Diagra
       previous.data.shape === node.data.shape &&
       previous.data.tone === node.data.tone &&
       previous.data.connecting === node.data.connecting &&
-      previous.data.connectable === node.data.connectable;
+      previous.data.connectable === node.data.connectable &&
+      previous.data.editing === node.data.editing;
     if (same) return previous;
     changed = true;
     return { ...node, selected: previous.selected, measured: previous.measured };

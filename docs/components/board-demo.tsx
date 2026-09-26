@@ -1,7 +1,7 @@
 'use client';
 
 import { Board, type BoardColumn, type BoardMove } from '@ceebee/ui/client';
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { Demo } from './demo';
 
 const START: BoardColumn[] = [
@@ -157,6 +157,40 @@ export function BoardRefusalDemo() {
         }}
       />
       <p>Moving into “Doing” is always refused here: the card goes back and the reason is announced.</p>
+    </Demo>
+  );
+}
+
+/* Fourteen Stages of a construction flow, as a real board has them: most hold a job or two, some are
+   empty, one is long enough to scroll inside its column, and some titles are longer than two lines. */
+const STAGES = [
+  'Enquiry', 'Site visit', 'Estimate', 'Quotation sent', 'Negotiation', 'Contract', 'Down payment',
+  'Mobilisation', 'Foundation', 'Structure', 'Roof', 'Finishing', 'Handover', 'Retention',
+];
+
+const WIDE: BoardColumn[] = STAGES.map((stage, i) => ({
+  id: `s${i}`,
+  name: stage,
+  empty: 'Nothing at this stage',
+  cards: Array.from({ length: i === 8 ? 12 : i % 3 === 1 ? 0 : 2 }, (_, n) => ({
+    id: `s${i}-${n}`,
+    title: n === 0 && i % 2 === 0
+      ? `Two-storey house, Cluster Melati block C number ${i + n} — foundation, structure and roof`
+      : `Job ${i}-${n}`,
+    meta: n % 2 === 0 ? 'due Friday · Budi · waiting on materials' : '3 days',
+  })),
+}));
+
+export function BoardWideDemo() {
+  const [columns, setColumns] = useState(WIDE);
+  return (
+    <Demo
+      layout="block"
+      code={`<Board columns={fourteenStages} onMove={…} layout="board" />`}
+    >
+      <div style={{ '--cb-board-max-block-size': '28rem' } as CSSProperties}>
+        <Board columns={columns} onMove={(move) => setColumns((c) => apply(c, move))} layout="board" aria-label="Construction flow" />
+      </div>
     </Demo>
   );
 }

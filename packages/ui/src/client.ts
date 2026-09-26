@@ -8,6 +8,8 @@
 export * from 'antd';
 export { Modal } from './overlay/modal.js';
 export type { ModalProps } from './overlay/modal.js';
+export { Select } from './form/select.js';
+export type { SelectProps } from './form/select.js';
 export { ThemeBridge } from './theme/theme-bridge.js';
 export type { ThemeBridgeProps } from './theme/theme-bridge.js';
 export { CeebeeAntStyleProvider } from './theme/ant-style-provider.js';
@@ -118,6 +120,8 @@ export type {
   DiagramProps,
   DiagramRemoval,
   DiagramRenameTarget,
+  DiagramAddRequest,
+  DiagramPaletteItem,
   DiagramShape,
   DiagramSkeletonProps,
 } from './data/diagram/index.js';

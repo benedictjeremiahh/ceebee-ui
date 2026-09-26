@@ -17,6 +17,12 @@ import type { DiagramEdge, DiagramNode, DiagramShape } from './diagram.types.js'
  */
 export const FIT_VIEW: FitViewOptions = { minZoom: 0.8, padding: 0.1 };
 
+/**
+ * Scroll and a two-finger swipe pan, the way every page and trackpad does; pinch, Ctrl/⌘ + wheel and the
+ * − / + / fit controls zoom (ceebee-ui#44). A wheel that zoomed fought the page the canvas sits in.
+ */
+export const SCROLL_PANS = { panOnScroll: true, zoomOnScroll: false, zoomOnPinch: true } as const;
+
 /** Stable across renders: React Flow re-mounts every node when this object changes identity. */
 export const NODE_TYPES: NodeTypes = { [FLOW_NODE_TYPE]: DiagramNodeView };
 

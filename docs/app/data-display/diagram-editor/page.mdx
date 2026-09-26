@@ -16,7 +16,24 @@ The editor runs on the React Flow runtime (`@xyflow/react`) and keeps its intera
 re-implementing one. Nodes and edges are focusable; `Enter` or `Space` selects the focused one, arrow keys
 move selected nodes one grid cell, and `Delete` or `Backspace` asks to remove the selection. With a pointer,
 drag a node to move it, drag from one handle to another to connect — or click one handle and then another,
-which works on touch — and drag the background to pan.
+which works on touch — and drag the background to pan. **Scroll or a two-finger swipe pans** (Shift + scroll
+pans sideways); **pinch, Ctrl/⌘ + scroll and the − / + / fit controls zoom** — a wheel that zoomed fought the
+page and every trackpad habit. The read-only `Diagram` does the same.
+
+## Adding a node from the palette
+
+`palette` lists the kinds a person can add, each drawn in its node shape with its `description` as a
+tooltip. Drag one onto the canvas and `onAddNode({ kind, position })` asks for it centred where it was
+dropped, in whole cells. A drag is not the only way: a tap, a click or `Enter` asks for it in the middle of
+what is visible, so touch screens and keyboards can add nodes too (WCAG 2.5.7). Like every change it is a
+request — the node appears when you add it to `nodes`.
+
+## Renaming in place
+
+Set `editingId` to a node's id and it shows an input where its label was — set it to the id of a node you
+just added, so a new node is named where it sits. `Enter` or leaving the input calls
+`onRenameSubmit(id, label)`; `Escape`, or an empty or unchanged name, calls `onRenameCancel`. `F2` still
+reports `onRename({ kind, id })`, so a caller can start the same inline rename from the keyboard.
 
 Nothing is applied by the component. A move is reported in whole cells when the drag ends or the key is
 pressed, and snaps back unless the caller updates `nodes`; a connection, a removal (a node brings the edges
@@ -57,6 +74,14 @@ text as a tooltip; `legendLabels` names the node shapes in use.
   { name: 'renderInspector', type: '(selection: DiagramSelection | null) => ReactNode', description: 'The panel that says what is selected and offers its actions as buttons. null when nothing is selected.' },
   { name: 'inspectorLabel', type: 'string', default: 'Selection', description: 'Accessible name for the inspector panel.' },
   { name: 'legendLabels', type: 'Partial<Record<DiagramShape, string>>', description: 'Names for the node shapes; given, a legend lists the shapes in use.' },
+  { name: 'palette', type: 'DiagramPaletteItem[]', description: '{ kind, label, shape, tone?, description? } — the kinds a person can drag or tap in.' },
+  { name: 'onAddNode', type: '({ kind, position }) => void', description: 'An add request, centred on the drop point or the visible middle, in whole cells.' },
+  { name: 'paletteLabel', type: 'string', default: 'Add a node', description: 'Accessible name for the palette.' },
+  { name: 'paletteHint', type: 'string', description: 'One line shown in the palette.' },
+  { name: 'editingId', type: 'string | null', description: 'The node renamed in place.' },
+  { name: 'onRenameSubmit', type: '(id, label) => void', description: 'The new name, trimmed, on Enter or leaving the input.' },
+  { name: 'onRenameCancel', type: '() => void', description: 'Escape, or an empty or unchanged name.' },
+  { name: 'renameLabel', type: '(label) => string', default: '`Rename ${label}`', description: 'Accessible name for the rename input.' },
 ]}/>
 
 ## Skeleton
