@@ -93,6 +93,46 @@ describe('scheduleRows', () => {
   it('marks nothing late without a today', () => {
     expect(first(scheduleRows([item({ end: '2020-01-09' })])).late).toBe(false);
   });
+
+  it('draws planned only when no actuals were reported — never a guessed actual', () => {
+    const row = first(scheduleRows([item()]));
+    expect(row.actual).toBeNull();
+    expect(row.planned).toEqual({ left: 0, width: 100 });
+    expect(row.overran).toBe(false);
+  });
+
+  it('places the actual span inside the planned one by proportion', () => {
+    const row = first(
+      scheduleRows([item({ start: '2026-01-05', end: '2026-01-10', actual: { start: '2026-01-06', end: '2026-01-08' } })]),
+    );
+    expect(row.planned).toEqual({ left: 0, width: 100 });
+    expect(row.actual).toEqual({ left: 20, width: 40 });
+    expect(row.overran).toBe(false);
+  });
+
+  it('stretches the row to the union and flags the overrun when actuals run past the plan', () => {
+    const row = first(
+      scheduleRows([item({ start: '2026-01-05', end: '2026-01-08', actual: { start: '2026-01-06', end: '2026-01-10' } })]),
+    );
+    expect(row.spanEnd.toISOString()).toBe('2026-01-10T00:00:00.000Z');
+    expect(row.planned).toEqual({ left: 0, width: 60 });
+    expect(row.actual).toEqual({ left: 20, width: 80 });
+    expect(row.overran).toBe(true);
+  });
+
+  it('drops actuals that are not days rather than guessing, and keeps the plan', () => {
+    const row = first(scheduleRows([item({ actual: { start: 'soon', end: '2026-01-08' } })]));
+    expect(row.actual).toBeNull();
+    expect(row.planned).toEqual({ left: 0, width: 100 });
+  });
+
+  it('draws an actual whose end is before its start as a single day', () => {
+    const row = first(
+      scheduleRows([item({ start: '2026-01-05', end: '2026-01-09', actual: { start: '2026-01-08', end: '2026-01-06' } })]),
+    );
+    expect(row.actual?.left).toBeCloseTo(75);
+    expect(row.actual?.width).toBeCloseTo(25);
+  });
 });
 
 describe('lateWeightShare', () => {

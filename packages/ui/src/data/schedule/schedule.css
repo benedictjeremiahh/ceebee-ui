@@ -75,12 +75,15 @@
   overflow: hidden;
 }
 
-/* The bar's content, drawn inside the substrate's positioned bar: the fill is how much is reported done,
-   and a late bar is toned danger. The grid row carries the name, so the bar carries no text. */
+/* The bar's content, drawn inside the substrate's positioned bar. Without actuals it is the old
+   single bar: the fill is how much is reported done, and a late bar is toned danger. With actuals the
+   planned bar is the track (an outline) and the actual bar sits on it — the grid row carries the name,
+   so neither carries text except the optional percent reading. */
 .cb-schedule__bar {
   block-size: 100%;
   display: block;
   inline-size: 100%;
+  position: relative;
 }
 
 .cb-schedule__bar-fill {
@@ -89,8 +92,38 @@
   display: block;
 }
 
-.cb-schedule__bar[data-late] .cb-schedule__bar-fill {
+.cb-schedule__bar[data-late]:not([data-actual]) .cb-schedule__bar-fill {
   background: var(--cb-tone-danger);
+}
+
+.cb-schedule__bar-planned {
+  border: var(--cb-border-width) solid var(--cb-tone-brand);
+  border-radius: var(--cb-radius-sm);
+  display: block;
+  inset-block: 0;
+  position: absolute;
+}
+
+.cb-schedule__bar-actual {
+  background: var(--cb-tone-brand);
+  border-radius: var(--cb-radius-sm);
+  display: block;
+  inset-block: 3px;
+  position: absolute;
+}
+
+.cb-schedule__bar[data-late] .cb-schedule__bar-actual,
+.cb-schedule__bar[data-overran] .cb-schedule__bar-actual {
+  background: var(--cb-tone-danger);
+}
+
+.cb-schedule__bar-percent {
+  color: var(--cb-fg-muted);
+  font-size: var(--cb-text-xs);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
 }
 
 /* Today, stated above the axis. The substrate's own vertical marker is a PRO feature, so this is the

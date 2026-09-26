@@ -11,6 +11,10 @@ const DEFAULTS: ScheduleLabels = {
   item: 'Work item',
   today: 'Today',
   progress: (percent) => `${percent}% done`,
+  actual: (start, end) => `actual ${start}–${end}`,
+  notStarted: 'not started',
+  overran: 'past the plan',
+  late: 'late',
 };
 
 /**
@@ -21,7 +25,7 @@ const DEFAULTS: ScheduleLabels = {
  * needs, lateness is decided against `today` and weighted in basis points, and every colour comes from
  * Tokens — the substrate's `--wx-*` properties are pointed at `--cb-*` in `schedule.css`.
  */
-function ScheduleRoot({ items, today, labels, editable = false, height = 320, className }: ScheduleProps) {
+function ScheduleRoot({ items, today, labels, editable = false, percentLabels = true, height = 320, className }: ScheduleProps) {
   const text = { ...DEFAULTS, ...labels };
   const rows = useMemo(() => scheduleRows(items, today), [items, today]);
 
@@ -30,17 +34,23 @@ function ScheduleRoot({ items, today, labels, editable = false, height = 320, cl
       rows.map((row) => ({
         id: row.item.id,
         text: row.item.label,
-        start: row.start,
-        end: row.end,
+        start: row.spanStart,
+        end: row.spanEnd,
         /* The substrate wants a percentage; the plan states a fraction. Absent progress is drawn as
            nothing done rather than as an unknown, because a bar with no fill is the honest reading of
            "nobody has reported". */
-        progress: Math.round((row.progress ?? 0) * 100),
-        // Read by the template below, not by the substrate: a late, unfinished row.
+        progress: Math.round(((row.progress ?? 0) * 100)),
+        // Read by the template below, not by the substrate: the planned track, the actual overlay,
+        // and whether the row is late or ran past its plan.
         late: row.late,
-        weight: row.weight,
+        overran: row.overran,
+        planned: row.planned,
+        actual: row.actual,
+        actualStart: row.actual ? row.item.actual?.start ?? null : null,
+        actualEnd: row.actual ? row.item.actual?.end ?? null : null,
+        showPercent: percentLabels && row.progress !== null,
       })),
-    [rows],
+    [rows, percentLabels],
   );
 
   if (items.length === 0) return <p className={cn('cb-schedule__empty', className)}>{text.empty}</p>;
@@ -63,16 +73,48 @@ function ScheduleRoot({ items, today, labels, editable = false, height = 320, cl
         taskTemplate={({ data }) => {
           const percent = data.progress ?? 0;
           const label = data.text ?? '';
+          const planned = (data.planned ?? { left: 0, width: 100 }) as { left: number; width: number };
+          const actual = (data.actual ?? null) as { left: number; width: number } | null;
+          const words = [
+            label,
+            text.progress(percent),
+            actual && data.actualStart && data.actualEnd
+              ? text.actual(String(data.actualStart), String(data.actualEnd))
+              : text.notStarted,
+            data.late === true ? text.late : null,
+            data.overran === true ? text.overran : null,
+          ].filter((word): word is string => word !== null);
           return (
             /* The grid already names the row, so the bar does not repeat it. It is a graphic, and its
-               name is the reading it carries: the item and how far along it is. */
+               name is the reading it carries: the plan against the actuals, and how far along it is. */
             <span
               className="cb-schedule__bar"
               data-late={data.late === true ? '' : undefined}
+              data-overran={data.overran === true ? '' : undefined}
+              data-actual={actual ? '' : undefined}
               role="img"
-              aria-label={`${label}, ${text.progress(percent)}`}
+              aria-label={words.join(', ')}
             >
-              <span className="cb-schedule__bar-fill" style={{ inlineSize: `${percent}%` }} />
+              <span
+                className="cb-schedule__bar-planned"
+                style={{ insetInlineStart: `${planned.left}%`, inlineSize: `${planned.width}%` }}
+              />
+              {actual ? (
+                <span
+                  className="cb-schedule__bar-actual"
+                  style={{ insetInlineStart: `${actual.left}%`, inlineSize: `${actual.width}%` }}
+                />
+              ) : (
+                <span className="cb-schedule__bar-fill" style={{ inlineSize: `${percent}%` }} />
+              )}
+              {data.showPercent === true ? (
+                <span
+                  className="cb-schedule__bar-percent"
+                  style={{ insetInlineStart: `min(calc(${actual ? actual.left + actual.width : percent}% + 4px), calc(100% - 2.5em))` }}
+                >
+                  {percent}%
+                </span>
+              ) : null}
             </span>
           );
         }}

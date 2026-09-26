@@ -13,6 +13,14 @@ export interface ScheduleItem {
   progress?: number;
   /** Basis points, so a late item can be weighted by how much it matters. Defaults to 10000 (all of it). */
   weight?: number;
+  /**
+   * When the work actually ran, as calendar days. Absent means nobody reported actuals yet — the row
+   * draws planned only, never a guessed actual. A consumer derives this from reports (never typed).
+   */
+  actual?: {
+    start: string;
+    end: string;
+  };
 }
 
 /** Every string the schedule says. Override any of them for a product that does not speak English. */
@@ -21,6 +29,10 @@ export interface ScheduleLabels {
   item: string;
   today: string;
   progress: (percent: number) => string;
+  actual: (start: string, end: string) => string;
+  notStarted: string;
+  overran: string;
+  late: string;
 }
 
 export interface ScheduleProps {
@@ -30,6 +42,8 @@ export interface ScheduleProps {
   labels?: Partial<ScheduleLabels>;
   /** Bars are read-only by default: a schedule is a view of someone else's plan, not a plan editor. */
   editable?: boolean;
+  /** The `%` reading at each actual bar. On by default; a caller with 30+ rows turns it off. */
+  percentLabels?: boolean;
   height?: number;
   className?: string;
 }
