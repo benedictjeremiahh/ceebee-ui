@@ -5,6 +5,19 @@
 Every released version, and what breaks when you move between them. Written from the changesets that
 shipped with each change.
 
+## 1.20.0
+
+### Minor Changes
+
+- 7efc6e1: `Board` for long boards (ceebee-ui#43): the `collapsed` column prop is deprecated and ignored — an empty column renders at full width with its `empty` content; columns default to 20rem; each column is as tall as its cards up to the viewport less `--cb-board-offset` (14rem) and then scrolls its cards under a header that stays, so the page does not scroll to reach a column's end; a card title clamped to two lines carries its whole text as a tooltip; badges in `meta` wrap. Also fixes a hydration mismatch: the drag-and-drop ids now come from React's `useId`, so a server render and the client agree.
+- 5532d38: `DiagramEditor` adds nodes from a `palette` — dragged onto the canvas, or tapped / Enter for the middle of the view — as `onAddNode(&#123; kind, position &#125;)` requests in whole cells, and renames a node in place through `editingId`, `onRenameSubmit` and `onRenameCancel`. In both `Diagram` and `DiagramEditor`, scroll and a two-finger swipe now pan; pinch, Ctrl/⌘ + scroll and the controls zoom.
+- 7d39f33: `Select` sizes itself to its options: the field is as wide as its longest option (12rem–28rem, never wider than its container), the dropdown may be wider than the field up to 32rem, and a value or option that still does not fit ellipsises with its whole text in a tooltip. A consumer width, `popupMatchSelectWidth`, `labelRender` or `optionRender` still wins.
+
+### Patch Changes
+
+- c5cf17b: `DiagramEditor`'s inspector sits beside the canvas when there is room, as `renderInspector` has claimed since it shipped (ceebee-ui#24). The editor's body was both the size container and the element its `@container` rule targeted, and an element cannot query its own size — so the rule never matched and the inspector stayed under the canvas at every width. The editor itself is the container now.
+- c5cf17b: `Select`'s stylesheet actually ships. `build-css.mjs` concatenates the CSS of named source folders, and Select sat outside every one of them, so its width cap and ellipsis never reached `dist/styles.css` — a form at 360px scrolled sideways for want of them. Select moves into a bundled folder, and the folder list moves to `css-groups.mjs`, shared by the build and a spec that fails when any stylesheet sits outside it, so the next one cannot go missing quietly.
+
 ## 1.19.0
 
 ### Minor Changes
