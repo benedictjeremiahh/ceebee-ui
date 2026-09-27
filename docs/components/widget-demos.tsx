@@ -1,6 +1,7 @@
 'use client';
 
-import { BarMini, Donut, Flex, Grid, Sparkline, Surface, Text } from '@ceebee/ui';
+import { Donut, Flex, Grid, Surface, Text } from '@ceebee/ui';
+import { BarMini, Sparkline } from '@ceebee/ui/client';
 import { Statistic } from '@ceebee/ui/client';
 import { Demo } from './demo';
 
@@ -48,6 +49,7 @@ export function SparklineDemo() {
           <Sparkline values={REVENUE} label="Revenue trend" />
           <Sparkline values={REVENUE} filled hue="teal" label="Revenue trend, filled" />
           <Sparkline values={[8, 8, 8, 8]} tone="neutral" label="Flat series" />
+          <Sparkline values={[8]} tone="neutral" label="Single point" />
           <BarMini values={SIGNUPS} hue="violet" label="Signups per day" />
         </Flex>
 

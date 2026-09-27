@@ -1909,15 +1909,59 @@
       "strategy": "ceebee",
       "source": [
         "packages/ui/src/data/cash-flow/cash-flow.tsx",
+        "packages/ui/src/data/cash-flow/cash-flow.chart.ts",
         "packages/ui/src/data/cash-flow/cash-flow.math.ts",
         "packages/ui/src/data/cash-flow/cash-flow.types.ts",
         "packages/ui/src/data/cash-flow/cash-flow.css"
       ],
       "demoPath": "docs/app/data-display/cash-flow-chart",
-      "interactionContract": "inflow bars above zero and outflow bars below per period, the running balance as a line from the opening balance; a period closing below the threshold is shaded and the lowest point marked; the breach and the lowest figure are stated in words above the plot. Periods become buttons (aria-pressed) only when onSelectPeriod is given; a visually hidden table carries every figure.",
+      "interactionContract": "inflow bars above zero and outflow bars below per period, the running balance as a line from the opening balance; a lowest-point marker and a sentence state the breach. Crosshair hover reveals exact per-period values; optional period buttons reveal the same detail on focus and request selection. A visually hidden table carries every exact figure.",
+      "runtime": {
+        "package": "lightweight-charts",
+        "version": "5.2.1",
+        "license": "Apache-2.0",
+        "loading": "dynamic import inside the mount effect"
+      },
       "substrate": [
-        "react"
+        "react",
+        "lightweight-charts"
       ]
+    },
+    "Sparkline": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/sparkline.tsx",
+        "packages/ui/src/data/mini-chart.chart.ts",
+        "packages/ui/src/data/mini-chart.math.ts",
+        "packages/ui/src/data/donut.css"
+      ],
+      "demoPath": "docs/app/data/sparkline",
+      "interactionContract": "read-only compact line or area with no visible axes, tooltip or selection; the accessible name states the series, and the exact value belongs beside the widget",
+      "runtime": {
+        "package": "lightweight-charts",
+        "version": "5.2.1",
+        "license": "Apache-2.0",
+        "loading": "dynamic import inside the mount effect"
+      },
+      "substrate": ["react", "lightweight-charts"]
+    },
+    "BarMini": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/sparkline.tsx",
+        "packages/ui/src/data/mini-chart.chart.ts",
+        "packages/ui/src/data/mini-chart.math.ts",
+        "packages/ui/src/data/donut.css"
+      ],
+      "demoPath": "docs/app/data/sparkline",
+      "interactionContract": "read-only compact histogram with no visible axes, tooltip or selection; the accessible name states the series, and the exact value belongs beside the widget",
+      "runtime": {
+        "package": "lightweight-charts",
+        "version": "5.2.1",
+        "license": "Apache-2.0",
+        "loading": "dynamic import inside the mount effect"
+      },
+      "substrate": ["react", "lightweight-charts"]
     },
     "TargetBars": {
       "strategy": "ceebee",

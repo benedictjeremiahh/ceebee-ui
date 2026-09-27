@@ -34,9 +34,9 @@ The package splits at the React Server Component boundary, and the split is deli
 content-heavy page can be built from `@ceebee/ui` alone and ship no animation runtime at all.
 
 - **`@ceebee/ui`** — server-safe. `Surface`, `Flex`, `Grid`, `Container`, `Text`, `Heading`,
-  `PageContainer`, and the widgets: `Donut`, `Sparkline`, `BarMini`, `Leaderboard`.
+  `PageContainer`, and the widgets `Donut` and `Leaderboard`.
 - **`@ceebee/ui/client`** — carries `"use client"`. The whole interactive catalogue — `Button`,
-  `Form`, `Input`, `Select`, `Table`, `Modal`, `Tabs`, and the rest — plus the app shell
+  `Form`, `Input`, `Select`, `Table`, `Modal`, `Tabs`, chart-backed `Sparkline` and `BarMini`, and the rest — plus the app shell
   (`Sidebar`, `TopBar`), `CommandPalette`, `Checklist`, and the providers.
 
 <Guidance
@@ -48,8 +48,9 @@ content-heavy page can be built from `@ceebee/ui` alone and ship no animation ru
 
 Saying no is what keeps it small enough to maintain alone.
 
-- **No charting.** Widgets with no axis (`Donut`, `Sparkline`) ship here; anything
-  with an axis or a scale belongs to your app's charting library.
+- **No second chart engine.** Time-series and mini charts use Lightweight Charts; Schedule uses its
+  dedicated Gantt substrate. Donut and TargetBars are non-time-series exceptions with their own
+  focused rendering contracts.
 - **No memory.** Whether a person has already completed an onboarding step is passed in by your app.
   The library never learns who your users are.
 - **No second way to do the same thing.** Where a component already exists, there is exactly one of

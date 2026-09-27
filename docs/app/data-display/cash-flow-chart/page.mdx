@@ -19,30 +19,35 @@ cash and is not one.
 
 ## What it states
 
-Above the plot, one sentence gives the two figures a decision needs: the first period that closes below the
-line and the lowest balance. A period that closes below the line is shaded, and the lowest point carries a
-small dot with its figure, so the trouble reads by position and fill as well as by colour. The zero line is
-drawn stronger than the grid, and axis ticks fall on round numbers.
+Above the plot, one sentence gives the two figures a decision needs: the first period below the
+threshold and the lowest balance. The period selector marks a dip, including one hidden inside a period
+that later closes above the threshold. A dot marks the lowest point on the plot; the sentence supplies
+its exact figure. Lightweight Charts draws the bars, line, threshold, grid and numeric axis. Hover a
+period on the plot to read its exact inflow, outflow and closing balance without interpreting the
+compact axis labels. If the period's intra-period low differs from its close, the detail shows that too.
 
 ## Periods are the consumer's
 
 The chart does not bucket. Pass days, weeks or months, each with its `start` day, `inflow` and `outflow`
 (positive; a negative outflow is read as the same amount). A period bucketed from finer figures can dip and recover
 inside itself — a week that is overdrawn on Wednesday and paid on Friday closes above zero. Pass its `low`
-(the lowest balance within it) and the chart reads that against the line, shades the period and marks the
-dip, so a mid-period shortfall is never hidden by the close. `formatPeriod` names a period; by default it is
-its start day in the document's language. With many periods, every *n*-th label is shown so none overlap.
+(the lowest balance within it) and the chart reads that against the threshold, marks its period and plots
+the dip, so a mid-period shortfall is never hidden by the close. `formatPeriod` names a period on the
+chart's axis and in the selector; by default it is its start day in the document's language. The
+axis chooses which labels fit at the available width.
 
 ## Interaction contract
 
 Read-only unless `onSelectPeriod` is given. Then each period is a button named with its date and all three
-figures, `aria-pressed` for `selectedPeriod`, so the consumer can list what is behind it beside the chart.
+exact figures, `aria-pressed` for `selectedPeriod`, so the consumer can list what is behind it beside the chart.
+Keyboard focus on a period button reveals the same exact-value detail as hover.
 
 ## Accessibility
 
-A visually hidden table gives every period's in, out and balance; the drawing is `aria-hidden`. Under
-`forced-colors: active` the bars and line keep system colours and the table comes into view; under
-`prefers-reduced-motion: reduce` the bars do not grow into place.
+A visually hidden table gives every period's in, out and balance; the canvas is `aria-hidden` because
+the table is the exact accessible rendering. Under `forced-colors: active` the canvas is replaced by
+the visible table. Pass `formatExact` when `format` abbreviates the axis; the library has no currency
+assumption. The chart has no entry animation, including under reduced motion.
 
 <Guidance
   do="Use it for a forecast where the reader has to see which flows cause a dip."
@@ -56,12 +61,14 @@ A visually hidden table gives every period's in, out and balance; the drawing is
   { name: 'opening', type: 'number', description: 'The balance before the first period. Required.' },
   { name: 'periods', type: 'CashFlowPeriod[]', description: '`{ id, start, inflow, outflow, low? }` in order; `low` is the lowest balance within the period.' },
   { name: 'format', type: '(value: number) => string', description: 'How a value is written. The product owns this.' },
+  { name: 'formatExact', type: '(value: number) => string', default: 'format', description: 'Full-precision values for hover, focused period buttons and the accessible table.' },
   { name: 'formatPeriod', type: '(start: string) => string', description: 'How a period is named. Defaults to its start day.' },
   { name: 'threshold', type: '{ value: number; label?: string }', default: '{ value: 0 }', description: 'The line the balance is read against.' },
   { name: 'onSelectPeriod', type: '(id: string) => void', description: 'Makes each period a button.' },
   { name: 'selectedPeriod', type: 'string', description: 'The period whose detail the consumer is showing.' },
   { name: 'height', type: 'number', default: '240', description: 'Plot height in pixels.' },
   { name: 'inflowLabel / outflowLabel / balanceLabel', type: 'string', default: "'In' / 'Out' / 'Balance'", description: 'Legend, table and button words.' },
+  { name: 'lowestLabel', type: 'string', default: "'Low'", description: 'Hover label when the lowest intra-period balance differs from the closing balance.' },
   { name: 'belowLabel', type: '(from, lowest, periods) => string', description: 'The sentence when the balance goes below the line.' },
   { name: 'clearLabel', type: '(lowest) => string', description: 'The sentence when it never does.' },
   { name: 'tableLabel', type: 'string', default: "'Cash flow by period'", description: 'Caption of the hidden table.' },
@@ -72,8 +79,7 @@ A visually hidden table gives every period's in, out and balance; the drawing is
 
 ## Tokens
 
-`--cb-tone-success` fills inflows, `--cb-tone-danger` mixed with `--cb-fg-subtle` fills outflows,
-`--cb-tone-brand` draws the balance and the low point, `--cb-tone-danger` shades a period below the line and
-colours the breach sentence, `--cb-border` the grid, `--cb-fg-muted` the zero line and the axis text,
-`--cb-focus-width` the focus ring, `--cb-radius-sm`, `--cb-space-*`, `--cb-text-xs`, `--cb-text-sm`, and
-`--cb-duration-deliberate` with `--cb-ease-entrance` for the bars growing in.
+`--cb-tone-success` fills inflows, `--cb-tone-danger` fills outflows and marks a period below the
+threshold, `--cb-tone-brand` draws the balance and low point, `--cb-border` draws the grid and selector
+separator, `--cb-fg-muted` the axis text, `--cb-focus-width` the focus ring, and the existing
+`--cb-radius-*`, `--cb-space-*`, and `--cb-text-*` Tokens size the component.

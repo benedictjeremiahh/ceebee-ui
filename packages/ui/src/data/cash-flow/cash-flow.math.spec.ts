@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cashFlowReading, cashFlowRows, cashFlowScale, heightOf } from './cash-flow.math.js';
+import { cashFlowReading, cashFlowRows } from './cash-flow.math.js';
 
 const PERIODS = [
   { id: 'w1', start: '2026-09-28', inflow: 0, outflow: 30 },
@@ -35,37 +35,11 @@ describe('cashFlowReading', () => {
   });
 });
 
-describe('cashFlowScale', () => {
-  it('holds every bar, every balance and zero, on round ticks', () => {
-    const scale = cashFlowScale(cashFlowRows(50, PERIODS));
-    // Outflows reach −40, inflows 120, balances −10…90.
-    expect(scale.min).toBeLessThanOrEqual(-40);
-    expect(scale.max).toBeGreaterThanOrEqual(120);
-    expect(scale.ticks).toContain(0);
-    for (const tick of scale.ticks) expect(Math.abs(tick % scale.step)).toBe(0);
-  });
-
-  it('gives an all-zero set a span so nothing divides by zero', () => {
-    const scale = cashFlowScale(cashFlowRows(0, [{ id: 'a', start: '2026-09-28', inflow: 0, outflow: 0 }]));
-    expect(scale.max).toBeGreaterThan(scale.min);
-  });
-});
-
-describe('heightOf', () => {
-  it('places a value as a percentage up the plot', () => {
-    const scale = { min: -50, max: 150, step: 50, ticks: [-50, 0, 50, 100, 150] };
-    expect(heightOf(-50, scale)).toBe(0);
-    expect(heightOf(0, scale)).toBe(25);
-    expect(heightOf(150, scale)).toBe(100);
-  });
-});
-
 describe('a dip inside a period', () => {
   it('reads a period\'s low against the line even when it closes above it', () => {
     const rows = cashFlowRows(50, [{ id: 'w1', start: '2026-09-28', inflow: 40, outflow: 30, low: -5 }]);
     expect(rows[0]).toMatchObject({ balance: 60, lowest: -5 });
     expect(cashFlowReading(rows, 0)).toMatchObject({ lowest: -5, firstBelowIndex: 0, periodsBelow: 1 });
-    expect(cashFlowScale(rows).min).toBeLessThanOrEqual(-5);
   });
 
   it('ignores a low that is not lower than the close', () => {

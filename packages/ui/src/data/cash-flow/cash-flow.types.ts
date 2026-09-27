@@ -9,6 +9,8 @@ export interface CashFlowChartProps {
   periods: CashFlowPeriod[];
   /** How a value is written. The library holds no currency. */
   format: (value: number) => string;
+  /** Full-precision value for hover details, the accessible table and period buttons. Defaults to `format`. */
+  formatExact?: (value: number) => string;
   /** How a period is named on the axis and in the table. Defaults to its start day in the document's locale. */
   formatPeriod?: (start: string) => string;
   /** The line the balance is read against. Defaults to zero. */
@@ -21,6 +23,7 @@ export interface CashFlowChartProps {
   inflowLabel?: string;
   outflowLabel?: string;
   balanceLabel?: string;
+  lowestLabel?: string;
   tableLabel?: string;
   emptyLabel?: string;
   /** The reading's sentence when the balance goes below the line: the first period, the lowest figure, how many. */

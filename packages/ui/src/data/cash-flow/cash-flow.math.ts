@@ -1,11 +1,9 @@
 /**
- * What a cash flow says about itself — the scale and reading behind `CashFlowChart`.
+ * What a cash flow says about itself — the reading behind `CashFlowChart`.
  *
  * A running balance shows *that* cash dips; the flows per period show *why*. Both are computed here, away
- * from the drawing, because these are the parts that can be wrong: a balance that forgets the opening
- * figure, or a scale that clips the one bar the reader needed to see.
+ * from the drawing, because a balance that forgets the opening figure is wrong.
  */
-import { niceRange } from '../time-series/time-series.math.js';
 
 export interface CashFlowPeriod {
   /** Stable key for the period. */
@@ -41,13 +39,6 @@ export interface CashFlowReading {
   closing: number | null;
 }
 
-export interface CashFlowScale {
-  min: number;
-  max: number;
-  step: number;
-  ticks: number[];
-}
-
 /** Each period with its net flow and the balance it closes on, running from `opening`. */
 export function cashFlowRows(opening: number, periods: readonly CashFlowPeriod[]): CashFlowRow[] {
   let balance = opening;
@@ -74,23 +65,4 @@ export function cashFlowReading(rows: readonly CashFlowRow[], threshold = 0): Ca
     periodsBelow: rows.filter((row) => row.lowest < threshold).length,
     closing: rows.at(-1)?.balance ?? null,
   };
-}
-
-/**
- * One scale for bars and line, always containing zero: inflows stand up from it, outflows hang down, and the
- * balance crosses it. Rounded outwards to ticks of 1, 2 or 5 × 10ⁿ so no label carries a trivial decimal.
- */
-export function cashFlowScale(rows: readonly CashFlowRow[], target = 4): CashFlowScale {
-  const values = rows.flatMap((row) => [row.inflow, -row.outflow, row.balance, row.lowest]);
-  const low = Math.min(0, ...values);
-  const high = Math.max(0, ...values);
-  const { min, max, step } = high === low ? { min: low, max: low + 1, step: 1 } : niceRange(low, high, target);
-  const ticks: number[] = [];
-  for (let tick = min; tick <= max + step / 2; tick += step) ticks.push(Math.round(tick / step) * step || 0);
-  return { min, max, step, ticks };
-}
-
-/** How far up the plot a value sits, as a percentage of its height. */
-export function heightOf(value: number, scale: CashFlowScale): number {
-  return ((value - scale.min) / (scale.max - scale.min)) * 100;
 }

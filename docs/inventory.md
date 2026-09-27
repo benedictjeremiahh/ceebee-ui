@@ -80,7 +80,7 @@ replaced the `Field` wiring they shared.
 | Board (+ `.Skeleton`) | Composition | client | built |
 | Statistic (+ `.Skeleton`) | Composition | server | S1 |
 | Donut | Widget | server | S2 — built |
-| Sparkline / BarMini | Widget | server | S2 — built |
+| Sparkline / BarMini | Widget | client | S2 — built on Lightweight Charts |
 | Table (+ `.Skeleton`) | Composition | client | S3 — built |
 | Leaderboard (+ `.Skeleton`) | Composition | server | S3 — built |
 | Timeline (+ `.Skeleton`) | Composition | server | S4 — built |

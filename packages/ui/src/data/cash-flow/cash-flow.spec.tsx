@@ -26,10 +26,12 @@ describe('CashFlowChart', () => {
     expect(rows[2]).toHaveTextContent('2026-10-05Rp 10Rp 40Rp -10');
   });
 
-  it('shades a period that closes below the line', () => {
+  it('marks a period that closes below the line beside its readable period label', () => {
     const { container } = render(<CashFlowChart label="Kas" opening={50} periods={PERIODS} format={money} />);
-    const columns = container.querySelectorAll('.cb-cash-flow__column');
-    expect([...columns].map((column) => column.getAttribute('data-below'))).toEqual([null, 'true', null]);
+    const periods = container.querySelectorAll('.cb-cash-flow__period');
+    expect([...periods].map((period) => period.getAttribute('data-below'))).toEqual([null, 'true', null]);
+    expect(container.querySelector('.cb-cash-flow__canvas')).toBeInTheDocument();
+    expect(container.querySelector('svg')).not.toBeInTheDocument();
   });
 
   it('makes each period a named button only when the consumer can show what is behind it', () => {
@@ -42,6 +44,17 @@ describe('CashFlowChart', () => {
     expect(button).toHaveAttribute('aria-pressed', 'true');
     fireEvent.click(button);
     expect(onSelect).toHaveBeenCalledWith('w2');
+  });
+
+  it('reveals exact amounts on keyboard focus while leaving the compact axis format intact', () => {
+    const exact = (value: number) => `Rp ${value.toLocaleString('id-ID')}`;
+    render(<CashFlowChart label="Kas" opening={50} periods={PERIODS} format={() => '0M'} formatExact={exact}
+      formatPeriod={(day) => day} onSelectPeriod={() => undefined} inflowLabel="Masuk" outflowLabel="Keluar" balanceLabel="Saldo" />);
+    const button = screen.getByRole('button', { name: '2026-10-05: Masuk Rp 10, Keluar Rp 40, Saldo Rp -10' });
+    fireEvent.focus(button);
+    expect(screen.getByTestId('cash-flow-detail')).toHaveTextContent('MasukRp 10KeluarRp 40SaldoRp -10');
+    fireEvent.blur(button);
+    expect(screen.queryByTestId('cash-flow-detail')).not.toBeInTheDocument();
   });
 
   it('shows the empty wording when there are no periods', () => {

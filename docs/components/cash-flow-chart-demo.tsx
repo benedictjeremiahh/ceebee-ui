@@ -22,6 +22,7 @@ function compact(value: number): string {
   if (size === 0) return '0';
   return size >= 1e6 ? `${sign}${(size / 1e6).toFixed(0)}M` : `${sign}${Math.round(size / 1e3)}k`;
 }
+const exact = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 });
 
 export function CashFlowChartDemo() {
   const [week, setWeek] = useState<string | undefined>(undefined);
@@ -33,11 +34,13 @@ export function CashFlowChartDemo() {
   opening={40_000_000}
   periods={weeks}
   format={compact}
+  formatExact={(value) => exact.format(value)}
   onSelectPeriod={setWeek}
   selectedPeriod={week}
 />`}
     >
-      <CashFlowChart label="Cash, next six weeks" opening={40_000_000} periods={weeks} format={compact} onSelectPeriod={setWeek} selectedPeriod={week} />
+      <CashFlowChart label="Cash, next six weeks" opening={40_000_000} periods={weeks} format={compact} formatExact={exact.format}
+        onSelectPeriod={setWeek} selectedPeriod={week} />
       <p>{week ? `Showing what is behind ${week}.` : 'Press a week to list what is behind it.'}</p>
     </Demo>
   );

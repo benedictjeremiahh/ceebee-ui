@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { ArrowDownLeft, ArrowUpRight, Plus, Split } from 'lucide-react';
 
 import { Avatar, Badge, Button, Form, InputNumber, Modal, Switch, Timeline } from '@ceebee/ui/client';
-import { Flex, Sparkline, Surface, Text } from '@ceebee/ui';
+import { Flex, Surface, Text } from '@ceebee/ui';
+import { Sparkline } from '@ceebee/ui/client';
 
 const BALANCE_TREND = [18, 22, 19, 26, 24, 31, 29, 36, 34, 41];
 const money = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 });
