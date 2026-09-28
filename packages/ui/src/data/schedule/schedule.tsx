@@ -1,7 +1,7 @@
 'use client';
 
 import { Gantt, type IApi, type IColumnConfig } from '@svar-ui/react-gantt';
-import { Button } from 'antd';
+import { ConfigProvider } from 'antd';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { cn } from '../../lib/cn.js';
 import { useMediaQuery } from '../../lib/use-media-query.js';
@@ -15,6 +15,9 @@ import { ScheduleSkeleton } from './schedule.skeleton.js';
 import { ScheduleCells, ScheduleNameCell, ScheduleProgressCell, ScheduleVarianceCell } from './schedule-cells.js';
 import { scheduleScales } from './schedule.scales.js';
 import { useScheduleGridColor } from './use-schedule-grid-color.js';
+import { useScheduleFullscreen } from './use-schedule-fullscreen.js';
+import { ScheduleFullscreenTools } from './schedule-fullscreen-tools.js';
+import { ScheduleMobileItems } from './schedule-mobile-items.js';
 
 /** Shared calendar geometry; the consumer owns physical facts and measurement dates. */
 function ScheduleRoot({
@@ -28,12 +31,18 @@ function ScheduleRoot({
   view,
   onViewChange,
   onItemOpen,
+  fullscreen = false,
+  label,
+  toolbar,
+  footer,
+  children,
   height = 320,
   className,
 }: ScheduleProps) {
   const text = useMemo<ResolvedScheduleLabels>(() => ({ ...DEFAULT_SCHEDULE_LABELS, ...labels }), [labels]);
   const narrow = useMediaQuery('(max-width: 48rem)');
   const scheduleRef = useRef<HTMLDivElement>(null);
+  const presentation = useScheduleFullscreen(scheduleRef, fullscreen);
   useScheduleScaleTitles(scheduleRef, items.length > 0);
   const gridColor = useScheduleGridColor(scheduleRef, items.length > 0);
   const apiRef = useRef<IApi | null>(null);
@@ -129,7 +138,11 @@ function ScheduleRoot({
 
   if (rows.length === 0) return <p className={cn('cb-schedule__empty', className)}>{text.empty}</p>;
   return (
-    <div ref={scheduleRef} className={cn('cb-schedule', className)} data-mode={mode}>
+    <div ref={scheduleRef} className={cn('cb-schedule', className)} data-mode={mode}
+      data-fullscreen={presentation.mode} role={fullscreen ? 'region' : undefined}
+      aria-label={fullscreen ? label ?? text.item : undefined} tabIndex={fullscreen ? -1 : undefined}>
+      <ConfigProvider getPopupContainer={(trigger) => scheduleRef.current ?? trigger?.parentElement ?? document.body}>
+      <ScheduleFullscreenTools enabled={fullscreen} toolbar={toolbar} presentation={presentation} text={text} />
       {physical ? (
         <ScheduleControls
           api={apiRef}
@@ -149,7 +162,7 @@ function ScheduleRoot({
         </p>
       ) : null}
       {compact ? <p className="cb-schedule__pan">{text.pan}</p> : null}
-      <div className="cb-schedule__chart" style={{ height }} aria-busy={!mounted || !gridColor}>
+      <div className="cb-schedule__chart" style={{ height: presentation.mode === 'inline' ? height : undefined }} aria-busy={!mounted || !gridColor}>
         {mounted && gridColor ? (
           <ScheduleCells rows={rowById} text={text} onItemOpen={onItemOpen}>
             <Gantt
@@ -218,23 +231,10 @@ function ScheduleRoot({
           </ScheduleCells>
         ) : null}
       </div>
-      {compact ? (
-        <ol className="cb-schedule__mobile-items" aria-label={text.item}>
-          {rows.map((row) => (
-            <li key={row.item.id}>
-              <span>{row.item.label}</span>
-              <span className="cb-schedule__mobile-progress">
-                {row.progress === null ? text.unreported : `${Math.round(row.progress * 100)}%`}
-              </span>
-              {onItemOpen ? (
-                <Button type="link" onClick={() => onItemOpen(row.item.id)}>
-                  {text.details}
-                </Button>
-              ) : null}
-            </li>
-          ))}
-        </ol>
-      ) : null}
+      {compact ? <ScheduleMobileItems rows={rows} text={text} onItemOpen={onItemOpen} /> : null}
+      {footer ? <div className="cb-schedule__footer">{footer}</div> : null}
+      {children}
+      </ConfigProvider>
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { Schedule } from './schedule.js';
 import type { ScheduleLabels } from '../../client.js';
 
@@ -8,6 +8,21 @@ import type { ScheduleLabels } from '../../client.js';
    in a real browser; what is here is what the component decides before the substrate is involved. */
 
 describe('Schedule', () => {
+  it('contains the toolbar, legend and details in its expanded reading region', () => {
+    const context = vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(null);
+    render(<Schedule items={[{ id: 'a', label: 'Work', start: '2026-09-01', end: '2026-09-30' }]}
+      fullscreen label="Work schedule" toolbar={<button>Sort work</button>}
+      footer={<span>Physical progress legend</span>}><span>Item details</span></Schedule>);
+    const region = screen.getByRole('region', { name: 'Work schedule' });
+    fireEvent.click(screen.getByRole('button', { name: 'Expand view' }));
+    expect(region).toHaveAttribute('data-fullscreen', 'window');
+    expect(region).toContainElement(screen.getByRole('button', { name: 'Sort work' }));
+    expect(region).toContainElement(screen.getByText('Physical progress legend'));
+    expect(region).toContainElement(screen.getByText('Item details'));
+    fireEvent.keyDown(region, { key: 'Escape' });
+    expect(region).toHaveAttribute('data-fullscreen', 'inline');
+    context.mockRestore();
+  });
   it('provides a labelled loading placeholder at the same chart height', () => {
     render(<Schedule.Skeleton height={300} label="Loading physical schedule" />);
     expect(screen.getByRole('status')).toHaveAccessibleName('Loading physical schedule');

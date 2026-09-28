@@ -45,8 +45,14 @@ The name also has a full-text tooltip. Keep lifecycle completion separate from p
 
 Physical mode supplies full-range, today and Day/Week/Month controls. Initial fit selects a readable
 scale; a long range scrolls rather than squeezing its labels. Pass `view` and `onViewChange` to keep
-scale and scroll offsets across a fullscreen mount. Render only the active inline/fullscreen chart,
-so two mounted charts do not fight over the same controlled view. `Schedule.Skeleton` reserves the
+scale and scroll offsets. Enable `fullscreen` to promote this same mounted schedule through the
+browser's Fullscreen API. Where unavailable or denied, the explicit “Expand view” fallback fills
+the window, isolates outside controls, and restores focus on return. Neither mode creates a dialog.
+The exit action and Escape return to the inline view without losing scale, position or row controls.
+Pass `toolbar` and `footer` so controls and the legend remain inside the fullscreen root. Tooltips
+and menus resolve their popup container there. Render item details through `children` and use the
+detail component's inline-container API (for example `Modal getContainer={false}`); body-mounted
+portals otherwise sit behind the browser's fullscreen top layer. `Schedule.Skeleton` reserves the
 chart height while its data is loading. The caller supplies a legend for its graphical meanings.
 
 The grid and the bars are [SVAR React Gantt](https://svar.dev/react/gantt/) (`@svar-ui/react-gantt`,
@@ -82,6 +88,8 @@ time axis. The narrow view includes a pan hint because later dates extend beyond
   { name: 'mode', type: "'range' | 'physical'", default: "'range'", description: 'Physical mode fills the planned contour by completion; actual date overlays remain available in the default range mode.' },
   { name: 'view / onViewChange', type: 'ScheduleView / callback', description: 'Controlled scale, fit, left/top scroll offsets and initialized flag. Preserve this state across fullscreen mounts.' },
   { name: 'onItemOpen', type: '(id: string) => void', description: 'Explicit Details button for each item, including keyboard access. The consumer owns the detail surface.' },
+  { name: 'fullscreen / label', type: 'boolean / string', description: 'Opt-in native fullscreen with an isolated full-window fallback, and the accessible region name. Escape or the exit button restores the same inline chart.' },
+  { name: 'toolbar / footer / children', type: 'ReactNode', description: 'Controls, legend and inline item-detail surfaces that remain inside the fullscreen root.' },
   { name: 'percentLabels', type: 'boolean', default: 'false', description: 'Opt in to percentage badges on the bars. The aligned Actual column and narrow-screen item list show the reading by default.' },
   { name: 'editable', type: 'boolean', default: 'false', description: 'false (the default) draws the plan read-only. A schedule is a view of someone else\'s plan, not a plan editor.' },
   { name: 'height', type: 'number', default: '320', description: 'The drawing area\'s height in pixels.' },

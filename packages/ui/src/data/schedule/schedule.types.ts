@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 /**
  * A bar on the schedule: one item, its plan, and how far along it is.
  *
@@ -65,6 +67,12 @@ export interface ScheduleLabels {
   weekScale?: string;
   monthScale?: string;
   percent?: (percent: number) => string;
+  fullscreen?: string;
+  expandWindow?: string;
+  exitFullscreen?: string;
+  exitExpanded?: string;
+  fullscreenHint?: string;
+  expandedHint?: string;
 }
 
 export interface ScheduleView {
@@ -96,6 +104,15 @@ export interface ScheduleProps {
   view?: ScheduleView;
   onViewChange?: (view: ScheduleView) => void;
   onItemOpen?: (id: string) => void;
+  /** Opt in to native fullscreen with an isolated full-window fallback; no chart remount. */
+  fullscreen?: boolean;
+  /** Accessible name for the fullscreen region. */
+  label?: string;
+  /** Consumer controls and legend stay inside the same fullscreen root. */
+  toolbar?: ReactNode;
+  footer?: ReactNode;
+  /** Item detail surfaces; render portals within this root, e.g. Modal getContainer={false}. */
+  children?: ReactNode;
   height?: number;
   className?: string;
 }
