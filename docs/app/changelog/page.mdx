@@ -5,6 +5,28 @@
 Every released version, and what breaks when you move between them. Written from the changesets that
 shipped with each change.
 
+## 2.0.0
+
+### Major Changes
+
+- 4d9f9fd: Use Lightweight Charts for CashFlowChart, Sparkline and BarMini. CashFlowChart now supports `formatExact` for full-precision hover, focus and accessible table values while keeping a compact axis formatter. Donut and TargetBars remain non-time-series exceptions.
+
+  Migration: import `Sparkline`, `BarMini`, `SparklineProps` and `BarMiniProps` from `@ceebee/ui/client` instead of `@ceebee/ui`. They now mount a client-only chart. Remove imports of `sparklineGeometry`, `SparklineGeometry`, `cashFlowScale`, `CashFlowScale` and `heightOf`; the chart substrate owns scale and geometry, and those helpers no longer exist. Consumers that abbreviate cash values should pass a currency-aware `formatExact` in addition to the compact `format`.
+
+### Minor Changes
+
+- 5ad6434: Improve Schedule's mobile readability and client hydration, add a time-axis marker for today, and show completion in an aligned column rather than default bar badges. Keep unreported progress distinct from a reported zero. Label ProgressCurve gaps in percentage points. Give their visible reading dates locale-aware formatters while preserving machine-readable calendar days. Add responsive schedule controls, clarify Board presentation, and keep immovable cards inspectable through their title.
+- 5ad6434: Add GroupedBarChart for discrete nonnegative totals on a shared zero-based scale, with exact hover and keyboard readings, unknown-value handling, an accessible table, and a matching skeleton. It does not derive a running balance or imply a continuous trend.
+
+### Patch Changes
+
+- 5ad6434: Show an exact-value table inside the optional cash-flow disclosure instead of repeating date labels.
+  Preserve selectable period actions, balance adjustments and the forced-colors table fallback. Add
+  `periodLabel` for the period column heading.
+
+  Add `compact` to avoid a second date row in overview charts while retaining keyboard inspection and
+  the exact screen-reader table.
+
 ## 1.21.0
 
 ### Minor Changes
