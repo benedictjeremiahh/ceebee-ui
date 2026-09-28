@@ -23,7 +23,7 @@ import { spawn } from 'node:child_process';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chdir, platform } from 'node:process';
-import { npmUser, toMain, waitUntilPublished } from './release-flow.mjs';
+import { npmUser, ptyCommand, toMain, waitUntilPublished } from './release-flow.mjs';
 
 const DRY = process.argv.includes('--dry');
 
@@ -73,14 +73,8 @@ function run(command, args, { capture = false } = {}) {
  * script is built around.
  *
  * `script -q /dev/null <command>` is the BSD way to hand a child a pty; the
- * Linux one takes its arguments the other way round. Only used when there is no
- * terminal already, so a person running this by hand gets the plain command. */
-function ptyCommand(command) {
-  if (process.stdout.isTTY) return [command[0], command.slice(1)];
-  return platform === 'darwin'
-    ? ['script', ['-q', '/dev/null', ...command]]
-    : ['script', ['-qfec', command.join(' '), '/dev/null']];
-}
+ * Linux one takes its arguments the other way round. Always wrap captured commands:
+ * run() pipes their output, so the parent's terminal does not survive in the child. */
 
 const publishCommand = () => ptyCommand(['pnpm', 'exec', 'changeset', 'publish']);
 

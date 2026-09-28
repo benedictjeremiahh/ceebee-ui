@@ -12,6 +12,13 @@
 import { spawn, spawnSync } from 'node:child_process';
 import { platform } from 'node:process';
 
+/** Capturing output replaces the child's terminal even when the parent already has one. */
+export function ptyCommand(command, targetPlatform = platform) {
+  return targetPlatform === 'darwin'
+    ? ['script', ['-q', '/dev/null', ...command]]
+    : ['script', ['-qfec', command.join(' '), '/dev/null']];
+}
+
 const git = (args, cwd) => {
   const result = spawnSync('git', args, { cwd, encoding: 'utf8' });
   if (result.status !== 0) throw new Error(`git ${args.join(' ')} failed:\n${result.stderr}`);
