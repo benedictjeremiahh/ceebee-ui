@@ -76,6 +76,9 @@
 .cb-schedule__chart {
   overflow: hidden;
 }
+.cb-schedule__loading {
+  padding: var(--cb-space-4);
+}
 
 /* SVAR deliberately makes its grid header's bottom border transparent. The Work Item column
    instead needs the same visible rule as the dated header, with text aligned to its row labels. */
@@ -99,6 +102,74 @@
   border-block-end: var(--cb-border-width) solid var(--cb-border);
 }
 
+/* Header and body must count padding and borders inside the same declared column width. */
+.cb-schedule .wx-table .wx-cell {
+  box-sizing: border-box;
+}
+.cb-schedule[data-mode='physical'] .wx-table .wx-cell {
+  padding-inline: var(--cb-space-3);
+  border-inline-end: var(--cb-border-width) solid var(--cb-border);
+}
+.cb-schedule[data-mode='physical'] .wx-table .wx-header .wx-cell {
+  border-block-end: var(--cb-border-width) solid var(--cb-border);
+}
+.cb-schedule[data-mode='physical'] .wx-table .wx-body .wx-cell {
+  padding-block: var(--cb-space-2);
+}
+.cb-schedule .wx-scale .wx-cell {
+  box-sizing: border-box;
+  padding-inline: var(--cb-space-2);
+}
+.cb-schedule .wx-scale .wx-cell > span {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cb-schedule__identity,
+.cb-schedule__reading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-1);
+  min-width: 0;
+}
+.cb-schedule__identity .ant-btn {
+  align-self: start;
+  padding: 0;
+  height: auto;
+}
+.cb-schedule__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cb-schedule__reading {
+  font-variant-numeric: tabular-nums;
+  font-size: var(--cb-text-sm);
+  white-space: nowrap;
+}
+.cb-schedule__reading > span {
+  color: var(--cb-fg-muted);
+}
+.cb-schedule__reading [data-negative] {
+  color: var(--cb-tone-danger);
+}
+.cb-schedule__controls,
+.cb-schedule__scales {
+  display: flex;
+  align-items: center;
+  gap: var(--cb-space-2);
+  flex-wrap: wrap;
+}
+.cb-schedule__controls {
+  padding: var(--cb-space-3);
+  border-block-end: var(--cb-border-width) solid var(--cb-border);
+}
+.cb-schedule__scales {
+  margin-inline-start: auto;
+}
+
 .cb-schedule__mobile-items {
   border-block-start: var(--cb-border-width) solid var(--cb-border);
   color: var(--cb-fg);
@@ -106,7 +177,9 @@
   margin: 0;
   padding: var(--cb-space-3) var(--cb-space-3) var(--cb-space-3) var(--cb-space-6);
 }
-.cb-schedule__mobile-items li + li { margin-block-start: var(--cb-space-1); }
+.cb-schedule__mobile-items li + li {
+  margin-block-start: var(--cb-space-1);
+}
 .cb-schedule__mobile-items li {
   padding-inline-end: calc(var(--cb-space-8) * 1.5);
   position: relative;
@@ -130,8 +203,12 @@
 /* SVAR still paints its own full-width task and progress bar behind `taskTemplate`. That makes a
    planned outline look like a solid completed span, even when the actual is only one day. The custom
    template owns both bars, so remove only the substrate's task paint, not its layout or hit area. */
-.cb-schedule .wx-bar.wx-task { background: none; }
-.cb-schedule .wx-bar.wx-task .wx-progress-wrapper { display: none; }
+.cb-schedule .wx-bar.wx-task {
+  background: none;
+}
+.cb-schedule .wx-bar.wx-task .wx-progress-wrapper {
+  display: none;
+}
 
 /* The bar's content, drawn inside the substrate's positioned bar. Without actuals it is the old
    single bar: the fill is how much is reported done, and a late bar is toned danger. With actuals the
@@ -148,6 +225,35 @@
   background: var(--cb-tone-brand);
   block-size: 100%;
   display: block;
+}
+.cb-schedule__bar[data-mode='physical'] .cb-schedule__bar-fill {
+  position: absolute;
+  inset-block: var(--cb-space-1);
+  block-size: auto;
+  border-radius: var(--cb-radius-sm);
+  background: var(--cb-tone-brand);
+}
+.cb-schedule__bar[data-mode='physical'] {
+  position: absolute;
+  inset-block-start: 50%;
+  block-size: var(--cb-space-6);
+  transform: translateY(-50%);
+}
+.cb-schedule__bar[data-mode='physical'] .cb-schedule__bar-planned {
+  border-color: var(--cb-fg-subtle);
+  background: color-mix(in oklab, var(--cb-fg-subtle) 12%, transparent);
+}
+.cb-schedule__bar[data-unreported] .cb-schedule__bar-planned {
+  border-style: dashed;
+}
+.cb-schedule__bar-report {
+  position: absolute;
+  inset-block-start: 50%;
+  inline-size: var(--cb-space-2);
+  block-size: var(--cb-space-2);
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--cb-fg);
+  border: var(--cb-border-width) solid var(--cb-surface);
 }
 
 .cb-schedule__bar[data-late]:not([data-actual]) .cb-schedule__bar-fill {

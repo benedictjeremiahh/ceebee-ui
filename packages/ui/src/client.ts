@@ -72,7 +72,7 @@ export type {
   BoardSkeletonProps,
 } from './data/board/index.js';
 export { Schedule } from './data/schedule/index.js';
-export type { ScheduleItem, ScheduleLabels, ScheduleProps, ScheduleRow } from './data/schedule/index.js';
+export type { ScheduleItem, ScheduleLabels, ScheduleProps, ScheduleRow, ScheduleView, ScheduleSkeletonProps } from './data/schedule/index.js';
 export { dayToDate, lateRows, lateWeightShare, sameDay, scheduleRows } from './data/schedule/index.js';
 export { TimeSeriesChart, TimeSeriesChartSkeleton } from './data/time-series/index.js';
 export type {

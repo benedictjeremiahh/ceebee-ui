@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { dayForGantt, dayToDate, lateRows, lateWeightShare, sameDay, scheduleRows, type ScheduleRow } from './schedule.math.js';
+import {
+  dayForGantt,
+  dayToDate,
+  lateRows,
+  lateWeightShare,
+  sameDay,
+  scheduleRows,
+  type ScheduleRow,
+} from './schedule.math.js';
 import type { ScheduleItem } from './schedule.types.js';
 
 const item = (over: Partial<ScheduleItem> = {}): ScheduleItem => ({
@@ -58,6 +66,28 @@ describe('sameDay', () => {
 });
 
 describe('scheduleRows', () => {
+  it('keeps physical completion inside the inclusive plan and positions a later report separately', () => {
+    const row = first(
+      scheduleRows(
+        [
+          item({
+            start: '2026-01-05',
+            end: '2026-01-09',
+            progress: 0.7,
+            reportedOn: '2026-01-10',
+            actual: { start: '2026-01-10', end: '2026-01-10' },
+          }),
+        ],
+        '2026-01-12',
+        'physical'
+      )
+    );
+    expect(row.actual).toBeNull();
+    expect(row.planned.width).toBeCloseTo((5 / 6) * 100);
+    expect(row.reportedAt).toBeCloseTo((5.5 / 6) * 100);
+    expect(row.progress).toBe(0.7);
+  });
+
   it('draws an item as a row from its start to its end', () => {
     const row = first(scheduleRows([item()]));
     expect(row.start.toISOString()).toBe('2026-01-05T00:00:00.000Z');
@@ -110,7 +140,9 @@ describe('scheduleRows', () => {
 
   it('places the actual span inside the planned one by proportion', () => {
     const row = first(
-      scheduleRows([item({ start: '2026-01-05', end: '2026-01-10', actual: { start: '2026-01-06', end: '2026-01-08' } })]),
+      scheduleRows([
+        item({ start: '2026-01-05', end: '2026-01-10', actual: { start: '2026-01-06', end: '2026-01-08' } }),
+      ])
     );
     expect(row.planned).toEqual({ left: 0, width: 100 });
     expect(row.actual).toEqual({ left: 20, width: 40 });
@@ -119,7 +151,9 @@ describe('scheduleRows', () => {
 
   it('stretches the row to the union and flags the overrun when actuals run past the plan', () => {
     const row = first(
-      scheduleRows([item({ start: '2026-01-05', end: '2026-01-08', actual: { start: '2026-01-06', end: '2026-01-10' } })]),
+      scheduleRows([
+        item({ start: '2026-01-05', end: '2026-01-08', actual: { start: '2026-01-06', end: '2026-01-10' } }),
+      ])
     );
     expect(row.spanEnd.toISOString()).toBe('2026-01-10T00:00:00.000Z');
     expect(row.planned).toEqual({ left: 0, width: 60 });
@@ -135,7 +169,9 @@ describe('scheduleRows', () => {
 
   it('draws an actual whose end is before its start as a single day', () => {
     const row = first(
-      scheduleRows([item({ start: '2026-01-05', end: '2026-01-09', actual: { start: '2026-01-08', end: '2026-01-06' } })]),
+      scheduleRows([
+        item({ start: '2026-01-05', end: '2026-01-09', actual: { start: '2026-01-08', end: '2026-01-06' } }),
+      ])
     );
     expect(row.actual?.left).toBeCloseTo(75);
     expect(row.actual?.width).toBeCloseTo(25);
@@ -144,11 +180,8 @@ describe('scheduleRows', () => {
 
 describe('lateWeightShare', () => {
   const rows = scheduleRows(
-    [
-      item({ id: 'a', end: '2026-01-09', weight: 3000 }),
-      item({ id: 'b', end: '2026-01-20', weight: 1000 }),
-    ],
-    '2026-01-12',
+    [item({ id: 'a', end: '2026-01-09', weight: 3000 }), item({ id: 'b', end: '2026-01-20', weight: 1000 })],
+    '2026-01-12'
   );
 
   it('counts the late rows and their share of the weight', () => {

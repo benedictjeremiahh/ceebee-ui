@@ -8,6 +8,10 @@ import type { ScheduleLabels } from '../../client.js';
    in a real browser; what is here is what the component decides before the substrate is involved. */
 
 describe('Schedule', () => {
+  it('provides a labelled loading placeholder at the same chart height', () => {
+    render(<Schedule.Skeleton height={300} label="Loading physical schedule" />);
+    expect(screen.getByRole('status')).toHaveAccessibleName('Loading physical schedule');
+  });
   it('keeps the original complete label shape source-compatible', () => {
     const labels: ScheduleLabels = {
       empty: 'Nothing planned.',

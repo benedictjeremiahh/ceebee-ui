@@ -56,3 +56,12 @@ pnpm report:ci-reliability -- --since 2026-08-31 --until 2026-09-14
 Record the completed-job failure rate on the tracking issue. A materially lower result means below
 10%, with every remaining failure attributed; the target is not achieved by cancelling or skipping
 jobs.
+
+## Follow-up result — 29 September 2026
+
+The same command for 31 August through 14 September reports 40 completed runs and 86 jobs:
+81 succeeded and 5 failed, a **5.8%** failure rate. No cancellation or skipped job supplied the
+improvement. The five failures are attributed to three Release jobs at `Run changesets/action@v1`
+and two CI verify jobs at `Run pnpm check:flutter-tokens`. The original below-10% acceptance target
+is met; this closes the historical reliability issue, not a promise that future CI never fails.
+The public reporter remains available for subsequent windows and regressions.

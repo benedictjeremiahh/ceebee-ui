@@ -47,6 +47,8 @@ export interface ScheduleRow {
   actual: SpanPct | null;
   /** The actuals ran past the planned end. */
   overran: boolean;
+  /** Position of the distinct reporting diamond inside the drawn range. */
+  reportedAt: number | null;
 }
 
 /** One span's place inside the drawn range, as percentages the template positions with. */
@@ -80,24 +82,38 @@ function spanPct(spanStart: Date, spanEnd: Date, from: Date, to: Date): SpanPct 
  * `late` needs a `today`: without one there is no "behind" to be behind. A finished item is never late,
  * however old — it is done, which is the point of marking lateness at all.
  */
-export function scheduleRows(items: ScheduleItem[], today?: string): ScheduleRow[] {
+export function scheduleRows(
+  items: ScheduleItem[],
+  today?: string,
+  mode: 'range' | 'physical' = 'range'
+): ScheduleRow[] {
   const at = today ? dayToDate(today) : null;
   const rows: ScheduleRow[] = [];
   for (const item of items) {
     const start = dayToDate(item.start);
     const end = dayToDate(item.end);
     if (!start || !end) continue;
-    const progress = typeof item.progress === 'number' && Number.isFinite(item.progress) ? clamp01(item.progress) : null;
-    const weight = typeof item.weight === 'number' && Number.isFinite(item.weight) ? Math.min(10000, Math.max(0, Math.round(item.weight))) : 10000;
+    const progress =
+      typeof item.progress === 'number' && Number.isFinite(item.progress) ? clamp01(item.progress) : null;
+    const weight =
+      typeof item.weight === 'number' && Number.isFinite(item.weight)
+        ? Math.min(10000, Math.max(0, Math.round(item.weight)))
+        : 10000;
     const plannedEnd = end < start ? start : end;
     // Actuals follow the same rules as the plan: not days means no actuals (never guessed), and an
     // end before its start is a single day. A missing actual is not a zero — the row draws planned only.
-    const rawActualStart = item.actual ? dayToDate(item.actual.start) : null;
-    const rawActualEnd = item.actual ? dayToDate(item.actual.end) : null;
+    const rawActualStart = mode === 'range' && item.actual ? dayToDate(item.actual.start) : null;
+    const rawActualEnd = mode === 'range' && item.actual ? dayToDate(item.actual.end) : null;
     const actualStart = rawActualStart && rawActualEnd ? rawActualStart : null;
     const actualEnd = actualStart && rawActualEnd ? (rawActualEnd < actualStart ? actualStart : rawActualEnd) : null;
-    const spanStart = actualStart && actualStart < start ? actualStart : start;
-    const spanEnd = actualEnd && actualEnd > plannedEnd ? actualEnd : plannedEnd;
+    const report = mode === 'physical' && item.reportedOn ? dayToDate(item.reportedOn) : null;
+    const spanStart = new Date(
+      Math.min(start.getTime(), actualStart?.getTime() ?? Infinity, report?.getTime() ?? Infinity)
+    );
+    const spanEnd = new Date(
+      Math.max(plannedEnd.getTime(), actualEnd?.getTime() ?? -Infinity, report?.getTime() ?? -Infinity)
+    );
+    const total = spanEnd.getTime() - spanStart.getTime() + DAY_MS;
     rows.push({
       item,
       start,
@@ -107,9 +123,16 @@ export function scheduleRows(items: ScheduleItem[], today?: string): ScheduleRow
       late: at !== null && plannedEnd < at && (progress === null || progress < 1),
       spanStart,
       spanEnd,
-      planned: spanPct(spanStart, spanEnd, start, plannedEnd),
+      planned:
+        mode === 'physical'
+          ? {
+              left: ((start.getTime() - spanStart.getTime()) / total) * 100,
+              width: ((plannedEnd.getTime() - start.getTime() + DAY_MS) / total) * 100,
+            }
+          : spanPct(spanStart, spanEnd, start, plannedEnd),
       actual: actualStart && actualEnd ? spanPct(spanStart, spanEnd, actualStart, actualEnd) : null,
       overran: actualEnd !== null && actualEnd > plannedEnd,
+      reportedAt: report ? ((report.getTime() - spanStart.getTime() + DAY_MS / 2) / total) * 100 : null,
     });
   }
   return rows;

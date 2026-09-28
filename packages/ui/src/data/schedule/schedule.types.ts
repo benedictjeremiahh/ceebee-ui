@@ -13,9 +13,15 @@ export interface ScheduleItem {
   progress?: number;
   /** Basis points, so a late item can be weighted by how much it matters. Defaults to 10000 (all of it). */
   weight?: number;
+  /** Physical-progress mode: last reporting day, not an actual start or finish. */
+  reportedOn?: string;
+  /** 0–1 planned physical completion at the consumer's measurement date. */
+  plannedProgress?: number;
+  /** Consumer-owned calendar lateness; completed work may have finished late. */
+  latenessDays?: number;
   /**
    * When the work actually ran, as calendar days. Absent means nobody reported actuals yet — the row
-   * draws planned only, never a guessed actual. A consumer derives this from reports (never typed).
+   * draws planned only, never a guessed actual. The caller must qualify the meaning of these dates.
    */
   actual?: {
     start: string;
@@ -47,6 +53,27 @@ export interface ScheduleLabels {
   day?: (date: Date) => string;
   /** Week row on the time axis when the weekly scale is selected. */
   week?: (date: Date) => string;
+  plannedProgress?: string;
+  variance?: string;
+  gap?: (points: number) => string;
+  lateDays?: (days: number) => string;
+  report?: (day: string) => string;
+  details?: string;
+  fullSchedule?: string;
+  goToday?: string;
+  dayScale?: string;
+  weekScale?: string;
+  monthScale?: string;
+  percent?: (percent: number) => string;
+}
+
+export interface ScheduleView {
+  scale: 'day' | 'week' | 'month';
+  fit: boolean;
+  left: number;
+  top: number;
+  /** Set after initial fit selection so a fullscreen mount preserves the chosen scale. */
+  initialized?: boolean;
 }
 
 /** The complete label set after Schedule merges a consumer's overrides with its defaults. */
@@ -62,7 +89,13 @@ export interface ScheduleProps {
   /** Optional `%` badge on bars. Off by default because the grid carries an aligned reading. */
   percentLabels?: boolean;
   /** Day cells by default; week cells keep longer schedules readable at a glance. */
-  scale?: 'day' | 'week';
+  scale?: 'day' | 'week' | 'month';
+  /** Opt-in: blue fill measures physical completion within the plan, never a reporting envelope. */
+  mode?: 'range' | 'physical';
+  /** Optional controlled navigation for preserving the view across fullscreen mounts. */
+  view?: ScheduleView;
+  onViewChange?: (view: ScheduleView) => void;
+  onItemOpen?: (id: string) => void;
   height?: number;
   className?: string;
 }
