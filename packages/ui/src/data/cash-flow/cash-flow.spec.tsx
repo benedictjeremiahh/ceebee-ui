@@ -10,6 +10,57 @@ const PERIODS = [
 const money = (value: number) => `Rp ${value}`;
 
 describe('CashFlowChart', () => {
+  it('keeps keyboard inspection and the accessible table in a compact overview without disclosure', () => {
+    const { container } = render(<CashFlowChart label="Cash" opening={50} periods={PERIODS}
+      format={money} formatPeriod={(day) => day} compact />);
+    expect(container.querySelector('details')).not.toBeInTheDocument();
+    expect(container.querySelector('.cb-cash-flow__periods--compact')).toBeInTheDocument();
+    expect(screen.getByRole('table')).toHaveTextContent('Rp -10');
+    fireEvent.focus(screen.getByRole('img', { name: /2026-10-05: In Rp 10/ }));
+    expect(screen.getByTestId('cash-flow-detail')).toHaveTextContent('BalanceRp -10');
+  });
+  it('discloses an exact-value table instead of a second row of date labels', () => {
+    const { container } = render(<CashFlowChart label="Cash" opening={50} periods={PERIODS} format={money}
+      formatExact={(value) => `Exact ${value}`} formatPeriod={(day) => day}
+      periodControlsLabel="Browse exact amounts" />);
+    const disclosure = container.querySelector('details');
+    expect(disclosure).toBeInTheDocument();
+    expect(disclosure).not.toHaveAttribute('open');
+    expect(disclosure?.querySelector('summary')).toHaveTextContent('Browse exact amounts');
+    const table = disclosure?.querySelector('table');
+    expect(table).toBeInTheDocument();
+    expect(table).toHaveTextContent('PeriodInOutBalance');
+    expect(table).toHaveTextContent('2026-10-05Exact 10Exact 40Exact -10');
+    expect(disclosure?.querySelectorAll('.cb-cash-flow__periods')).toHaveLength(0);
+    expect(container.querySelectorAll('table')).toHaveLength(1);
+  });
+  it('preserves selectable period actions and adjustments inside the disclosed table', () => {
+    const onSelect = vi.fn();
+    const { container } = render(<CashFlowChart label="Cash" opening={50}
+      periods={[{ id: 'a', start: '2026-09-28', inflow: 10, outflow: 5, adjustment: -20 }]}
+      format={money} formatPeriod={(day) => day} periodControlsLabel="Browse" periodLabel="Periode"
+      selectedPeriod="a" onSelectPeriod={onSelect} />);
+    const table = container.querySelector('details table');
+    if (!(table instanceof HTMLTableElement)) throw new Error('The disclosed cash table is missing');
+    expect(table).toHaveTextContent('PeriodeInOutAdjustmentBalance');
+    expect(table).toHaveTextContent('2026-09-28Rp 10Rp 5Rp -20Rp 35');
+    const button = within(table).getByRole('button', { name: /2026-09-28: In Rp 10/ });
+    expect(button).toHaveAttribute('aria-pressed', 'true');
+    fireEvent.click(button);
+    expect(onSelect).toHaveBeenCalledWith('a');
+  });
+  it('shows exact details on focus without pretending a non-actionable period is a button', () => {
+    const { container } = render(<CashFlowChart label="Cash" opening={50} periods={[{ id: 'a', start: '2026-09-28', inflow: 10, outflow: 5, adjustment: -20 }]}
+      format={money} formatPeriod={(day) => day} adjustmentLabel="Adjustment" />);
+    expect(screen.queryAllByRole('button')).toHaveLength(0);
+    fireEvent.focus(screen.getByRole('img', { name: /2026-09-28: In Rp 10/ }));
+    expect(screen.getByTestId('cash-flow-detail')).toHaveTextContent('AdjustmentRp -20');
+    const plot = container.querySelector('.cb-cash-flow__plot');
+    if (!plot) throw new Error('The cash plot is missing');
+    fireEvent.mouseLeave(plot);
+    expect(screen.getByTestId('cash-flow-detail')).toHaveTextContent('AdjustmentRp -20');
+    expect(screen.getByRole('table')).toHaveTextContent('Adjustment');
+  });
   it('says when the balance goes under and how far, in the consumer\'s words', () => {
     render(
       <CashFlowChart label="Kas" opening={50} periods={PERIODS} format={money} formatPeriod={(day) => day.slice(5)}
@@ -60,5 +111,21 @@ describe('CashFlowChart', () => {
   it('shows the empty wording when there are no periods', () => {
     render(<CashFlowChart label="Kas" opening={0} periods={[]} format={money} emptyLabel="Belum ada proyeksi." />);
     expect(screen.getByText('Belum ada proyeksi.')).toBeInTheDocument();
+  });
+  it('keeps the exact table exposed without a disclosure in forced colors', () => {
+    const query = vi.spyOn(window, 'matchMedia').mockImplementation((media) => ({
+      media, matches: media === '(forced-colors: active)', onchange: null,
+      addEventListener: () => {}, removeEventListener: () => {},
+      addListener: () => {}, removeListener: () => {}, dispatchEvent: () => false,
+    }));
+    try {
+      const { container } = render(<CashFlowChart label="Cash" opening={50} periods={PERIODS}
+        format={money} periodControlsLabel="Browse" />);
+      expect(container.querySelector('details')).not.toBeInTheDocument();
+      expect(container.querySelector('.cb-cash-flow__canvas')).not.toBeInTheDocument();
+      expect(screen.getByRole('table')).toHaveTextContent('Rp -10');
+    } finally {
+      query.mockRestore();
+    }
   });
 });

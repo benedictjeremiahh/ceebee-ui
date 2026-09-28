@@ -31,12 +31,16 @@ Read-only. A crosshair follows the pointer; there is no pan, no zoom, no selecti
 A dashboard chart is read, not traded, and panning would let a reader scroll the plan off the screen
 with no way back.
 
-What is marked on the plot is the **last report**, not today. A marker attaches to a data point, and
-today is usually not one — a "today" mark snapped to whichever reported day sat nearest it and then
+What is marked on the plot is the **last report**, not today. Its label and date are also repeated
+below the plot so they remain readable when the plotted point is near an edge. A marker attaches to
+a data point, and today is usually not one — a "today" mark snapped to whichever reported day sat nearest it and then
 carried a label that was false, an arrow reading *Today* pointing four days off it. The last reported
 day is a point that always exists, so the arrow lands exactly on it, and it tells a reader the one
 thing the line cannot: how stale the actual is. Today's reading is stated in words above the plot,
 where it needs no pixel to land on.
+
+The date in that reading is written for a person. `formatDay` lets a product choose its language;
+the underlying `<time dateTime>` retains the calendar day for machines.
 
 ## Accessibility
 
@@ -93,11 +97,13 @@ the component will not invent a colour, and the table stands as the rendering un
   { name: 'height', type: 'number', default: '260', description: 'Plot height in pixels. The width is the container\'s.' },
   { name: 'plannedLabel', type: 'string', default: 'Planned', description: 'Legend and column name for the plan.' },
   { name: 'actualLabel', type: 'string', default: 'Actual', description: 'Legend and column name for delivery.' },
-  { name: 'lastReportLabel', type: 'string', default: 'Last report', description: 'Text on the mark sitting at the last reported day.' },
+  { name: 'lastReportLabel', type: 'string', default: 'Last report', description: 'Label of the last-reported-day marker, repeated with its date below the plot.' },
   { name: 'emptyLabel', type: 'string', default: 'Nothing has been reported yet.', description: 'Shown instead of the chart when neither series has a usable day.' },
   { name: 'tableLabel', type: 'string', default: 'Progress by day', description: 'Caption of the accessible table.' },
   { name: 'dayLabel', type: 'string', default: 'Day', description: 'Header of the table\'s day column.' },
+  { name: 'formatDay', type: '(day: string) => string', default: 'English day, short month, and year', description: 'Formats the visible reading day; the calendar day remains in the time element\'s dateTime.' },
   { name: 'formatNumber', type: '(value: number) => string', default: 'one decimal, dot', description: 'How the actual, the plan and the gap are written in the reading, without the `%`. A product that marks decimals with a comma passes its own.' },
+  { name: 'gapUnitLabel', type: 'string', default: 'points', description: 'Unit after the plan–actual gap. The value is percentage points, not a relative percent; products may supply their own language.' },
   { name: 'aheadLabel / behindLabel / onTrackLabel', type: 'string', description: 'The words the gap is stated in.' },
   { name: 'loading', type: 'boolean', default: 'false', description: 'Renders `ProgressCurve.Skeleton` in place of the chart.' },
 ]}/>

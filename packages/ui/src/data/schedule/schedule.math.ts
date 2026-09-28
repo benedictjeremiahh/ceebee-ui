@@ -15,6 +15,11 @@ export function dayToDate(day: string): Date | null {
   return new Date(at).toISOString().startsWith(day) ? new Date(at) : null;
 }
 
+/** Convert a validated UTC calendar day to local midnight at the Gantt boundary. Its date-fns axis uses local days. */
+export function dayForGantt(day: Date): Date {
+  return new Date(day.getUTCFullYear(), day.getUTCMonth(), day.getUTCDate());
+}
+
 /** Whether an instant falls on a `YYYY-MM-DD` day, read in UTC or in the reader's own zone. */
 export function sameDay(date: Date, day: string): boolean {
   if (date.toISOString().slice(0, 10) === day) return true;

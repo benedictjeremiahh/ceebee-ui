@@ -29,6 +29,11 @@ export interface ChartShape {
   baseline?: Baseline;
 }
 
+/** Keep axis labels visible without extending a fixed percentage range to another tick. */
+export function scaleMarginsFor(range: ValueRange | undefined): { top: number; bottom: number } {
+  return range ? { top: 0.02, bottom: 0.02 } : { top: 0.1, bottom: 0.08 };
+}
+
 /**
  * Loads the substrate and draws an empty chart into `host`.
  *
@@ -110,7 +115,7 @@ export async function mountTimeSeries(
         attributionLogo: false,
       },
       grid: { vertLines: { color: next.grid }, horzLines: { color: next.grid } },
-      rightPriceScale: { borderColor: next.grid, scaleMargins: { top: 0.1, bottom: 0.08 } },
+      rightPriceScale: { borderColor: next.grid, scaleMargins: scaleMarginsFor(shape.range) },
       timeScale: { borderColor: next.grid, fixLeftEdge: true, fixRightEdge: true },
       crosshair: { vertLine: { color: next.muted }, horzLine: { color: next.muted } },
       localization: { priceFormatter: shape.format },

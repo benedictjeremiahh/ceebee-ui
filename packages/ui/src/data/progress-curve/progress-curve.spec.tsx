@@ -52,8 +52,13 @@ describe('ProgressCurve', () => {
     const reading = screen.getByText(/behind plan/);
     expect(reading).toHaveTextContent('30%');
     expect(reading).toHaveTextContent('70%');
-    expect(reading).toHaveTextContent('40 behind plan');
+    expect(reading).toHaveTextContent('40 points behind plan');
     expect(reading).toHaveAttribute('data-state', 'behind');
+  });
+
+  it('names the marked report below the plot rather than writing across the line', () => {
+    render(<ProgressCurve planned={planned} actual={actual} label="Ruko Depok" lastReportLabel="Laporan terakhir" />);
+    expect(screen.getByText('Laporan terakhir').closest('p')).toHaveTextContent('Laporan terakhir · Sep 12, 2026');
   });
 
   // A product that marks decimals with a comma shows the reading its own way, and names the day column.
@@ -65,12 +70,14 @@ describe('ProgressCurve', () => {
         label="Ruko Depok"
         dayLabel="Tanggal"
         behindLabel="tertinggal"
+        gapUnitLabel="poin"
         formatNumber={(value) => String(value).replace('.', ',')}
       />,
     );
     const reading = screen.getByText(/tertinggal/);
     expect(reading).toHaveTextContent('7,5%');
     expect(reading).toHaveTextContent('12,5%');
+    expect(reading).toHaveTextContent('5 poin tertinggal');
     expect(screen.getByRole('columnheader', { name: 'Tanggal' })).toBeInTheDocument();
   });
 
@@ -83,8 +90,21 @@ describe('ProgressCurve', () => {
     render(<ProgressCurve planned={planned} actual={actual} label="Ruko Depok" today="2026-09-11" />);
     // Read on 2026-09-11 itself: both series carry forward — planned 35, actual 10 — and the day named
     // is the one asked for, not whichever reported day happens to sit nearest it.
-    expect(screen.getByText(/behind plan/)).toHaveTextContent('25 behind plan');
-    expect(screen.getByText(/behind plan/)).toHaveTextContent('(2026-09-11)');
+    expect(screen.getByText(/behind plan/)).toHaveTextContent('25 points behind plan');
+    expect(screen.getByText(/behind plan/)).toHaveTextContent('(Sep 11, 2026)');
+  });
+
+  it('shows a readable date while preserving the calendar day for machines', () => {
+    render(
+      <ProgressCurve
+        planned={planned}
+        actual={actual}
+        label="Ruko Depok"
+        today="2026-09-11"
+        formatDay={() => '11 Sep 2026'}
+      />,
+    );
+    expect(screen.getByText('11 Sep 2026')).toHaveAttribute('dateTime', '2026-09-11');
   });
 
   /* The case a real plan produces and the spec above did not: the nearest reported day is in the FUTURE,
@@ -98,8 +118,8 @@ describe('ProgressCurve', () => {
     const done = [{ day: '2026-09-18', percent: 48 }];
     render(<ProgressCurve planned={plan} actual={done} label="Ruko Depok" today="2026-09-22" />);
     const reading = screen.getByText(/behind plan/);
-    expect(reading).toHaveTextContent('7 behind plan');
-    expect(reading).toHaveTextContent('(2026-09-22)');
+    expect(reading).toHaveTextContent('7 points behind plan');
+    expect(reading).toHaveTextContent('(Sep 22, 2026)');
     expect(reading).not.toHaveTextContent('70%');
   });
 
@@ -133,7 +153,7 @@ describe('ProgressCurve', () => {
       />,
     );
     expect(screen.getAllByRole('row')).toHaveLength(2);
-    expect(screen.getByText(/behind plan/)).toHaveTextContent('1 behind plan');
+    expect(screen.getByText(/behind plan/)).toHaveTextContent('1 point behind plan');
   });
 
   it('shows the skeleton while the readings load', () => {

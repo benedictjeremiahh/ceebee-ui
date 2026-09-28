@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { dayToDate, lateRows, lateWeightShare, sameDay, scheduleRows, type ScheduleRow } from './schedule.math.js';
+import { dayForGantt, dayToDate, lateRows, lateWeightShare, sameDay, scheduleRows, type ScheduleRow } from './schedule.math.js';
 import type { ScheduleItem } from './schedule.types.js';
 
 const item = (over: Partial<ScheduleItem> = {}): ScheduleItem => ({
@@ -32,6 +32,13 @@ describe('dayToDate', () => {
   it('refuses a day the calendar does not have, rather than rolling it over', () => {
     // new Date('2026-02-30') silently becomes March 2nd; a plan that says February 30th is a bug, not a day.
     expect(dayToDate('2026-02-30')).toBeNull();
+  });
+});
+
+describe('dayForGantt', () => {
+  it('hands the local-calendar Gantt engine midnight on the same named day', () => {
+    const date = dayForGantt(new Date('2026-01-05T00:00:00Z'));
+    expect([date.getFullYear(), date.getMonth(), date.getDate(), date.getHours()]).toEqual([2026, 0, 5, 0]);
   });
 });
 

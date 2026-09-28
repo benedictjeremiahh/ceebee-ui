@@ -12,6 +12,13 @@
   overflow: hidden;
 }
 
+.cb-chart__mark {
+  color: var(--cb-fg-muted);
+  font-size: var(--cb-text-sm);
+  margin: 0;
+  text-align: end;
+}
+
 .cb-chart__empty {
   display: grid;
   place-items: center;

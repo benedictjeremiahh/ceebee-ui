@@ -8,6 +8,10 @@ const PERIODS = [
 ];
 
 describe('cashFlowRows', () => {
+  it('includes balance adjustments without calling them inflows or outflows', () => {
+    expect(cashFlowRows(50, [{ id: 'a', start: '2026-09-28', inflow: 10, outflow: 5, adjustment: -20 }])[0])
+      .toMatchObject({ inflow: 10, outflow: 5, net: -15, balance: 35 });
+  });
   it('runs the balance from the opening balance through each period\'s net flow', () => {
     expect(cashFlowRows(50, PERIODS).map((row) => [row.id, row.net, row.balance])).toEqual([
       ['w1', -30, 20],

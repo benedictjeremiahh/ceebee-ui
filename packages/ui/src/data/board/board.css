@@ -276,7 +276,6 @@
   border-radius: var(--cb-radius-sm);
 }
 
-.cb-board__open:disabled { cursor: not-allowed; color: var(--cb-fg-muted); }
 
 /* The column's own way to add a card: a footer, after the cards, so it does not move as they arrive. It is
    not a drop target — the card it stands for does not exist yet — and it names its column, so a screen

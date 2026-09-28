@@ -34,7 +34,7 @@ export function refusalFor(columns: readonly BoardShape[], move: BoardMove): str
   if (!canPickUp(columns, move.cardId)) return 'this card cannot be moved';
   const target = columnOf(columns, move.to.columnId);
   if (!target) return 'that column is not on the board';
-  if (target.accepts === false) return 'that column does not take cards';
+  if (target.accepts === false) return target.refusal ?? 'that column does not take cards';
   return null;
 }
 

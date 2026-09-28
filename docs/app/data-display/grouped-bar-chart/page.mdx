@@ -1,0 +1,41 @@
+import { GroupedBarChartDemo } from '../../../components/grouped-bar-chart-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# GroupedBarChart <span className="docs__label">Composition</span>
+
+Compare discrete bucket totals side by side on one zero-based scale. Unlike CashFlowChart,
+this does not calculate a balance, net the series, or imply a continuous trend between buckets.
+
+## Usage
+
+<GroupedBarChartDemo />
+
+## Interaction and accessibility
+
+Hover or focus a group to read every series at full precision. Upstream Tooltip owns focus,
+positioning and dismissal. Groups are read-only, not buttons. A hidden table carries all values;
+forced colors displays that table instead of the plot. There is no entry animation.
+
+Missing, negative and non-finite values are unknown, not zero. Supply `formatExact` whenever
+the axis formatter abbreviates. The component does not assume a currency or bucket dates.
+
+<Guidance do="Compare nonnegative totals across a few categories or periods."
+  dont="Treat due or accrued amounts as dated cash movements or a future balance." />
+
+## Props
+
+<PropsTable rows={[
+  { name: 'label', type: 'string', description: 'Accessible chart name. Required.' },
+  { name: 'groups', type: 'BarGroup[]', description: 'Ordered { id, label, values } buckets. Values are keyed by series key.' },
+  { name: 'series', type: 'BarGroupSeries[]', description: 'Ordered { key, label, tone? } series.' },
+  { name: 'format', type: '(value: number) => string', description: 'Axis formatter. Required.' },
+  { name: 'formatExact', type: '(value: number) => string', default: 'format', description: 'Full precision tooltip, accessible names and table.' },
+  { name: 'height', type: 'number', default: '180', description: 'Plot height in pixels.' },
+  { name: 'unknownLabel', type: 'string', default: 'Unknown', description: 'Unavailable reading.' },
+  { name: 'emptyLabel', type: 'string', default: 'No readings', description: 'No buckets or series.' },
+  { name: 'tableLabel', type: 'string', default: 'label', description: 'Accessible table caption.' },
+  { name: 'className', type: 'string', description: 'Root class.' },
+]} />
+
+`GroupedBarChart.Skeleton` accepts `height` and an accessible `label`. Colour, typography,
+spacing and focus use CeeBee Tokens; the bar geometry comes only from the data.

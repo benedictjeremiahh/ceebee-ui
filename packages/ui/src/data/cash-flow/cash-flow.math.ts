@@ -14,6 +14,8 @@ export interface CashFlowPeriod {
   inflow: number;
   /** Money out during the period, as a positive amount (a negative one is read as the same outflow). */
   outflow: number;
+  /** Signed balance change that is not a flow, such as an opening-balance adjustment. */
+  adjustment?: number;
   /**
    * The lowest balance *within* the period, when the consumer knows it — a week bucketed from daily figures
    * can dip mid-week and recover by its close. Read against the line in place of the close when lower.
@@ -22,7 +24,7 @@ export interface CashFlowPeriod {
 }
 
 export interface CashFlowRow extends CashFlowPeriod {
-  /** In minus out. */
+  /** In minus out, including any balance adjustment. */
   net: number;
   /** The balance at the end of the period. */
   balance: number;
@@ -44,7 +46,7 @@ export function cashFlowRows(opening: number, periods: readonly CashFlowPeriod[]
   let balance = opening;
   return periods.map((period) => {
     const outflow = Math.abs(period.outflow);
-    const net = period.inflow - outflow;
+    const net = period.inflow - outflow + (period.adjustment ?? 0);
     balance += net;
     return { ...period, outflow, net, balance, lowest: Math.min(balance, period.low ?? balance) };
   });

@@ -17,9 +17,12 @@ One row per item, drawn against a time axis, with today marked. A **timeline**, 
 
 ## What the bar says
 
-The bar runs from `start` to `end`, both **calendar days** (`YYYY-MM-DD`, inclusive — a one-day item
-starts and ends on the same day). The fill is `progress`, 0–1; an item with no reported progress draws
-empty rather than full, because absent is not done.
+The outlined bar is the plan: `start` to `end`, both **calendar days** (`YYYY-MM-DD`, inclusive — a
+one-day item starts and ends on the same day). When `actual` is present, its `start` and `end` are
+calendar days too, and a solid bar shows when the work actually ran. If the actual end is after the
+planned end, that bar is marked as past the plan. Without `actual`, only the planned bar is drawn; its
+fill shows `progress` (0–1), when reported. An item with no progress has no fill or percentage, because
+absent is not done.
 
 `today` decides what is **late**: an item whose end is behind it and whose progress is under 1. A
 finished item is never late, however old. `weight` (basis points) is what makes a late item count for
@@ -34,17 +37,30 @@ consumer never imports the substrate's CSS.
 
 ### What the free edition does not do
 
-An on-axis **vertical marker** is a PRO feature: the free build accepts `markers`, and a scale cell's
-`css`, and silently ignores both — so today is named **above the axis**, in this library's own layer,
-where it is readable and reaches assistive technology. Lateness is this library's own reading too, from
+The substrate's `markers` API is a PRO feature: the free build ignores it. Schedule instead places a
+token-coloured today line over the chart using the substrate's time scale, while also naming today
+above the axis for readers and assistive technology. Lateness is this library's own reading too, from
 `start`/`end`/`progress`, rather than the substrate's critical path, which is also PRO.
+
+The visible date above the axis is formatted for a reader; its `<time dateTime>` preserves the original
+calendar day. Pass `labels.todayDate` to write that date in the product's language.
+
+## Responsive layout
+
+The schedule measures its own container, not just the viewport. Below 680px of available width it
+gives the timeline the full panel and lists Work Item names and their actual percentages immediately below it; wider panels show
+the names and an aligned Actual column beside the timeline. Missing progress reads “Not reported”,
+which is distinct from a reported 0%. Resizing the panel or browser updates the mode without losing the
+time axis. The narrow view includes a pan hint because later dates extend beyond the visible range.
 
 ## Props
 
 <PropsTable rows={[
-  { name: 'items', type: 'ScheduleItem[]', description: 'id, label, start and end (YYYY-MM-DD), and optionally progress (0–1) and weight (basis points).' },
-  { name: 'today', type: 'string', description: 'YYYY-MM-DD. Marked on the axis, and what decides which bars are late. Absent marks nothing and calls nothing late.' },
-  { name: 'labels', type: 'Partial<ScheduleLabels>', description: 'Every string the schedule says — today, late, empty, the item column header and the progress reading — for a product that does not speak English.' },
+  { name: 'items', type: 'ScheduleItem[]', description: 'id, label, planned start and end (inclusive YYYY-MM-DD), and optionally actual: { start, end } (YYYY-MM-DD calendar days when the work ran), progress (0–1), and weight (basis points). The plan is outlined; actual dates are shown as a solid bar. Without actual dates, only the plan is drawn, with a progress fill when progress is reported.' },
+  { name: 'today', type: 'string', description: 'YYYY-MM-DD. Named above and marked on the axis when in range; also decides which bars are late. Absent names and marks nothing.' },
+  { name: 'labels', type: 'Partial<ScheduleLabels>', description: 'Every string the schedule says — including month/day/week axis formatters, visible today-date formatter, mobile pan hint, late, empty, item header and progress — for a product that does not speak English.' },
+  { name: 'scale', type: "'day' | 'week'", default: "'day'", description: 'Second axis level. Week cells make longer schedules easier to scan without changing the item dates.' },
+  { name: 'percentLabels', type: 'boolean', default: 'false', description: 'Opt in to percentage badges on the bars. The aligned Actual column and narrow-screen item list show the reading by default.' },
   { name: 'editable', type: 'boolean', default: 'false', description: 'false (the default) draws the plan read-only. A schedule is a view of someone else\'s plan, not a plan editor.' },
   { name: 'height', type: 'number', default: '320', description: 'The drawing area\'s height in pixels.' },
 ]} />

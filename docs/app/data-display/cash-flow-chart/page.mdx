@@ -13,7 +13,7 @@ cash-forecast dashboards converge on: inflow bars up, outflow bars down, the bal
 
 ## Start from the real balance
 
-`opening` is the balance before the first period — today's cash. The line starts there and runs through
+`opening` is the balance before the first period — today's cash for a forecast, or the opening of a historical window. The line starts there and runs through
 each period's close. Starting from zero draws a projection of *change*, which reads like a projection of
 cash and is not one.
 
@@ -34,19 +34,36 @@ inside itself — a week that is overdrawn on Wednesday and paid on Friday close
 (the lowest balance within it) and the chart reads that against the threshold, marks its period and plots
 the dip, so a mid-period shortfall is never hidden by the close. `formatPeriod` names a period on the
 chart's axis and in the selector; by default it is its start day in the document's language. The
-axis chooses which labels fit at the available width.
+axis chooses which labels fit at the available width. An optional signed `adjustment` changes the running
+balance without creating an inflow/outflow bar. It appears separately in exact details and the table;
+use `adjustmentLabel` to name it. Never disguise a balance adjustment as a receipt or payment.
 
 ## Interaction contract
 
 Read-only unless `onSelectPeriod` is given. Then each period is a button named with its date and all three
 exact figures, `aria-pressed` for `selectedPeriod`, so the consumer can list what is behind it beside the chart.
-Keyboard focus on a period button reveals the same exact-value detail as hover.
+Keyboard focus on any period reveals the same exact-value detail as hover. Without an action callback,
+periods remain focusable labelled images, not buttons that promise an unavailable action.
+The detail follows the active period near the pointer, or its balance point during keyboard focus.
+It flips and stays within the chart bounds near an edge rather than jumping to the opposite chart edge.
+Pass `periodControlsLabel` to put the exact-value table in an initially closed native disclosure.
+This leaves only the plot's date axis visible in a compact overview. Enter or Space on the summary
+opens rows with the period, inflow, outflow, optional adjustment and closing balance. Numbers use
+`formatExact`, not the abbreviated axis format. Read-only period labels are plain row headings;
+when `onSelectPeriod` is provided they retain their selection buttons and keyboard detail.
+Use `periodLabel` to translate the period column heading. Do not label a date-only selector as an
+exact-amount table.
+For a read-only overview where hover details are sufficient, omit `periodControlsLabel` and pass
+`compact`. Period controls stay visually hidden until keyboard focus, while exact values remain
+available in the screen-reader table. Do not add a second visible table merely to repeat the plot.
 
 ## Accessibility
 
-A visually hidden table gives every period's in, out and balance; the canvas is `aria-hidden` because
-the table is the exact accessible rendering. Under `forced-colors: active` the canvas is replaced by
-the visible table. Pass `formatExact` when `format` abbreviates the axis; the library has no currency
+A visually hidden table gives every period's in, out and balance by default. With `periodControlsLabel`,
+the same table is visible when the disclosure is opened; there is no duplicate hidden table or date
+selector. The canvas is `aria-hidden` because the table is the exact accessible rendering. Under
+`forced-colors: active` the canvas is replaced by an always-visible table, even with a disclosure label.
+Pass `formatExact` when `format` abbreviates the axis; the library has no currency
 assumption. The chart has no entry animation, including under reduced motion.
 
 <Guidance
@@ -59,7 +76,7 @@ assumption. The chart has no entry animation, including under reduced motion.
 <PropsTable rows={[
   { name: 'label', type: 'string', description: 'Visible title and accessible name. Required.' },
   { name: 'opening', type: 'number', description: 'The balance before the first period. Required.' },
-  { name: 'periods', type: 'CashFlowPeriod[]', description: '`{ id, start, inflow, outflow, low? }` in order; `low` is the lowest balance within the period.' },
+  { name: 'periods', type: 'CashFlowPeriod[]', description: '`{ id, start, inflow, outflow, adjustment?, low? }` in order; adjustments affect balance, not flow bars; `low` is the lowest balance within the period.' },
   { name: 'format', type: '(value: number) => string', description: 'How a value is written. The product owns this.' },
   { name: 'formatExact', type: '(value: number) => string', default: 'format', description: 'Full-precision values for hover, focused period buttons and the accessible table.' },
   { name: 'formatPeriod', type: '(start: string) => string', description: 'How a period is named. Defaults to its start day.' },
@@ -69,9 +86,13 @@ assumption. The chart has no entry animation, including under reduced motion.
   { name: 'height', type: 'number', default: '240', description: 'Plot height in pixels.' },
   { name: 'inflowLabel / outflowLabel / balanceLabel', type: 'string', default: "'In' / 'Out' / 'Balance'", description: 'Legend, table and button words.' },
   { name: 'lowestLabel', type: 'string', default: "'Low'", description: 'Hover label when the lowest intra-period balance differs from the closing balance.' },
+  { name: 'adjustmentLabel', type: 'string', default: "'Adjustment'", description: 'Exact detail and table label for non-flow balance changes.' },
+  { name: 'periodLabel', type: 'string', default: "'Period'", description: 'Heading for the exact table\'s period column.' },
   { name: 'belowLabel', type: '(from, lowest, periods) => string', description: 'The sentence when the balance goes below the line.' },
   { name: 'clearLabel', type: '(lowest) => string', description: 'The sentence when it never does.' },
-  { name: 'tableLabel', type: 'string', default: "'Cash flow by period'", description: 'Caption of the hidden table.' },
+  { name: 'tableLabel', type: 'string', default: "'Cash flow by period'", description: 'Caption of the exact-value table.' },
+  { name: 'periodControlsLabel', type: 'string', description: 'Optional label for an initially collapsed visible exact-value table. Omit to keep expanded period controls and a screen-reader table.' },
+  { name: 'compact', type: 'boolean', default: 'false', description: 'Visually hide undisclosed period controls until keyboard focus; keep the exact screen-reader table and forced-colors fallback.' },
   { name: 'emptyLabel', type: 'string', default: "'Nothing to project yet.'", description: 'Shown when there are no periods.' },
   { name: 'locale', type: 'string', description: 'Language for default period names; the document\'s `lang` when omitted.' },
   { name: 'className', type: 'string', description: 'Added to the root element.' },

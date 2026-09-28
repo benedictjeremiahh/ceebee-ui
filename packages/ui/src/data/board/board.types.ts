@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-/** One card on the board. `disabled` refuses movement without hiding the card. */
+/** One card on the board. `disabled` refuses movement, not opening its detail. */
 export interface BoardCard {
   id: string;
   title: ReactNode;
@@ -66,4 +66,5 @@ export interface BoardShape {
   id: string;
   cards: { id: string; disabled?: boolean }[];
   accepts?: boolean;
+  refusal?: string;
 }

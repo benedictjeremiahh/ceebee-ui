@@ -24,7 +24,14 @@ export interface CashFlowChartProps {
   outflowLabel?: string;
   balanceLabel?: string;
   lowestLabel?: string;
+  adjustmentLabel?: string;
+  /** Heading for the exact table's period column. */
+  periodLabel?: string;
   tableLabel?: string;
+  /** Optional disclosure label: keeps the visible exact-value table collapsed until requested. */
+  periodControlsLabel?: string;
+  /** Keep period controls visually hidden until keyboard focus, without hiding accessible amounts. */
+  compact?: boolean;
   emptyLabel?: string;
   /** The reading's sentence when the balance goes below the line: the first period, the lowest figure, how many. */
   belowLabel?: (from: string, lowest: string, periods: number) => string;

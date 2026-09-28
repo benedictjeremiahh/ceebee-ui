@@ -98,7 +98,9 @@ export function TimeSeriesChart({
       const current = readPalette(element, tokens) ?? palette;
       if (current) mounted.applyPalette(current);
       mounted.setData(cleaned);
-      mounted.mark(markDay, mark?.label ?? '');
+      /* A canvas marker's text sits on top of the line at compact widths. Keep the arrow on the
+         plotted day, and name it in a real text row below the plot instead. */
+      mounted.mark(markDay, '');
     });
 
     const stopWatchingTokens = watchTokens(() => {
@@ -128,6 +130,10 @@ export function TimeSeriesChart({
       {empty || forcedColors ? null : (
         <div ref={host} className="cb-chart__canvas" style={{ height }} role="img" aria-label={label} />
       )}
+
+      {mark && markDay && !empty ? (
+        <p className="cb-chart__mark"><span>{mark.label}</span> · <time dateTime={markDay}>{readableDay(markDay, locale)}</time></p>
+      ) : null}
 
       {/* An empty table is not an accessible rendering of nothing: it announces columns and no rows. */}
       {empty ? null : (

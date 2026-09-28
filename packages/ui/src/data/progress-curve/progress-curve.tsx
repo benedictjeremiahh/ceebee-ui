@@ -3,7 +3,7 @@
 import { useMemo } from 'react';
 import { cn } from '../../lib/cn.js';
 import { TimeSeriesChart } from '../time-series/index.js';
-import { asDay, round1 } from '../time-series/time-series.math.js';
+import { asDay, readableDay, round1 } from '../time-series/time-series.math.js';
 import { curveRows, readingOn, toPoints } from './progress-curve.math.js';
 import { ProgressCurveSkeleton } from './progress-curve.skeleton.js';
 import type { ProgressCurveProps } from './progress-curve.types.js';
@@ -28,7 +28,9 @@ function ProgressCurveRoot({
   emptyLabel = 'Nothing has been reported yet.',
   tableLabel = 'Progress by day',
   dayLabel,
+  formatDay = englishDay,
   formatNumber = oneDecimal,
+  gapUnitLabel = 'points',
   aheadLabel = 'ahead of plan',
   behindLabel = 'behind plan',
   onTrackLabel = 'on plan',
@@ -81,10 +83,10 @@ function ProgressCurveRoot({
           {latest.gap === null ? null : (
             <>
               {' — '}
-              {formatNumber(Math.abs(latest.gap))} {gapWord(latest.gap, { aheadLabel, behindLabel, onTrackLabel })}
+              {formatNumber(Math.abs(latest.gap))} {Math.abs(latest.gap) === 1 && gapUnitLabel === 'points' ? 'point' : gapUnitLabel} {gapWord(latest.gap, { aheadLabel, behindLabel, onTrackLabel })}
             </>
           )}
-          <span className="cb-progress-curve__on-day"> ({latest.day})</span>
+          <span className="cb-progress-curve__on-day"> (<time dateTime={latest.day}>{formatDay(latest.day)}</time>)</span>
         </p>
       ) : null}
 
@@ -109,6 +111,8 @@ export const ProgressCurve = Object.assign(ProgressCurveRoot, { Skeleton: Progre
 const percentOf = (value: number): string => `${Math.round(value)}%`;
 
 const oneDecimal = (value: number): string => String(round1(value));
+
+const englishDay = (day: string): string => readableDay(day, 'en-US');
 
 function percent(value: number | null, formatNumber: (value: number) => string): string {
   return value === null ? '—' : `${formatNumber(value)}%`;

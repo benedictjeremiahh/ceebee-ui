@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useMediaQuery } from '../../lib/use-media-query.js';
 import {
   DndContext,
   DragOverlay,
@@ -500,8 +501,10 @@ function Card({
               ...attributes,
               ...(card.disabled ? {} : listeners),
               tabIndex: 0,
-              'aria-roledescription': 'draggable card',
-              'aria-disabled': card.disabled || undefined,
+              'aria-roledescription': card.disabled ? 'card' : 'draggable card',
+              'aria-disabled': undefined,
+              'aria-describedby': card.disabled ? undefined : attributes['aria-describedby'],
+              'aria-description': card.disabled ? (card.disabledReason ?? 'This card cannot be moved.') : undefined,
               onKeyDown: (event: React.KeyboardEvent) => onKeyDown(event, card.id),
             })}
       >
@@ -526,7 +529,6 @@ function Card({
             className="cb-board__title cb-board__open"
             title={fullTitle(card)}
             onClick={() => onCardOpen(card.id)}
-            disabled={card.disabled}
             aria-label={typeof card.title === 'string' ? undefined : (card.label ?? card.id)}
             // Enter/Space activate this button (open). Without a handle the card itself also answers those
             // keys with pick-up, and a keydown on a focused child bubbles — so the card's move path is
@@ -544,20 +546,6 @@ function Card({
       </li>
     </>
   );
-}
-
-/** A media query's answer, or false wherever the browser cannot answer one — a server render, a test DOM. */
-function useMediaQuery(query: string | null): boolean {
-  const [narrow, setNarrow] = React.useState(false);
-  React.useEffect(() => {
-    if (!query || typeof window === 'undefined' || !window.matchMedia) return;
-    const mql = window.matchMedia(query);
-    const read = () => setNarrow(mql.matches);
-    read();
-    mql.addEventListener('change', read);
-    return () => mql.removeEventListener('change', read);
-  }, [query]);
-  return narrow;
 }
 
 export const Board = Object.assign(BoardRoot, { Skeleton: BoardSkeleton });

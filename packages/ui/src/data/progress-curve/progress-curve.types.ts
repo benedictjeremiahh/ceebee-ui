@@ -18,7 +18,7 @@ export interface ProgressCurveProps {
   height?: number;
   plannedLabel?: string;
   actualLabel?: string;
-  /** Text on the mark sitting at the last reported day. */
+  /** Label of the last-reported-day marker, repeated with its date below the plot. */
   lastReportLabel?: string;
   /** Shown in place of the chart when neither series has a single usable day. */
   emptyLabel?: string;
@@ -26,11 +26,15 @@ export interface ProgressCurveProps {
   tableLabel?: string;
   /** Header of the table's day column. */
   dayLabel?: string;
+  /** Formats the visible reading day; the machine-readable day stays in `<time dateTime>`. */
+  formatDay?: (day: string) => string;
   /**
    * How a number in the reading is written, without its `%` — the actual, the plan and the gap.
    * Defaults to one decimal with a dot; a product that marks decimals with a comma passes its own.
    */
   formatNumber?: (value: number) => string;
+  /** Unit after the gap value, e.g. "points" or "poin"; the gap is percentage points, not a relative percentage. */
+  gapUnitLabel?: string;
   aheadLabel?: string;
   behindLabel?: string;
   onTrackLabel?: string;

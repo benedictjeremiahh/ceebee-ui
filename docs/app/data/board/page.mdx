@@ -67,6 +67,9 @@ The keyboard keeps one path per job. <kbd>Enter</kbd> and <kbd>Space</kbd> open 
 them reaching the card's move path, so one press never opens *and* picks up. A card with no
 `onCardOpen` behaves exactly as before.
 
+`card.disabled` blocks movement only. Its handle stays disabled, but the title still opens the card
+when `onCardOpen` is provided, so a blocked or finished card remains inspectable.
+
 ## A refused move goes back
 
 <BoardRefusalDemo />
@@ -122,7 +125,7 @@ arrives.
   { name: 'column.collapsed', type: 'boolean', description: 'Deprecated and ignored; removed in the next major. An empty column renders at full width.' },
   { name: 'column.accepts', type: 'boolean', description: 'false refuses drops and is stepped over by the keyboard, with refusal as the reason shown.' },
   { name: 'card.label', type: 'string', description: 'The card’s name in announcements and on the drag handle, when title is a node. Without it a node-titled card is announced by its id — a uuid read aloud.' },
-  { name: 'card.disabled', type: 'boolean', description: 'The card stays visible and cannot be picked up; disabledReason is announced when someone tries.' },
+  { name: 'card.disabled', type: 'boolean', description: 'The card stays visible and cannot be picked up; its title can still open detail. disabledReason is announced when someone tries to move it.' },
 ]} />
 
 ## Tokens

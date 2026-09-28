@@ -114,7 +114,13 @@ for (const entry of candidates) {
   ).trim().split("\n").filter(Boolean);
 
   for (const relativePath of trackedFiles) {
-    const source = await readFile(resolve(repository, relativePath), "utf8");
+    let source;
+    try {
+      source = await readFile(resolve(repository, relativePath), "utf8");
+    } catch (error) {
+      if (error && typeof error === "object" && "code" in error && error.code === "ENOENT") continue;
+      throw error;
+    }
     for (const match of source.matchAll(forbiddenRuntime)) {
       errors.push(`${entry.name}/${relativePath}: import ${match[1]} through @ceebee/ui instead`);
     }

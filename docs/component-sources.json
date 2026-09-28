@@ -1927,6 +1927,17 @@
         "lightweight-charts"
       ]
     },
+    "GroupedBarChart": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/grouped-bar-chart/grouped-bar-chart.tsx",
+        "packages/ui/src/data/grouped-bar-chart/grouped-bar-chart.skeleton.tsx",
+        "packages/ui/src/data/grouped-bar-chart/grouped-bar-chart.css"
+      ],
+      "demoPath": "docs/app/data-display/grouped-bar-chart",
+      "interactionContract": "read-only nonnegative categorical totals on one zero-based scale, without a derived balance or trend line; upstream Tooltip reveals exact values on hover and keyboard focus. A visually hidden table carries every exact value and becomes visible in forced colors.",
+      "substrate": ["react", "antd"]
+    },
     "Sparkline": {
       "strategy": "ceebee",
       "source": [

@@ -35,6 +35,15 @@ describe('canPickUp / refusalFor', () => {
       .toBe('that column does not take cards');
   });
 
+  it('announces the destination-specific reason when a column refuses cards', () => {
+    const columns: BoardShape[] = [
+      { id: 'todo', cards: [{ id: 'a' }] },
+      { id: 'decision', cards: [], accepts: false, refusal: 'Answer this Decision instead of moving a card here.' },
+    ];
+    expect(refusalFor(columns, { cardId: 'a', from: { columnId: 'todo', index: 0 }, to: { columnId: 'decision', index: 0 } }))
+      .toBe('Answer this Decision instead of moving a card here.');
+  });
+
   it('refuses a column that is not on the board', () => {
     expect(refusalFor(board(), { cardId: 'a', from: { columnId: 'todo', index: 0 }, to: { columnId: 'ghost', index: 0 } }))
       .toBe('that column is not on the board');

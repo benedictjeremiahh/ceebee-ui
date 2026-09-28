@@ -98,6 +98,8 @@ export { BalanceCurve, BalanceCurveSkeleton } from './data/balance-curve/index.j
 export type { BalanceCurveProps, BalanceCurveSkeletonProps, BalanceReading } from './data/balance-curve/index.js';
 export { balanceReading } from './data/balance-curve/index.js';
 export { CashFlowChart, cashFlowRows, cashFlowReading } from './data/cash-flow/index.js';
+export { GroupedBarChart } from './data/grouped-bar-chart/index.js';
+export type { GroupedBarChartProps, BarGroup, BarGroupSeries } from './data/grouped-bar-chart/index.js';
 export { Sparkline, BarMini } from './data/sparkline.js';
 export type { SparklineProps, BarMiniProps } from './data/sparkline.js';
 export type { CashFlowChartProps, CashFlowPeriod, CashFlowRow, CashFlowReading } from './data/cash-flow/index.js';

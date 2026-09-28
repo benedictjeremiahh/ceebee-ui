@@ -6,6 +6,10 @@
   z-index: var(--cb-z-modal-backdrop) !important;
 }
 
+.cb-modal .ant-modal-header {
+  padding-inline-end: var(--cb-space-7);
+}
+
 .cb-modal__description {
   margin-block-end: var(--cb-space-4);
   color: var(--cb-fg-muted);

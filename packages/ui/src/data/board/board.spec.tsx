@@ -87,6 +87,24 @@ describe('Board', () => {
     expect(title).toHaveAttribute('title', long);
   });
 
+  it('opens a card that cannot move without enabling its drag handle', () => {
+    const onCardOpen = vi.fn();
+    board({ onCardOpen, handle: true });
+    const title = screen.getByRole('button', { name: 'Survey' });
+    expect(title).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Move Survey' })).toBeDisabled();
+    fireEvent.click(title);
+    expect(onCardOpen).toHaveBeenCalledWith('c');
+  });
+
+  it('describes a disabled move without disabling the nested open action', () => {
+    board({ onCardOpen: vi.fn(), handle: false });
+    const survey = screen.getByText('Survey').closest('button');
+    expect(survey).toBeEnabled();
+    expect(survey?.closest('li')).not.toHaveAttribute('aria-disabled');
+    expect(survey?.closest('li')).toHaveAttribute('aria-description', 'this job is closed');
+  });
+
   it('gives each column its own way to add a card, and none to a column that refuses them', () => {
     const onAddCard = vi.fn();
     board({

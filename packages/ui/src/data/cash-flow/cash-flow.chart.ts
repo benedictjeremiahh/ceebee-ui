@@ -1,6 +1,7 @@
 import type { Time } from 'lightweight-charts';
 import { dayOf } from '../time-series/time-series.math.js';
 import type { CashFlowRow } from './cash-flow.math.js';
+import type { CashFlowAnchor } from './cash-flow.detail.js';
 
 interface PlotPoint { time: string; value: number }
 
@@ -44,6 +45,7 @@ export function cashFlowPlot(opening: number, rows: readonly CashFlowRow[]): Cas
 
 export interface MountedCashFlow {
   applyPalette(palette: CashFlowPalette): void;
+  pointAt(index: number): CashFlowAnchor | null;
   destroy(): void;
 }
 
@@ -56,7 +58,7 @@ export async function mountCashFlow(
   threshold: number,
   lowest: { index: number; value: number } | null,
   initialPalette: CashFlowPalette,
-  onHover?: (index: number | null) => void,
+  onHover?: (index: number | null, point: CashFlowAnchor | null) => void,
 ): Promise<MountedCashFlow> {
   const { ColorType, HistogramSeries, LineSeries, LineStyle, createChart, createSeriesMarkers } =
     await import('lightweight-charts');
@@ -93,9 +95,17 @@ export async function mountCashFlow(
   const resizeObserver = new ResizeObserver(() => chart.timeScale().fitContent());
   resizeObserver.observe(host);
   const indexByTime = new Map(plot.inflow.map((point, index) => [point.time, index]));
-  const handleCrosshairMove = (param: { time?: Time }) => {
+  const pointAt = (index: number): CashFlowAnchor | null => {
+    const row = plot.balance[index + 1];
+    if (!row) return null;
+    const x = chart.timeScale().timeToCoordinate(row.time);
+    const y = running.priceToCoordinate(row.value);
+    return x === null || y === null ? null : { x, y };
+  };
+  const handleCrosshairMove = (param: { time?: Time; point?: CashFlowAnchor }) => {
     const index = param.time === undefined ? undefined : indexByTime.get(dayOf(param.time));
-    onHover?.(index ?? null);
+    const point = index === undefined || !param.point ? null : pointAt(index);
+    onHover?.(point ? index ?? null : null, point && param.point ? { x: point.x, y: param.point.y } : null);
   };
   chart.subscribeCrosshairMove(handleCrosshairMove);
 
@@ -123,6 +133,7 @@ export async function mountCashFlow(
   applyPalette(initialPalette);
   return {
     applyPalette,
+    pointAt,
     destroy: () => {
       resizeObserver.disconnect();
       chart.unsubscribeCrosshairMove(handleCrosshairMove);
