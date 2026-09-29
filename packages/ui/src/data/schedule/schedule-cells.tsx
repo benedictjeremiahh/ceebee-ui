@@ -11,6 +11,7 @@ interface CellContext {
   rows: ReadonlyMap<string, ScheduleRow>;
   text: ResolvedScheduleLabels;
   onItemOpen?: (id: string) => void;
+  onChildOpen?: (id: string) => void;
   items: ReadonlyMap<string, ScheduleEntry>;
   hierarchy: ScheduleHierarchy;
   expanded: ReadonlySet<string>;
@@ -30,6 +31,7 @@ export function ScheduleNameCell({ row }: CellProps) {
   const { hierarchy, text } = context;
   const children = hierarchy.childCount.get(item.id) ?? 0;
   const dated = hierarchy.datedCount.get(item.id) ?? 0;
+  const child = (hierarchy.depth.get(item.id) ?? 0) > 0;
   return (
     <div className="cb-schedule__identity" data-depth={hierarchy.depth.get(item.id) ?? 0}>
       <div className="cb-schedule__title">
@@ -38,12 +40,27 @@ export function ScheduleNameCell({ row }: CellProps) {
             text={text} onToggle={() => context.onToggle(item.id)} />
         ) : null}
         <Tooltip title={item.label}>
-          <span className="cb-schedule__name">{item.label}</span>
+          {child && context.onChildOpen ? (
+            <button
+              type="button"
+              className="cb-schedule__name cb-schedule__name-action"
+              aria-label={`${text.details}: ${item.label}`}
+              onMouseDown={(event) => event.stopPropagation()}
+              onClick={(event) => {
+                event.stopPropagation();
+                context.onChildOpen?.(item.id);
+              }}
+            >
+              {item.label}
+            </button>
+          ) : (
+            <span className="cb-schedule__name">{item.label}</span>
+          )}
         </Tooltip>
       </div>
       {isUnscheduled(item) ? <span className="cb-schedule__note">{text.unscheduled}</span> : null}
       {dated < children ? <span className="cb-schedule__note">{text.partialCoverage(dated, children)}</span> : null}
-      {context.onItemOpen ? (
+      {context.onItemOpen && !child ? (
         <Button
           type="link"
           size="small"

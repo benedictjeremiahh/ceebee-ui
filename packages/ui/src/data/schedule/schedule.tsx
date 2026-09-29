@@ -32,6 +32,7 @@ function ScheduleRoot({
   view,
   onViewChange,
   onItemOpen,
+  onChildOpen,
   expanded: controlledExpanded,
   onExpandedChange,
   fullscreen = false,
@@ -186,7 +187,7 @@ function ScheduleRoot({
       {compact ? <p className="cb-schedule__pan">{text.pan}</p> : null}
       <div className="cb-schedule__chart" style={{ height: presentation.mode === 'inline' ? height : undefined }} aria-busy={!mounted || !gridColor}>
         {mounted && gridColor ? (
-          <ScheduleCells rows={rowById} text={text} onItemOpen={onItemOpen} items={itemById}
+          <ScheduleCells rows={rowById} text={text} onItemOpen={onItemOpen} onChildOpen={onChildOpen} items={itemById}
             hierarchy={hierarchy} expanded={expanded} onToggle={toggle}>
             <Gantt
               key={axisKey}
@@ -257,7 +258,7 @@ function ScheduleRoot({
           </ScheduleCells>
         ) : null}
       </div>
-      {compact ? <ScheduleMobileItems rows={rows} text={text} onItemOpen={onItemOpen}
+      {compact ? <ScheduleMobileItems rows={rows} text={text} onItemOpen={onItemOpen} onChildOpen={onChildOpen}
         hierarchy={hierarchy} expanded={expanded} onToggle={toggle} /> : null}
       {footer ? <div className="cb-schedule__footer">{footer}</div> : null}
       {children}

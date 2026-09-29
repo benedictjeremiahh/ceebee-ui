@@ -4,10 +4,11 @@ import type { ScheduleHierarchy } from './schedule.hierarchy.js';
 import { ScheduleDisclosure } from './schedule-disclosure.js';
 import type { ResolvedScheduleLabels } from './schedule.types.js';
 
-export function ScheduleMobileItems({ rows, text, onItemOpen, hierarchy, expanded, onToggle }: {
+export function ScheduleMobileItems({ rows, text, onItemOpen, onChildOpen, hierarchy, expanded, onToggle }: {
   rows: readonly ScheduleRow[];
   text: ResolvedScheduleLabels;
   onItemOpen?: (id: string) => void;
+  onChildOpen?: (id: string) => void;
   hierarchy: ScheduleHierarchy;
   expanded: ReadonlySet<string>;
   onToggle: (id: string) => void;
@@ -20,7 +21,10 @@ export function ScheduleMobileItems({ rows, text, onItemOpen, hierarchy, expande
       ) : null}
       <span>{row.item.label}</span>
       <span className="cb-schedule__mobile-progress">{row.progress === null ? text.unreported : `${Math.round(row.progress * 100)}%`}</span>
-      {onItemOpen ? <Button type="link" onClick={() => onItemOpen(row.item.id)}>{text.details}</Button> : null}
+      {(() => {
+        const open = (hierarchy.depth.get(row.item.id) ?? 0) > 0 ? onChildOpen : onItemOpen;
+        return open ? <Button type="link" onClick={() => open(row.item.id)}>{text.details}</Button> : null;
+      })()}
     </li>)}
   </ol>;
 }

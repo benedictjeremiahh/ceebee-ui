@@ -192,6 +192,21 @@
 .cb-schedule__bar[data-partial] .cb-schedule__bar-planned {
   border-inline-end: var(--cb-border-width) dashed var(--cb-fg-muted);
 }
+.cb-schedule__name-action {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.cb-schedule__name-action:hover {
+  text-decoration: underline;
+}
+.cb-schedule__name-action:focus-visible {
+  outline: var(--cb-focus-width) solid var(--cb-tone-brand);
+}
 .cb-schedule__name {
   overflow: hidden;
   text-overflow: ellipsis;

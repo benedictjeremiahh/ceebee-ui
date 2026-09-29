@@ -13,13 +13,17 @@ const items: ScheduleEntry[] = [
   { id: 'b', label: 'Slab', parentId: 'wp', unscheduled: true },
 ];
 
-function Harness({ onItemOpen, children }: { onItemOpen?: (id: string) => void; children: ReactNode }) {
+function Harness({ onItemOpen, onChildOpen, children }: {
+  onItemOpen?: (id: string) => void;
+  onChildOpen?: (id: string) => void;
+  children: ReactNode;
+}) {
   const [expanded, setExpanded] = useState<ReadonlySet<string>>(new Set());
   const hierarchy = scheduleHierarchy(items, expanded);
   const rows = scheduleRows(hierarchy.visible);
   return (
     <ScheduleCells rows={new Map(rows.map((row) => [row.item.id, row]))} text={DEFAULT_SCHEDULE_LABELS}
-      onItemOpen={onItemOpen} items={new Map(items.map((item) => [item.id, item]))} hierarchy={hierarchy}
+      onItemOpen={onItemOpen} onChildOpen={onChildOpen} items={new Map(items.map((item) => [item.id, item]))} hierarchy={hierarchy}
       expanded={expanded}
       onToggle={(id) => setExpanded((previous) => new Set(previous.has(id) ? [] : [id]))}>
       {children}
@@ -34,15 +38,15 @@ describe('Schedule detail action', () => {
     render(
       <div onMouseDown={selectRow} onClick={selectRow}>
         <Harness onItemOpen={openItem}>
-          <ScheduleNameCell row={{ id: 'a' }} />
+          <ScheduleNameCell row={{ id: 'wp' }} />
         </Harness>
       </div>
     );
-    const action = screen.getByRole('button', { name: 'Details: Footing' });
+    const action = screen.getByRole('button', { name: 'Details: Foundation' });
     fireEvent.mouseDown(action);
     fireEvent.click(action);
     expect(selectRow).not.toHaveBeenCalled();
-    expect(openItem).toHaveBeenCalledWith('a');
+    expect(openItem).toHaveBeenCalledWith('wp');
   });
 });
 
@@ -65,5 +69,24 @@ describe('Schedule row disclosure', () => {
   it('labels an undated child instead of drawing dates for it', () => {
     render(<Harness><ScheduleNameCell row={{ id: 'b' }} /></Harness>);
     expect(screen.getByText('Not scheduled')).toBeInTheDocument();
+  });
+});
+
+describe('Schedule child rows', () => {
+  it('has no labelled action of its own; its name opens it through the child handler', () => {
+    const openItem = vi.fn();
+    const openChild = vi.fn();
+    render(
+      <Harness onItemOpen={openItem} onChildOpen={openChild}>
+        <ScheduleNameCell row={{ id: 'wp' }} />
+        <ScheduleNameCell row={{ id: 'a' }} />
+      </Harness>
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Show items: Foundation (2)' }));
+    expect(screen.getAllByRole('button', { name: /^Details:/ })).toHaveLength(2);
+    expect(screen.getByRole('button', { name: 'Details: Foundation' })).toHaveTextContent('Details');
+    fireEvent.click(screen.getByRole('button', { name: 'Details: Footing' }));
+    expect(openChild).toHaveBeenCalledWith('a');
+    expect(openItem).not.toHaveBeenCalled();
   });
 });

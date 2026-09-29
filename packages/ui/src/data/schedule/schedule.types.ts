@@ -126,7 +126,10 @@ export interface ScheduleProps {
   /** Optional controlled navigation for preserving the view across fullscreen mounts. */
   view?: ScheduleView;
   onViewChange?: (view: ScheduleView) => void;
+  /** The labelled details action, on top-level rows only; a child never repeats its parent's action. */
   onItemOpen?: (id: string) => void;
+  /** Opens a child row from its own name, so one row has one way in. */
+  onChildOpen?: (id: string) => void;
   /** Ids of expanded parents. Omit for uncontrolled disclosure, which survives fullscreen. */
   expanded?: readonly string[];
   onExpandedChange?: (expanded: string[]) => void;
