@@ -44,7 +44,7 @@ export function ScheduleNameCell({ row }: CellProps) {
             <button
               type="button"
               className="cb-schedule__name cb-schedule__name-action"
-              aria-label={`${text.details}: ${item.label}`}
+              aria-label={`${text.itemDetails}: ${item.label}`}
               onMouseDown={(event) => event.stopPropagation()}
               onClick={(event) => {
                 event.stopPropagation();

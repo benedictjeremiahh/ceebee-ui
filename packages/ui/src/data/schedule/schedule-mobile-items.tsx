@@ -23,7 +23,7 @@ export function ScheduleMobileItems({ rows, text, onItemOpen, onChildOpen, hiera
       <span className="cb-schedule__mobile-progress">{row.progress === null ? text.unreported : `${Math.round(row.progress * 100)}%`}</span>
       {(() => {
         const open = (hierarchy.depth.get(row.item.id) ?? 0) > 0 ? onChildOpen : onItemOpen;
-        return open ? <Button type="link" onClick={() => open(row.item.id)}>{text.details}</Button> : null;
+        return open ? <Button type="link" onClick={() => open(row.item.id)}>{(hierarchy.depth.get(row.item.id) ?? 0) > 0 ? text.itemDetails : text.details}</Button> : null;
       })()}
     </li>)}
   </ol>;

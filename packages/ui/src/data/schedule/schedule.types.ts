@@ -77,6 +77,8 @@ export interface ScheduleLabels {
   lateDays?: (days: number) => string;
   report?: (day: string) => string;
   details?: string;
+  /** Names a child row's own way in; distinct from `details`, which is the parent's labelled action. */
+  itemDetails?: string;
   fullSchedule?: string;
   goToday?: string;
   dayScale?: string;

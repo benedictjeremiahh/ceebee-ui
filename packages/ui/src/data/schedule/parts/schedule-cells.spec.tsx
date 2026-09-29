@@ -83,9 +83,9 @@ describe('Schedule child rows', () => {
       </Harness>
     );
     fireEvent.click(screen.getByRole('button', { name: 'Show items: Foundation (2)' }));
-    expect(screen.getAllByRole('button', { name: /^Details:/ })).toHaveLength(2);
+    expect(screen.getAllByRole('button', { name: /details:/i })).toHaveLength(2);
     expect(screen.getByRole('button', { name: 'Details: Foundation' })).toHaveTextContent('Details');
-    fireEvent.click(screen.getByRole('button', { name: 'Details: Footing' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Item details: Footing' }));
     expect(openChild).toHaveBeenCalledWith('a');
     expect(openItem).not.toHaveBeenCalled();
   });
