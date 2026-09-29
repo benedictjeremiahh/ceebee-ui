@@ -1,5 +1,17 @@
 # @ceebee/ui
 
+## 2.1.0
+
+### Minor Changes
+
+- 65516ea: Add opt-in native Schedule fullscreen with a full-window fallback, persistent navigation,
+  contained controls and popup surfaces, keyboard exit and focus restoration. Distinguish
+  schedule column headers from content using semantic surface and typography tokens.
+- d2b68cb: Add an opt-in physical-completion Schedule view with aligned readings, a distinct report marker,
+  accessible item details, scale controls, controlled fullscreen navigation, and a loading skeleton.
+  Keep the existing actual-date range mode compatible.
+- ef1c60a: Schedule discloses child rows from the parent's identity cell. Items with a `parentId` start collapsed, the chevron and item count expose `aria-expanded`, and expansion survives fullscreen. A child may state no dates (`unscheduled: true`): it stays in its group, is labelled, and draws no bar. A parent with only some children dated says its coverage is partial.
+
 ## 2.0.0
 
 ### Major Changes
