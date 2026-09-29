@@ -9,6 +9,7 @@ import {
   applyNodeChanges,
   useReactFlow,
   type Connection,
+  type Edge,
   type Node,
   type NodeChange,
   type OnBeforeDelete,
@@ -210,6 +211,12 @@ function DiagramEditorCanvas(props: DiagramEditorProps) {
     [step],
   );
 
+  // Edges are controlled by the caller and never marked selected in the runtime's state, so a selection change
+  // never reports one: clicking an edge is what puts it in the inspector.
+  const onEdgeClick = useCallback((_: MouseEvent, edge: Edge) => {
+    setInspected({ kind: 'edge', id: edge.id });
+  }, []);
+
   const onPaneClick = useCallback(() => {
     if (latest.current.connect.mode === 'connecting') step({ type: 'cancel' });
   }, [step]);
@@ -297,6 +304,7 @@ function DiagramEditorCanvas(props: DiagramEditorProps) {
           onBeforeDelete={onBeforeDelete}
           onSelectionChange={onSelectionChange}
           onNodeClick={onNodeClick}
+          onEdgeClick={onEdgeClick}
           onPaneClick={onPaneClick}
           onKeyDown={onKeyDown}
           {...SCROLL_PANS}

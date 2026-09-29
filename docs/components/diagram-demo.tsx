@@ -93,6 +93,16 @@ export function DiagramEditorDemo() {
           setEdges((current) => current.filter((e) => !edgeIds.includes(e.id)));
         }}
         onRename={(target) => (target.kind === 'node' ? setEditingId(target.id) : undefined)}
+        inspectorLabel="Selection"
+        renderInspector={(selection) => (
+          <p>
+            {selection?.kind === 'edge'
+              ? `${selection.from.label} → ${selection.to.label}`
+              : selection?.kind === 'node'
+              ? selection.node.label
+              : 'Select a node or a connection.'}
+          </p>
+        )}
       />
     </Demo>
   );
