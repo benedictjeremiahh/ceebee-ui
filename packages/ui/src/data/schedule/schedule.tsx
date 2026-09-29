@@ -7,6 +7,7 @@ import { cn } from '../../lib/cn.js';
 import { useMediaQuery } from '../../lib/use-media-query.js';
 import { DEFAULT_SCHEDULE_LABELS } from './parts/schedule-defaults.js';
 import { useScheduleScaleTitles } from './parts/use-schedule-scale-titles.js';
+import { scheduleHierarchy } from './schedule.hierarchy.js';
 import { dayForGantt, dayToDate, scheduleRows } from './schedule.math.js';
 import type { ResolvedScheduleLabels, ScheduleProps, ScheduleView } from './schedule.types.js';
 import { ScheduleBar } from './schedule-bar.js';
@@ -31,6 +32,8 @@ function ScheduleRoot({
   view,
   onViewChange,
   onItemOpen,
+  expanded: controlledExpanded,
+  onExpandedChange,
   fullscreen = false,
   label,
   toolbar,
@@ -75,7 +78,19 @@ function ScheduleRoot({
     const frame = requestAnimationFrame(() => setChartMode({ color: gridColor, narrow: compact }));
     return () => cancelAnimationFrame(frame);
   }, [mounted, compact, gridColor]);
-  const rows = useMemo(() => scheduleRows(items, today, mode), [items, today, mode]);
+  const [localExpanded, setLocalExpanded] = useState<ReadonlySet<string>>(new Set());
+  const expanded = useMemo(
+    () => (controlledExpanded ? new Set(controlledExpanded) : localExpanded),
+    [controlledExpanded, localExpanded]
+  );
+  const toggle = (id: string) => {
+    const next = new Set(expanded);
+    if (!next.delete(id)) next.add(id);
+    setLocalExpanded(next);
+    onExpandedChange?.([...next]);
+  };
+  const hierarchy = useMemo(() => scheduleHierarchy(items, expanded), [items, expanded]);
+  const rows = useMemo(() => scheduleRows(hierarchy.visible, today, mode), [hierarchy, today, mode]);
   const rowById = useMemo(() => new Map(rows.map((row) => [row.item.id, row])), [rows]);
   const bounds = rows.reduce(
     (range, row) => ({
@@ -111,14 +126,21 @@ function ScheduleRoot({
     changeView({ ...navigation, scale: fitScale, initialized: true });
   }, [physical, width, navigation.initialized]);
   const axisKey = `${gridColor}:${selectedScale}:${cellWidth}:${today ?? ''}:${bounds.start}:${bounds.end}`;
-  const tasks = rows.map((row) => ({
-    id: row.item.id,
-    text: row.item.label,
-    start: dayForGantt(row.spanStart),
-    end: dayForGantt(new Date(row.spanEnd.getTime() + (physical ? 86400000 : 0))),
-    progress: Math.round((row.progress ?? 0) * 100),
-    progressText: row.progress === null ? text.unreported : `${Math.round(row.progress * 100)}%`,
-  }));
+  const itemById = useMemo(() => new Map(hierarchy.visible.map((item) => [item.id, item])), [hierarchy]);
+  // An undated row still needs a slot in the grid; its bar is never drawn, so the anchor day is inert.
+  const anchor = dayForGantt(new Date(bounds.start));
+  const tasks = hierarchy.visible.map((item) => {
+    const row = rowById.get(item.id);
+    if (!row) return { id: item.id, text: item.label, start: anchor, end: anchor, progress: 0, progressText: '' };
+    return {
+      id: row.item.id,
+      text: row.item.label,
+      start: dayForGantt(row.spanStart),
+      end: dayForGantt(new Date(row.spanEnd.getTime() + (physical ? 86400000 : 0))),
+      progress: Math.round((row.progress ?? 0) * 100),
+      progressText: row.progress === null ? text.unreported : `${Math.round(row.progress * 100)}%`,
+    };
+  });
 
   const columns: IColumnConfig[] = physical
     ? [
@@ -132,7 +154,7 @@ function ScheduleRoot({
         { id: 'variance', header: text.variance, width: 180, cell: ScheduleVarianceCell },
       ]
     : [
-        { id: 'text', header: text.item, width: chartNarrow ? 112 : 260 },
+        { id: 'text', header: text.item, width: chartNarrow ? 112 : 260, cell: ScheduleNameCell },
         { id: 'progressText', header: text.actualProgress, width: 120 },
       ];
 
@@ -164,7 +186,8 @@ function ScheduleRoot({
       {compact ? <p className="cb-schedule__pan">{text.pan}</p> : null}
       <div className="cb-schedule__chart" style={{ height: presentation.mode === 'inline' ? height : undefined }} aria-busy={!mounted || !gridColor}>
         {mounted && gridColor ? (
-          <ScheduleCells rows={rowById} text={text} onItemOpen={onItemOpen}>
+          <ScheduleCells rows={rowById} text={text} onItemOpen={onItemOpen} items={itemById}
+            hierarchy={hierarchy} expanded={expanded} onToggle={toggle}>
             <Gantt
               key={axisKey}
               tasks={tasks}
@@ -225,13 +248,17 @@ function ScheduleRoot({
               taskTemplate={({ data }) => {
                 const row = rowById.get(String(data.id));
                 if (!row) return null;
-                return <ScheduleBar row={row} mode={mode} labels={text} percentLabels={percentLabels} />;
+                const total = hierarchy.childCount.get(row.item.id) ?? 0;
+                const dated = hierarchy.datedCount.get(row.item.id) ?? 0;
+                return <ScheduleBar row={row} mode={mode} labels={text} percentLabels={percentLabels}
+                  coverage={dated < total ? text.partialCoverage(dated, total) : undefined} />;
               }}
             />
           </ScheduleCells>
         ) : null}
       </div>
-      {compact ? <ScheduleMobileItems rows={rows} text={text} onItemOpen={onItemOpen} /> : null}
+      {compact ? <ScheduleMobileItems rows={rows} text={text} onItemOpen={onItemOpen}
+        hierarchy={hierarchy} expanded={expanded} onToggle={toggle} /> : null}
       {footer ? <div className="cb-schedule__footer">{footer}</div> : null}
       {children}
       </ConfigProvider>

@@ -9,6 +9,8 @@ import type { ReactNode } from 'react';
 export interface ScheduleItem {
   id: string;
   label: string;
+  /** Rows with a parent are disclosed from its identity cell and start collapsed. */
+  parentId?: string;
   start: string;
   end: string;
   /** 0–1. `0.4` draws a bar 40% filled. Absent means nothing is known, which is not the same as zero. */
@@ -30,6 +32,20 @@ export interface ScheduleItem {
     end: string;
   };
 }
+
+/**
+ * A child that states no dates. It stays in its parent's group and item count, is labelled, and draws
+ * no bar: an invented range would read as a plan nobody made.
+ */
+export interface UnscheduledItem {
+  id: string;
+  label: string;
+  parentId: string;
+  unscheduled: true;
+}
+
+/** What `items` accepts: dated rows, and children that state no dates. */
+export type ScheduleEntry = ScheduleItem | UnscheduledItem;
 
 /** Every string the schedule says. Override any of them for a product that does not speak English. */
 export interface ScheduleLabels {
@@ -73,6 +89,13 @@ export interface ScheduleLabels {
   exitExpanded?: string;
   fullscreenHint?: string;
   expandedHint?: string;
+  /** Names the disclosure control of a row that has children. */
+  expandItems?: string;
+  collapseItems?: string;
+  /** Marks a child that states no dates. */
+  unscheduled?: string;
+  /** A parent whose children are only partly dated: how many of them are. */
+  partialCoverage?: (dated: number, total: number) => string;
 }
 
 export interface ScheduleView {
@@ -88,7 +111,7 @@ export interface ScheduleView {
 export type ResolvedScheduleLabels = Required<ScheduleLabels>;
 
 export interface ScheduleProps {
-  items: ScheduleItem[];
+  items: ScheduleEntry[];
   /** `YYYY-MM-DD`. Marked on the axis, and what decides which bars are late. Absent marks nothing. */
   today?: string;
   labels?: Partial<ScheduleLabels>;
@@ -104,6 +127,9 @@ export interface ScheduleProps {
   view?: ScheduleView;
   onViewChange?: (view: ScheduleView) => void;
   onItemOpen?: (id: string) => void;
+  /** Ids of expanded parents. Omit for uncontrolled disclosure, which survives fullscreen. */
+  expanded?: readonly string[];
+  onExpandedChange?: (expanded: string[]) => void;
   /** Opt in to native fullscreen with an isolated full-window fallback; no chart remount. */
   fullscreen?: boolean;
   /** Accessible name for the fullscreen region. */

@@ -9,12 +9,15 @@ export function ScheduleBar({
   description,
   labels,
   percentLabels = false,
+  coverage,
 }: {
   row: ScheduleRow;
   mode: 'range' | 'physical';
   description?: string;
   labels?: ResolvedScheduleLabels;
   percentLabels?: boolean;
+  /** Set when only some of the row's children carry dates: its range does not cover them all. */
+  coverage?: string;
 }) {
   const percent = Math.round((row.progress ?? 0) * 100);
   const physical = mode === 'physical';
@@ -23,6 +26,7 @@ export function ScheduleBar({
     ? [
         row.item.label,
         row.progress === null ? labels.unreported : labels.progress(percent),
+        coverage,
         physical && row.item.reportedOn
           ? labels.report(row.item.reportedOn)
           : !physical && row.item.actual
@@ -47,6 +51,7 @@ export function ScheduleBar({
         data-overran={row.overran ? '' : undefined}
         data-actual={row.actual ? '' : undefined}
         data-unreported={row.progress === null ? '' : undefined}
+        data-partial={coverage ? '' : undefined}
         role="img"
         aria-label={accessibleName}
       >

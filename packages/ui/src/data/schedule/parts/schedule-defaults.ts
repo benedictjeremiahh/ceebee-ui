@@ -16,4 +16,6 @@ export const DEFAULT_SCHEDULE_LABELS: ResolvedScheduleLabels = {
   fullscreen: 'Fullscreen', expandWindow: 'Expand view', exitFullscreen: 'Exit fullscreen',
   exitExpanded: 'Return to inline view', fullscreenHint: 'Press Escape to exit fullscreen.',
   expandedHint: 'Expanded window view. Press Escape to return.',
+  expandItems: 'Show items', collapseItems: 'Hide items', unscheduled: 'Not scheduled',
+  partialCoverage: (dated, total) => `${dated} of ${total} items dated`,
 };

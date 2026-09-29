@@ -1,4 +1,5 @@
-import type { ScheduleItem } from './schedule.types.js';
+import { isUnscheduled } from './schedule.hierarchy.js';
+import type { ScheduleEntry, ScheduleItem } from './schedule.types.js';
 
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -83,13 +84,14 @@ function spanPct(spanStart: Date, spanEnd: Date, from: Date, to: Date): SpanPct 
  * however old — it is done, which is the point of marking lateness at all.
  */
 export function scheduleRows(
-  items: ScheduleItem[],
+  items: readonly ScheduleEntry[],
   today?: string,
   mode: 'range' | 'physical' = 'range'
 ): ScheduleRow[] {
   const at = today ? dayToDate(today) : null;
   const rows: ScheduleRow[] = [];
   for (const item of items) {
+    if (isUnscheduled(item)) continue;
     const start = dayToDate(item.start);
     const end = dayToDate(item.end);
     if (!start || !end) continue;
