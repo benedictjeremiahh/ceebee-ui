@@ -163,7 +163,7 @@
   align-items: center;
   gap: var(--cb-space-2);
   flex: none;
-  padding: var(--cb-space-1) var(--cb-space-2);
+  padding: var(--cb-space-1) var(--cb-space-2) var(--cb-space-1) 0;
   border: 0;
   background: transparent;
   color: var(--cb-fg-muted);
@@ -179,7 +179,7 @@
   border-inline-end: var(--cb-border-width) solid currentColor;
   border-block-end: var(--cb-border-width) solid currentColor;
   transform: rotate(-45deg);
-  margin-inline: var(--cb-space-1);
+  margin-inline-end: var(--cb-space-1);
   transition: transform var(--cb-duration-fast) var(--cb-ease-standard);
 }
 .cb-schedule__disclosure[aria-expanded='true'] .cb-schedule__chevron {
