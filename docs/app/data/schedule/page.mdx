@@ -1,4 +1,4 @@
-import { ScheduleDemo } from '../../../components/schedule-demo';
+import { ScheduleDemo, ScheduleGroupedDemo } from '../../../components/schedule-demo';
 import { PropsTable, Guidance } from '../../../components/props-table';
 
 # Schedule <span className="docs__label">Composition</span>
@@ -14,6 +14,20 @@ One row per item, drawn against a time axis, with today marked. A **timeline**, 
   do="Give each item a planned start and end and let the schedule draw them. A schedule is a view of a plan, not the plan itself."
   dont="Reach for a Schedule when the items have no dates — a list with a progress bar is a list."
 />
+
+## Grouped rows
+
+Give an item a `parentId` and it becomes a child row, disclosed from its parent's name cell by a chevron
+and an item count. Groups start collapsed; expansion survives fullscreen (pass `expanded` and
+`onExpandedChange` to own it). Disclosure only decides which rows are shown: a parent's dates and
+progress are the ones you gave it, never derived from its children.
+
+<ScheduleGroupedDemo />
+
+A child may state no dates (`{ id, label, parentId, unscheduled: true }`). It stays in its parent's group
+and item count and is labelled, and no bar is drawn. A parent with only some children dated says its
+coverage is partial. `onItemOpen` puts one labelled action on each top-level row; a child opens from its own
+name through `onChildOpen`, so a row never repeats its parent's action.
 
 ## What the bar says
 

@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('a plan reads against a time axis, with today marked', async ({ page }) => {
-  const schedule = page.locator('.cb-schedule');
+  const schedule = page.locator('.cb-schedule').first();
   await expect(schedule.getByText('Pour the slab')).toBeVisible();
   await expect(schedule.getByText('First-fix wiring')).toBeVisible();
   // Today keeps its machine-readable date but is written for a person above the axis.
@@ -27,7 +27,7 @@ test('a plan reads against a time axis, with today marked', async ({ page }) => 
 });
 
 test('the work-item grid shares visible row rules and an aligned header with the time axis', async ({ page }) => {
-  const schedule = page.locator('.cb-schedule');
+  const schedule = page.locator('.cb-schedule').first();
   const header = schedule.locator('.wx-header .wx-cell').first();
   const firstRow = schedule.locator('.wx-body .wx-row').first();
   const grid = schedule.locator('.wx-table-container');
@@ -55,7 +55,7 @@ test('the work-item grid shares visible row rules and an aligned header with the
 });
 
 test('the calendar grid uses the skin border color after a live theme change', async ({ page }) => {
-  const schedule = page.locator('.cb-schedule');
+  const schedule = page.locator('.cb-schedule').first();
   await page.evaluate(() => { document.documentElement.dataset.theme = 'light'; });
   await expect.poll(() => schedule.evaluate((element) =>
     getComputedStyle(element).getPropertyValue('--wx-gantt-border').trim(),
@@ -79,7 +79,7 @@ test('the calendar grid uses the skin border color after a live theme change', a
 
 test('the narrow time axis survives a live theme change', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
-  const schedule = page.locator('.cb-schedule');
+  const schedule = page.locator('.cb-schedule').first();
   const chart = schedule.locator('.wx-chart');
   await expect.poll(() => chart.evaluate((element) => element.getBoundingClientRect().width)).toBeGreaterThan(150);
   await page.evaluate(() => { document.documentElement.dataset.theme = 'dark'; });
@@ -90,13 +90,13 @@ test('the narrow time axis survives a live theme change', async ({ page }) => {
 });
 
 test('a bar that is behind and unfinished reads as late', async ({ page }) => {
-  const schedule = page.locator('.cb-schedule');
+  const schedule = page.locator('.cb-schedule').first();
   // Only "Pour the slab" ends before today (2026-01-19) and is under 100%.
   await expect(schedule.locator('.cb-schedule__bar[data-late]')).toHaveCount(1);
 });
 
 test('the substrate does not paint over the planned outline and actual span', async ({ page }) => {
-  const schedule = page.locator('.cb-schedule');
+  const schedule = page.locator('.cb-schedule').first();
   const bar = schedule.locator('.cb-schedule__bar[data-actual]').first();
   await expect(bar.locator('.cb-schedule__bar-planned')).toBeVisible();
   await expect(bar.locator('.cb-schedule__bar-actual')).toBeVisible();
@@ -117,7 +117,7 @@ test('the third-party chart hydrates without a server/client markup mismatch', a
 
 test('a narrow schedule gives the time axis room and explains how to see later dates', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
-  const schedule = page.locator('.cb-schedule');
+  const schedule = page.locator('.cb-schedule').first();
   await expect(schedule.getByText('Swipe the timeline to see later dates.')).toBeVisible();
   const chart = schedule.locator('.wx-chart');
   await expect(chart).toBeVisible();
@@ -148,4 +148,25 @@ test('the time axis remains visible in a constrained desktop panel and after vie
   await page.setViewportSize({ width: 1440, height: 1000 });
   await schedule.evaluate((element) => { element.style.width = '100%'; });
   await expect.poll(() => schedule.locator('.wx-table-container').evaluate((element) => element.getBoundingClientRect().width)).toBeGreaterThan(150);
+});
+
+test('grouped rows start collapsed, disclose from the parent, and label an undated child', async ({ page }) => {
+  const schedule = page.locator('.cb-schedule').nth(1);
+  await expect(schedule.getByText('Kitchen fit-out')).toBeVisible();
+  await expect(schedule.getByText('Cabinets')).toHaveCount(0);
+  const toggle = schedule.getByRole('button', { name: 'Show items: Kitchen fit-out (3)' });
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(schedule.getByText('1 of 3 items dated')).toHaveCount(0);
+  await toggle.click();
+  await expect(schedule.getByRole('button', { name: 'Hide items: Kitchen fit-out (3)' })).toHaveAttribute('aria-expanded', 'true');
+  await expect(schedule.getByText('Cabinets')).toBeVisible();
+  await expect(schedule.getByText('Paint')).toBeVisible();
+  await expect(schedule.getByText('Not scheduled')).toBeVisible();
+  // The undated row occupies a grid slot but draws no bar.
+  await expect(schedule.locator('.cb-schedule__bar[aria-label^="Paint"]')).toHaveCount(0);
+  await expect(schedule.locator('.cb-schedule__bar[aria-label^="Cabinets"]')).toHaveCount(1);
+  // A child has no labelled action of its own; its name is the way in.
+  await expect(schedule.getByRole('button', { name: 'Details: Kitchen fit-out', exact: true })).toHaveCount(1);
+  await expect(schedule.getByRole('button', { name: 'Item details: Cabinets' })).toHaveCount(1);
+  await expect(schedule.getByRole('button', { name: 'Details: Cabinets', exact: true })).toHaveCount(0);
 });

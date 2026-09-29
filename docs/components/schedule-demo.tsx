@@ -1,6 +1,6 @@
 'use client';
 
-import { Schedule, type ScheduleItem } from '@ceebee/ui/client';
+import { Schedule, type ScheduleEntry, type ScheduleItem } from '@ceebee/ui/client';
 import { Demo } from './demo';
 
 const ITEMS: ScheduleItem[] = [
@@ -33,6 +33,23 @@ export function ScheduleDemo() {
         Outlined bars show the plan; solid bars show reported actual dates. The Actual column shows completion,
         The slab pour ran two days past plan, while first-fix wiring stayed within its planned window. Today is marked.
       </p>
+    </Demo>
+  );
+}
+
+const GROUPED: ScheduleEntry[] = [
+  { id: 'kitchen', label: 'Kitchen fit-out', start: '2026-01-05', end: '2026-01-23', progress: 0.5 },
+  { id: 'cabinets', label: 'Cabinets', parentId: 'kitchen', start: '2026-01-05', end: '2026-01-14', progress: 1 },
+  { id: 'tiling', label: 'Tiling', parentId: 'kitchen', start: '2026-01-15', end: '2026-01-23', progress: 0.1 },
+  { id: 'paint', label: 'Paint', parentId: 'kitchen', unscheduled: true },
+];
+
+export function ScheduleGroupedDemo() {
+  return (
+    <Demo layout="block" code={`<Schedule items={items} onChildOpen={openItem} />`}>
+      <Schedule items={GROUPED} today="2026-01-19" mode="physical" height={300} onChildOpen={() => undefined}
+        onItemOpen={() => undefined} />
+      <p>Rows start collapsed. Paint states no dates, so it is listed and labelled but never drawn.</p>
     </Demo>
   );
 }
