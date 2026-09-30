@@ -175,6 +175,8 @@
 }
 
 .cb-diagram .react-flow__controls-button svg { fill: currentColor; }
+/* A line icon added among the substrate's filled glyphs (maximize) keeps its strokes. */
+.cb-diagram .react-flow__controls-button svg.lucide { fill: none; stroke: currentColor; max-inline-size: var(--cb-space-4); max-block-size: var(--cb-space-4); }
 
 .cb-diagram .react-flow__controls { border: var(--cb-border-width) solid var(--cb-border); border-radius: var(--cb-radius-sm); overflow: hidden; }
 

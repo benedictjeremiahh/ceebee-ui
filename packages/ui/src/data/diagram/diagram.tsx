@@ -1,6 +1,8 @@
 'use client';
 
-import { Background, ConnectionMode, Controls, ReactFlow, type ReactFlowProps } from '@xyflow/react';
+import { Background, ConnectionMode, ControlButton, Controls, ReactFlow, type ReactFlowProps } from '@xyflow/react';
+import { Tooltip } from 'antd';
+import { Maximize2 } from 'lucide-react';
 import { useId, useMemo, useRef } from 'react';
 import { DiagramLegend, type DiagramLegendEntry, DiagramOutline, FIT_VIEW, NODE_TYPES, safeId, useCellSize, SCROLL_PANS } from './diagram-flow.js';
 import { toFlowEdges, toFlowNodes } from './diagram.math.js';
@@ -26,6 +28,13 @@ export interface DiagramProps {
    * overview that must show the whole thing at once (a process map) passes something lower.
    */
   fitMinZoom?: number;
+  /**
+   * Offers a maximize control among the canvas's own controls — the corner where that glyph is the
+   * convention, so it may be icon-only. Its tooltip, shown on hover and keyboard focus, and its accessible
+   * name are `maximizeLabel`.
+   */
+  onMaximize?: () => void;
+  maximizeLabel?: string;
 }
 
 /**
@@ -33,7 +42,7 @@ export interface DiagramProps {
  * viewport's; nothing in the drawing is focusable, draggable or selectable. The diagram is also given as an
  * outline list, which the viewport is described by.
  */
-function DiagramRoot({ label, nodes, edges, hint, outlineLabel = 'Diagram outline', ariaLabels, legendLabels, legend, fitMinZoom }: DiagramProps) {
+function DiagramRoot({ label, nodes, edges, hint, outlineLabel = 'Diagram outline', ariaLabels, legendLabels, legend, fitMinZoom, onMaximize, maximizeLabel = 'Maximize' }: DiagramProps) {
   const fitView = useMemo(() => (fitMinZoom === undefined ? FIT_VIEW : { ...FIT_VIEW, minZoom: fitMinZoom }), [fitMinZoom]);
   const base = safeId(useId());
   const cellRef = useRef<HTMLSpanElement>(null);
@@ -64,7 +73,15 @@ function DiagramRoot({ label, nodes, edges, hint, outlineLabel = 'Diagram outlin
           ariaLabelConfig={ariaLabels}
         >
           <Background gap={cell} />
-          <Controls showInteractive={false} />
+          <Controls showInteractive={false}>
+            {onMaximize ? (
+              <Tooltip title={maximizeLabel} trigger={['hover', 'focus']} placement="right">
+                <ControlButton onClick={onMaximize} aria-label={maximizeLabel} title={maximizeLabel}>
+                  <Maximize2 aria-hidden="true" />
+                </ControlButton>
+              </Tooltip>
+            ) : null}
+          </Controls>
         </ReactFlow>
       </div>
       {legend || legendLabels ? <DiagramLegend nodes={nodes} labels={legendLabels} entries={legend} /> : null}

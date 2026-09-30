@@ -34,6 +34,15 @@ describe('Diagram', () => {
     expect(screen.getByRole('region', { name: 'Approval process' })).toHaveAttribute('aria-describedby', outline.id);
   });
 
+  it('offers a maximize control in the canvas corner only when asked, named and wired (icon-only by convention)', () => {
+    const onMaximize = vi.fn();
+    const { rerender } = render(<Diagram label="Approval process" nodes={nodes} edges={edges} />);
+    expect(screen.queryByRole('button', { name: 'Perbesar peta' })).toBeNull();
+    rerender(<Diagram label="Approval process" nodes={nodes} edges={edges} onMaximize={onMaximize} maximizeLabel="Perbesar peta" />);
+    fireEvent.click(screen.getByRole('button', { name: 'Perbesar peta' }));
+    expect(onMaximize).toHaveBeenCalledTimes(1);
+  });
+
   it('makes no node focusable', () => {
     render(<Diagram label="Approval process" nodes={nodes} edges={edges} />);
     expect(wrapperOf('Draft')).not.toHaveAttribute('tabindex');
