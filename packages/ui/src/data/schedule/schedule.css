@@ -435,3 +435,8 @@
   min-block-size: calc(var(--cb-space-8) * 6);
 }
 .cb-schedule:not([data-fullscreen='inline']) > :not(.cb-schedule__chart) { flex-shrink: 0; }
+
+/* A row's details control keeps a real target (WCAG 2.5.8: 24px) even as a compact link in a dense row. */
+.cb-schedule__details.ant-btn {
+  min-block-size: var(--cb-control-height-sm);
+}
