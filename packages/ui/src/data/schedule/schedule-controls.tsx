@@ -1,5 +1,5 @@
 'use client';
-import { Button } from 'antd';
+import { Button, Segmented } from 'antd';
 import type { IApi } from '@svar-ui/react-gantt';
 import type { RefObject } from 'react';
 import { dayForGantt, dayToDate } from './schedule.math.js';
@@ -55,19 +55,19 @@ export function ScheduleControls({
       >
         {text.goToday}
       </Button>
-      <div className="cb-schedule__scales" role="group" aria-label={text.fullSchedule}>
-        {(['day', 'week', 'month'] as const).map((unit) => (
-          <Button
-            size="small"
-            key={unit}
-            type={navigation.scale === unit ? 'primary' : 'default'}
-            aria-pressed={navigation.scale === unit}
-            onClick={() => onChange({ ...navigation, scale: unit, fit: false })}
-          >
-            {unit === 'day' ? text.dayScale : unit === 'week' ? text.weekScale : text.monthScale}
-          </Button>
-        ))}
-      </div>
+      {/* Choosing one scale is a selection, not an action: a segmented control, never a primary button (UX-3.1). */}
+      <Segmented<'day' | 'week' | 'month'>
+        size="small"
+        className="cb-schedule__scales"
+        aria-label={text.fullSchedule}
+        value={navigation.scale}
+        options={[
+          { value: 'day', label: text.dayScale },
+          { value: 'week', label: text.weekScale },
+          { value: 'month', label: text.monthScale },
+        ]}
+        onChange={(unit) => onChange({ ...navigation, scale: unit, fit: false })}
+      />
     </div>
   );
 }

@@ -223,8 +223,7 @@
 .cb-schedule__reading [data-negative] {
   color: var(--cb-tone-danger);
 }
-.cb-schedule__controls,
-.cb-schedule__scales {
+.cb-schedule__controls {
   display: flex;
   align-items: center;
   gap: var(--cb-space-2);
