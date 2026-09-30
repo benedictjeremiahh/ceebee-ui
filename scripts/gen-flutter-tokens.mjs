@@ -533,6 +533,8 @@ const ANT_COLOR_TOKENS = {
   colorTextSecondary: '--cb-fg-muted',
   colorTextTertiary: '--cb-fg-subtle',
   colorTextPlaceholder: '--cb-fg-muted',
+  colorTextDisabled: '--cb-fg-muted',
+  colorTextDescription: '--cb-fg-muted',
   colorTextLightSolid: '--cb-fg-on-brand',
   colorBgBase: '--cb-bg',
   colorBgContainer: '--cb-surface',

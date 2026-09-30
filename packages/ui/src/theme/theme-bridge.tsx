@@ -156,6 +156,11 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
        looked quiet enough. Disabled still reads as disabled: the control also loses its border and
        its ground, which are cues that do not depend on colour at all. */
     colorTextDisabled: color('--cb-fg-muted'),
+    /* The third of the same defect: Ant draws a form field's help line (and other descriptive text) in
+       `colorTextDescription`, which it derives from the tertiary foreground — the subtle step. On a card
+       painted with the subtle surface that measured 4.35:1. Muted clears AA on every surface, and
+       text-contrast.spec.ts now checks all three quiet text tokens together. */
+    colorTextDescription: color('--cb-fg-muted'),
     colorTextLightSolid: color('--cb-fg-on-brand'),
     colorBgBase: color('--cb-bg'),
     colorBgContainer: color('--cb-surface'),
