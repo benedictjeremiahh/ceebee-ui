@@ -202,6 +202,15 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
     };
   }
 
+  /* A Switch keeps a 24px target (WCAG 2.5.8): Ant's track is 22px tall, under the minimum the audit and the
+     standard hold every control to. Its height is the 24px step of the space scale (the small control height
+     is 32px, which would make a switch outgrow the rows it sits in); the handle and width keep Ant's
+     proportions around it. */
+  const switchHeight = length('--cb-space-5');
+  if (switchHeight !== undefined) {
+    components.Switch = { trackHeight: switchHeight, handleSize: switchHeight - 4, trackMinWidth: switchHeight * 2 };
+  }
+
   probe.done();
   return {
     token: Object.fromEntries(
