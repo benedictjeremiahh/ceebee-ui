@@ -99,14 +99,12 @@
   font-size: var(--cb-text-xs);
 }
 
-/* A multiple Select wraps its tags onto new lines, so its frame grows with them: the control height is its floor.
-   Holding it to one line spills the tags over whatever sits below. */
-:where(.ant-select-multiple) {
+/* A multiple Select wraps its tags onto new lines, so its frame grows with them. It only gives up the fixed
+   height above; the floor is Ant's own, because a constraint stated here would outlive every Ant rule (see the
+   spec). Holding it to one line spilled the tags over whatever sits below. */
+:where(.ant-select-multiple, .ant-select-multiple.ant-select-lg, .ant-select-multiple.ant-select-sm) {
   height: auto;
-  min-height: var(--cb-control-height-md);
 }
-:where(.ant-select-multiple.ant-select-lg) { min-height: var(--cb-control-height-lg); }
-:where(.ant-select-multiple.ant-select-sm) { min-height: var(--cb-control-height-sm); }
 
 /* An input inside an affix wrapper is framed by the wrapper, so it states no box of its own. */
 :where(.ant-input-affix-wrapper .ant-input) {
