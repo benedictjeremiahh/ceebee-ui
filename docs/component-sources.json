@@ -1546,7 +1546,7 @@
         "Separate accessible description",
         "Focus restoration across conditional unmount",
         "Stable CeeBee semantic layer classes",
-        "Above-drawer stacking layer"
+        "Above-drawer stacking layer with automatic Drawer-descendant detection"
       ]
     },
     "Notification": {

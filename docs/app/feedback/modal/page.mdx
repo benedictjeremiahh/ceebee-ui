@@ -21,10 +21,11 @@ Use the upstream `classNames` semantic slots for any other additive styling.
 
 ## Stacking
 
-Most dialogs stay on the default `--cb-z-modal` rung. When a dialog is opened from inside a Drawer,
-pass `layer="above-drawer"` so both the dialog and its backdrop resolve above the drawer. This is
-the only supported nested overlay: a modal inside another modal, or a drawer inside a dialog, still
-belongs on its own page.
+Most dialogs stay on the default `--cb-z-modal` rung. A dialog rendered by Drawer content
+automatically moves to the documented above-drawer rung, with its backdrop; pass
+`layer="above-drawer"` only to control an exceptional call chain deliberately. This is the
+only supported nested overlay: a modal inside another modal, or a drawer inside a dialog,
+still belongs on its own page.
 
 ## Keyboard
 
@@ -37,7 +38,7 @@ belongs on its own page.
 
 - Do pass a short `title` and supporting `description` as separate props.
 - Don't build a stacked title-and-subtitle React node and pass the whole block as `title`.
-- Do pass `layer="above-drawer"` for a dialog opened from a Drawer.
+- Do pass `layer="above-drawer"` only to control an exceptional overlay call chain deliberately.
 - Don't open a modal inside another modal, or a drawer inside a dialog, to work around stacking.
 
 ## Examples

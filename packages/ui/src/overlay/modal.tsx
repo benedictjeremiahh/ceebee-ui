@@ -6,6 +6,7 @@ import type { MutableRefObject, ReactNode, Ref } from 'react';
 import { useCallback, useId, useInsertionEffect, useLayoutEffect, useRef } from 'react';
 
 import { cn } from '../lib/cn.js';
+import { OverlayAncestorProvider, useOverlayAncestors } from './overlay-ancestors.js';
 import './modal.css';
 
 export type ModalLayer = 'page' | 'above-drawer';
@@ -14,15 +15,15 @@ export interface ModalProps extends AntModalProps {
   /** Separate explanatory copy announced after the dialog title. */
   description?: ReactNode;
   /**
-   * A dialog opened from a Drawer is still one interruption, not two pages: keep it on the page rung by
-   * default, and move it to the documented above-drawer rung only for that call chain.
+   * A dialog opened from a Drawer is still one interruption, not two pages. CeeBee detects that
+   * call chain automatically; pass a value only to control an exceptional one deliberately.
    */
   layer?: ModalLayer;
 }
 
 function ModalRoot({
   description,
-  layer = 'page',
+  layer,
   children,
   classNames,
   open,
@@ -39,6 +40,8 @@ function ModalRoot({
   const wasOpen = useRef(false);
   const openRef = useRef(!!open);
   openRef.current = !!open;
+  const overlayAncestors = useOverlayAncestors();
+  const resolvedLayer = layer ?? (overlayAncestors.includes('drawer') ? 'above-drawer' : 'page');
   const shouldRestoreFocus = focusable?.focusTriggerAfterClose
     ?? focusTriggerAfterClose
     ?? true;
@@ -84,16 +87,16 @@ function ModalRoot({
         const resolved = classNames(info) ?? {};
         return {
           ...resolved,
-          wrapper: cn('cb-modal', layer === 'above-drawer' && 'cb-modal--above-drawer', resolved.wrapper),
-          mask: cn('cb-modal__backdrop', layer === 'above-drawer' && 'cb-modal--above-drawer-backdrop', resolved.mask),
+          wrapper: cn('cb-modal', resolvedLayer === 'above-drawer' && 'cb-modal--above-drawer', resolved.wrapper),
+          mask: cn('cb-modal__backdrop', resolvedLayer === 'above-drawer' && 'cb-modal--above-drawer-backdrop', resolved.mask),
         };
       }
     : {
         ...classNames,
-        wrapper: cn('cb-modal', layer === 'above-drawer' && 'cb-modal--above-drawer', classNames?.wrapper),
+        wrapper: cn('cb-modal', resolvedLayer === 'above-drawer' && 'cb-modal--above-drawer', classNames?.wrapper),
         mask: cn(
           'cb-modal__backdrop',
-          layer === 'above-drawer' && 'cb-modal--above-drawer-backdrop',
+          resolvedLayer === 'above-drawer' && 'cb-modal--above-drawer-backdrop',
           classNames?.mask,
         ),
       };
@@ -133,7 +136,7 @@ function ModalRoot({
           {description}
         </div>
       ) : null}
-      {children}
+      <OverlayAncestorProvider ancestor="modal">{children}</OverlayAncestorProvider>
     </AntModal>
   );
 }
