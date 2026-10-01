@@ -19,10 +19,11 @@ Since the `5.17.0`, we provided the `loading` prop by the Spin. However, since t
 ## Stacking
 
 CeeBee's Drawer resolves `--cb-z-drawer`, with its backdrop on `--cb-z-drawer-backdrop`. A dialog
-opened from inside it stays a Modal, and must therefore pass that Modal `layer="above-drawer"`:
-the dialog and its backdrop then resolve above the drawer while the drawer's focus trap waits for it.
+rendered by Drawer content automatically moves to the documented above-drawer rung; pass that
+Modal `layer="above-drawer"` only to control an exceptional call chain deliberately. The dialog
+and its backdrop then resolve above the drawer while the drawer's focus trap waits for it.
 
-- Do keep a modal's focused task inside a drawer by passing `layer="above-drawer"`.
+- Do keep a modal's focused task inside a drawer on the documented rung.
 - Don't restyle the drawer or dialog with a local `z-index` to force one above the other.
 
 ## Examples

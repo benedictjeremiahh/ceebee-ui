@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { StrictMode, useState } from 'react';
 import { describe, expect, it } from 'vitest';
 
-import { Modal } from '../client.js';
+import { Drawer, Modal } from '../client.js';
 
 function ConditionalModal() {
   const [open, setOpen] = useState(false);
@@ -57,6 +57,33 @@ describe('Modal', () => {
     const dialog = await screen.findByRole('dialog');
     expect(dialog).toHaveAccessibleName('Expense details');
     expect(dialog.closest('.ant-modal-wrap')).toHaveClass('cb-modal--above-drawer');
+  });
+
+  it('elevates a dialog opened from a Drawer without an explicit layer', async () => {
+    function DrawerBackedModal() {
+      const [drawerOpen, setDrawerOpen] = useState(false);
+      const [dialogOpen, setDialogOpen] = useState(false);
+      return (
+        <>
+          <button type="button" onClick={() => setDrawerOpen(true)}>Open drawer</button>
+          <Drawer open={drawerOpen} title="Drawer title" onClose={() => setDrawerOpen(false)}>
+            <button type="button" onClick={() => setDialogOpen(true)}>Open nested dialog</button>
+            <Modal open={dialogOpen} title="Nested dialog" footer={null} scrollLock={false} onCancel={() => setDialogOpen(false)}>
+              Nested body
+            </Modal>
+          </Drawer>
+        </>
+      );
+    }
+
+    render(<DrawerBackedModal />);
+    fireEvent.click(screen.getByRole('button', { name: 'Open drawer' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'Open nested dialog' }));
+
+    const title = await screen.findByText('Nested dialog');
+    const dialog = title.closest('.ant-modal');
+    expect(dialog).not.toBeNull();
+    expect(dialog?.closest('.ant-modal-wrap')).toHaveClass('cb-modal--above-drawer');
   });
 
   it('preserves the upstream static and hook APIs', () => {

@@ -4,6 +4,7 @@ import { Drawer as AntDrawer } from 'antd';
 import type { DrawerProps as AntDrawerProps } from 'antd';
 
 import { cn } from '../lib/cn.js';
+import { OverlayAncestorProvider } from './overlay-ancestors.js';
 import './drawer.css';
 
 export type DrawerProps = AntDrawerProps;
@@ -18,7 +19,7 @@ export type DrawerProps = AntDrawerProps;
  *
  * Everything else is Ant's contract, untouched.
  */
-function DrawerRoot({ classNames, rootClassName, ...props }: DrawerProps) {
+function DrawerRoot({ children, classNames, rootClassName, ...props }: DrawerProps) {
   const drawerClassNames =
     typeof classNames === 'function'
       ? (info: Parameters<typeof classNames>[0]) => {
@@ -38,7 +39,9 @@ function DrawerRoot({ classNames, rootClassName, ...props }: DrawerProps) {
       {...props}
       rootClassName={cn('cb-drawer', rootClassName)}
       classNames={drawerClassNames}
-    />
+    >
+      <OverlayAncestorProvider ancestor="drawer">{children}</OverlayAncestorProvider>
+    </AntDrawer>
   );
 }
 

@@ -18,7 +18,6 @@ const App: React.FC = () => {
         <Modal
           title="Record payment"
           open={dialogOpen}
-          layer="above-drawer"
           footer={null}
           onCancel={() => setDialogOpen(false)}
         >
