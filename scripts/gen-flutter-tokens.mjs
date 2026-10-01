@@ -751,6 +751,8 @@ const STRUCTURE_SCHEMA = {
   '--cb-z-sticky': { kind: 'int', field: 'zSticky' },
   '--cb-z-modal-backdrop': { kind: 'int', field: 'zModalBackdrop' },
   '--cb-z-modal': { kind: 'int', field: 'zModal' },
+  '--cb-z-drawer-backdrop': { kind: 'int', field: 'zDrawerBackdrop' },
+  '--cb-z-drawer': { kind: 'int', field: 'zDrawer' },
   '--cb-z-dropdown': { kind: 'int', field: 'zDropdown' },
   '--cb-z-popover': { kind: 'int', field: 'zPopover' },
   '--cb-z-tooltip': { kind: 'int', field: 'zTooltip' },
@@ -759,6 +761,8 @@ const STRUCTURE_SCHEMA = {
   '--cb-z-toast': { kind: 'int', field: 'zToast' },
   '--cb-z-coachmark-spotlight': { kind: 'int', field: 'zCoachmarkSpotlight' },
   '--cb-z-coachmark': { kind: 'int', field: 'zCoachmark' },
+  '--cb-z-modal-above-drawer-backdrop': { kind: 'int', field: 'zModalAboveDrawerBackdrop' },
+  '--cb-z-modal-above-drawer': { kind: 'int', field: 'zModalAboveDrawer' },
   '--cb-z-overlay': { kind: 'int', field: 'zOverlay' },
 };
 

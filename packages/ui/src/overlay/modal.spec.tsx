@@ -47,6 +47,18 @@ describe('Modal', () => {
     await waitFor(() => expect(trigger).toHaveFocus());
   });
 
+  it('keeps an explicitly elevated dialog on the documented above-drawer layer', async () => {
+    render(
+      <Modal open title="Expense details" layer="above-drawer" footer={null} scrollLock={false} onCancel={() => {}}>
+        Expense body
+      </Modal>,
+    );
+
+    const dialog = await screen.findByRole('dialog');
+    expect(dialog).toHaveAccessibleName('Expense details');
+    expect(dialog.closest('.ant-modal-wrap')).toHaveClass('cb-modal--above-drawer');
+  });
+
   it('preserves the upstream static and hook APIs', () => {
     expect(Modal.confirm).toBeTypeOf('function');
     expect(Modal.useModal).toBeTypeOf('function');

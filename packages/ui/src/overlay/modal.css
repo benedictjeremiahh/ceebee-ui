@@ -6,6 +6,14 @@
   z-index: var(--cb-z-modal-backdrop) !important;
 }
 
+.cb-modal--above-drawer {
+  z-index: var(--cb-z-modal-above-drawer) !important;
+}
+
+.cb-modal--above-drawer-backdrop {
+  z-index: var(--cb-z-modal-above-drawer-backdrop) !important;
+}
+
 .cb-modal .ant-modal-header {
   padding-inline-end: var(--cb-space-7);
 }

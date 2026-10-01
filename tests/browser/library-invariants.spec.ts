@@ -416,7 +416,7 @@ test('Feedback docs match the documented card geometry, coverage, and primary in
     { path: '/feedback/alert', component: 'alert', cards: 13, api: 27, flow: 'columns' },
     { path: '/feedback/drawer', component: 'drawer', cards: 13, api: 40, flow: 'columns' },
     { path: '/feedback/message', component: 'message', cards: 9, api: 14, flow: 'columns' },
-    { path: '/feedback/modal', component: 'modal', cards: 17, api: 38, flow: 'columns' },
+    { path: '/feedback/modal', component: 'modal', cards: 18, api: 38, flow: 'columns' },
     { path: '/feedback/notification', component: 'notification', cards: 12, api: 43, flow: 'columns' },
     { path: '/feedback/popconfirm', component: 'popconfirm', cards: 9, api: 13, flow: 'columns' },
     { path: '/feedback/progress', component: 'progress', cards: 16, api: 25, flow: 'columns' },

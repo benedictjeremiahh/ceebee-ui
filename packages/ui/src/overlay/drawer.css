@@ -1,0 +1,7 @@
+.cb-drawer {
+  z-index: var(--cb-z-drawer) !important;
+}
+
+.cb-drawer__backdrop {
+  z-index: var(--cb-z-drawer-backdrop) !important;
+}
