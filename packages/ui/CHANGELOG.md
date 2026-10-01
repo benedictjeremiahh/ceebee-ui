@@ -1,5 +1,19 @@
 # @ceebee/ui
 
+## 2.2.0
+
+### Minor Changes
+
+- 7dde6d0: Diagram: optional `onMaximize` and `maximizeLabel` add an icon-only maximize control among the canvas's own controls, with a tooltip on hover and keyboard focus and the label as its accessible name.
+
+### Patch Changes
+
+- c8f1464: DiagramEditor: clicking a connection now puts it in the inspector. Edges are controlled by the caller and were never marked selected in the runtime's own state, so a selection change never reported one and the inspector could only ever describe nodes.
+- 5925baf: Form help text (`Form.Item extra`, and other text Ant draws in `colorTextDescription`) takes the muted foreground, so it reads at WCAG AA on every surface — it measured 4.35:1 on the subtle card surface. The server-rendered seeds now also carry `colorTextDisabled`, which the runtime theme already sent.
+- c2953b3: Schedule: the day / week / month scale is a segmented control instead of three buttons with the chosen one drawn as a primary, so a page keeps one primary action.
+- febf0f4: A multiple Select now grows with its wrapped tags: the pre-paint fallback no longer holds it to one control height (its floor is Ant's own), so tags on a second line no longer spill over whatever sits below the field.
+- 72d487b: Switch: a 24px track (was Ant's 22px) so it meets the 24px minimum target (WCAG 2.5.8); the handle and width keep Ant's proportions.
+
 ## 2.1.0
 
 ### Minor Changes
