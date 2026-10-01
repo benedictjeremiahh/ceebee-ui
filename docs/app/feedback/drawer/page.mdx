@@ -16,6 +16,15 @@ A Drawer is a panel that is typically overlaid on top of a page and slides in fr
 Notes for developers
 Since the `5.17.0`, we provided the `loading` prop by the Spin. However, since the `5.18.0` version, we have fixed this design error and replaced the Spin with the Skeleton, and also modified the type of `loading` prop, which can only accept `boolean` type.
 
+## Stacking
+
+CeeBee's Drawer resolves `--cb-z-drawer`, with its backdrop on `--cb-z-drawer-backdrop`. A dialog
+opened from inside it stays a Modal, and must therefore pass that Modal `layer="above-drawer"`:
+the dialog and its backdrop then resolve above the drawer while the drawer's focus trap waits for it.
+
+- Do keep a modal's focused task inside a drawer by passing `layer="above-drawer"`.
+- Don't restyle the drawer or dialog with a local `z-index` to force one above the other.
+
 ## Examples
 
 <DrawerShowcase />

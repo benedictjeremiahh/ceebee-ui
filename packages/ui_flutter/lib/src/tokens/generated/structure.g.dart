@@ -55,13 +55,17 @@ abstract final class CbStructure {
   static const int zSticky = 100;
   static const int zModalBackdrop = 200;
   static const int zModal = 300;
-  static const int zDropdown = 400;
-  static const int zPopover = 500;
-  static const int zTooltip = 600;
-  static const int zCommandBackdrop = 700;
-  static const int zCommand = 800;
-  static const int zToast = 900;
-  static const int zCoachmarkSpotlight = 1000;
-  static const int zCoachmark = 1100;
+  static const int zDrawerBackdrop = 400;
+  static const int zDrawer = 500;
+  static const int zDropdown = 600;
+  static const int zPopover = 700;
+  static const int zTooltip = 800;
+  static const int zCommandBackdrop = 900;
+  static const int zCommand = 1000;
+  static const int zToast = 1100;
+  static const int zCoachmarkSpotlight = 1200;
+  static const int zCoachmark = 1300;
+  static const int zModalAboveDrawerBackdrop = 1400;
+  static const int zModalAboveDrawer = 1500;
   static const int zOverlay = 200;
 }

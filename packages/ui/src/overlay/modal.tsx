@@ -8,13 +8,21 @@ import { useCallback, useId, useInsertionEffect, useLayoutEffect, useRef } from 
 import { cn } from '../lib/cn.js';
 import './modal.css';
 
+export type ModalLayer = 'page' | 'above-drawer';
+
 export interface ModalProps extends AntModalProps {
   /** Separate explanatory copy announced after the dialog title. */
   description?: ReactNode;
+  /**
+   * A dialog opened from a Drawer is still one interruption, not two pages: keep it on the page rung by
+   * default, and move it to the documented above-drawer rung only for that call chain.
+   */
+  layer?: ModalLayer;
 }
 
 function ModalRoot({
   description,
+  layer = 'page',
   children,
   classNames,
   open,
@@ -76,14 +84,18 @@ function ModalRoot({
         const resolved = classNames(info) ?? {};
         return {
           ...resolved,
-          wrapper: cn('cb-modal', resolved.wrapper),
-          mask: cn('cb-modal__backdrop', resolved.mask),
+          wrapper: cn('cb-modal', layer === 'above-drawer' && 'cb-modal--above-drawer', resolved.wrapper),
+          mask: cn('cb-modal__backdrop', layer === 'above-drawer' && 'cb-modal--above-drawer-backdrop', resolved.mask),
         };
       }
     : {
         ...classNames,
-        wrapper: cn('cb-modal', classNames?.wrapper),
-        mask: cn('cb-modal__backdrop', classNames?.mask),
+        wrapper: cn('cb-modal', layer === 'above-drawer' && 'cb-modal--above-drawer', classNames?.wrapper),
+        mask: cn(
+          'cb-modal__backdrop',
+          layer === 'above-drawer' && 'cb-modal--above-drawer-backdrop',
+          classNames?.mask,
+        ),
       };
 
   const describedBy = [

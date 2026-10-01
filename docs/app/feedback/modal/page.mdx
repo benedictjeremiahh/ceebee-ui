@@ -19,6 +19,13 @@ returns to the opening control even when a controlled consumer unmounts the Moda
 The positioning wrapper and backdrop expose `cb-modal` and `cb-modal__backdrop` respectively.
 Use the upstream `classNames` semantic slots for any other additive styling.
 
+## Stacking
+
+Most dialogs stay on the default `--cb-z-modal` rung. When a dialog is opened from inside a Drawer,
+pass `layer="above-drawer"` so both the dialog and its backdrop resolve above the drawer. This is
+the only supported nested overlay: a modal inside another modal, or a drawer inside a dialog, still
+belongs on its own page.
+
 ## Keyboard
 
 - `Tab` and `Shift+Tab` move through focusable controls inside the modal.
@@ -30,6 +37,8 @@ Use the upstream `classNames` semantic slots for any other additive styling.
 
 - Do pass a short `title` and supporting `description` as separate props.
 - Don't build a stacked title-and-subtitle React node and pass the whole block as `title`.
+- Do pass `layer="above-drawer"` for a dialog opened from a Drawer.
+- Don't open a modal inside another modal, or a drawer inside a dialog, to work around stacking.
 
 ## Examples
 

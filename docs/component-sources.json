@@ -1503,11 +1503,10 @@
         "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
       },
       "license": "MIT",
-      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "adapter": "packages/ui/src/overlay/drawer.tsx",
       "demoPath": "docs/components/feedback/drawer",
       "parityGaps": [],
-      "proof": "docs/parity.generated.json#Drawer",
-      "legacyAdapter": "packages/ui/src/overlay/drawer.tsx"
+      "proof": "docs/parity.generated.json#Drawer"
     },
     "Message": {
       "strategy": "antd-runtime",
@@ -1546,7 +1545,8 @@
       "additiveExtensions": [
         "Separate accessible description",
         "Focus restoration across conditional unmount",
-        "Stable CeeBee semantic layer classes"
+        "Stable CeeBee semantic layer classes",
+        "Above-drawer stacking layer"
       ]
     },
     "Notification": {

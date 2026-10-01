@@ -127,9 +127,10 @@ or adopts Dropdown's action-menu roving focus and typeahead.
 _Avoid_: Persistent Dropdown, action list
 
 **Stacking Ladder**:
-The semantic global order for raised interaction layers: page chrome, modal, anchored controls,
-informational overlays, command surfaces, notifications, then guided onboarding. Portalled anchored
-layers assign their rung to the Positioner that creates the stacking context, not to its Popup.
+The semantic global order for raised interaction layers: page chrome, modal, drawer, anchored controls,
+informational overlays, command surfaces, notifications, guided onboarding, then a modal deliberately
+opened from a drawer. Portalled anchored layers assign their rung to the Positioner that creates the
+stacking context, not to its Popup.
 _Avoid_: Arbitrary z-index, highest-number-wins
 
 **Server-safe primitive**:

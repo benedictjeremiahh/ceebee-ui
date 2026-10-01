@@ -12,6 +12,7 @@ import ModalFooterRender from './footer-render';
 import ModalHooks from './hooks';
 import ModalLocale from './locale';
 import ModalManual from './manual';
+import ModalNestedDrawer from './nested-drawer';
 import ModalPosition from './position';
 import ModalButtonProps from './button-props';
 import ModalModalRender from './modal-render';
@@ -31,6 +32,7 @@ const demos: OfficialDemo[] = [
   { file: "hooks", title: "Use hooks to get context", description: "Use Modal.useModal to get contextHolder with context accessible issue. Only hooks method support Promise await operation.", Component: ModalHooks },
   { file: "locale", title: "Internationalization", description: "To customize the text of the buttons, you need to set okText and cancelText props.", Component: ModalLocale },
   { file: "manual", title: "Manual to update destroy", description: "Manually updating and destroying a modal through instance.", Component: ModalManual },
+  { file: "nested-drawer", title: "Modal in a drawer", description: "A focused dialog opened from a Drawer stays above it.", Component: ModalNestedDrawer },
   { file: "position", title: "To customize the position of modal", description: "You can use centered,style.top or other styles to set position of modal dialog.", Component: ModalPosition },
   { file: "button-props", title: "Customize footer buttons props", description: "Passing okButtonProps and cancelButtonProps will customize the OK button and cancel button props.", Component: ModalButtonProps },
   { file: "modal-render", title: "Custom modal content render", description: "Custom modal content render. use react-draggable implements draggable.", Component: ModalModalRender },

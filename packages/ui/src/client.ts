@@ -7,7 +7,9 @@
  */
 export * from 'antd';
 export { Modal } from './overlay/modal.js';
-export type { ModalProps } from './overlay/modal.js';
+export type { ModalLayer, ModalProps } from './overlay/modal.js';
+export { Drawer } from './overlay/drawer.js';
+export type { DrawerProps } from './overlay/drawer.js';
 export { Select } from './form/select.js';
 export type { SelectProps } from './form/select.js';
 export { ThemeBridge } from './theme/theme-bridge.js';
