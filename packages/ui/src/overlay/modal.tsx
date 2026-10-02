@@ -3,7 +3,7 @@
 import { Modal as AntModal } from 'antd';
 import type { ModalProps as AntModalProps } from 'antd';
 import type { MutableRefObject, ReactNode, Ref } from 'react';
-import { useCallback, useId, useInsertionEffect, useLayoutEffect, useRef } from 'react';
+import { useCallback, useEffect, useId, useInsertionEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { cn } from '../lib/cn.js';
 import { OverlayAncestorProvider, useOverlayAncestors } from './overlay-ancestors.js';
@@ -47,8 +47,8 @@ function ModalRoot({
   // to travel through Ant's own `zIndex` prop too — otherwise a popup opened from the dialog resolves
   // against Ant's unpinned arithmetic and paints underneath it. Read live from the token rather than
   // restating it: the stylesheet stays the single source of the rung.
-  const [aboveDrawerZ, setAboveDrawerZ] = React.useState<number>();
-  React.useEffect(() => {
+  const [aboveDrawerZ, setAboveDrawerZ] = useState<number>();
+  useEffect(() => {
     const raw = getComputedStyle(document.documentElement).getPropertyValue('--cb-z-modal-above-drawer').trim();
     const parsed = Number.parseInt(raw, 10);
     if (Number.isFinite(parsed)) setAboveDrawerZ(parsed);

@@ -51,13 +51,18 @@ test('a dialog opened from a drawer paints above it, traps Escape, and returns f
   expect(Number(paint.picker)).toBeGreaterThan(Number(paint.dialog));
   expect(paint.topmost).toBe('picker');
 
+  const focusIsInDialog = () => page.evaluate(
+    () => document.activeElement?.closest('.ant-modal') !== null,
+  );
+  // Escape is handled by whichever layer holds focus: settle focus inside the dialog first, so the
+  // keypress below can only dismiss the dialog — never the drawer behind it.
+  await dialog.getByText('Confirm this focused payment').click();
+  await expect.poll(focusIsInDialog).toBe(true);
   await page.keyboard.press('Escape');
   await expect(picker).toBeHidden();
   await expect(dialog).toBeVisible();
 
-  await page.keyboard.press('Escape');
-  await expect(dialog).toBeHidden();
-
+  await expect.poll(focusIsInDialog).toBe(true);
   await page.keyboard.press('Escape');
   await expect(dialog).toBeHidden();
   await expect(page.locator('.ant-drawer.ant-drawer-open')).toBeVisible();
