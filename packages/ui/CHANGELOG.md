@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 2.4.1
+
+### Patch Changes
+
+- ee6e640: Fix popups opened from an above-drawer Modal rendering underneath it. The dialog now reports its resolved rung through Ant's own `zIndex`, so date pickers, selects, dropdowns and tooltips derive a rung above the dialog instead of Ant's unpinned arithmetic.
+
 ## 2.4.0
 
 ### Minor Changes
