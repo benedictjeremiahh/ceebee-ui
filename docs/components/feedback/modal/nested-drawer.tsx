@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button, Drawer, Modal } from '@ceebee/ui/client';
+import { Button, DatePicker, Drawer, Modal } from '@ceebee/ui/client';
 
 const App: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -21,8 +21,11 @@ const App: React.FC = () => {
           footer={null}
           onCancel={() => setDialogOpen(false)}
         >
-          <p>Confirm this focused payment before returning to the invoice drawer.</p>
+        <p>Confirm this focused payment before returning to the invoice drawer.</p>
+        <DatePicker placeholder="Received on" style={{ width: '100%' }} />
+        <p>
           <Button onClick={() => setDialogOpen(false)}>Close payment dialog</Button>
+        </p>
         </Modal>
       </Drawer>
     </>
