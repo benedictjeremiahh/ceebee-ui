@@ -23,7 +23,9 @@ Use the upstream `classNames` semantic slots for any other additive styling.
 
 Most dialogs stay on the default `--cb-z-modal` rung. A dialog rendered by Drawer content
 automatically moves to the documented above-drawer rung, with its backdrop; pass
-`layer="above-drawer"` only to control an exceptional call chain deliberately. This is the
+`layer="above-drawer"` only to control an exceptional call chain deliberately. Popups the
+dialog itself opens — date pickers, selects, dropdowns — inherit the rung through Ant's own
+`zIndex`, so they resolve above the dialog rather than wedging underneath it. This is the
 only supported nested overlay: a modal inside another modal, or a drawer inside a dialog,
 still belongs on its own page.
 
