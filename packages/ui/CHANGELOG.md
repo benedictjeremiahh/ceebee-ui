@@ -1,5 +1,12 @@
 # @ceebee/ui
 
+## 2.5.0
+
+### Minor Changes
+
+- 29f1cca: Export a fixed theme bootstrap script for restoring saved light, dark, or system choices before
+  paint. ThemeProvider now keeps working when browser storage or cookie writes are unavailable.
+
 ## 2.4.1
 
 ### Patch Changes
