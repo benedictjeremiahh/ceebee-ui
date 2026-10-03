@@ -11,6 +11,7 @@ export {
   serializeThemeModeCookie,
   THEME_MODE_COOKIE,
 } from './theme/server-theme.js';
+export { getThemeBootstrapScript, THEME_CHOICE_STORAGE_KEY } from './theme/bootstrap-theme.js';
 export type {
   CeebeeAntThemeSeed,
   CeebeeAntThemeSeedOptions,

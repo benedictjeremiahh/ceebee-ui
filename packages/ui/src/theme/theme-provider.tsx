@@ -9,6 +9,7 @@ import {
   type ThemeContrast,
   type ThemeMode,
 } from './server-theme.js';
+import { THEME_CHOICE_STORAGE_KEY } from './bootstrap-theme.js';
 
 export type ThemeChoice = 'light' | 'dark' | 'system';
 
@@ -40,8 +41,6 @@ interface ThemeState {
 }
 
 const ThemeContext = createContext<ThemeState | null>(null);
-const STORAGE_KEY = 'cb-theme';
-
 /**
  * CSS remains the colour source of truth. This flips `data-theme` and gives Ant the generated seed
  * for the server-known rendering; after mount ThemeBridge refreshes from the live CSS cascade.
@@ -58,6 +57,7 @@ export function ThemeProvider({
 }: ThemeProviderProps) {
   const [choice, setChoiceState] = useState<ThemeChoice>(defaultChoice);
   const [systemDark, setSystemDark] = useState(initialMode === 'dark');
+  const [choiceRestored, setChoiceRestored] = useState(false);
 
   useEffect(() => {
     const query = window.matchMedia('(prefers-color-scheme: dark)');
@@ -68,21 +68,35 @@ export function ThemeProvider({
   }, []);
 
   useEffect(() => {
-    if (!persist) return;
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored === 'light' || stored === 'dark' || stored === 'system') setChoiceState(stored);
+    if (persist) {
+      try {
+        const stored = window.localStorage.getItem(THEME_CHOICE_STORAGE_KEY);
+        if (stored === 'light' || stored === 'dark' || stored === 'system') setChoiceState(stored);
+      } catch {
+        // Storage can be disabled by browser policy; keep the server-provided choice.
+      }
+    }
+    setChoiceRestored(true);
   }, [persist]);
 
   useEffect(() => {
+    if (!choiceRestored) return;
     const root = document.documentElement;
     if (choice === 'system') root.removeAttribute('data-theme');
     else root.setAttribute('data-theme', choice);
-  }, [choice]);
+    root.setAttribute('data-cb-theme-mode', choice === 'system' ? (systemDark ? 'dark' : 'light') : choice);
+  }, [choice, choiceRestored, systemDark]);
 
   const setChoice = useCallback(
     (next: ThemeChoice) => {
       setChoiceState(next);
-      if (persist) window.localStorage.setItem(STORAGE_KEY, next);
+      if (persist) {
+        try {
+          window.localStorage.setItem(THEME_CHOICE_STORAGE_KEY, next);
+        } catch {
+          // The selection remains active for this page even when it cannot be persisted.
+        }
+      }
     },
     [persist],
   );
@@ -90,8 +104,13 @@ export function ThemeProvider({
   const resolved = choice === 'system' ? (systemDark ? 'dark' : 'light') : choice;
 
   useEffect(() => {
-    if (persist) document.cookie = serializeThemeModeCookie(resolved);
-  }, [persist, resolved]);
+    if (!persist || !choiceRestored) return;
+    try {
+      document.cookie = serializeThemeModeCookie(resolved);
+    } catch {
+      // Cookie access can be blocked; theme selection still works in this page.
+    }
+  }, [choiceRestored, persist, resolved]);
 
   return (
     <ThemeContext.Provider value={{ choice, setChoice, resolved }}>

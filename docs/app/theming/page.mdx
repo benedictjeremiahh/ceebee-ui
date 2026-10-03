@@ -18,9 +18,15 @@ toggle at the top right of this page is this exact hook.
 
 ```tsx
 import { ThemeProvider, useTheme } from '@ceebee/ui/client';
+import { getThemeBootstrapScript } from '@ceebee/ui';
 
 export default function Layout({ children }) {
-  return <ThemeProvider defaultChoice="system">{children}</ThemeProvider>;
+  return (
+    <html suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: getThemeBootstrapScript() }} /></head>
+      <body><ThemeProvider defaultChoice="system">{children}</ThemeProvider></body>
+    </html>
+  );
 }
 
 function ThemeToggle() {
@@ -28,6 +34,13 @@ function ThemeToggle() {
   return <Button onClick={() => setChoice(resolved === 'dark' ? 'light' : 'dark')}>{resolved}</Button>;
 }
 ```
+
+For a saved browser choice to affect the very first paint, place `getThemeBootstrapScript()` in the
+document head before stylesheets. The fixed script restores the `cb-theme` choice before CSS paints:
+it sets `data-theme` for an explicit choice, removes it for `system`, and writes the resolved
+`data-cb-theme-mode` for integrations that need the browser's initial light or dark mode. Storage or
+browser API failures leave the server-rendered theme in place. `suppressHydrationWarning` on the
+document root accounts for the intentional pre-hydration attribute update.
 
 ## The browser's own chrome
 
