@@ -25,6 +25,20 @@ const forbiddenDependencyPrefixes = [
 const webDependencies = ["next", "react", "vite", "astro", "@sveltejs/kit"];
 const sourceExtensions = ["*.js", "*.jsx", "*.mjs", "*.ts", "*.tsx"];
 const errors = [];
+
+async function isCeeBeeWorkspace(workspace, apps) {
+  for (const directory of [workspace, ...apps.map((app) => app.path)]) {
+    const agents = resolve(directory, "AGENTS.md");
+    if ((await exists(agents)) && (await readFile(agents, "utf8")).includes(contractHeading)) return true;
+  }
+  for (const app of apps) {
+    const manifestPath = resolve(app.path, "package.json");
+    if (!(await exists(manifestPath))) continue;
+    const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+    if ({ ...manifest.devDependencies, ...manifest.dependencies }["@ceebee/ui"]) return true;
+  }
+  return false;
+}
 const consumers = [];
 const seenGitDirectories = new Set();
 
@@ -42,16 +56,24 @@ const exists = async (path) => {
    only the top level would validate nothing and report success — which is worse
    than failing. Both shapes are discovered, and neither is named here. */
 const candidates = [];
+let skippedWorkspaces = 0;
 for (const entry of await readdir(projectsDirectory, { withFileTypes: true })) {
   if (!entry.isDirectory() || entry.name === "ceebee-ui" || entry.name.startsWith(".")) continue;
   const sibling = resolve(projectsDirectory, entry.name);
   if (await exists(resolve(sibling, "pnpm-workspace.yaml"))) {
     const appsDirectory = resolve(sibling, "apps");
-    if (await exists(appsDirectory)) {
-      for (const app of await readdir(appsDirectory, { withFileTypes: true })) {
-        if (app.isDirectory()) candidates.push({ name: `${entry.name}/apps/${app.name}`, path: resolve(appsDirectory, app.name) });
-      }
+    if (!(await exists(appsDirectory))) continue;
+    const apps = [];
+    for (const app of await readdir(appsDirectory, { withFileTypes: true })) {
+      if (app.isDirectory()) apps.push({ name: `${entry.name}/apps/${app.name}`, path: resolve(appsDirectory, app.name) });
     }
+    /* Not every workspace beside this one is a CeeBee product; a personal project
+       in the same folder is not bound by this contract. A workspace is enrolled
+       when it says it is one — an app depends on @ceebee/ui, or its AGENTS.md states
+       the contract — and then every web app in it is checked, so an app that forgot
+       the dependency still fails rather than quietly dropping out. */
+    if (await isCeeBeeWorkspace(sibling, apps)) candidates.push(...apps);
+    else skippedWorkspaces += 1;
     continue;
   }
   if (entry.name.startsWith("ceebee-")) candidates.push({ name: entry.name, path: sibling });
@@ -137,4 +159,7 @@ if (errors.length) {
   process.exitCode = 1;
 } else {
   console.log(`Validated ${consumers.length} CeeBee web consumers: ${consumers.sort().join(", ")}.`);
+  if (skippedWorkspaces) {
+    console.log(`Skipped ${skippedWorkspaces} sibling workspace${skippedWorkspaces === 1 ? " that does" : "s that do"} not use CeeBee UI.`);
+  }
 }

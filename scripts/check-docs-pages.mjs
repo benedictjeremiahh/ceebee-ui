@@ -8,7 +8,8 @@
 // Run with `pnpm check:docs`. The rules are documented in docs/authoring-pages.md.
 
 import { readdirSync, readFileSync, statSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { createRequire } from 'node:module';
+import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -23,13 +24,26 @@ const NOT_A_COMPONENT_PAGE = new Set([
   'app/theming/page.mdx',
   'app/labels/page.mdx',
   'app/motion/page.mdx',
+  'app/changelog/page.mdx',
+  // Type helpers only — nothing to render, and the page says so.
+  'app/other/util/page.mdx',
 ]);
 
 /** The recipes are compositions of documented components, not components; they carry their own shape. */
 const isRecipe = (id) => id.startsWith('app/recipes/');
 
 /** Components rendered directly in MDX prose on purpose — they are the page's own furniture. */
-const PROSE_COMPONENTS = new Set(['Demo', 'PropsTable', 'Guidance', 'CodeBlock', 'Text', 'Callout']);
+const PROSE_COMPONENTS = new Set(['Demo', 'PropsTable', 'ApiReference', 'Guidance', 'CodeBlock', 'Text', 'Callout']);
+
+/**
+ * A component carried over from the upstream catalog keeps upstream's page: upstream's opening
+ * section (usually `When to use`), a live `Examples` gallery, then `<ApiReference>` — which is that
+ * page's props table. docs/authoring-pages.md
+ * sanctions this shape, so such a page owes neither the native tier label, a PropsTable, nor a Guidance
+ * pair; the upstream catalog defines none of the three.
+ */
+const isCatalogPage = (source) =>
+  /^## Examples$/m.test(source) && /<ApiReference\b/.test(source);
 
 /** The canonical order. A page may omit any of these, but may not present them out of order. */
 const SECTION_ORDER = ['Playground', 'Usage', '*', 'Props', 'Skeleton', 'Keyboard', 'Tokens'];
@@ -40,11 +54,25 @@ const SECTION_ORDER = ['Playground', 'Usage', '*', 'Props', 'Skeleton', 'Keyboar
  * kind of broken example a reader cannot diagnose — so it is checked here rather than found later.
  */
 function entryExports(file) {
-  const source = readFileSync(join(ROOT, 'packages/ui/src', file), 'utf8');
+  const path = join(ROOT, 'packages/ui/src', file);
+  const source = readFileSync(path, 'utf8');
+  const names = exportedNames(source);
+  // `export * from 'antd'` re-exports the vendored runtime wholesale (AGENTS.md rule 3). Its names
+  // are read from the package's own declarations, so a page importing `Button` from the client entry
+  // is not reported as broken merely because the entry never spells the name out.
+  const resolver = createRequire(path);
+  for (const [, specifier] of source.matchAll(/^export\s+\*\s+from\s+'([^'.][^']*)';/gm)) {
+    const declarations = join(dirname(resolver.resolve(`${specifier}/package.json`)), 'es/index.d.ts');
+    for (const name of exportedNames(readFileSync(declarations, 'utf8'))) names.add(name);
+  }
+  return names;
+}
+
+function exportedNames(source) {
   const names = new Set();
   for (const [, list] of source.matchAll(/export\s+(?:type\s+)?\{([\s\S]*?)\}\s+from/g)) {
     for (const part of list.split(',')) {
-      const name = part.trim().split(/\s+as\s+/).pop()?.trim();
+      const name = part.trim().replace(/^type\s+/, '').split(/\s+as\s+/).pop()?.trim();
       if (name) names.add(name);
     }
   }
@@ -245,6 +273,7 @@ function check(path) {
   }
 
   if (!componentPage) return { id, problems };
+  const catalogPage = isCatalogPage(source);
 
   // 3. A component page states what it is, shows it running, lists its props, and says when not
   //    to reach for it.
@@ -253,15 +282,15 @@ function check(path) {
   const title = source.match(/^# (.+)$/m);
   const label = title?.[1].match(/<span className="docs__label">([A-Za-z]+)<\/span>/);
   if (!label) {
-    report(1, 'The title carries no docs__label; every component page states its tier.');
+    if (!catalogPage) report(1, 'The title carries no docs__label; every component page states its tier.');
   } else if (!['Atom', 'Composition', 'Widget'].includes(label[1])) {
     report(1, `"${label[1]}" is not a docs tier; CONTEXT.md defines Atom, Composition, and Widget.`);
   }
   const hasLiveExample =
     /<Demo[\s>]/.test(source) || /<[A-Z][A-Za-z0-9]*(?:Demo|Playground|Showcase)\b/.test(source);
   if (!hasLiveExample) report(1, 'No live example: the page describes the component without running it.');
-  if (!/<PropsTable\b/.test(source)) report(1, 'No PropsTable.');
-  if (!/<Guidance\b/.test(source)) report(1, 'No Guidance pair.');
+  if (!catalogPage && !/<PropsTable\b/.test(source)) report(1, 'No PropsTable.');
+  if (!catalogPage && !/<Guidance\b/.test(source)) report(1, 'No Guidance pair.');
 
   // 4. The sections arrive in one order across the catalog.
   const headings = [...source.matchAll(/^## (.+)$/gm)].map((match) => ({

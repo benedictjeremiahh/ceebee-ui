@@ -12,7 +12,10 @@ the page outline. Do not make a control sticky by styling only the control's int
 content will leak around it. The browser invariant suite checks these boundaries at a deep page and
 sidebar scroll position, so every component page inherits the same protection.
 
-For audited components, `docs/component-capabilities.json` is the completeness interface. A
+For audited components, `docs/component-capabilities.json` is the completeness interface. It is empty
+since 1.0: the seven components it audited were the native implementations that release replaced with
+the vendored runtime, so their docs pages and specs are gone. A Ceebee-owned component is added back
+when it is audited. A
 supported capability names its docs and public-interface test evidence; planned, replaced, and
 deliberately absent capabilities carry a rationale. `built` in the roadmap never overrides that
 evidence.
@@ -40,6 +43,11 @@ One paragraph: what it is, and the nearest component it is not.
 Components carried over from the catalog baseline follow its documented page structure instead: `When to use` first,
 then an `Examples` gallery containing the live cards in upstream order. Do not insert a duplicate,
 untitled canonical card above that gallery merely to satisfy the native page shape.
+
+A catalog page is recognised by its `## Examples` gallery together with `<ApiReference>`, which is that
+page's props table. It keeps upstream's own opening section name (`How to use` on Icon, `Component
+overview` on Layout) and owes none of the native extras upstream does not define: no tier label, no
+`<PropsTable>`, no `<Guidance>` pair. A native Ceebee page owes all three.
 
 Sections may be omitted. They may not be reordered: the checker reads
 `Playground → Usage → … → Props → Skeleton → Keyboard → Tokens` and rejects anything that arrives

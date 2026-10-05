@@ -39,7 +39,7 @@ const App: React.FC = () => {
         onChange={setArrow}
         style={{ marginBottom: 24 }}
       />
-      <Flex vertical justify="center" align="center" className="demo">
+      <Flex vertical justify="center" align="center">
         <Flex justify="center" align="center" style={{ whiteSpace: 'nowrap' }}>
           <Popover placement="topLeft" title={text} content={content} arrow={mergedArrow}>
             <Button>TL</Button>

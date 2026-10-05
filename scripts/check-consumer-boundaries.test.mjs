@@ -62,3 +62,56 @@ test("continues scanning remaining files after a tracked file was deleted", asyn
   assert.match(result.stderr, /ceebee-consumer\/src\/remaining\.ts: import antd/);
   assert.doesNotMatch(result.stderr, /ENOENT/);
 });
+
+async function createWorkspace(root, name, apps, rootAgents) {
+  const workspace = join(root, name);
+  await mkdir(workspace);
+  await writeFile(join(workspace, "pnpm-workspace.yaml"), "packages:\n  - apps/*\n");
+  if (rootAgents) await writeFile(join(workspace, "AGENTS.md"), rootAgents);
+  for (const [app, dependencies] of Object.entries(apps)) {
+    await mkdir(join(workspace, "apps", app, "src"), { recursive: true });
+    await writeFile(join(workspace, "apps", app, "package.json"), JSON.stringify({ dependencies }));
+    await writeFile(join(workspace, "apps", app, "src", "index.ts"), "export {};\n");
+  }
+  execFileSync("git", ["init", "-q"], { cwd: workspace });
+  execFileSync("git", ["add", "."], { cwd: workspace });
+  execFileSync("git", [
+    "-c", "user.name=Consumer Test",
+    "-c", "user.email=consumer-test@example.invalid",
+    "commit", "-qm", "Create workspace fixture",
+  ], { cwd: workspace });
+}
+
+test("skips a sibling workspace that is not a CeeBee product", async (t) => {
+  const { uiDirectory } = await createConsumerFixture(t);
+  await createWorkspace(resolve(uiDirectory, ".."), "unrelated-project", { web: { next: "16.0.0", react: "19.0.0" } });
+
+  const result = runConsumerCheck(uiDirectory);
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Validated 1 CeeBee web consumers/);
+  assert.match(result.stdout, /Skipped 1 sibling workspace that does not use CeeBee UI/);
+});
+
+test("still fails an app that forgot @ceebee/ui inside a CeeBee workspace", async (t) => {
+  const { uiDirectory } = await createConsumerFixture(t);
+  await createWorkspace(resolve(uiDirectory, ".."), "product", {
+    web: { "@ceebee/ui": "1.0.0", react: "19.0.0" },
+    admin: { react: "19.0.0" },
+  }, contract);
+
+  const result = runConsumerCheck(uiDirectory);
+
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /product\/apps\/admin: missing @ceebee\/ui dependency/);
+});
+
+test("enrols a workspace by its stated contract even when no app depends on @ceebee/ui yet", async (t) => {
+  const { uiDirectory } = await createConsumerFixture(t);
+  await createWorkspace(resolve(uiDirectory, ".."), "product", { web: { react: "19.0.0" } }, contract);
+
+  const result = runConsumerCheck(uiDirectory);
+
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /product\/apps\/web: missing @ceebee\/ui dependency/);
+});

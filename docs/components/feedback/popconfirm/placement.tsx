@@ -9,7 +9,7 @@ const buttonWidth = 80;
 
 const App: React.FC = () => (
   <ConfigProvider button={{ style: { width: buttonWidth, margin: 4 } }}>
-    <Flex vertical justify="center" align="center" className="demo">
+    <Flex vertical justify="center" align="center">
       <Flex justify="center" align="center" style={{ whiteSpace: 'nowrap' }}>
         <Popconfirm
           placement="topLeft"
