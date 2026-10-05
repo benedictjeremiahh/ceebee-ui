@@ -116,6 +116,9 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
   const length = (name: string) => probe.length(name);
   const tokens: NonNullable<ThemeConfig['token']> = {
     colorPrimary: color('--cb-tone-brand'),
+    /* A primary Button keeps light-solid text; Ant's lighter hover/active palette steps lose contrast. */
+    colorPrimaryHover: color('--cb-tone-brand'),
+    colorPrimaryActive: color('--cb-tone-brand'),
     colorInfo: color('--cb-tone-info'),
     /* Ant derives its link colour from colorInfo, not colorPrimary, so every link-style button took the
        info hue — a second accent beside the brand. Links are the theme's link colour, derived from the
@@ -126,6 +129,9 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
     colorSuccess: color('--cb-tone-success'),
     colorWarning: color('--cb-tone-warning'),
     colorError: color('--cb-tone-danger'),
+    /* Ant derives validation text from the error seed, whose dark-mode palette step misses AA on raised surfaces.
+       Error text is still semantic danger text, so it uses the same accessible foreground as the token. */
+    colorErrorText: color('--cb-tone-danger'),
     /* The quiet ground behind a tone's text (a filled tag, an alert), designed per mode: Ant's palette
        generator turns a dark seed into a muddy mid-tone the tone's own text cannot read on. */
     colorPrimaryBg: color('--cb-tone-brand-bg'),
@@ -187,6 +193,9 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
      disabled. Ceebee's own brand ramp already has the step Ant is reaching for, so the Slider reads
      it directly. */
   const components: NonNullable<ThemeConfig['components']> = {};
+  const danger = color('--cb-tone-danger');
+  /* Form's explain-error style reads the component token, which Ant derives into a low-contrast dark step. */
+  if (danger) components.Form = { colorError: danger };
   /* Tooltip, Tour and Image preview put Ant's light-solid text on a dark neutral rather than on a tone.
      In dark mode the text on a tone turns dark (the tones have to be light to read as text), so these
      three keep light text of their own. */

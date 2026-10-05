@@ -30,6 +30,40 @@ space it had. The CeeBee `Select` sets three defaults on Ant's contract:
   accessible name is never the shortened one. A consumer's own `labelRender` or `optionRender` replaces
   this for what it renders.
 
+## Clear action
+
+When `allowClear` is enabled, the clear button uses the `clear` label from `LabelsProvider`; without a
+provider override it keeps the default “Clear” label. The Ant Design clear icon also stays intact. A
+caller-provided `allowClear.label` takes precedence over the provider label, and an explicit
+`allowClear.clearIcon` takes precedence over configured icons. Without that icon, the Select `clearIcon`
+prop, `ConfigProvider`'s `select.clearIcon`, then Ant Design's default icon are used in that order.
+
+The clear action has a token-sized hit area around its compact icon. It remains visible when reached
+by keyboard focus, with the shared focus indicator, even while the pointer is outside the Select.
+
+Wrap the part of the app that needs localized library labels with `LabelsProvider`:
+
+```tsx
+import { LabelsProvider, Select } from '@ceebee/ui/client';
+
+<LabelsProvider labels={{ clear: 'Clear choice' }}>
+  <Select allowClear options={[{ value: 'a', label: 'First choice' }]} value="a" />
+</LabelsProvider>
+```
+
+An explicit label and icon stay with the Select:
+
+```tsx
+<Select
+  allowClear={{ label: 'Remove choice', clearIcon: <span aria-hidden="true">×</span> }}
+  options={[{ value: 'a', label: 'First choice' }]}
+  value="a"
+/>
+```
+
+`allowClear={false}` disables clearing even when a `ConfigProvider` enables it. Omitting `allowClear`
+keeps Ant Design's configured behavior, including a provider-level `select.allowClear` setting.
+
 ## Sizes
 
 `small`, `middle` (the default), and `large` map to `--cb-control-height-sm`, `--cb-control-height-md`,

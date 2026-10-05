@@ -49,12 +49,55 @@ describe('tone contrast', () => {
     expect(failing).toEqual([]);
   });
 
+  it('uses the accessible danger tone for Ant error text on every surface and seed', () => {
+    const failing = seeds.flatMap(({ name, seed }) => {
+      const errorText = String(seed.token.colorErrorText);
+      return [
+        ...(errorText !== String(seed.token.colorError) ? [`${name} error text differs from the danger tone`] : []),
+        ...SURFACES
+          .map((bg) => ({ bg, r: ratio(errorText, String(seed.token[bg])) }))
+          .filter(({ r }) => r < 4.5)
+          .map(({ bg, r }) => `${name} error text on ${bg}: ${r.toFixed(2)}`),
+      ];
+    });
+    expect(failing).toEqual([]);
+  });
+
+  it('keeps Ant Form validation text on the accessible danger tone in every component seed', () => {
+    const failing = seeds.flatMap(({ name, seed }) => {
+      const formError = seed.components?.Form?.colorError;
+      return [
+        ...(formError !== seed.token.colorError ? [`${name} Form colorError differs from colorError`] : []),
+        ...SURFACES
+          .map((bg) => ({ bg, r: ratio(String(formError), String(seed.token[bg])) }))
+          .filter(({ r }) => r < 4.5)
+          .map(({ bg, r }) => `${name} Form error on ${bg}: ${r.toFixed(2)}`),
+      ];
+    });
+    expect(failing).toEqual([]);
+  });
+
   it('carries its light-solid text at WCAG AA 4.5:1 on every tone fill', () => {
     const failing = seeds.flatMap(({ name, seed }) =>
       TONES.map((tone) => ({ tone, r: ratio(String(seed.token.colorTextLightSolid), String(seed.token[tone])) }))
         .filter(({ r }) => r < 4.5)
         .map(({ tone, r }) => `${name} text on ${tone}: ${r.toFixed(2)}`),
     );
+    expect(failing).toEqual([]);
+  });
+
+  it('keeps solid primary Button text accessible on hover and active fills', () => {
+    const states = ['colorPrimaryHover', 'colorPrimaryActive'] as const;
+    const failing = seeds.flatMap(({ name, seed }) => states.flatMap((state) => {
+      const fill = seed.token[state];
+      return [
+        ...(typeof fill !== 'string' ? [`${name} missing ${state}`] : []),
+        ...(typeof fill === 'string' && fill !== seed.token.colorPrimary ? [`${name} ${state} differs from the accessible brand tone`] : []),
+        ...(typeof fill === 'string' && ratio(String(seed.token.colorTextLightSolid), fill) < 4.5
+          ? [`${name} ${state}: ${ratio(String(seed.token.colorTextLightSolid), fill).toFixed(2)}`]
+          : []),
+      ];
+    }));
     expect(failing).toEqual([]);
   });
 

@@ -1,10 +1,12 @@
 'use client';
 
-import { Select as AntSelect } from 'antd';
+import { ConfigProvider, Select as AntSelect } from 'antd';
 import type { SelectProps as AntSelectProps } from 'antd';
 import type { BaseOptionType, DefaultOptionType } from 'antd/es/select/index.js';
+import { CloseCircleFilled } from '@ant-design/icons';
 import type { CSSProperties } from 'react';
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
+import { useLabels } from '../lib/labels.js';
 import { longestLabel, selectWidth, SELECT_POPUP_MAX } from './select.math.js';
 import { TruncatedLabel } from './truncated-label.js';
 import './select.css';
@@ -42,16 +44,36 @@ function setsWidth(style: CSSProperties | undefined): boolean {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function SelectRoot<V = any, O extends BaseOptionType | DefaultOptionType = DefaultOptionType>({
-  style, styles, labelRender, optionRender, popupMatchSelectWidth, options, className, ...props
+  style, styles, labelRender, optionRender, popupMatchSelectWidth, options, className, allowClear, ...props
 }: SelectProps<V, O>) {
+  const labels = useLabels();
+  const config = useContext(ConfigProvider.ConfigContext);
   /* Only ever widens: a select that searches the server swaps its options on every keystroke, and a field
      that shrank and grew with them would jump under the cursor. */
   const widest = useRef(0);
   widest.current = Math.max(widest.current, longestLabel(options));
   const width = setsWidth(style) ? undefined : selectWidth(widest.current);
+  const effectiveAllowClear = allowClear ?? config.select?.allowClear;
+  const defaultClearIcon = props.clearIcon !== undefined
+    ? props.clearIcon
+    : config.select?.clearIcon !== undefined
+      ? config.select.clearIcon
+      : <CloseCircleFilled />;
+  const localizedAllowClear = effectiveAllowClear === true
+    ? { label: labels.clear, clearIcon: defaultClearIcon }
+    : effectiveAllowClear && typeof effectiveAllowClear === 'object'
+      ? {
+          ...effectiveAllowClear,
+          label: effectiveAllowClear.label ?? labels.clear,
+          clearIcon: effectiveAllowClear.clearIcon !== undefined
+            ? effectiveAllowClear.clearIcon
+            : defaultClearIcon,
+        }
+      : effectiveAllowClear;
   return (
     <AntSelect<V, O>
       {...props}
+      allowClear={localizedAllowClear}
       options={options}
       className={className ? `cb-select ${className}` : 'cb-select'}
       style={width ? { inlineSize: width, ...style } : style}

@@ -516,6 +516,8 @@ ${lookup}
 
 const ANT_COLOR_TOKENS = {
   colorPrimary: '--cb-tone-brand',
+  colorPrimaryHover: '--cb-tone-brand',
+  colorPrimaryActive: '--cb-tone-brand',
   colorInfo: '--cb-tone-info',
   // Ant derives its link colour from colorInfo, so every link button was the info hue — a second accent.
   colorLink: '--cb-fg-link',
@@ -524,6 +526,7 @@ const ANT_COLOR_TOKENS = {
   colorSuccess: '--cb-tone-success',
   colorWarning: '--cb-tone-warning',
   colorError: '--cb-tone-danger',
+  colorErrorText: '--cb-tone-danger',
   colorPrimaryBg: '--cb-tone-brand-bg',
   colorInfoBg: '--cb-tone-info-bg',
   colorSuccessBg: '--cb-tone-success-bg',
@@ -599,6 +602,8 @@ function emitAntThemeSeeds() {
             // go on the components that paint presets, whose tokens apply after that derivation.
             Tag: antPresetTokens(brightness),
             Badge: antPresetTokens(brightness),
+            // Form explain-error reads component colorError, so keep it on the accessible danger step.
+            Form: { colorError: antColor(value('--cb-tone-danger'), `${skin.name}/${brightness}/${contrast}/--cb-tone-danger`) },
             Tooltip: { colorTextLightSolid: onDark },
             Tour: { colorTextLightSolid: onDark },
             Image: { colorTextLightSolid: onDark },

@@ -7,3 +7,15 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* Keep the clearing glyph compact while giving pointer and keyboard users a full hit target. */
+.cb-select .ant-select-clear {
+  inline-size: var(--cb-space-6);
+  block-size: var(--cb-space-6);
+  inset-inline-end: calc(var(--cb-space-3) - var(--cb-space-6) / 4);
+  margin-block-start: calc(var(--cb-space-6) / -2);
+  display: grid;
+  place-items: center;
+  color: var(--cb-fg-muted);
+}
+.cb-select .ant-select-clear:focus-visible { opacity: 1; }

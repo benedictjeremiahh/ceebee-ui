@@ -26,8 +26,11 @@ progress are the ones you gave it, never derived from its children.
 
 A child may state no dates (`{ id, label, parentId, unscheduled: true }`). It stays in its parent's group
 and item count and is labelled, and no bar is drawn. A parent with only some children dated says its
-coverage is partial. `onItemOpen` puts one labelled action on each top-level row; a child opens from its own
-name through `onChildOpen`, so a row never repeats its parent's action.
+coverage is partial. `onItemOpen` puts one labelled action on each top-level row. Use `itemHref` to make
+that Details action a native link in both the grid and compact list; when it returns a destination,
+`onItemOpen` is not called. If `itemHref` returns `undefined`, `onItemOpen` remains the callback fallback.
+Children ignore `itemHref` and open through their own `onChildOpen` action, so they never repeat the
+parent's destination or callback.
 
 ## What the bar says
 
@@ -101,7 +104,8 @@ time axis. The narrow view includes a pan hint because later dates extend beyond
   { name: 'scale', type: "'day' | 'week' | 'month'", default: "'day'", description: 'Axis level. Physical mode uses its navigation state after initial fit.' },
   { name: 'mode', type: "'range' | 'physical'", default: "'range'", description: 'Physical mode fills the planned contour by completion; actual date overlays remain available in the default range mode.' },
   { name: 'view / onViewChange', type: 'ScheduleView / callback', description: 'Controlled scale, fit, left/top scroll offsets and initialized flag. Preserve this state across fullscreen mounts.' },
-  { name: 'onItemOpen', type: '(id: string) => void', description: 'Explicit Details button for each item, including keyboard access. The consumer owns the detail surface.' },
+  { name: 'onItemOpen', type: '(id: string) => void', description: 'Callback Details action for top-level items when itemHref does not return a destination. Children use onChildOpen.' },
+  { name: 'itemHref', type: '(id: string) => string | undefined', description: 'Return a native link destination for a top-level Details action in the grid and compact list. Returning undefined uses onItemOpen when supplied. Children ignore this prop.' },
   { name: 'fullscreen / label', type: 'boolean / string', description: 'Opt-in native fullscreen with an isolated full-window fallback, and the accessible region name. Escape or the exit button restores the same inline chart.' },
   { name: 'toolbar / footer / children', type: 'ReactNode', description: 'Controls, legend and inline item-detail surfaces that remain inside the fullscreen root.' },
   { name: 'percentLabels', type: 'boolean', default: 'false', description: 'Opt in to percentage badges on the bars. The aligned Actual column and narrow-screen item list show the reading by default.' },

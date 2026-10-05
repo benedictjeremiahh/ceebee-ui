@@ -54,8 +54,9 @@ export function DiagramNodeView({ id, data, selected }: NodeProps<DiagramFlowNod
       data-selected={String(Boolean(selected))}
       data-connecting={String(data.connecting)}
     >
-      <Handle id="left" type="target" position={Position.Left} className="cb-diagram__handle" isConnectable={data.connectable} />
-      <Handle id="top" type="target" position={Position.Top} className="cb-diagram__handle" isConnectable={data.connectable} />
+      {/* Loose mode accepts source-to-source connections, and every side can be the origin of an edge. */}
+      <Handle id="left" type="source" position={Position.Left} className="cb-diagram__handle" isConnectable={data.connectable} />
+      <Handle id="top" type="source" position={Position.Top} className="cb-diagram__handle" isConnectable={data.connectable} />
       {/* Two lines, then an ellipsis; the whole label is the tooltip and is always in the outline. */}
       {data.editing ? (
         <RenameInput id={id} label={data.label} />

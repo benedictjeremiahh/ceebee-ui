@@ -13,9 +13,10 @@ const items: ScheduleEntry[] = [
   { id: 'b', label: 'Slab', parentId: 'wp', unscheduled: true },
 ];
 
-function Harness({ onItemOpen, onChildOpen, children }: {
+function Harness({ onItemOpen, onChildOpen, itemHref, children }: {
   onItemOpen?: (id: string) => void;
   onChildOpen?: (id: string) => void;
+  itemHref?: (id: string) => string | undefined;
   children: ReactNode;
 }) {
   const [expanded, setExpanded] = useState<ReadonlySet<string>>(new Set());
@@ -23,7 +24,8 @@ function Harness({ onItemOpen, onChildOpen, children }: {
   const rows = scheduleRows(hierarchy.visible);
   return (
     <ScheduleCells rows={new Map(rows.map((row) => [row.item.id, row]))} text={DEFAULT_SCHEDULE_LABELS}
-      onItemOpen={onItemOpen} onChildOpen={onChildOpen} items={new Map(items.map((item) => [item.id, item]))} hierarchy={hierarchy}
+      onItemOpen={onItemOpen} onChildOpen={onChildOpen} itemHref={itemHref}
+      items={new Map(items.map((item) => [item.id, item]))} hierarchy={hierarchy}
       expanded={expanded}
       onToggle={(id) => setExpanded((previous) => new Set(previous.has(id) ? [] : [id]))}>
       {children}
@@ -37,7 +39,7 @@ describe('Schedule detail action', () => {
     const openItem = vi.fn();
     render(
       <div onMouseDown={selectRow} onClick={selectRow}>
-        <Harness onItemOpen={openItem}>
+        <Harness onItemOpen={openItem} itemHref={() => undefined}>
           <ScheduleNameCell row={{ id: 'wp' }} />
         </Harness>
       </div>
@@ -47,6 +49,20 @@ describe('Schedule detail action', () => {
     fireEvent.click(action);
     expect(selectRow).not.toHaveBeenCalled();
     expect(openItem).toHaveBeenCalledWith('wp');
+  });
+
+  it('renders a parent details link when itemHref supplies a destination', () => {
+    const openItem = vi.fn();
+    render(
+      <Harness onItemOpen={openItem} itemHref={(id) => `/work/${id}`}>
+        <ScheduleNameCell row={{ id: 'wp' }} />
+      </Harness>,
+    );
+
+    const link = screen.getByRole('link', { name: 'Details: Foundation' });
+    expect(link).toHaveAttribute('href', '/work/wp');
+    expect(screen.queryByRole('button', { name: 'Details: Foundation' })).toBeNull();
+    expect(openItem).not.toHaveBeenCalled();
   });
 });
 

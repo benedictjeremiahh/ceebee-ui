@@ -9,6 +9,8 @@ export const generatedCeebeeAntSeeds = {
       "normal": {
         "token": {
           "colorPrimary": "rgba(81, 93, 218, 1)",
+          "colorPrimaryHover": "rgba(81, 93, 218, 1)",
+          "colorPrimaryActive": "rgba(81, 93, 218, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(61, 71, 172, 1)",
           "colorLinkHover": "rgba(81, 93, 218, 1)",
@@ -16,6 +18,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
+          "colorErrorText": "rgba(185, 32, 92, 1)",
           "colorPrimaryBg": "rgba(231, 237, 255, 1)",
           "colorInfoBg": "rgba(217, 244, 251, 1)",
           "colorSuccessBg": "rgba(222, 246, 227, 1)",
@@ -155,6 +158,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan6": "rgba(0, 119, 128, 1)",
             "cyan7": "rgba(0, 109, 117, 1)"
           },
+          "Form": {
+            "colorError": "rgba(185, 32, 92, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -175,6 +181,8 @@ export const generatedCeebeeAntSeeds = {
       "more": {
         "token": {
           "colorPrimary": "rgba(81, 93, 218, 1)",
+          "colorPrimaryHover": "rgba(81, 93, 218, 1)",
+          "colorPrimaryActive": "rgba(81, 93, 218, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(61, 71, 172, 1)",
           "colorLinkHover": "rgba(81, 93, 218, 1)",
@@ -182,6 +190,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
+          "colorErrorText": "rgba(185, 32, 92, 1)",
           "colorPrimaryBg": "rgba(231, 237, 255, 1)",
           "colorInfoBg": "rgba(217, 244, 251, 1)",
           "colorSuccessBg": "rgba(222, 246, 227, 1)",
@@ -321,6 +330,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan6": "rgba(0, 119, 128, 1)",
             "cyan7": "rgba(0, 109, 117, 1)"
           },
+          "Form": {
+            "colorError": "rgba(185, 32, 92, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -343,6 +355,8 @@ export const generatedCeebeeAntSeeds = {
       "normal": {
         "token": {
           "colorPrimary": "rgba(130, 150, 255, 1)",
+          "colorPrimaryHover": "rgba(130, 150, 255, 1)",
+          "colorPrimaryActive": "rgba(130, 150, 255, 1)",
           "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(130, 150, 255, 1)",
           "colorLinkHover": "rgba(130, 150, 255, 1)",
@@ -350,6 +364,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(99, 202, 132, 1)",
           "colorWarning": "rgba(255, 156, 122, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
+          "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(38, 44, 71, 1)",
           "colorInfoBg": "rgba(4, 52, 61, 1)",
           "colorSuccessBg": "rgba(25, 53, 33, 1)",
@@ -489,6 +504,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan6": "rgba(48, 200, 207, 1)",
             "cyan7": "rgba(86, 211, 218, 1)"
           },
+          "Form": {
+            "colorError": "rgba(248, 112, 152, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -509,6 +527,8 @@ export const generatedCeebeeAntSeeds = {
       "more": {
         "token": {
           "colorPrimary": "rgba(130, 150, 255, 1)",
+          "colorPrimaryHover": "rgba(130, 150, 255, 1)",
+          "colorPrimaryActive": "rgba(130, 150, 255, 1)",
           "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(130, 150, 255, 1)",
           "colorLinkHover": "rgba(130, 150, 255, 1)",
@@ -516,6 +536,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(99, 202, 132, 1)",
           "colorWarning": "rgba(255, 156, 122, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
+          "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(38, 44, 71, 1)",
           "colorInfoBg": "rgba(4, 52, 61, 1)",
           "colorSuccessBg": "rgba(25, 53, 33, 1)",
@@ -655,6 +676,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan6": "rgba(48, 200, 207, 1)",
             "cyan7": "rgba(86, 211, 218, 1)"
           },
+          "Form": {
+            "colorError": "rgba(248, 112, 152, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -679,6 +703,8 @@ export const generatedCeebeeAntSeeds = {
       "normal": {
         "token": {
           "colorPrimary": "rgba(90, 90, 217, 1)",
+          "colorPrimaryHover": "rgba(90, 90, 217, 1)",
+          "colorPrimaryActive": "rgba(90, 90, 217, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(69, 68, 171, 1)",
           "colorLinkHover": "rgba(90, 90, 217, 1)",
@@ -686,6 +712,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
+          "colorErrorText": "rgba(185, 32, 92, 1)",
           "colorPrimaryBg": "rgba(232, 237, 255, 1)",
           "colorInfoBg": "rgba(217, 244, 251, 1)",
           "colorSuccessBg": "rgba(222, 246, 227, 1)",
@@ -825,6 +852,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan6": "rgba(0, 119, 128, 1)",
             "cyan7": "rgba(0, 109, 117, 1)"
           },
+          "Form": {
+            "colorError": "rgba(185, 32, 92, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -845,6 +875,8 @@ export const generatedCeebeeAntSeeds = {
       "more": {
         "token": {
           "colorPrimary": "rgba(90, 90, 217, 1)",
+          "colorPrimaryHover": "rgba(90, 90, 217, 1)",
+          "colorPrimaryActive": "rgba(90, 90, 217, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(69, 68, 171, 1)",
           "colorLinkHover": "rgba(90, 90, 217, 1)",
@@ -852,6 +884,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
+          "colorErrorText": "rgba(185, 32, 92, 1)",
           "colorPrimaryBg": "rgba(232, 237, 255, 1)",
           "colorInfoBg": "rgba(217, 244, 251, 1)",
           "colorSuccessBg": "rgba(222, 246, 227, 1)",
@@ -991,6 +1024,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan6": "rgba(0, 119, 128, 1)",
             "cyan7": "rgba(0, 109, 117, 1)"
           },
+          "Form": {
+            "colorError": "rgba(185, 32, 92, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -1013,6 +1049,8 @@ export const generatedCeebeeAntSeeds = {
       "normal": {
         "token": {
           "colorPrimary": "rgba(140, 147, 255, 1)",
+          "colorPrimaryHover": "rgba(140, 147, 255, 1)",
+          "colorPrimaryActive": "rgba(140, 147, 255, 1)",
           "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(140, 147, 255, 1)",
           "colorLinkHover": "rgba(140, 147, 255, 1)",
@@ -1020,6 +1058,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(99, 202, 132, 1)",
           "colorWarning": "rgba(255, 156, 122, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
+          "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(40, 43, 71, 1)",
           "colorInfoBg": "rgba(4, 52, 61, 1)",
           "colorSuccessBg": "rgba(25, 53, 33, 1)",
@@ -1159,6 +1198,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan6": "rgba(48, 200, 207, 1)",
             "cyan7": "rgba(86, 211, 218, 1)"
           },
+          "Form": {
+            "colorError": "rgba(248, 112, 152, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -1179,6 +1221,8 @@ export const generatedCeebeeAntSeeds = {
       "more": {
         "token": {
           "colorPrimary": "rgba(140, 147, 255, 1)",
+          "colorPrimaryHover": "rgba(140, 147, 255, 1)",
+          "colorPrimaryActive": "rgba(140, 147, 255, 1)",
           "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(140, 147, 255, 1)",
           "colorLinkHover": "rgba(140, 147, 255, 1)",
@@ -1186,6 +1230,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(99, 202, 132, 1)",
           "colorWarning": "rgba(255, 156, 122, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
+          "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(40, 43, 71, 1)",
           "colorInfoBg": "rgba(4, 52, 61, 1)",
           "colorSuccessBg": "rgba(25, 53, 33, 1)",
@@ -1325,6 +1370,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan6": "rgba(48, 200, 207, 1)",
             "cyan7": "rgba(86, 211, 218, 1)"
           },
+          "Form": {
+            "colorError": "rgba(248, 112, 152, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -1349,6 +1397,8 @@ export const generatedCeebeeAntSeeds = {
       "normal": {
         "token": {
           "colorPrimary": "rgba(51, 100, 219, 1)",
+          "colorPrimaryHover": "rgba(51, 100, 219, 1)",
+          "colorPrimaryActive": "rgba(51, 100, 219, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(37, 77, 172, 1)",
           "colorLinkHover": "rgba(51, 100, 219, 1)",
@@ -1356,6 +1406,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
+          "colorErrorText": "rgba(185, 32, 92, 1)",
           "colorPrimaryBg": "rgba(227, 239, 255, 1)",
           "colorInfoBg": "rgba(217, 244, 251, 1)",
           "colorSuccessBg": "rgba(222, 246, 227, 1)",
@@ -1495,6 +1546,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan6": "rgba(0, 119, 128, 1)",
             "cyan7": "rgba(0, 109, 117, 1)"
           },
+          "Form": {
+            "colorError": "rgba(185, 32, 92, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -1515,6 +1569,8 @@ export const generatedCeebeeAntSeeds = {
       "more": {
         "token": {
           "colorPrimary": "rgba(51, 100, 219, 1)",
+          "colorPrimaryHover": "rgba(51, 100, 219, 1)",
+          "colorPrimaryActive": "rgba(51, 100, 219, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(37, 77, 172, 1)",
           "colorLinkHover": "rgba(51, 100, 219, 1)",
@@ -1522,6 +1578,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
+          "colorErrorText": "rgba(185, 32, 92, 1)",
           "colorPrimaryBg": "rgba(227, 239, 255, 1)",
           "colorInfoBg": "rgba(217, 244, 251, 1)",
           "colorSuccessBg": "rgba(222, 246, 227, 1)",
@@ -1661,6 +1718,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan6": "rgba(0, 119, 128, 1)",
             "cyan7": "rgba(0, 109, 117, 1)"
           },
+          "Form": {
+            "colorError": "rgba(185, 32, 92, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -1683,6 +1743,8 @@ export const generatedCeebeeAntSeeds = {
       "normal": {
         "token": {
           "colorPrimary": "rgba(102, 158, 255, 1)",
+          "colorPrimaryHover": "rgba(102, 158, 255, 1)",
+          "colorPrimaryActive": "rgba(102, 158, 255, 1)",
           "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(102, 158, 255, 1)",
           "colorLinkHover": "rgba(102, 158, 255, 1)",
@@ -1690,6 +1752,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(99, 202, 132, 1)",
           "colorWarning": "rgba(255, 156, 122, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
+          "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(33, 45, 71, 1)",
           "colorInfoBg": "rgba(4, 52, 61, 1)",
           "colorSuccessBg": "rgba(25, 53, 33, 1)",
@@ -1829,6 +1892,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan6": "rgba(48, 200, 207, 1)",
             "cyan7": "rgba(86, 211, 218, 1)"
           },
+          "Form": {
+            "colorError": "rgba(248, 112, 152, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -1849,6 +1915,8 @@ export const generatedCeebeeAntSeeds = {
       "more": {
         "token": {
           "colorPrimary": "rgba(102, 158, 255, 1)",
+          "colorPrimaryHover": "rgba(102, 158, 255, 1)",
+          "colorPrimaryActive": "rgba(102, 158, 255, 1)",
           "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(102, 158, 255, 1)",
           "colorLinkHover": "rgba(102, 158, 255, 1)",
@@ -1856,6 +1924,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(99, 202, 132, 1)",
           "colorWarning": "rgba(255, 156, 122, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
+          "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(33, 45, 71, 1)",
           "colorInfoBg": "rgba(4, 52, 61, 1)",
           "colorSuccessBg": "rgba(25, 53, 33, 1)",
@@ -1995,6 +2064,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan6": "rgba(48, 200, 207, 1)",
             "cyan7": "rgba(86, 211, 218, 1)"
           },
+          "Form": {
+            "colorError": "rgba(248, 112, 152, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -2019,6 +2091,8 @@ export const generatedCeebeeAntSeeds = {
       "normal": {
         "token": {
           "colorPrimary": "rgba(183, 46, 130, 1)",
+          "colorPrimaryHover": "rgba(183, 46, 130, 1)",
+          "colorPrimaryActive": "rgba(183, 46, 130, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(143, 33, 101, 1)",
           "colorLinkHover": "rgba(183, 46, 130, 1)",
@@ -2026,6 +2100,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
+          "colorErrorText": "rgba(185, 32, 92, 1)",
           "colorPrimaryBg": "rgba(255, 230, 243, 1)",
           "colorInfoBg": "rgba(217, 244, 251, 1)",
           "colorSuccessBg": "rgba(222, 246, 227, 1)",
@@ -2165,6 +2240,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan6": "rgba(0, 119, 128, 1)",
             "cyan7": "rgba(0, 109, 117, 1)"
           },
+          "Form": {
+            "colorError": "rgba(185, 32, 92, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -2185,6 +2263,8 @@ export const generatedCeebeeAntSeeds = {
       "more": {
         "token": {
           "colorPrimary": "rgba(183, 46, 130, 1)",
+          "colorPrimaryHover": "rgba(183, 46, 130, 1)",
+          "colorPrimaryActive": "rgba(183, 46, 130, 1)",
           "colorInfo": "rgba(0, 115, 147, 1)",
           "colorLink": "rgba(143, 33, 101, 1)",
           "colorLinkHover": "rgba(183, 46, 130, 1)",
@@ -2192,6 +2272,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(5, 119, 59, 1)",
           "colorWarning": "rgba(161, 76, 50, 1)",
           "colorError": "rgba(185, 32, 92, 1)",
+          "colorErrorText": "rgba(185, 32, 92, 1)",
           "colorPrimaryBg": "rgba(255, 230, 243, 1)",
           "colorInfoBg": "rgba(217, 244, 251, 1)",
           "colorSuccessBg": "rgba(222, 246, 227, 1)",
@@ -2331,6 +2412,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan6": "rgba(0, 119, 128, 1)",
             "cyan7": "rgba(0, 109, 117, 1)"
           },
+          "Form": {
+            "colorError": "rgba(185, 32, 92, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -2353,6 +2437,8 @@ export const generatedCeebeeAntSeeds = {
       "normal": {
         "token": {
           "colorPrimary": "rgba(246, 107, 185, 1)",
+          "colorPrimaryHover": "rgba(246, 107, 185, 1)",
+          "colorPrimaryActive": "rgba(246, 107, 185, 1)",
           "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(246, 107, 185, 1)",
           "colorLinkHover": "rgba(246, 107, 185, 1)",
@@ -2360,6 +2446,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(99, 202, 132, 1)",
           "colorWarning": "rgba(255, 156, 122, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
+          "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(64, 35, 50, 1)",
           "colorInfoBg": "rgba(4, 52, 61, 1)",
           "colorSuccessBg": "rgba(25, 53, 33, 1)",
@@ -2499,6 +2586,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan6": "rgba(48, 200, 207, 1)",
             "cyan7": "rgba(86, 211, 218, 1)"
           },
+          "Form": {
+            "colorError": "rgba(248, 112, 152, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -2519,6 +2609,8 @@ export const generatedCeebeeAntSeeds = {
       "more": {
         "token": {
           "colorPrimary": "rgba(246, 107, 185, 1)",
+          "colorPrimaryHover": "rgba(246, 107, 185, 1)",
+          "colorPrimaryActive": "rgba(246, 107, 185, 1)",
           "colorInfo": "rgba(27, 198, 227, 1)",
           "colorLink": "rgba(246, 107, 185, 1)",
           "colorLinkHover": "rgba(246, 107, 185, 1)",
@@ -2526,6 +2618,7 @@ export const generatedCeebeeAntSeeds = {
           "colorSuccess": "rgba(99, 202, 132, 1)",
           "colorWarning": "rgba(255, 156, 122, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
+          "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(64, 35, 50, 1)",
           "colorInfoBg": "rgba(4, 52, 61, 1)",
           "colorSuccessBg": "rgba(25, 53, 33, 1)",
@@ -2664,6 +2757,9 @@ export const generatedCeebeeAntSeeds = {
             "cyan3": "rgba(21, 97, 101, 1)",
             "cyan6": "rgba(48, 200, 207, 1)",
             "cyan7": "rgba(86, 211, 218, 1)"
+          },
+          "Form": {
+            "colorError": "rgba(248, 112, 152, 1)"
           },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"

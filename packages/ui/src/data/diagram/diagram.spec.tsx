@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { Diagram } from './diagram.js';
 import { DiagramEditor } from './diagram-editor.js';
+import { edgeHandles } from './diagram.math.js';
 import type { DiagramEdge, DiagramNode } from './diagram.types.js';
 
 /* Dragging, panning, zooming, selection and Delete are React Flow's and depend on layout jsdom does not
@@ -94,6 +95,37 @@ describe('DiagramEditor', () => {
     const { onRename } = renderEditor();
     fireEvent.keyDown(wrapperOf('Review'), { key: 'F2' });
     expect(onRename).toHaveBeenCalledWith({ kind: 'node', id: 'review' });
+  });
+
+  it('draws backward and upward edges from a source handle and onto a loose handle', () => {
+    const routingNodes: DiagramNode[] = [
+      { id: 'left-source', label: 'Left source', position: { x: 24, y: 0 } },
+      { id: 'left-target', label: 'Left target', position: { x: 0, y: 0 } },
+      { id: 'upper-source', label: 'Upper source', position: { x: 36, y: 12 } },
+      { id: 'upper-target', label: 'Upper target', position: { x: 36, y: 0 } },
+    ];
+    const routingEdges: DiagramEdge[] = [
+      { id: 'backward', from: 'left-source', to: 'left-target' },
+      { id: 'upward', from: 'upper-source', to: 'upper-target' },
+    ];
+    render(<DiagramEditor label="Routing" nodes={routingNodes} edges={routingEdges} />);
+
+    for (const edge of routingEdges) {
+      const from = routingNodes.find((node) => node.id === edge.from);
+      const to = routingNodes.find((node) => node.id === edge.to);
+      if (!from || !to) throw new Error(`missing routing nodes for ${edge.id}`);
+      const handles = edgeHandles(from, to);
+      const source = document.querySelector(
+        `.react-flow__node[data-id="${edge.from}"] .react-flow__handle[data-handleid="${handles.sourceHandle}"]`,
+      );
+      const target = document.querySelector(
+        `.react-flow__node[data-id="${edge.to}"] .react-flow__handle[data-handleid="${handles.targetHandle}"]`,
+      );
+
+      expect(source).toHaveClass('source');
+      expect(target).not.toBeNull();
+      expect(target?.classList.contains('source') || target?.classList.contains('target')).toBe(true);
+    }
   });
 
   it('ships a named loading state', () => {

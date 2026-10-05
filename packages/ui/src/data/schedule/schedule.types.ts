@@ -130,6 +130,8 @@ export interface ScheduleProps {
   onViewChange?: (view: ScheduleView) => void;
   /** The labelled details action, on top-level rows only; a child never repeats its parent's action. */
   onItemOpen?: (id: string) => void;
+  /** Optional native destination for a top-level item's details action. */
+  itemHref?: (id: string) => string | undefined;
   /** Opens a child row from its own name, so one row has one way in. */
   onChildOpen?: (id: string) => void;
   /** Ids of expanded parents. Omit for uncontrolled disclosure, which survives fullscreen. */

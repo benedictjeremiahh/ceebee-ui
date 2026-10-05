@@ -11,6 +11,7 @@ interface CellContext {
   rows: ReadonlyMap<string, ScheduleRow>;
   text: ResolvedScheduleLabels;
   onItemOpen?: (id: string) => void;
+  itemHref?: (id: string) => string | undefined;
   onChildOpen?: (id: string) => void;
   items: ReadonlyMap<string, ScheduleEntry>;
   hierarchy: ScheduleHierarchy;
@@ -32,6 +33,7 @@ export function ScheduleNameCell({ row }: CellProps) {
   const children = hierarchy.childCount.get(item.id) ?? 0;
   const dated = hierarchy.datedCount.get(item.id) ?? 0;
   const child = (hierarchy.depth.get(item.id) ?? 0) > 0;
+  const href = child ? undefined : context.itemHref?.(item.id);
   return (
     <div className="cb-schedule__identity" data-depth={hierarchy.depth.get(item.id) ?? 0}>
       <div className="cb-schedule__title">
@@ -60,7 +62,19 @@ export function ScheduleNameCell({ row }: CellProps) {
       </div>
       {isUnscheduled(item) ? <span className="cb-schedule__note">{text.unscheduled}</span> : null}
       {dated < children ? <span className="cb-schedule__note">{text.partialCoverage(dated, children)}</span> : null}
-      {context.onItemOpen && !child ? (
+      {href !== undefined ? (
+        <Button
+          type="link"
+          size="small"
+          href={href}
+          className="cb-schedule__details"
+          aria-label={`${text.details}: ${item.label}`}
+          onMouseDown={(event) => event.stopPropagation()}
+          onClick={(event) => event.stopPropagation()}
+        >
+          {text.details}
+        </Button>
+      ) : context.onItemOpen && !child ? (
         <Button
           type="link"
           size="small"
