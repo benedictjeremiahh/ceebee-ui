@@ -12,6 +12,8 @@ export { Drawer } from './overlay/drawer.js';
 export type { DrawerProps } from './overlay/drawer.js';
 export { Select } from './form/select.js';
 export type { SelectProps } from './form/select.js';
+export { InputNumber } from './form/input-number.js';
+export type { InputNumberProps } from './form/input-number.js';
 export { ThemeBridge } from './theme/theme-bridge.js';
 export type { ThemeBridgeProps } from './theme/theme-bridge.js';
 export { CeebeeAntStyleProvider } from './theme/ant-style-provider.js';

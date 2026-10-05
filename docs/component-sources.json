@@ -750,10 +750,14 @@
         "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
       },
       "license": "MIT",
-      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "adapter": "packages/ui/src/form/input-number.tsx",
       "demoPath": "docs/components/data-entry/input-number",
       "parityGaps": [],
-      "proof": "docs/parity.generated.json#InputNumber"
+      "proof": "docs/parity.generated.json#InputNumber",
+      "additiveExtensions": [
+        "Stepper accessible names come from Labels.increase / Labels.decrease instead of the literal 'Increase Value' / 'Decrease Value' that @rc-component/input-number writes into the element itself, with no prop and no locale hook to change it"
+      ],
+      "ownsUpstreamAccessibility": "Stepper accessible names only; role, keyboard, focus, hold-to-repeat and geometry remain Ant's"
     },
     "Radio": {
       "strategy": "antd-runtime",
