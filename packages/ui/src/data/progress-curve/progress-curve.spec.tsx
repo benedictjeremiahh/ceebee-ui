@@ -37,6 +37,38 @@ afterEach(() => {
 });
 
 describe('ProgressCurve', () => {
+  it('shows a hyphen for unreported progress in the reading and accessible table', () => {
+    render(
+      <ProgressCurve
+        planned={[{ day: '2026-09-01', percent: 10 }]}
+        actual={[]}
+        label="Ruko Depok"
+        today="2026-09-01"
+      />,
+    );
+    const reading = screen.getByText(/actual · 10% planned/);
+    expect(reading).toHaveTextContent('- actual');
+    expect(reading).not.toHaveTextContent('—');
+    const row = screen.getByRole('row', { name: /Sep 1, 2026/ });
+    expect(row).toHaveTextContent('-');
+    expect(row).not.toHaveTextContent('—');
+  });
+
+  it('keeps a reported zero distinct from missing progress', () => {
+    render(
+      <ProgressCurve
+        planned={[{ day: '2026-09-01', percent: 10 }]}
+        actual={[{ day: '2026-09-01', percent: 0 }]}
+        label="Ruko Depok"
+        today="2026-09-01"
+      />,
+    );
+    const reading = screen.getByText(/actual · 10% planned/);
+    expect(reading).toHaveTextContent('0% actual');
+    const row = screen.getByRole('row', { name: /Sep 1, 2026/ });
+    expect(row).toHaveTextContent('0%');
+  });
+
   it('renders every reported day as a row, with both values and the gap', () => {
     render(<ProgressCurve planned={planned} actual={actual} label="Ruko Depok" />);
     const rows = screen.getAllByRole('row');

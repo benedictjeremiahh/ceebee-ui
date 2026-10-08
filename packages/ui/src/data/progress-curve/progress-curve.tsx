@@ -115,7 +115,7 @@ const oneDecimal = (value: number): string => String(round1(value));
 const englishDay = (day: string): string => readableDay(day, 'en-US');
 
 function percent(value: number | null, formatNumber: (value: number) => string): string {
-  return value === null ? '—' : `${formatNumber(value)}%`;
+  return value === null ? '-' : `${formatNumber(value)}%`;
 }
 
 function stateOf(gap: number | null): 'behind' | 'ahead' | 'on-plan' | 'unknown' {

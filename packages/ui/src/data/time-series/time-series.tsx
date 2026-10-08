@@ -154,7 +154,7 @@ export function TimeSeriesChart({
                   <th scope="row">{readableDay(row.day, locale)}</th>
                   {cleaned.map((one) => {
                     const value = row.values[one.key];
-                    return <td key={one.key}>{value === null || value === undefined ? '—' : format(value)}</td>;
+                    return <td key={one.key}>{value === null || value === undefined ? '-' : format(value)}</td>;
                   })}
                 </tr>
               ))}
