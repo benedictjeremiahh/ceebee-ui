@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 2.5.4
+
+### Patch Changes
+
+- 986537c: Show missing progress as a hyphen while preserving a reported zero percentage.
+
 ## 2.5.3
 
 ### Patch Changes
