@@ -811,6 +811,9 @@
       "license": "MIT",
       "adapter": "packages/ui/src/theme/theme-bridge.tsx",
       "legacyAdapter": "packages/ui/src/nav/menu.tsx",
+      "additiveExtensions": [
+        "packages/ui/src/nav/dropdown.tsx consumes Enter activation once and restores the durable trigger on menu dismissal before a newly opened dialog captures its return-focus target; remaining upstream interaction and geometry are preserved"
+      ],
       "demoPath": "docs/components/navigation/dropdown",
       "parityGaps": [],
       "proof": "docs/parity.generated.json#Dropdown"
@@ -1258,6 +1261,10 @@
       },
       "license": "MIT",
       "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "additiveExtensions": [
+        "Preview control accessible names come from LabelsProvider; Ant continues to own the controls, preview state, focus, keyboard, dismissal, and geometry"
+      ],
+      "ownsUpstreamAccessibility": "Image preview control accessible names only; preview control roles, event handlers, focus, keyboard, dismissal, and geometry remain Ant's",
       "demoPath": "docs/components/data-display/image",
       "parityGaps": [],
       "proof": "docs/parity.generated.json#Image",

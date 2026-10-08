@@ -1,11 +1,13 @@
 'use client';
 
 import { InputNumber as AntInputNumber } from 'antd';
-import type { InputNumberProps as AntInputNumberProps } from 'antd';
+import type { GetRef, InputNumberProps as AntInputNumberProps } from 'antd';
+import type { RefAttributes } from 'react';
 import { useEffect, useId } from 'react';
 import { useLabels } from '../lib/labels.js';
 
-export type InputNumberProps = AntInputNumberProps;
+export type InputNumberProps<T extends string | number = string | number> = AntInputNumberProps<T>;
+type InputNumberRef = GetRef<typeof AntInputNumber>;
 
 /** Ant 5 spelled these `-handler-up`; Ant 6 renamed them `-action-up`. Both spellings are internal. */
 const STEPPERS = [
@@ -23,7 +25,8 @@ const STEPPERS = [
  */
 function steppersOf(root: HTMLElement): HTMLElement[] {
   const byClass = STEPPERS.map((stepper) => root.querySelector(stepper.selector));
-  if (byClass.every((control) => control !== null)) return byClass as HTMLElement[];
+  const matchedControls = byClass.filter((control): control is HTMLElement => control instanceof HTMLElement);
+  if (matchedControls.length === STEPPERS.length) return matchedControls;
   const byRole = [...root.querySelectorAll<HTMLElement>('[role="button"]')];
   return byRole.length === 2 ? byRole : [];
 }
@@ -60,7 +63,11 @@ function rootOf(id: string): HTMLElement | null {
  * written when the attribute already reads correctly, so the observer settles after one correction
  * instead of looping on its own writes.
  */
-export function InputNumber({ id, ...props }: InputNumberProps) {
+function InputNumberRoot<T extends string | number = string | number>({
+  id,
+  ref,
+  ...props
+}: InputNumberProps<T> & RefAttributes<InputNumberRef>) {
   const labels = useLabels();
   const generatedId = useId();
   const inputId = id ?? generatedId;
@@ -81,5 +88,7 @@ export function InputNumber({ id, ...props }: InputNumberProps) {
     return () => observer.disconnect();
   });
 
-  return <AntInputNumber {...props} id={inputId} />;
+  return <AntInputNumber<T> {...props} id={inputId} ref={ref} />;
 }
+
+export const InputNumber: typeof AntInputNumber = Object.assign(InputNumberRoot, AntInputNumber);

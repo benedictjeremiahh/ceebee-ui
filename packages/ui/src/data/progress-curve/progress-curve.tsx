@@ -82,7 +82,7 @@ function ProgressCurveRoot({
           {actualLabel.toLowerCase()} · {percent(latest.plannedPercent, formatNumber)} {plannedLabel.toLowerCase()}
           {latest.gap === null ? null : (
             <>
-              {' — '}
+              {' · '}
               {formatNumber(Math.abs(latest.gap))} {Math.abs(latest.gap) === 1 && gapUnitLabel === 'points' ? 'point' : gapUnitLabel} {gapWord(latest.gap, { aheadLabel, behindLabel, onTrackLabel })}
             </>
           )}

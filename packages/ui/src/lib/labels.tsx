@@ -34,11 +34,21 @@ export interface Labels {
   decrease: string;
   expandNavigation: string;
   collapseNavigation: string;
+  /** Opens the overflow menu when the tab bar does not fit. */
+  moreTabs?: string;
   /** Carousel and image-preview stepping. */
   next: string;
+  imagePrevious?: string;
+  imageNext?: string;
+  imageFlipHorizontal?: string;
+  imageFlipVertical?: string;
+  imageRotateLeft?: string;
+  imageRotateRight?: string;
+  imageZoomOut?: string;
+  imageZoomIn?: string;
 }
 
-export const DEFAULT_LABELS: Labels = {
+export const DEFAULT_LABELS = {
   dismiss: 'Dismiss',
   close: 'Close',
   clear: 'Clear',
@@ -63,8 +73,17 @@ export const DEFAULT_LABELS: Labels = {
   decrease: 'Decrease',
   expandNavigation: 'Expand navigation',
   collapseNavigation: 'Collapse navigation',
+  moreTabs: 'More tabs',
   next: 'Next',
-};
+  imagePrevious: 'Previous image',
+  imageNext: 'Next image',
+  imageFlipHorizontal: 'Flip horizontally',
+  imageFlipVertical: 'Flip vertically',
+  imageRotateLeft: 'Rotate left',
+  imageRotateRight: 'Rotate right',
+  imageZoomOut: 'Zoom out',
+  imageZoomIn: 'Zoom in',
+} satisfies Labels;
 
 const LabelsContext = createContext<Labels>(DEFAULT_LABELS);
 
