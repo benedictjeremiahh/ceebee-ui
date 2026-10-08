@@ -1,10 +1,34 @@
 import { render, screen } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
+import { useRef } from 'react';
+import type { GetRef } from 'antd';
 import { describe, expect, it } from 'vitest';
 import { InputNumber as AntInputNumber } from 'antd';
 import { LabelsProvider } from '../lib/labels.js';
-import { InputNumber } from './input-number.js';
+import { InputNumber, type InputNumberProps } from './input-number.js';
+
+function GenericInputNumber() {
+  const ref = useRef<GetRef<typeof InputNumber>>(null);
+  const onChange: InputNumberProps<string>['onChange'] = (value) => {
+    if (value !== null) value.toUpperCase();
+  };
+
+  return (
+    <>
+      <InputNumber<string> id="generic-string-number" ref={ref} stringMode defaultValue="1" onChange={onChange} />
+      <button type="button" onClick={() => ref.current?.focus({ cursor: 'start' })}>Focus number</button>
+    </>
+  );
+}
 
 describe('InputNumber stepper labels', () => {
+  it('preserves generic value props and forwards the public ref', () => {
+    render(<GenericInputNumber />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Focus number' }));
+    expect(screen.getByRole('spinbutton')).toHaveFocus();
+  });
+
   it("names the steppers from the library's own English labels", () => {
     render(<InputNumber />);
     expect(screen.getByRole('button', { name: 'Increase' })).toBeInTheDocument();

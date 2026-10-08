@@ -17,4 +17,15 @@ Use Dropdown when a page has more operations than can remain visible or when act
 
 `Dropdown`, `Dropdown.Button`, and their props are exported from `@ceebee/ui/client`.
 
+When selecting an item dismisses the menu, focus returns to its trigger before a dialog opened
+by that item mounts. Closing the dialog can then return focus to the same durable trigger.
+Multiple-selection menus that remain open retain their menu focus. Upstream props, forwarded
+trigger refs, and `onOpenChange` notifications remain available.
+Enter activates the menu item once; its default click is consumed before focus moves, so it cannot
+also activate the newly opened dialog's first button.
+
+Keep the trigger mounted while its dialog is open. Avoid restoring focus to the dismissed menu
+item, which may no longer exist. Arrow navigation and menu activation retain the upstream keyboard
+contract; a dialog owns its own Tab loop and Escape dismissal.
+
 <ApiReference component="Dropdown" />
