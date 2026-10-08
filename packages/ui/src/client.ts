@@ -16,6 +16,8 @@ export { InputNumber } from './form/input-number.js';
 export type { InputNumberProps } from './form/input-number.js';
 export { Tabs } from './nav/tabs.js';
 export type { TabsProps } from './nav/tabs.js';
+export { Pagination } from './nav/pagination.js';
+export type { PaginationProps } from './nav/pagination.js';
 export { Dropdown } from './nav/dropdown.js';
 export type { DropdownProps } from './nav/dropdown.js';
 export { Image } from './media/image.js';
