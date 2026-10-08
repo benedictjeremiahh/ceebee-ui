@@ -852,11 +852,14 @@
         "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
       },
       "license": "MIT",
-      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
-      "legacyAdapter": "packages/ui/src/data/pagination.tsx",
+      "adapter": "packages/ui/src/nav/pagination.tsx",
       "demoPath": "docs/components/navigation/pagination",
       "parityGaps": [],
-      "proof": "docs/parity.generated.json#Pagination"
+      "proof": "docs/parity.generated.json#Pagination",
+      "additiveExtensions": [
+        "Enter and Space on the inner native previous/next button do not bubble to the parent list item, preventing one keyboard activation from advancing twice; itemRender handlers, pointer activation, names, disabled behavior and outer-item keyboard behavior remain Ant's"
+      ],
+      "ownsUpstreamAccessibility": "Duplicate arrow keyboard activation only; no focus model, key binding, naming, disabled-state or geometry changes"
     },
     "Steps": {
       "strategy": "antd-runtime",
