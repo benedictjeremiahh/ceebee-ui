@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 2.5.5
+
+### Patch Changes
+
+- 0570ac7: Prevent previous and next Pagination arrows from advancing twice on one keyboard activation.
+
 ## 2.5.4
 
 ### Patch Changes
