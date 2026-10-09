@@ -51,10 +51,14 @@ export type ScheduleEntry = ScheduleItem | UnscheduledItem;
 export interface ScheduleLabels {
   empty: string;
   item: string;
+  /** Accessible name of the substrate column-resizing handle. */
+  resizeColumn?: string;
   /** Header for the stable completion reading beside each Work Item. */
   actualProgress?: string;
   /** Distinct from a reported zero. */
   unreported?: string;
+  /** A plan or variance cannot be calculated from the available readings. */
+  unavailable?: string;
   today: string;
   /** A human-readable rendering of the calendar day; the `<time>` keeps the ISO dateTime. */
   todayDate?: (day: string) => string;

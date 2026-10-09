@@ -104,7 +104,9 @@ export function ScheduleProgressCell({ row }: CellProps) {
       </strong>
       <span>
         {context.text.plannedProgress}{' '}
-        {reading.item.plannedProgress === undefined ? '—' : context.text.percent(reading.item.plannedProgress * 100)}
+        {reading.item.plannedProgress === undefined
+          ? context.text.unavailable
+          : context.text.percent(reading.item.plannedProgress * 100)}
       </span>
     </div>
   );
@@ -121,7 +123,7 @@ export function ScheduleVarianceCell({ row }: CellProps) {
   return (
     <div className="cb-schedule__reading">
       <span data-negative={gap !== null && gap < -0.05 ? '' : undefined}>
-        {gap === null ? '—' : context.text.gap(gap)}
+        {gap === null ? context.text.unavailable : context.text.gap(gap)}
       </span>
       {(reading.item.latenessDays ?? 0) > 0 ? (
         <strong data-negative="">{context.text.lateDays(reading.item.latenessDays ?? 0)}</strong>

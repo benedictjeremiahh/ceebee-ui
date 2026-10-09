@@ -21,7 +21,7 @@ export function ScheduleMobileItems({ rows, text, onItemOpen, itemHref, onChildO
           open={expanded.has(row.item.id)} text={text} onToggle={() => onToggle(row.item.id)} />
       ) : null}
       <span>{row.item.label}</span>
-      <span className="cb-schedule__mobile-progress">{row.progress === null ? text.unreported : `${Math.round(row.progress * 100)}%`}</span>
+      <span className="cb-schedule__mobile-progress">{row.progress === null ? text.unreported : text.percent(row.progress * 100)}</span>
       {(() => {
         const child = (hierarchy.depth.get(row.item.id) ?? 0) > 0;
         const href = child ? undefined : itemHref?.(row.item.id);

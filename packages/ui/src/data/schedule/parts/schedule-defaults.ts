@@ -2,6 +2,7 @@ import { readableDay } from '../../time-series/time-series.math.js';
 import type { ResolvedScheduleLabels } from '../schedule.types.js';
 
 export const DEFAULT_SCHEDULE_LABELS: ResolvedScheduleLabels = {
+  resizeColumn: 'Resize column', unavailable: 'Not available',
   empty: 'Nothing is planned yet.', item: 'Work item', actualProgress: 'Actual', unreported: 'Not reported',
   today: 'Today', todayDate: (day) => readableDay(day, 'en-US'), progress: (percent) => `${percent}% done`,
   actual: (start, end) => `actual ${start}–${end}`, notStarted: 'not started', overran: 'past the plan', late: 'late',

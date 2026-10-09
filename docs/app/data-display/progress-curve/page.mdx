@@ -49,6 +49,11 @@ ships a second rendering rather than a description of the first: a table of ever
 reports, with both values and the gap. It is always in the DOM, visually hidden, and built from the
 same numbers as the line.
 
+The table keeps the detail values at the precision supplied by `formatDetailNumber`, so a value such
+as `0.04` remains visible as `0.04%`. It defaults to `formatNumber`; give it a separate formatter when
+the spoken summary should stay rounded while the detailed values retain more precision. Both
+formatters return the number without the percent sign.
+
 Under `forced-colors: active` the canvas is **not rendered at all** and the table takes its place. A
 bitmap is the one thing a forced-colors user cannot have recoloured for them, and an empty labelled
 region holding a chart's worth of blank space is a worse answer than the readings themselves.
@@ -103,6 +108,7 @@ the component will not invent a colour, and the table stands as the rendering un
   { name: 'dayLabel', type: 'string', default: 'Day', description: 'Header of the table\'s day column.' },
   { name: 'formatDay', type: '(day: string) => string', default: 'English day, short month, and year', description: 'Formats the visible reading day; the calendar day remains in the time element\'s dateTime.' },
   { name: 'formatNumber', type: '(value: number) => string', default: 'one decimal, dot', description: 'How the actual, the plan and the gap are written in the reading, without the `%`. A product that marks decimals with a comma passes its own.' },
+  { name: 'formatDetailNumber', type: '(value: number) => string', default: '`formatNumber`', description: 'How values in the chart detail are written, without the `%`. Choose this separately when detail values need more precision than the reading.' },
   { name: 'gapUnitLabel', type: 'string', default: 'points', description: 'Unit after the plan–actual gap. The value is percentage points, not a relative percent; products may supply their own language.' },
   { name: 'aheadLabel / behindLabel / onTrackLabel', type: 'string', description: 'The words the gap is stated in.' },
   { name: 'loading', type: 'boolean', default: 'false', description: 'Renders `ProgressCurve.Skeleton` in place of the chart.' },

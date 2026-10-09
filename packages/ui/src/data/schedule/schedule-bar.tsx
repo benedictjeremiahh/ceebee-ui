@@ -19,7 +19,7 @@ export function ScheduleBar({
   /** Set when only some of the row's children carry dates: its range does not cover them all. */
   coverage?: string;
 }) {
-  const percent = Math.round((row.progress ?? 0) * 100);
+  const percent = (row.progress ?? 0) * 100;
   const physical = mode === 'physical';
   const fill = physical ? row.planned.width * (row.progress ?? 0) : percent;
   const words = labels
@@ -82,7 +82,7 @@ export function ScheduleBar({
               }% + var(--cb-space-1)), calc(100% - 2.5em))`,
             }}
           >
-            {percent}%
+            {labels ? labels.percent(percent) : `${percent}%`}
           </span>
         ) : null}
       </span>
