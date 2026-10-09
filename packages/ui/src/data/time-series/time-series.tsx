@@ -83,7 +83,14 @@ export function TimeSeriesChart({
       element,
       /* The axis and the table read the same days in the same language: two renderings of one chart that
          disagreed about the date would be two charts. */
-      { series: cleaned, format, range, baseline, tickMark: (day) => readableDay(day, locale, 'short') },
+      {
+        series: cleaned,
+        format,
+        range,
+        baseline,
+        tickMark: (day) => readableDay(day, locale, 'short'),
+        formatDay: (day) => readableDay(day, locale),
+      },
       palette,
     ).then((mounted) => {
       if (cancelled) {
