@@ -30,6 +30,7 @@ function ProgressCurveRoot({
   dayLabel,
   formatDay = englishDay,
   formatNumber = oneDecimal,
+  formatDetailNumber = formatNumber,
   gapUnitLabel = 'points',
   aheadLabel = 'ahead of plan',
   behindLabel = 'behind plan',
@@ -93,7 +94,7 @@ function ProgressCurveRoot({
       <TimeSeriesChart
         label={label}
         series={series}
-        format={percentOf}
+        format={(value) => `${formatDetailNumber(value)}%`}
         range={{ min: 0, max: 100 }}
         mark={lastReport ? { day: lastReport, label: lastReportLabel } : undefined}
         height={height}
@@ -107,8 +108,6 @@ function ProgressCurveRoot({
 
 /** The Composition and its Skeleton, so a loading page keeps the chart's geometry. */
 export const ProgressCurve = Object.assign(ProgressCurveRoot, { Skeleton: ProgressCurveSkeleton });
-
-const percentOf = (value: number): string => `${Math.round(value)}%`;
 
 const oneDecimal = (value: number): string => String(round1(value));
 

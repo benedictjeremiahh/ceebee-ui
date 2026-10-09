@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { cn } from '../../lib/cn.js';
 import { useMediaQuery } from '../../lib/use-media-query.js';
 import { DEFAULT_SCHEDULE_LABELS } from './parts/schedule-defaults.js';
+import { useScheduleColumnLabels } from './parts/use-schedule-column-labels.js';
 import { useScheduleScaleTitles } from './parts/use-schedule-scale-titles.js';
 import { scheduleHierarchy } from './schedule.hierarchy.js';
 import { dayForGantt, dayToDate, scheduleRows } from './schedule.math.js';
@@ -49,6 +50,7 @@ function ScheduleRoot({
   const scheduleRef = useRef<HTMLDivElement>(null);
   const presentation = useScheduleFullscreen(scheduleRef, fullscreen);
   useScheduleScaleTitles(scheduleRef, items.length > 0);
+  useScheduleColumnLabels(scheduleRef, items.length > 0, text.resizeColumn);
   const gridColor = useScheduleGridColor(scheduleRef, items.length > 0);
   const apiRef = useRef<IApi | null>(null);
   const [width, setWidth] = useState<number | null>(null);
@@ -139,8 +141,8 @@ function ScheduleRoot({
       text: row.item.label,
       start: dayForGantt(row.spanStart),
       end: dayForGantt(new Date(row.spanEnd.getTime() + (physical ? 86400000 : 0))),
-      progress: Math.round((row.progress ?? 0) * 100),
-      progressText: row.progress === null ? text.unreported : `${Math.round(row.progress * 100)}%`,
+      progress: (row.progress ?? 0) * 100,
+      progressText: row.progress === null ? text.unreported : text.percent(row.progress * 100),
     };
   });
 

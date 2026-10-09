@@ -33,6 +33,8 @@ export interface ProgressCurveProps {
    * Defaults to one decimal with a dot; a product that marks decimals with a comma passes its own.
    */
   formatNumber?: (value: number) => string;
+  /** Formats values in the chart's detailed output, without `%`; defaults to `formatNumber`. */
+  formatDetailNumber?: (value: number) => string;
   /** Unit after the gap value, e.g. "points" or "poin"; the gap is percentage points, not a relative percentage. */
   gapUnitLabel?: string;
   aheadLabel?: string;

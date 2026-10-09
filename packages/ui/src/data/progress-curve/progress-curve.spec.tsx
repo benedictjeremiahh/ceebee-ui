@@ -42,8 +42,9 @@ describe('ProgressCurve', () => {
       <ProgressCurve
         planned={[{ day: '2026-09-01', percent: 10 }]}
         actual={[]}
-        label="Ruko Depok"
+        label="Site progress"
         today="2026-09-01"
+        formatDetailNumber={(value) => String(value)}
       />,
     );
     const reading = screen.getByText(/actual · 10% planned/);
@@ -59,14 +60,49 @@ describe('ProgressCurve', () => {
       <ProgressCurve
         planned={[{ day: '2026-09-01', percent: 10 }]}
         actual={[{ day: '2026-09-01', percent: 0 }]}
-        label="Ruko Depok"
+        label="Site progress"
         today="2026-09-01"
+        formatDetailNumber={(value) => String(value)}
       />,
     );
     const reading = screen.getByText(/actual · 10% planned/);
     expect(reading).toHaveTextContent('0% actual');
     const row = screen.getByRole('row', { name: /Sep 1, 2026/ });
     expect(row).toHaveTextContent('0%');
+  });
+
+  it('uses the consumer detail formatter for exact table values while keeping the summary formatter', () => {
+    render(
+      <ProgressCurve
+        planned={[{ day: '2026-09-01', percent: 12.34 }]}
+        actual={[{ day: '2026-09-01', percent: 0.04 }]}
+        label="Site progress"
+        formatNumber={(value) => `summary ${value.toFixed(1)}`}
+        formatDetailNumber={(value) => value.toFixed(2)}
+      />,
+    );
+
+    const row = screen.getByRole('row', { name: /Sep 1, 2026/ });
+    expect(row).toHaveTextContent('0.04%');
+    expect(row).toHaveTextContent('12.34%');
+    const reading = screen.getByText(/behind plan/);
+    expect(reading).toHaveTextContent('summary 0.0% actual');
+    expect(reading).toHaveTextContent('summary 12.3% planned');
+  });
+
+  it('defaults detailed values to the summary formatter when no detail formatter is given', () => {
+    render(
+      <ProgressCurve
+        planned={[{ day: '2026-09-01', percent: 12.34 }]}
+        actual={[{ day: '2026-09-01', percent: 0.04 }]}
+        label="Site progress"
+        formatNumber={(value) => value.toFixed(2)}
+      />,
+    );
+
+    const row = screen.getByRole('row', { name: /Sep 1, 2026/ });
+    expect(row).toHaveTextContent('0.04%');
+    expect(row).toHaveTextContent('12.34%');
   });
 
   it('renders every reported day as a row, with both values and the gap', () => {

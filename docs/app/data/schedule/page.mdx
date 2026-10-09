@@ -87,6 +87,18 @@ above the axis for readers and assistive technology. Lateness is this library's 
 The visible date above the axis is formatted for a reader; its `<time dateTime>` preserves the original
 calendar day. Pass `labels.todayDate` to write that date in the product's language.
 
+### Completion formatting
+
+`labels.percent` receives the unrounded completion percentage for the desktop grid, compact item
+list and optional bar badges. `labels.progress` receives that same percentage for the bar's spoken
+description. Choose precision in those callbacks; the component does not round before calling them.
+Unknown completion still uses `labels.unreported`, distinct from a reported zero. A missing plan
+or variance uses `labels.unavailable` instead of a punctuation placeholder.
+
+`labels.resizeColumn` names the column-resizing handle. The substrate hardcodes that accessible
+label instead of reading its locale, so the adapter keeps it synchronized within the schedule root
+when headers mount or change. It does not replace the substrate's resizing behavior.
+
 ## Responsive layout
 
 The schedule measures its own container, not just the viewport. Below 680px (760px in physical mode) of available width it
