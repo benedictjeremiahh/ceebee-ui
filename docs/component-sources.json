@@ -1856,7 +1856,7 @@
       "interactionContract": "read-only SVAR Gantt grid and timeline by default; physical mode has controlled calendar navigation and separates physical completion from actual dates. Bars have accessible names with item and progress readings. Today is named above the axis and marked on it with a CeeBee-owned overlay. Opt-in element-level native fullscreen keeps controls and popup containers within the root, with an explicitly labelled isolated application-window fallback, Escape exit and focus restoration (ADR 0026).",
       "runtime": {
         "package": "@svar-ui/react-gantt",
-        "version": "2.7.3",
+        "version": "2.8.0",
         "license": "MIT"
       },
       "substrate": [

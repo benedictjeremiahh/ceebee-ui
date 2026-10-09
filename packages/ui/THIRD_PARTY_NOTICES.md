@@ -40,7 +40,7 @@ License.
 
 Copyright © 2025 XB Software Sp. z o.o
 
-`Schedule` in `@ceebee/ui/client` draws its grid and bars with `@svar-ui/react-gantt` 2.7.3, a
+`Schedule` in `@ceebee/ui/client` draws its grid and bars with `@svar-ui/react-gantt` 2.8.0, a
 dependency. Its base stylesheet is included in `styles.css`, and its appearance is set by Ceebee's
 Tokens through the substrate's `--wx-*` custom properties. It is licensed under the MIT License, and
 its copyright notice is retained here.

@@ -6,7 +6,7 @@ function borderColorAsHex(element: HTMLElement): string | null {
   const context = canvas.getContext('2d');
   if (!context || !color) return null;
 
-  // SVAR 2.7.3 extracts the first `#` from --wx-gantt-border for its calendar-grid image.
+  // SVAR extracts the first `#` from --wx-gantt-border for its calendar-grid image.
   // Canvas resolves our token's OKLCH color without duplicating the skin palette in hex.
   context.fillStyle = color;
   context.fillRect(0, 0, 1, 1);
