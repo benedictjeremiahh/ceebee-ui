@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 2.5.6
+
+### Patch Changes
+
+- ab067b2: Preserve consumer-selected completion precision in schedule readings and detailed progress charts. Allow a separate detail formatter and localized column resize labels.
+
 ## 2.5.5
 
 ### Patch Changes
