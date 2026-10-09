@@ -25,6 +25,8 @@ export interface ChartShape {
   format: (value: number) => string;
   /** A tick's day in the product's words. Omitted, the substrate's own English date stands. */
   tickMark?: (day: string) => string;
+  /** A crosshair's day in the product's words. Omitted, the substrate's own date stands. */
+  formatDay?: (day: string) => string;
   range?: ValueRange;
   baseline?: Baseline;
 }
@@ -118,7 +120,12 @@ export async function mountTimeSeries(
       rightPriceScale: { borderColor: next.grid, scaleMargins: scaleMarginsFor(shape.range) },
       timeScale: { borderColor: next.grid, fixLeftEdge: true, fixRightEdge: true },
       crosshair: { vertLine: { color: next.muted }, horzLine: { color: next.muted } },
-      localization: { priceFormatter: shape.format },
+      localization: {
+        priceFormatter: shape.format,
+        ...(shape.formatDay
+          ? { timeFormatter: (time: Time) => shape.formatDay?.(dayOf(time)) }
+          : {}),
+      },
     });
     drawn.forEach((series, index) => {
       if (shape.baseline) {
