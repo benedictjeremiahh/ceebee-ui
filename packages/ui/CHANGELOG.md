@@ -1,5 +1,12 @@
 # @ceebee/ui
 
+## 2.5.7
+
+### Patch Changes
+
+- 8e0ee0e: Format chart crosshair dates in the same language as the axis and accessible table. Preserve the
+  complete date and value format when the chart palette changes.
+
 ## 2.5.6
 
 ### Patch Changes
