@@ -150,6 +150,37 @@ test('the time axis remains visible in a constrained desktop panel and after vie
   await expect.poll(() => schedule.locator('.wx-table-container').evaluate((element) => element.getBoundingClientRect().width)).toBeGreaterThan(150);
 });
 
+test('the physical calendar survives repeated viewport changes and a live theme change', async ({ page }) => {
+  const schedule = page.locator('.cb-schedule[data-mode="physical"]');
+  const chart = schedule.locator('.wx-chart');
+  const grid = schedule.locator('.wx-table-container');
+  const expectCalendarVisible = async () => {
+    await expect.poll(() => chart.evaluate((element) => element.getBoundingClientRect().width)).toBeGreaterThan(150);
+  };
+  const expectReadingsVisible = async () => {
+    await expect(schedule.locator('.cb-schedule__mobile-items')).toContainText('Kitchen fit-out');
+    await expect(schedule.locator('.cb-schedule__mobile-progress').first()).toBeVisible();
+    await expect(schedule.locator('.cb-schedule__mobile-progress').first()).toHaveText(/\S/);
+  };
+
+  await expect(schedule).toBeVisible();
+  await expect.poll(() => grid.evaluate((element) => element.getBoundingClientRect().width)).toBeGreaterThan(150);
+
+  await page.setViewportSize({ width: 360, height: 800 });
+  await expectCalendarVisible();
+  await expectReadingsVisible();
+  await page.evaluate(() => { document.documentElement.dataset.theme = 'dark'; });
+  await expectCalendarVisible();
+
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await expect.poll(() => grid.evaluate((element) => element.getBoundingClientRect().width)).toBeGreaterThan(150);
+  await page.setViewportSize({ width: 360, height: 800 });
+  await expectCalendarVisible();
+  await expectReadingsVisible();
+  await page.evaluate(() => { document.documentElement.dataset.theme = 'light'; });
+  await expectCalendarVisible();
+});
+
 test('grouped rows start collapsed, disclose from the parent, and label an undated child', async ({ page }) => {
   const schedule = page.locator('.cb-schedule').nth(1);
   await expect(schedule.getByText('Kitchen fit-out')).toBeVisible();
