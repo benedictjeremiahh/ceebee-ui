@@ -1,5 +1,12 @@
 # @ceebee/ui
 
+## 2.5.8
+
+### Patch Changes
+
+- 7704654: Pin the Schedule runtime to SVAR React Gantt 2.8.0 so compact calendar layouts remain visible
+  after container resizing and local builds use the same runtime as installed packages.
+
 ## 2.5.7
 
 ### Patch Changes
