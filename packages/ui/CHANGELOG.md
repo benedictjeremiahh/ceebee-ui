@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 2.5.9
+
+### Patch Changes
+
+- 9921867: Preserve small directional gaps in ProgressCurve before formatting, and add an independent gap magnitude formatter. Default readings distinguish a nonzero gap from being on plan.
+
 ## 2.5.8
 
 ### Patch Changes
