@@ -29,8 +29,9 @@ function ProgressCurveRoot({
   tableLabel = 'Progress by day',
   dayLabel,
   formatDay = englishDay,
-  formatNumber = oneDecimal,
-  formatDetailNumber = formatNumber,
+  formatNumber,
+  formatGapNumber,
+  formatDetailNumber = formatNumber ?? oneDecimal,
   gapUnitLabel = 'points',
   aheadLabel = 'ahead of plan',
   behindLabel = 'behind plan',
@@ -38,6 +39,8 @@ function ProgressCurveRoot({
   loading = false,
   className,
 }: ProgressCurveProps) {
+  const summaryNumber = formatNumber ?? oneDecimal;
+  const gapNumber = formatGapNumber ?? formatNumber ?? gapMagnitude;
   const rows = useMemo(() => curveRows(planned, actual), [planned, actual]);
   const actualPoints = useMemo(() => toPoints(actual), [actual]);
   const lastReport = actualPoints.at(-1)?.day ?? null;
@@ -78,13 +81,13 @@ function ProgressCurveRoot({
       {/* The reading in words, above the picture — the one number somebody opened this to find. */}
       {latest ? (
         <p className="cb-progress-curve__reading" data-state={stateOf(latest.gap)}>
-          <strong>{percent(latest.actualPercent, formatNumber)}</strong>
+          <strong>{percent(latest.actualPercent, summaryNumber)}</strong>
           {' '}
-          {actualLabel.toLowerCase()} · {percent(latest.plannedPercent, formatNumber)} {plannedLabel.toLowerCase()}
+          {actualLabel.toLowerCase()} · {percent(latest.plannedPercent, summaryNumber)} {plannedLabel.toLowerCase()}
           {latest.gap === null ? null : (
             <>
               {' · '}
-              {formatNumber(Math.abs(latest.gap))} {Math.abs(latest.gap) === 1 && gapUnitLabel === 'points' ? 'point' : gapUnitLabel} {gapWord(latest.gap, { aheadLabel, behindLabel, onTrackLabel })}
+              {gapNumber(Math.abs(latest.gap))} {Math.abs(latest.gap) === 1 && gapUnitLabel === 'points' ? 'point' : gapUnitLabel} {gapWord(latest.gap, { aheadLabel, behindLabel, onTrackLabel })}
             </>
           )}
           <span className="cb-progress-curve__on-day"> (<time dateTime={latest.day}>{formatDay(latest.day)}</time>)</span>
@@ -110,6 +113,11 @@ function ProgressCurveRoot({
 export const ProgressCurve = Object.assign(ProgressCurveRoot, { Skeleton: ProgressCurveSkeleton });
 
 const oneDecimal = (value: number): string => String(round1(value));
+
+function gapMagnitude(value: number): string {
+  const rounded = oneDecimal(value);
+  return value > 0 && rounded === '0' ? 'less than 0.1' : rounded;
+}
 
 const englishDay = (day: string): string => readableDay(day, 'en-US');
 

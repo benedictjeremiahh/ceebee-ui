@@ -18,6 +18,13 @@ on: the actual, the planned, and the gap between them in points. Somebody checki
 between sites gets their answer without interpreting a line, and the picture is there for the shape
 of the slip — when it started, whether it is still widening.
 
+The gap retains the sign of the supplied readings before formatting. A nonzero difference must not
+be classified as on plan merely because a rounded summary displays zero. The default gap reading
+says `less than 0.1` for such differences. `formatGapNumber` lets a caller localize that magnitude
+separately from progress percentages; it receives the nonnegative, unrounded magnitude without a unit.
+If only `formatNumber` is supplied, it continues to format the gap too, so that formatter must keep
+small directional differences distinguishable from zero.
+
 A day nobody reported is **not** a day of no progress. Both series carry the last report forward, so
 a gap in reporting reads as a flat stretch rather than a collapse to zero, which would say the work
 went backwards.
@@ -109,7 +116,8 @@ the component will not invent a colour, and the table stands as the rendering un
   { name: 'tableLabel', type: 'string', default: 'Progress by day', description: 'Caption of the accessible table.' },
   { name: 'dayLabel', type: 'string', default: 'Day', description: 'Header of the table\'s day column.' },
   { name: 'formatDay', type: '(day: string) => string', default: 'English day, short month, and year', description: 'Formats the visible reading day; the calendar day remains in the time element\'s dateTime.' },
-  { name: 'formatNumber', type: '(value: number) => string', default: 'one decimal, dot', description: 'How the actual, the plan and the gap are written in the reading, without the `%`. A product that marks decimals with a comma passes its own.' },
+  { name: 'formatNumber', type: '(value: number) => string', default: 'one decimal, dot', description: 'How actual and planned progress are written in the reading, without the `%`. A supplied formatter also formats the gap unless formatGapNumber is supplied.' },
+  { name: 'formatGapNumber', type: '(magnitude: number) => string', default: 'supplied formatNumber, otherwise one decimal with less than 0.1 for small nonzero gaps', description: 'Formats the unrounded nonnegative gap magnitude without its unit. Supply separately when small directional gaps need different wording from rounded progress.' },
   { name: 'formatDetailNumber', type: '(value: number) => string', default: '`formatNumber`', description: 'How values in the chart detail are written, without the `%`. Choose this separately when detail values need more precision than the reading.' },
   { name: 'gapUnitLabel', type: 'string', default: 'points', description: 'Unit after the plan–actual gap. The value is percentage points, not a relative percent; products may supply their own language.' },
   { name: 'aheadLabel / behindLabel / onTrackLabel', type: 'string', description: 'The words the gap is stated in.' },

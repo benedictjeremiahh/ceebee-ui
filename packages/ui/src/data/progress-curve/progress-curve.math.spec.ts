@@ -42,6 +42,24 @@ describe('readingOn', () => {
     expect(readingOn(actual, planned, '2026-09-20').gap).toBe(40);
   });
 
+  it('preserves the sign and precision of small fractional gaps', () => {
+    const positive = readingOn(
+      [{ day: '2026-09-01', percent: 10 }],
+      [{ day: '2026-09-01', percent: 10.04 }],
+      '2026-09-01',
+    ).gap;
+    const negative = readingOn(
+      [{ day: '2026-09-01', percent: 10 }],
+      [{ day: '2026-09-01', percent: 9.96 }],
+      '2026-09-01',
+    ).gap;
+
+    expect(positive).toBeCloseTo(0.04, 8);
+    expect(positive).toBeGreaterThan(0);
+    expect(negative).toBeCloseTo(-0.04, 8);
+    expect(negative).toBeLessThan(0);
+  });
+
   it('says nothing rather than zero before either series starts', () => {
     expect(readingOn(planned, actual, '2026-08-01')).toEqual({
       plannedPercent: null,
@@ -69,6 +87,25 @@ describe('curveRows', () => {
 
   it('is empty when there is nothing to say', () => {
     expect(curveRows([], [])).toEqual([]);
+  });
+
+  it('preserves the sign and precision of small fractional gaps in accessible rows', () => {
+    const rows = curveRows(
+      [
+        { day: '2026-09-01', percent: 10 },
+        { day: '2026-09-02', percent: 10 },
+      ],
+      [
+        { day: '2026-09-01', percent: 10.04 },
+        { day: '2026-09-02', percent: 9.96 },
+      ],
+    );
+
+    expect(rows).toHaveLength(2);
+    expect(rows[0]?.gap).toBeCloseTo(0.04, 8);
+    expect(rows[0]?.gap).toBeGreaterThan(0);
+    expect(rows[1]?.gap).toBeCloseTo(-0.04, 8);
+    expect(rows[1]?.gap).toBeLessThan(0);
   });
 });
 

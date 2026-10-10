@@ -5,7 +5,7 @@
  * feeds the accessible table are the same for every dated chart in this library and live in
  * `../time-series/time-series.math.ts`.
  */
-import { alignRows, seriesPoints, valueOn, round1 } from '../time-series/time-series.math.js';
+import { alignRows, seriesPoints, valueOn } from '../time-series/time-series.math.js';
 
 /** One reading: a day, and the share of the work complete by then. */
 export interface CurvePoint {
@@ -44,7 +44,7 @@ export function readingOn(
   return {
     plannedPercent,
     actualPercent,
-    gap: plannedPercent === null || actualPercent === null ? null : round1(actualPercent - plannedPercent),
+    gap: plannedPercent === null || actualPercent === null ? null : actualPercent - plannedPercent,
   };
 }
 
@@ -63,7 +63,7 @@ export function curveRows(
       day: row.day,
       plannedPercent,
       actualPercent,
-      gap: plannedPercent === null || actualPercent === null ? null : round1(actualPercent - plannedPercent),
+      gap: plannedPercent === null || actualPercent === null ? null : actualPercent - plannedPercent,
     };
   });
 }

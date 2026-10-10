@@ -29,10 +29,16 @@ export interface ProgressCurveProps {
   /** Formats the visible reading day; the machine-readable day stays in `<time dateTime>`. */
   formatDay?: (day: string) => string;
   /**
-   * How a number in the reading is written, without its `%` — the actual, the plan and the gap.
+   * How a number in the reading is written, without its `%` — the actual and the plan.
    * Defaults to one decimal with a dot; a product that marks decimals with a comma passes its own.
    */
   formatNumber?: (value: number) => string;
+  /**
+   * Formats the nonnegative gap magnitude, without its unit. Defaults to a supplied `formatNumber`;
+   * otherwise uses one decimal and "less than 0.1" for nonzero gaps that would round to zero.
+   * Supply this separately when rounded progress and a small directional gap need different wording.
+   */
+  formatGapNumber?: (value: number) => string;
   /** Formats values in the chart's detailed output, without `%`; defaults to `formatNumber`. */
   formatDetailNumber?: (value: number) => string;
   /** Unit after the gap value, e.g. "points" or "poin"; the gap is percentage points, not a relative percentage. */
