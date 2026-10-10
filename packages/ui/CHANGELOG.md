@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 2.5.10
+
+### Patch Changes
+
+- 8a2d42d: Keep full-screen image preview controls readable in both themes with a solid dark canvas and explicit light operation colors.
+
 ## 2.5.9
 
 ### Patch Changes
