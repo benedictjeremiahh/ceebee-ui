@@ -168,6 +168,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {
@@ -340,6 +343,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {
@@ -514,6 +520,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {
@@ -686,6 +695,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {
@@ -862,6 +874,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {
@@ -1034,6 +1049,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {
@@ -1208,6 +1226,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {
@@ -1380,6 +1401,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {
@@ -1556,6 +1580,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {
@@ -1728,6 +1755,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {
@@ -1902,6 +1932,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {
@@ -2074,6 +2107,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {
@@ -2250,6 +2286,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {
@@ -2422,6 +2461,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {
@@ -2596,6 +2638,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {
@@ -2768,6 +2813,9 @@ export const generatedCeebeeAntSeeds = {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Image": {
+            "colorBgMask": "rgba(9, 10, 19, 1)",
+            "previewOperationColor": "rgba(252, 252, 252, 1)",
+            "previewOperationHoverColor": "rgba(252, 252, 252, 1)",
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
           "Slider": {

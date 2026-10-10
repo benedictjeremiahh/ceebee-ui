@@ -48,6 +48,8 @@
   /* Light text on a dark neutral — a tooltip, a tour step, an image preview's controls. Not the text on
      a tone: that is fg-on-brand, which turns dark with the tones in dark mode. */
   --cb-fg-on-dark: oklch(0.99 0 0);
+  /* A solid image-preview canvas keeps its toolbar readable over arbitrary photo colours. */
+  --cb-image-preview-bg: oklch(0.15 0.02 280);
   /* The quiet ground behind a tone's text — a filled tag, an alert. Designed per mode rather than left to
      Ant's palette generator, which turns a dark seed into a muddy mid-tone the tone's text cannot read
      on (an "Active" tag measured 2.71:1). */

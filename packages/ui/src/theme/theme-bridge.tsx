@@ -200,10 +200,16 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
      In dark mode the text on a tone turns dark (the tones have to be light to read as text), so these
      three keep light text of their own. */
   const onDark = color('--cb-fg-on-dark');
+  const imagePreviewBg = color('--cb-image-preview-bg');
   if (onDark) {
     components.Tooltip = { colorTextLightSolid: onDark };
     components.Tour = { colorTextLightSolid: onDark };
-    components.Image = { colorTextLightSolid: onDark };
+    components.Image = {
+      ...(imagePreviewBg ? { colorBgMask: imagePreviewBg } : {}),
+      previewOperationColor: onDark,
+      previewOperationHoverColor: onDark,
+      colorTextLightSolid: onDark,
+    };
   }
   const trackBg = color('--cb-brand-300');
   const trackHoverBg = color('--cb-brand-400');

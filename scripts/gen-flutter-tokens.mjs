@@ -60,6 +60,8 @@ const SCHEMA = {
   '--cb-fg-link': { kind: 'color', field: 'fgLink' },
   '--cb-fg-on-brand': { kind: 'color', field: 'fgOnBrand' },
   '--cb-fg-on-dark': { kind: 'color', field: 'fgOnDark' },
+  // This ground belongs to the web Image preview; Flutter has no matching image-preview surface.
+  '--cb-image-preview-bg': { kind: 'skip' },
 
   '--cb-tone-neutral': { kind: 'color', field: 'toneNeutral' },
   '--cb-tone-brand': { kind: 'color', field: 'toneBrand' },
@@ -595,6 +597,7 @@ function emitAntThemeSeeds() {
         // Tooltip, Tour and Image preview put Ant's light-solid text on a dark neutral, not on a tone; in
         // dark mode the text on a tone turns dark, so these keep light text of their own.
         const onDark = antColor(value('--cb-fg-on-dark'), `${skin.name}/${brightness}/${contrast}/--cb-fg-on-dark`);
+        const imagePreviewBg = antColor(value('--cb-image-preview-bg'), `${skin.name}/${brightness}/${contrast}/--cb-image-preview-bg`);
         registry[skin.name][brightness][contrast] = {
           token,
           components: {
@@ -606,7 +609,12 @@ function emitAntThemeSeeds() {
             Form: { colorError: antColor(value('--cb-tone-danger'), `${skin.name}/${brightness}/${contrast}/--cb-tone-danger`) },
             Tooltip: { colorTextLightSolid: onDark },
             Tour: { colorTextLightSolid: onDark },
-            Image: { colorTextLightSolid: onDark },
+            Image: {
+              colorBgMask: imagePreviewBg,
+              previewOperationColor: onDark,
+              previewOperationHoverColor: onDark,
+              colorTextLightSolid: onDark,
+            },
             Slider: {
               trackBg: antColor(value('--cb-brand-300'), `${skin.name}/${brightness}/${contrast}/--cb-brand-300`),
               trackHoverBg: antColor(value('--cb-brand-400'), `${skin.name}/${brightness}/${contrast}/--cb-brand-400`),
