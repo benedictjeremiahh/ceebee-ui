@@ -101,7 +101,11 @@ describe('Schedule child rows', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Show items: Foundation (2)' }));
     expect(screen.getAllByRole('button', { name: /details:/i })).toHaveLength(2);
     expect(screen.getByRole('button', { name: 'Details: Foundation' })).toHaveTextContent('Details');
-    fireEvent.click(screen.getByRole('button', { name: 'Item details: Footing' }));
+    const childAction = screen.getByRole('button', { name: 'Item details: Footing' });
+    expect(childAction).toHaveClass('cb-schedule__name-action');
+    expect(childAction).toHaveAttribute('aria-label', 'Item details: Footing');
+    expect(childAction.querySelector('.cb-schedule__name')).toHaveTextContent('Footing');
+    fireEvent.click(childAction);
     expect(openChild).toHaveBeenCalledWith('a');
     expect(openItem).not.toHaveBeenCalled();
   });

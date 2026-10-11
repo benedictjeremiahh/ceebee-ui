@@ -24,10 +24,10 @@ describe('ScheduleMobileItems links', () => {
         expanded={new Set(['parent'])} onToggle={vi.fn()} />,
     );
 
-    const link = screen.getByRole('link', { name: 'Details' });
+    const link = screen.getByRole('link', { name: 'Details: Foundation' });
     expect(link).toHaveAttribute('href', '/work/parent');
-    expect(screen.queryByRole('button', { name: 'Details' })).toBeNull();
-    fireEvent.click(screen.getByRole('button', { name: 'Item details' }));
+    expect(screen.queryByRole('button', { name: 'Details: Foundation' })).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Item details: Footing' }));
     expect(onItemOpen).not.toHaveBeenCalled();
     expect(onChildOpen).toHaveBeenCalledWith('child');
   });
@@ -42,7 +42,7 @@ describe('ScheduleMobileItems links', () => {
         itemHref={() => undefined} hierarchy={hierarchy} expanded={new Set()} onToggle={vi.fn()} />,
     );
 
-    fireEvent.click(screen.getByRole('button', { name: 'Details' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Details: Foundation' }));
     expect(onItemOpen).toHaveBeenCalledWith('parent');
   });
 });

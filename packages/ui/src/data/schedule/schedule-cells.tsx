@@ -45,7 +45,7 @@ export function ScheduleNameCell({ row }: CellProps) {
           {child && context.onChildOpen ? (
             <button
               type="button"
-              className="cb-schedule__name cb-schedule__name-action"
+              className="cb-schedule__name-action"
               aria-label={`${text.itemDetails}: ${item.label}`}
               onMouseDown={(event) => event.stopPropagation()}
               onClick={(event) => {
@@ -53,7 +53,7 @@ export function ScheduleNameCell({ row }: CellProps) {
                 context.onChildOpen?.(item.id);
               }}
             >
-              {item.label}
+              <span className="cb-schedule__name">{item.label}</span>
             </button>
           ) : (
             <span className="cb-schedule__name">{item.label}</span>

@@ -20,6 +20,7 @@ import { useScheduleGridColor } from './use-schedule-grid-color.js';
 import { useScheduleFullscreen } from './use-schedule-fullscreen.js';
 import { ScheduleFullscreenTools } from './schedule-fullscreen-tools.js';
 import { ScheduleMobileItems } from './schedule-mobile-items.js';
+import { useScheduleTableScroll } from './use-schedule-table-scroll.js';
 
 /** Shared calendar geometry; the consumer owns physical facts and measurement dates. */
 function ScheduleRoot({
@@ -53,6 +54,7 @@ function ScheduleRoot({
   useScheduleColumnLabels(scheduleRef, items.length > 0, text.resizeColumn);
   const gridColor = useScheduleGridColor(scheduleRef, items.length > 0);
   const apiRef = useRef<IApi | null>(null);
+  useScheduleTableScroll(scheduleRef, apiRef, items.length > 0);
   const [width, setWidth] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
   const [chartMode, setChartMode] = useState({ color: '', narrow: false });

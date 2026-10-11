@@ -201,3 +201,24 @@ test('grouped rows start collapsed, disclose from the parent, and label an undat
   await expect(schedule.getByRole('button', { name: 'Item details: Cabinets' })).toHaveCount(1);
   await expect(schedule.getByRole('button', { name: 'Details: Cabinets', exact: true })).toHaveCount(0);
 });
+
+test('keyboard detail focus keeps the table rows aligned with their bars', async ({ page }) => {
+  const schedule = page.locator('.cb-schedule[data-mode="physical"]');
+  await schedule.getByRole('button', { name: 'Show items: Kitchen fit-out (3)' }).press('Enter');
+  await schedule.getByRole('button', { name: 'Item details: Paint' }).press('Enter');
+  for (const label of ['Cabinets', 'Tiling']) {
+    const row = schedule.getByRole('row').filter({ hasText: label });
+    const bar = schedule.locator(`.cb-schedule__bar[aria-label^="${label}"]`);
+    await expect.poll(async () => {
+      const rowBox = await row.boundingBox();
+      const barBox = await bar.boundingBox();
+      if (!rowBox || !barBox) return Infinity;
+      return Math.abs(rowBox.y + rowBox.height / 2 - barBox.y - barBox.height / 2);
+    }).toBeLessThanOrEqual(1);
+  }
+  await page.setViewportSize({ width: 360, height: 800 });
+  const compact = schedule.locator('.cb-schedule__mobile-items');
+  await expect(compact).toContainText('Paint');
+  await expect(compact).toContainText('Not scheduled');
+  await expect(compact.getByRole('button', { name: 'Item details: Paint' })).toBeVisible();
+});

@@ -193,10 +193,16 @@
   border-inline-end: var(--cb-border-width) dashed var(--cb-fg-muted);
 }
 .cb-schedule__name-action {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-block-size: calc(var(--cb-space-4) + var(--cb-space-2));
+  min-inline-size: 0;
+  max-inline-size: 100%;
   padding: 0;
   border: 0;
   background: transparent;
-  color: inherit;
+  color: var(--cb-fg-link);
   font: inherit;
   text-align: start;
   cursor: pointer;
@@ -208,9 +214,13 @@
   outline: var(--cb-focus-width) solid var(--cb-tone-brand);
 }
 .cb-schedule__name {
+  min-inline-size: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.cb-schedule__name-action > .cb-schedule__name {
+  flex: 1 1 auto;
 }
 .cb-schedule__reading {
   font-variant-numeric: tabular-nums;
@@ -245,19 +255,20 @@
   padding: var(--cb-space-3) var(--cb-space-3) var(--cb-space-3) var(--cb-space-6);
 }
 .cb-schedule__mobile-items li + li {
-  margin-block-start: var(--cb-space-1);
+  margin-block-start: var(--cb-space-3);
 }
 .cb-schedule__mobile-items li {
-  padding-inline-end: calc(var(--cb-space-8) * 1.5);
-  position: relative;
+  overflow-wrap: anywhere;
 }
 .cb-schedule__mobile-progress {
+  display: block;
   color: var(--cb-fg-muted);
   font-variant-numeric: tabular-nums;
-  inset-block-start: 0;
-  inset-inline-end: 0;
-  position: absolute;
-  text-align: end;
+  margin-block-start: var(--cb-space-1);
+}
+.cb-schedule__mobile-items .cb-schedule__note {
+  display: block;
+  margin-block-start: var(--cb-space-1);
 }
 
 .cb-schedule {

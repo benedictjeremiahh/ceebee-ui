@@ -54,7 +54,7 @@ for (const file of files.slice(0, TOKEN_ORDER.length)) {
 const require = createRequire(import.meta.url);
 const substrateCss = [
   ['@xyflow/react/dist/base.css', require.resolve('@xyflow/react/dist/base.css')],
-  ['@svar-ui/react-gantt/style.css', require.resolve('@svar-ui/react-gantt/style.css')],
+  ['@svar-ui/react-gantt/all.css', require.resolve('@svar-ui/react-gantt/all.css')],
 ];
 for (const [name, path] of substrateCss) {
   chunks.push(`/* ${name} (MIT, see THIRD_PARTY_NOTICES.md) */\n${await readFile(path, 'utf8')}`);

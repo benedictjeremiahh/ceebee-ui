@@ -25,12 +25,15 @@ progress are the ones you gave it, never derived from its children.
 <ScheduleGroupedDemo />
 
 A child may state no dates (`{ id, label, parentId, unscheduled: true }`). It stays in its parent's group
-and item count and is labelled, and no bar is drawn. A parent with only some children dated says its
+and item count in both the grid and compact list. It reads “Not scheduled”, with no invented progress
+or bar. A parent with only some children dated says its
 coverage is partial. `onItemOpen` puts one labelled action on each top-level row. Use `itemHref` to make
 that Details action a native link in both the grid and compact list; when it returns a destination,
 `onItemOpen` is not called. If `itemHref` returns `undefined`, `onItemOpen` remains the callback fallback.
 Children ignore `itemHref` and open through their own `onChildOpen` action, so they never repeat the
 parent's destination or callback.
+Child names are native detail buttons in the grid, with link styling, a full-name tooltip and a
+visible keyboard focus ring. Compact detail actions include the item's name in their accessible label.
 
 ## What the bar says
 
