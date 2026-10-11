@@ -26,6 +26,16 @@ and its backdrop then resolve above the drawer while the drawer's focus trap wai
 - Do keep a modal's focused task inside a drawer on the documented rung.
 - Don't restyle the drawer or dialog with a local `z-index` to force one above the other.
 
+## Keyboard and return focus
+
+The upstream runtime owns keyboard navigation, focus trapping and dismissal. CeeBee also restores
+the connected opening control when a consumer conditionally removes the Drawer before its closing
+animation completes. Set `focusable={{ focusTriggerAfterClose: false }}` to opt out. A control that
+has been removed is not focused, and cleanup does not override another control the consumer has focused.
+
+- Do open the Drawer from a named control and keep that control available after the task.
+- Don't add a page-local focus handler to compensate for conditional Drawer unmounting.
+
 ## Examples
 
 <DrawerShowcase />

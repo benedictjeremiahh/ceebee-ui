@@ -1523,7 +1523,11 @@
       "adapter": "packages/ui/src/overlay/drawer.tsx",
       "demoPath": "docs/components/feedback/drawer",
       "parityGaps": [],
-      "proof": "docs/parity.generated.json#Drawer"
+      "proof": "docs/parity.generated.json#Drawer",
+      "additiveExtensions": [
+        "Focus restoration across conditional unmount",
+        "Stable CeeBee semantic layer classes"
+      ]
     },
     "Message": {
       "strategy": "antd-runtime",
