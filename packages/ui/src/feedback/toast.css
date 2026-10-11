@@ -48,7 +48,7 @@
 }
 
 .cb-toast__icon { grid-area: icon; color: var(--cb-toast-accent); display: inline-flex; margin-top: 0.125rem; }
-.cb-toast__content { grid-area: content; display: flex; flex-direction: column; gap: 0.125rem; min-width: 0; }
+.cb-toast__content { grid-area: content; display: flex; flex-direction: column; gap: var(--cb-space-1); min-width: 0; }
 /* Base UI renders these as <h2> and <p>, which inherit the host app's heading and paragraph
    margins — without this reset a two-line toast is twice as tall in one app as in another. */
 .cb-toast__title { margin: 0; font-size: var(--cb-text-sm); font-weight: var(--cb-weight-semibold); color: var(--cb-fg); }
