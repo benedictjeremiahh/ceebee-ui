@@ -7,6 +7,12 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.cb-select__option-label {
+  display: block;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
 
 /* Keep the clearing glyph compact while giving pointer and keyboard users a full hit target. */
 .cb-select .ant-select-clear {

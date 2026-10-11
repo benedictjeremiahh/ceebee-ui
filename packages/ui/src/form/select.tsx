@@ -18,7 +18,7 @@ export type SelectProps<V = any, O extends BaseOptionType | DefaultOptionType = 
 
 type Styles = AntSelectProps['styles'];
 
-/** The dropdown may be wider than its field, up to a cap; a consumer's own popup styles still win. */
+/** The dropdown may be wider than its field, up to a viewport-aware cap; a consumer's own popup styles still win. */
 function withPopupCap<S extends Styles>(styles: S): S | Styles {
   if (typeof styles === 'function') return styles;
   const popupRoot: CSSProperties = { maxInlineSize: SELECT_POPUP_MAX, ...styles?.popup?.root };
@@ -36,15 +36,16 @@ function setsWidth(style: CSSProperties | undefined): boolean {
  * - The field is as wide as the longest option it has held, between 12rem and 28rem, and never wider than its container,
  *   so it takes the full width on a phone. A consumer that sets a width keeps it.
  * - The dropdown may be wider than the field, up to 32rem, so options are read whole where there is room.
- * - What still does not fit ellipsises, and the selected value and each option show their whole text in a
- *   tooltip when — and only when — they are cut. A consumer's own `labelRender` or `optionRender` replaces
- *   this for what it renders.
+ *   When it cannot expand to fit, options wrap unless the consumer enables width matching.
+ * - The selected value ellipsises and shows its whole text in a tooltip when — and only when — it is cut.
+ *   A consumer's own `labelRender` or `optionRender` replaces this for what it renders.
  *
  * Everything else is Ant's contract, untouched.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function SelectRoot<V = any, O extends BaseOptionType | DefaultOptionType = DefaultOptionType>({
-  style, styles, labelRender, optionRender, popupMatchSelectWidth, options, className, allowClear, ...props
+  style, styles, labelRender, optionRender, popupMatchSelectWidth, popupAlign, builtinPlacements,
+  options, className, allowClear, ...props
 }: SelectProps<V, O>) {
   const labels = useLabels();
   const config = useContext(ConfigProvider.ConfigContext);
@@ -54,6 +55,7 @@ function SelectRoot<V = any, O extends BaseOptionType | DefaultOptionType = Defa
   widest.current = Math.max(widest.current, longestLabel(options));
   const width = setsWidth(style) ? undefined : selectWidth(widest.current);
   const effectiveAllowClear = allowClear ?? config.select?.allowClear;
+  const effectivePopupMatchSelectWidth = popupMatchSelectWidth ?? false;
   const defaultClearIcon = props.clearIcon !== undefined
     ? props.clearIcon
     : config.select?.clearIcon !== undefined
@@ -70,6 +72,18 @@ function SelectRoot<V = any, O extends BaseOptionType | DefaultOptionType = Defa
             : defaultClearIcon,
         }
       : effectiveAllowClear;
+  // rc-trigger shallow-merges popupAlign over its placement, so retain Ant's overflow defaults when adding shiftX.
+  const alignedPopup = builtinPlacements
+    ? popupAlign
+    : {
+        ...popupAlign,
+        overflow: {
+          adjustX: effectivePopupMatchSelectWidth === true ? 0 : 1,
+          adjustY: 1,
+          shiftX: true,
+          ...popupAlign?.overflow,
+        },
+      };
   return (
     <AntSelect<V, O>
       {...props}
@@ -78,9 +92,13 @@ function SelectRoot<V = any, O extends BaseOptionType | DefaultOptionType = Defa
       className={className ? `cb-select ${className}` : 'cb-select'}
       style={width ? { inlineSize: width, ...style } : style}
       styles={withPopupCap(styles)}
-      popupMatchSelectWidth={popupMatchSelectWidth ?? false}
+      popupAlign={alignedPopup}
+      builtinPlacements={builtinPlacements}
+      popupMatchSelectWidth={effectivePopupMatchSelectWidth}
       labelRender={labelRender ?? ((label) => <TruncatedLabel>{label.label ?? label.value}</TruncatedLabel>)}
-      optionRender={optionRender ?? ((option) => <TruncatedLabel>{option.label ?? option.value}</TruncatedLabel>)}
+      optionRender={optionRender ?? (effectivePopupMatchSelectWidth === false
+        ? (option) => <span className="cb-select__option-label">{option.label ?? option.value}</span>
+        : (option) => <TruncatedLabel>{option.label ?? option.value}</TruncatedLabel>)}
     />
   );
 }

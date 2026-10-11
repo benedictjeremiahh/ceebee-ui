@@ -8,8 +8,8 @@
  */
 export const SELECT_MIN = '12rem';
 export const SELECT_MAX = '28rem';
-/** How much wider than its field the dropdown may grow, so options are read whole where there is room. */
-export const SELECT_POPUP_MAX = '32rem';
+/** How much wider than its field the dropdown may grow, capped against the viewport using spacing tokens. */
+export const SELECT_POPUP_MAX = 'min(32rem, calc(100vw - var(--cb-space-4) - var(--cb-space-4)))';
 
 function written(value: unknown): number {
   return typeof value === 'string' || typeof value === 'number' ? String(value).length : 0;

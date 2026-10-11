@@ -18,6 +18,7 @@ const App: React.FC = () => (
         { value: 'lucy', label: 'Lucy' },
         { value: 'Yiminghe', label: 'yiminghe' },
         { value: 'disabled', label: 'Disabled', disabled: true },
+        { value: 'long-location', label: 'Warehouse · Jakarta · Building C · Floor 4 · Aisle 12 · Shelf 08' },
       ]}
     />
     <Select
