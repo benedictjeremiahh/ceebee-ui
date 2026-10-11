@@ -25,9 +25,10 @@ separately from progress percentages; it receives the nonnegative, unrounded mag
 If only `formatNumber` is supplied, it continues to format the gap too, so that formatter must keep
 small directional differences distinguishable from zero.
 
-A day nobody reported is **not** a day of no progress. Both series carry the last report forward, so
-a gap in reporting reads as a flat stretch rather than a collapse to zero, which would say the work
-went backwards.
+A day between reports is **not** a day of no progress. The table carries the previous actual value
+through gaps within the reported date range. After the last report, later planned dates have an
+unavailable actual cell (`-`), matching the end of the plotted actual line. A reported zero remains
+`0%` on its date. The summary above the plot continues to use the latest available actual reading.
 
 The vertical scale is pinned to 0–100%. Autoscaling would stretch a job that has reached 30% to the
 full height of the plot, which reads as *nearly there* — the opposite of the truth.
@@ -55,7 +56,7 @@ Axis labels omit the year to stay compact; the crosshair shows the complete cale
 
 The plot is a `<canvas>`, so it is not in the accessibility tree at all. This component therefore
 ships a second rendering rather than a description of the first: a table of every day either series
-reports, with both values and the gap. It is always in the DOM, visually hidden, and built from the
+reports, with planned and actual values. It is always in the DOM, visually hidden, and built from the
 same numbers as the line.
 
 The table keeps the detail values at the precision supplied by `formatDetailNumber`, so a value such
@@ -85,6 +86,10 @@ The canvas, the Token reading, the forced-colors path and the accessible table b
 **TimeSeriesChart**, the primitive every dated chart here is built from. This Composition adds the part
 that is about progress: the scale pinned to 0–100%, the two series with their dash treatment, and the
 reading in words.
+
+Its actual series sets `SeriesSpec.extendLastValue` to `false`, limiting the accessible readings to
+the reported date range. Generic dated charts retain their carry-forward default, which also suits
+balances that continue to hold after the final supplied entry.
 
 That split happened when the second dated chart arrived
 ([BalanceCurve](/data-display/balance-curve)). The shared half is ~200 lines of canvas and Token

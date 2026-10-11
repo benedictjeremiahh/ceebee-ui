@@ -74,6 +74,51 @@ describe('alignRows', () => {
     expect(alignRows([{ key: 'a', points: [] }])).toEqual([]);
   });
 
+  it('can stop carrying a series after its last reported day', () => {
+    expect(alignRows([
+      { key: 'actual', points: actual, extendLastValue: false },
+      { key: 'planned', points: planned },
+    ])).toEqual([
+      { day: '2026-09-01', values: { actual: 10, planned: 10 } },
+      { day: '2026-09-10', values: { actual: 10, planned: 35 } },
+      { day: '2026-09-12', values: { actual: 30, planned: 35 } },
+      { day: '2026-09-20', values: { actual: null, planned: 70 } },
+    ]);
+  });
+
+  it('keeps a reported zero distinct from missing values before or after the series', () => {
+    expect(alignRows([
+      { key: 'actual', points: [{ day: '2026-09-10', value: 0 }], extendLastValue: false },
+      { key: 'planned', points: planned },
+    ])).toEqual([
+      { day: '2026-09-01', values: { actual: null, planned: 10 } },
+      { day: '2026-09-10', values: { actual: 0, planned: 35 } },
+      { day: '2026-09-20', values: { actual: null, planned: 70 } },
+    ]);
+  });
+
+  it('uses normalized dates and the last correction when deciding where carrying ends', () => {
+    expect(alignRows([
+      {
+        key: 'actual',
+        points: [
+          { day: '2026-09-12', value: 30 },
+          { day: 'not-a-day', value: 99 },
+          { day: '2026-09-01', value: 10 },
+          { day: '2026-09-12', value: 0 },
+          { day: '2026-13-01', value: 100 },
+        ],
+        extendLastValue: false,
+      },
+      { key: 'planned', points: planned },
+    ])).toEqual([
+      { day: '2026-09-01', values: { actual: 10, planned: 10 } },
+      { day: '2026-09-10', values: { actual: 10, planned: 35 } },
+      { day: '2026-09-12', values: { actual: 0, planned: 35 } },
+      { day: '2026-09-20', values: { actual: null, planned: 70 } },
+    ]);
+  });
+
   it('holds a key for every series, even one that never reported', () => {
     expect(alignRows([{ key: 'a', points: planned }, { key: 'b', points: [] }]).at(0)?.values)
       .toEqual({ a: 10, b: null });

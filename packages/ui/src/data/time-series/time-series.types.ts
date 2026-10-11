@@ -24,6 +24,8 @@ export interface SeriesSpec {
   label: string;
   points: SeriesPoint[];
   emphasis?: SeriesEmphasis;
+  /** Whether the last reading carries into later dates; defaults to true for balance-like series. */
+  extendLastValue?: boolean;
   /** The Token this series takes its colour from, e.g. `--cb-tone-brand`. */
   colorToken: string;
 }

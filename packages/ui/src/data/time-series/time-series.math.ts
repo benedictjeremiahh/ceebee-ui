@@ -59,15 +59,26 @@ export function valueOn(points: readonly SeriesPoint[], day: string): number | n
  * A canvas has no DOM, so this is the *only* thing a screen reader can be given, and it is what a
  * forced-colors viewer sees in place of the bitmap. It is therefore the same data, not a summary. A
  * value is carried forward from the last reading: a day nobody reported is not a day of nothing, and
- * showing it as zero would say the measure collapsed.
+ * showing it as zero would say the measure collapsed. With `extendLastValue: false`, that carry ends
+ * at the last valid reported day; later dates from other series remain unavailable.
  */
 export function alignRows(
-  series: readonly { key: string; points: readonly SeriesPoint[] }[],
+  series: readonly { key: string; points: readonly SeriesPoint[]; extendLastValue?: boolean }[],
 ): { day: string; values: Record<string, number | null> }[] {
-  const days = [...new Set(series.flatMap((one) => seriesPoints(one.points).map((point) => point.day)))].sort();
+  const normalized = series.map((one) => ({
+    key: one.key,
+    points: seriesPoints(one.points),
+    extendLastValue: one.extendLastValue,
+  }));
+  const days = [...new Set(normalized.flatMap((one) => one.points.map((point) => point.day)))].sort();
   return days.map((day) => {
     const values: Record<string, number | null> = {};
-    for (const one of series) values[one.key] = valueOn(one.points, day);
+    for (const one of normalized) {
+      const last = one.points[one.points.length - 1];
+      values[one.key] = one.extendLastValue === false && last && day > last.day
+        ? null
+        : valueOn(one.points, day);
+    }
     return { day, values };
   });
 }

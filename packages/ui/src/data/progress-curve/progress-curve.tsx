@@ -58,7 +58,7 @@ function ProgressCurveRoot({
   const series = useMemo(
     () => [
       { key: 'planned', label: plannedLabel, points: toPoints(planned), emphasis: 'reference' as const, colorToken: '--cb-fg-subtle' },
-      { key: 'actual', label: actualLabel, points: toPoints(actual), emphasis: 'primary' as const, colorToken: '--cb-tone-brand' },
+      { key: 'actual', label: actualLabel, points: toPoints(actual), extendLastValue: false, emphasis: 'primary' as const, colorToken: '--cb-tone-brand' },
     ],
     [planned, actual, plannedLabel, actualLabel],
   );
