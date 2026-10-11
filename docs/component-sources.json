@@ -429,11 +429,14 @@
         "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
       },
       "license": "MIT",
-      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
-      "legacyAdapter": "packages/ui/src/form/button.tsx",
+      "adapter": "packages/ui/src/form/button.tsx",
       "demoPath": "docs/components/general/button",
       "parityGaps": [],
-      "proof": "docs/parity.generated.json#Button"
+      "proof": "docs/parity.generated.json#Button",
+      "additiveExtensions": [
+        "The default loading icon's outer named span is aria-hidden after hydration, including while its exit node remains; caller icons and global custom loading icons retain their semantics"
+      ],
+      "ownsUpstreamAccessibility": "Default loading icon decoration only; role, keyboard, focus, activation, delay, ref, geometry and motion remain Ant's"
     },
     "FloatButton": {
       "strategy": "antd-runtime",

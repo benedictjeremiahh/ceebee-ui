@@ -6,6 +6,8 @@
  * Skins — see THIRD_PARTY_NOTICES.md and docs/component-sources.json for what came from where.
  */
 export * from 'antd';
+export { Button } from './form/button.js';
+export type { ButtonProps } from './form/button.js';
 export { Modal } from './overlay/modal.js';
 export type { ModalLayer, ModalProps } from './overlay/modal.js';
 export { Drawer } from './overlay/drawer.js';
