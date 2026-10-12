@@ -2,9 +2,10 @@
 
 import { Drawer as AntDrawer } from 'antd';
 import type { DrawerProps as AntDrawerProps } from 'antd';
-import { useEffect, useInsertionEffect, useRef } from 'react';
+import { useCallback, useEffect, useInsertionEffect, useRef } from 'react';
 
 import { cn } from '../lib/cn.js';
+import { useFocusRecoveryController } from '../focus/focus-recovery/index.js';
 import { OverlayAncestorProvider } from './overlay-ancestors.js';
 import './drawer.css';
 
@@ -28,15 +29,36 @@ function DrawerRoot({
   open,
   afterOpenChange,
   focusable,
+  panelRef,
   ...props
 }: DrawerProps) {
   const returnFocus = useRef<HTMLElement | null>(null);
+  const panel = useRef<HTMLDivElement | null>(null);
   const restoreTask = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const wasOpen = useRef(false);
   const mounted = useRef(false);
+  const openRef = useRef(!!open);
+  openRef.current = !!open;
+  const focusRecovery = useFocusRecoveryController();
   const shouldRestoreFocus = focusable?.focusTriggerAfterClose ?? true;
   const shouldRestoreFocusRef = useRef(shouldRestoreFocus);
   shouldRestoreFocusRef.current = shouldRestoreFocus;
+
+  const restoreRecoveryTarget = useCallback(() => {
+    if (!shouldRestoreFocusRef.current || !focusRecovery || restoreTask.current) return;
+    restoreTask.current = setTimeout(() => {
+      restoreTask.current = undefined;
+      if (openRef.current && mounted.current) return;
+      const activeElement = document.activeElement;
+      const focusIsNeutral = !activeElement
+        || activeElement === document.body
+        || activeElement === document.documentElement
+        || !activeElement.isConnected;
+      if (focusIsNeutral || (activeElement instanceof Element && panel.current?.contains(activeElement))) {
+        focusRecovery.requestRecovery(panel.current);
+      }
+    });
+  }, [focusRecovery]);
 
   useInsertionEffect(() => {
     if (open) {
@@ -45,7 +67,10 @@ function DrawerRoot({
         restoreTask.current = undefined;
       }
       if (!wasOpen.current && document.activeElement instanceof HTMLElement) {
-        returnFocus.current = document.activeElement;
+        const activeElement = document.activeElement;
+        returnFocus.current = activeElement === document.body || activeElement === document.documentElement
+          ? null
+          : activeElement;
       }
     }
     wasOpen.current = !!open;
@@ -63,6 +88,7 @@ function DrawerRoot({
       if (!shouldRestoreFocusRef.current) return;
       if (!target?.isConnected) {
         returnFocus.current = null;
+        restoreRecoveryTarget();
         return;
       }
       restoreTask.current = setTimeout(() => {
@@ -73,11 +99,16 @@ function DrawerRoot({
           || activeElement === document.body
           || activeElement === document.documentElement
           || !activeElement.isConnected;
-        if (focusIsNeutral && target.isConnected) target.focus({ preventScroll: true });
+        if (target.isConnected) {
+          if (focusIsNeutral) target.focus({ preventScroll: true });
+        } else if (shouldRestoreFocusRef.current && focusRecovery
+          && (focusIsNeutral || (activeElement instanceof Element && panel.current?.contains(activeElement)))) {
+          focusRecovery.requestRecovery(panel.current);
+        }
         if (returnFocus.current === target) returnFocus.current = null;
       });
     };
-  }, []);
+  }, [restoreRecoveryTarget]);
 
   const drawerClassNames =
     typeof classNames === 'function'
@@ -98,8 +129,16 @@ function DrawerRoot({
       {...props}
       open={open}
       focusable={focusable}
+      panelRef={(node) => {
+        panel.current = node;
+        if (typeof panelRef === 'function') panelRef(node);
+        else if (panelRef) panelRef.current = node;
+      }}
       afterOpenChange={(nextOpen) => {
-        if (!nextOpen) returnFocus.current = null;
+        if (!nextOpen) {
+          if (!returnFocus.current?.isConnected) restoreRecoveryTarget();
+          returnFocus.current = null;
+        }
         afterOpenChange?.(nextOpen);
       }}
       rootClassName={cn('cb-drawer', rootClassName)}

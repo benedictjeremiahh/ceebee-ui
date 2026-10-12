@@ -12,6 +12,8 @@ export { Modal } from './overlay/modal.js';
 export type { ModalLayer, ModalProps } from './overlay/modal.js';
 export { Drawer } from './overlay/drawer.js';
 export type { DrawerProps } from './overlay/drawer.js';
+export { FocusRecovery } from './focus/focus-recovery/index.js';
+export type { FocusRecoveryProps } from './focus/focus-recovery/index.js';
 export { Select } from './form/select.js';
 export type { SelectProps } from './form/select.js';
 export { InputNumber } from './form/input-number.js';

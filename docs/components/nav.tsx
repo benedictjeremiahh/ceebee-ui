@@ -150,6 +150,7 @@ const GROUPS: Group[] = [
       { href: '/feedback/drawer', label: 'Drawer' },
       { href: '/feedback/message', label: 'Message' },
       { href: '/feedback/modal', label: 'Modal' },
+      { href: '/feedback/focus-recovery', label: 'FocusRecovery' },
       { href: '/feedback/notification', label: 'Notification' },
       { href: '/feedback/popconfirm', label: 'Popconfirm' },
       { href: '/feedback/progress', label: 'Progress' },

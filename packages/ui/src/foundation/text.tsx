@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, Ref } from 'react';
 import { cn, type Tone } from '../lib/cn.js';
 
 export interface TextProps {
@@ -35,11 +35,14 @@ export interface HeadingProps {
   size?: 'lg' | 'xl' | '2xl' | '3xl';
   className?: string;
   children?: ReactNode;
+  /** An opt-in anchor for programmatic focus recovery; it need not enter the Tab order. */
+  ref?: Ref<HTMLHeadingElement>;
+  tabIndex?: number;
 }
 
 /** Level and size are separate on purpose: document structure is not a font size. */
-export function Heading({ level = 2, size, className, children }: HeadingProps) {
+export function Heading({ level = 2, size, className, children, ref, tabIndex }: HeadingProps) {
   const Tag = `h${level}` as const;
   const resolved = size ?? (['3xl', '2xl', 'xl', 'lg'] as const)[level - 1] ?? 'lg';
-  return <Tag className={cn('cb-heading', `cb-text--${resolved}`, className)}>{children}</Tag>;
+  return <Tag ref={ref} tabIndex={tabIndex} className={cn('cb-heading', `cb-text--${resolved}`, className)}>{children}</Tag>;
 }

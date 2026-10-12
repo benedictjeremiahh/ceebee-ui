@@ -2007,6 +2007,22 @@
       "substrate": [
         "react"
       ]
+    },
+    "FocusRecovery": {
+      "strategy": "ceebee-native",
+      "substrate": [
+        "React context and effects",
+        "DOM focus",
+        "Scoped MutationObserver"
+      ],
+      "license": "MIT",
+      "adapter": "packages/ui/src/focus/focus-recovery/focus-recovery.tsx",
+      "demoPath": "docs/components/focus-recovery-demo.tsx",
+      "additiveExtensions": [
+        "Injected ready-aware removal destination",
+        "Context fallback for removed Modal and Drawer openers"
+      ],
+      "interactionContract": "A caller-injected ready-aware destination receives focus after the focused control is removed. Connected overlay openers retain their normal priority; intentional focus elsewhere and active unrelated overlays are preserved."
     }
   }
 }

@@ -26,6 +26,10 @@ and its backdrop then resolve above the drawer while the drawer's focus trap wai
 - Do keep a modal's focused task inside a drawer on the documented rung.
 - Don't restyle the drawer or dialog with a local `z-index` to force one above the other.
 
+When an opener is removed, an enclosing `FocusRecovery` can supply an injected, ready-aware
+section destination. A connected opener retains ordinary return focus; an explicit return-focus
+opt-out disables the fallback too.
+
 ## Keyboard and return focus
 
 The upstream runtime owns keyboard navigation, focus trapping and dismissal. CeeBee also restores

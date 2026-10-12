@@ -1,0 +1,55 @@
+import { Demo } from '../../../components/demo';
+import { FocusRecoveryDemo } from '../../../components/focus-recovery-demo';
+import { Guidance, PropsTable } from '../../../components/props-table';
+
+# FocusRecovery <span className="docs__label">Atom</span>
+
+Return focus to an injected section heading when a focused control disappears. The application
+chooses the destination and when its content is ready; the primitive preserves intentional focus
+elsewhere. A connected Modal or Drawer opener keeps ordinary return focus.
+
+## Usage
+
+Use a stable heading ref and `tabIndex={-1}` to make the destination programmatically focusable
+without adding a Tab stop. `Heading` forwards both props to its existing semantic heading.
+
+<Demo layout="block" code={`const headingRef = useRef<HTMLHeadingElement>(null);
+<FocusRecovery targetRef={headingRef} ready={!loading}>
+  <Heading level={2} ref={headingRef} tabIndex={-1}>Entries</Heading>
+  <EntryList />
+</FocusRecovery>`}>
+  <FocusRecoveryDemo />
+</Demo>
+
+Activate “Remove entry” with the keyboard. The heading becomes the focus destination; the next
+Tab continues through this section. Failed operations that leave the control mounted keep its focus.
+
+`FocusRecovery` observes removals inside its own DOM root, which uses `display: contents` to
+preserve layout. It adds no landmark or keyboard shortcut. Portalled Modal/Drawer content inherits
+the recovery destination through context, but its focus is not treated as list focus.
+Nested recovery sections own their descendants: an ancestor cannot recover a nested section's
+control while that section is still loading.
+
+## Props
+
+<PropsTable rows={[
+  { name: 'targetRef', type: 'RefObject<HTMLElement | null>', description: 'A connected, programmatically focusable heading or control chosen by the application.' },
+  { name: 'ready', type: 'boolean', default: 'true', description: 'Wait for related content before completing a pending recovery.' },
+  { name: 'children', type: 'ReactNode', description: 'The controls and overlays belonging to this task.' },
+]} />
+
+<Guidance do="Choose one stable destination in the same task and wait for its read to settle."
+  dont="Use recovery to move focus away from an active overlay or a control the user intentionally chose." />
+
+## Keyboard
+
+- Ordinary controls retain their existing keyboard contract.
+- A removed focused control returns focus to the injected target when `ready`.
+- Recovery permits the browser to scroll the destination into view.
+- A connected overlay opener wins over the fallback; disabling overlay return focus also disables its fallback.
+- Recovery never adds the heading to the ordinary Tab order or overrides intentional focus elsewhere.
+
+## Tokens
+
+The recovery wrapper has no visual treatment. Opt-in `Heading` focus outlines use
+`--cb-focus-width`, `--cb-focus-offset`, and `--cb-tone-brand`.

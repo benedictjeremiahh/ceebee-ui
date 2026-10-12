@@ -1,6 +1,7 @@
 .cb-text, .cb-heading { margin: 0; font-family: var(--cb-font-sans); color: var(--cb-fg); }
 .cb-text { line-height: var(--cb-leading-normal); }
 .cb-heading { line-height: var(--cb-leading-tight); font-weight: var(--cb-weight-semibold); letter-spacing: -0.015em; }
+.cb-heading[tabindex]:focus-visible { outline: var(--cb-focus-width) solid var(--cb-tone-brand); outline-offset: var(--cb-focus-offset); }
 
 .cb-text--xs { font-size: var(--cb-text-xs); }
 .cb-text--sm { font-size: var(--cb-text-sm); }

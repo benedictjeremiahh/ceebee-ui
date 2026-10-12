@@ -6,6 +6,7 @@ import type { MutableRefObject, ReactNode, Ref } from 'react';
 import { useCallback, useEffect, useId, useInsertionEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { cn } from '../lib/cn.js';
+import { useFocusRecoveryController } from '../focus/focus-recovery/index.js';
 import { OverlayAncestorProvider, useOverlayAncestors } from './overlay-ancestors.js';
 import './modal.css';
 
@@ -41,6 +42,7 @@ function ModalRoot({
   const openRef = useRef(!!open);
   openRef.current = !!open;
   const overlayAncestors = useOverlayAncestors();
+  const focusRecovery = useFocusRecoveryController();
   const resolvedLayer = layer ?? (overlayAncestors.includes('drawer') ? 'above-drawer' : 'page');
   // Ant derives every descendant popup's rung from the rung this dialog reports (a date picker adds
   // its own offset on top). The CSS classes above pin the wrapper and backdrop, but the number has
@@ -59,7 +61,7 @@ function ModalRoot({
 
   const restoreFocus = useCallback(() => {
     const target = returnFocus.current;
-    if (!shouldRestoreFocus || !target?.isConnected) {
+    if (!shouldRestoreFocus || (!target?.isConnected && !focusRecovery)) {
       returnFocus.current = null;
       return;
     }
@@ -67,10 +69,21 @@ function ModalRoot({
     restoreTask.current = setTimeout(() => {
       restoreTask.current = undefined;
       if (openRef.current && panel.current?.isConnected) return;
-      if (target.isConnected) target.focus({ preventScroll: true });
+      if (target?.isConnected) {
+        target.focus({ preventScroll: true });
+      } else if (focusRecovery) {
+        const activeElement = document.activeElement;
+        const focusIsNeutral = !activeElement
+          || activeElement === document.body
+          || activeElement === document.documentElement
+          || !activeElement.isConnected;
+        if (focusIsNeutral || (activeElement instanceof Element && panel.current?.contains(activeElement))) {
+          focusRecovery.requestRecovery(panel.current);
+        }
+      }
       if (returnFocus.current === target) returnFocus.current = null;
     });
-  }, [shouldRestoreFocus]);
+  }, [focusRecovery, shouldRestoreFocus]);
 
   useInsertionEffect(() => {
     if (open && restoreTask.current) {
@@ -78,7 +91,10 @@ function ModalRoot({
       restoreTask.current = undefined;
     }
     if (open && !wasOpen.current && document.activeElement instanceof HTMLElement) {
-      returnFocus.current = document.activeElement;
+      const activeElement = document.activeElement;
+      returnFocus.current = activeElement === document.body || activeElement === document.documentElement
+        ? null
+        : activeElement;
     }
   }, [open]);
 

@@ -29,6 +29,10 @@ dialog itself opens — date pickers, selects, dropdowns — inherit the rung th
 only supported nested overlay: a modal inside another modal, or a drawer inside a dialog,
 still belongs on its own page.
 
+When an opener is removed, an enclosing `FocusRecovery` can supply an injected, ready-aware
+section destination. A connected opener retains ordinary return focus; an explicit return-focus
+opt-out disables the fallback too.
+
 ## Keyboard
 
 - `Tab` and `Shift+Tab` move through focusable controls inside the modal.
