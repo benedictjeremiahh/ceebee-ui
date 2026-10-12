@@ -119,6 +119,11 @@
 .cb-schedule[data-mode='physical'] .wx-table .wx-header .wx-cell {
   border-block-end: var(--cb-border-width) solid var(--cb-border);
 }
+.cb-schedule[data-mode='physical'] .wx-table .wx-header .wx-text {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+}
 .cb-schedule[data-mode='physical'] .wx-table .wx-body .wx-cell {
   padding-block: var(--cb-space-2);
 }
@@ -404,6 +409,22 @@
   font-size: var(--cb-text-sm);
   margin: 0;
   padding: var(--cb-space-1) var(--cb-space-3);
+}
+
+.cb-schedule__scale-labels {
+  display: flex;
+  justify-content: flex-end;
+  padding-inline: var(--cb-space-3);
+}
+.cb-schedule__scale-labels .ant-btn {
+  min-block-size: var(--cb-control-height-sm);
+}
+.cb-schedule__scale-label-list {
+  display: grid;
+  gap: var(--cb-space-1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .cb-schedule__empty {

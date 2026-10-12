@@ -84,6 +84,13 @@ MIT), bundled into `styles.css` the way React Flow is for `Diagram`. Its `--wx-*
 pointed at Tokens in `schedule.css`, so a Skin or a theme moves the schedule with everything else and a
 consumer never imports the substrate's CSS.
 
+Calendar scale cells keep their native full-text titles. When a rendered label is clipped, a
+“Calendar labels” button appears above the chart and opens a list of the distinct full labels; set
+`labels.calendarLabels` to localize its accessible name. The button is absent when the axis fits its
+labels or has not rendered any scale cells.
+Physical-mode grid headers wrap within their existing row height, keeping paired progress headings
+readable when their column is narrow.
+
 ### What the free edition does not do
 
 The substrate's `markers` API is a PRO feature: the free build ignores it. Schedule instead places a
@@ -119,7 +126,7 @@ time axis. The narrow view includes a pan hint because later dates extend beyond
 <PropsTable rows={[
   { name: 'items', type: 'ScheduleItem[]', description: 'id, label, planned start and end (inclusive YYYY-MM-DD), and optionally actual: { start, end } (YYYY-MM-DD calendar days when the work ran), progress (0–1), and weight (basis points). The plan is outlined; actual dates are shown as a solid bar. Without actual dates, only the plan is drawn, with a progress fill when progress is reported.' },
   { name: 'today', type: 'string', description: 'YYYY-MM-DD. Named above and marked on the axis when in range; also decides which bars are late. Absent names and marks nothing.' },
-  { name: 'labels', type: 'Partial<ScheduleLabels>', description: 'Every string the schedule says — including month/day/week axis formatters, visible today-date formatter, mobile pan hint, late, empty, item header and progress — for a product that does not speak English.' },
+  { name: 'labels', type: 'Partial<ScheduleLabels>', description: 'Every string the schedule says — including month/day/week axis formatters, clipped calendar-label control, visible today-date formatter, mobile pan hint, late, empty, item header and progress — for a product that does not speak English.' },
   { name: 'scale', type: "'day' | 'week' | 'month'", default: "'day'", description: 'Axis level. Physical mode uses its navigation state after initial fit.' },
   { name: 'mode', type: "'range' | 'physical'", default: "'range'", description: 'Physical mode fills the planned contour by completion; actual date overlays remain available in the default range mode.' },
   { name: 'view / onViewChange', type: 'ScheduleView / callback', description: 'Controlled scale, fit, left/top scroll offsets and initialized flag. Preserve this state across fullscreen mounts.' },

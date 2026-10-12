@@ -8,6 +8,7 @@ import { useMediaQuery } from '../../lib/use-media-query.js';
 import { DEFAULT_SCHEDULE_LABELS } from './parts/schedule-defaults.js';
 import { useScheduleColumnLabels } from './parts/use-schedule-column-labels.js';
 import { useScheduleScaleTitles } from './parts/use-schedule-scale-titles.js';
+import { ScheduleScaleLabels } from './parts/schedule-scale-labels.js';
 import { scheduleHierarchy } from './schedule.hierarchy.js';
 import { dayForGantt, dayToDate, scheduleRows } from './schedule.math.js';
 import type { ResolvedScheduleLabels, ScheduleProps, ScheduleView } from './schedule.types.js';
@@ -50,7 +51,7 @@ function ScheduleRoot({
   const narrow = useMediaQuery('(max-width: 48rem)');
   const scheduleRef = useRef<HTMLDivElement>(null);
   const presentation = useScheduleFullscreen(scheduleRef, fullscreen);
-  useScheduleScaleTitles(scheduleRef, items.length > 0);
+  const clippedScaleLabels = useScheduleScaleTitles(scheduleRef, items.length > 0);
   useScheduleColumnLabels(scheduleRef, items.length > 0, text.resizeColumn);
   const gridColor = useScheduleGridColor(scheduleRef, items.length > 0);
   const apiRef = useRef<IApi | null>(null);
@@ -190,6 +191,7 @@ function ScheduleRoot({
         </p>
       ) : null}
       {compact ? <p className="cb-schedule__pan">{text.pan}</p> : null}
+      <ScheduleScaleLabels labels={clippedScaleLabels} label={text.calendarLabels} />
       <div className="cb-schedule__chart" style={{ height: presentation.mode === 'inline' ? height : undefined }} aria-busy={!mounted || !gridColor}>
         {mounted && gridColor ? (
           <ScheduleCells rows={rowById} text={text} onItemOpen={onItemOpen} itemHref={itemHref}

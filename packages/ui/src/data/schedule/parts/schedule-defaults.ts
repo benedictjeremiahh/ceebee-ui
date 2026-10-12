@@ -7,6 +7,7 @@ export const DEFAULT_SCHEDULE_LABELS: ResolvedScheduleLabels = {
   today: 'Today', todayDate: (day) => readableDay(day, 'en-US'), progress: (percent) => `${percent}% done`,
   actual: (start, end) => `actual ${start}–${end}`, notStarted: 'not started', overran: 'past the plan', late: 'late',
   pan: 'Swipe the timeline to see later dates.',
+  calendarLabels: 'Calendar labels',
   month: (date) => new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(date),
   day: (date) => new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(date),
   week: (date) => new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(date),

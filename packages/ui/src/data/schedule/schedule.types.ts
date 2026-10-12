@@ -69,6 +69,8 @@ export interface ScheduleLabels {
   late: string;
   /** Visible instruction on narrow screens where the time axis needs horizontal panning. */
   pan?: string;
+  /** Accessible name for the control that lists clipped calendar axis labels. */
+  calendarLabels?: string;
   /** Month row on the time axis; receives the calendar month being drawn. */
   month?: (date: Date) => string;
   /** Day row on the time axis; receives the calendar day being drawn. */

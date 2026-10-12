@@ -5,7 +5,7 @@ import type { GetRef } from 'antd';
 import { useRef } from 'react';
 import { DatePicker as AntDatePicker } from 'antd';
 import { describe, expect, it, vi } from 'vitest';
-import { DatePicker } from './date-picker.js';
+import { DatePicker } from '../client.js';
 
 function RefDatePicker() {
   const ref = useRef<GetRef<typeof DatePicker>>(null);
