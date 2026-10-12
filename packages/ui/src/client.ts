@@ -8,6 +8,8 @@
 export * from 'antd';
 export { Button } from './form/button.js';
 export type { ButtonProps } from './form/button.js';
+export { DatePicker } from './form/date-picker.js';
+export type { DatePickerProps } from './form/date-picker.js';
 export { Modal } from './overlay/modal.js';
 export type { ModalLayer, ModalProps } from './overlay/modal.js';
 export { Drawer } from './overlay/drawer.js';

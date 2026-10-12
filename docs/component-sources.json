@@ -680,10 +680,14 @@
         "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
       },
       "license": "MIT",
-      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "adapter": "packages/ui/src/form/date-picker.tsx",
       "demoPath": "docs/components/data-entry/date-picker",
       "parityGaps": [],
-      "proof": "docs/parity.generated.json#DatePicker"
+      "proof": "docs/parity.generated.json#DatePicker",
+      "additiveExtensions": [
+        "Enter confirms a single picker input without triggering the browser implicit parent-form submission; explicit form submit controls remain keyboard-operable"
+      ],
+      "ownsUpstreamAccessibility": "Enter default-action cancellation only; confirmation, propagation, focus, refs, calendar navigation, geometry and static picker members remain Ant's"
     },
     "TimePicker": {
       "strategy": "antd-runtime",
@@ -1105,7 +1109,7 @@
       "parityGaps": [],
       "proof": "docs/parity.generated.json#Select",
       "additiveExtensions": [
-        "Field width follows the longest option (12rem–28rem, never wider than its container)",
+        "Field width follows the longest option (12rem\u201328rem, never wider than its container)",
         "Dropdown may be wider than the field, up to 32rem",
         "Ellipsis with a tooltip on a cut value or option, full text kept as the accessible name"
       ]
@@ -1957,7 +1961,10 @@
       ],
       "demoPath": "docs/app/data-display/grouped-bar-chart",
       "interactionContract": "read-only nonnegative categorical totals on one zero-based scale, without a derived balance or trend line; upstream Tooltip reveals exact values on hover and keyboard focus. A visually hidden table carries every exact value and becomes visible in forced colors.",
-      "substrate": ["react", "antd"]
+      "substrate": [
+        "react",
+        "antd"
+      ]
     },
     "Sparkline": {
       "strategy": "ceebee",
@@ -1975,7 +1982,10 @@
         "license": "Apache-2.0",
         "loading": "dynamic import inside the mount effect"
       },
-      "substrate": ["react", "lightweight-charts"]
+      "substrate": [
+        "react",
+        "lightweight-charts"
+      ]
     },
     "BarMini": {
       "strategy": "ceebee",
@@ -1993,7 +2003,10 @@
         "license": "Apache-2.0",
         "loading": "dynamic import inside the mount effect"
       },
-      "substrate": ["react", "lightweight-charts"]
+      "substrate": [
+        "react",
+        "lightweight-charts"
+      ]
     },
     "TargetBars": {
       "strategy": "ceebee",

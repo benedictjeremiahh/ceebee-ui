@@ -13,6 +13,17 @@ By clicking the input box, you can select a date from a popup calendar.
 
 <DatePickerShowcase />
 
+## Keyboard and forms
+
+Enter confirms the date in the `DatePicker` input and keeps focus there. It does not implicitly submit
+an enclosing form. Use Tab to reach the form's explicit submit button, then Enter or Space to activate it.
+The caller's `onKeyDown` still receives the event; the adapter cancels its default action without
+stopping propagation. The calendar, selection, ref and static picker APIs stay upstream-owned.
+
+Do use an explicit form action after selecting a date. Do not rely on confirming a date to also save
+an unrelated form. This extension applies to `DatePicker`; static picker members retain their upstream
+keyboard contract.
+
 ## API
 
 `DatePicker`, `DatePicker.RangePicker`, and the picker panels are exported from `@ceebee/ui/client`.
