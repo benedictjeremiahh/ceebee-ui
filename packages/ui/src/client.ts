@@ -12,6 +12,8 @@ export { DatePicker } from './form/date-picker.js';
 export type { DatePickerProps } from './form/date-picker.js';
 export { Modal } from './overlay/modal.js';
 export type { ModalLayer, ModalProps } from './overlay/modal.js';
+export { Tooltip } from './overlay/tooltip.js';
+export type { TooltipProps } from './overlay/tooltip.js';
 export { Drawer } from './overlay/drawer.js';
 export type { DrawerProps } from './overlay/drawer.js';
 export { FocusRecovery } from './focus/focus-recovery/index.js';

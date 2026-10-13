@@ -1453,7 +1453,11 @@
         "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
       },
       "license": "MIT",
-      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "adapter": "packages/ui/src/overlay/tooltip.tsx",
+      "additiveExtensions": [
+        "Escape dismisses the exported Tooltip before an ancestor dialog handles the same stroke, preserving the trigger focus and upstream geometry, props and ref"
+      ],
+      "ownsUpstreamAccessibility": "Escape dismissal only; pointer/focus triggers, portal placement, styling and transitions remain Ant's",
       "demoPath": "docs/components/data-display/tooltip",
       "parityGaps": [],
       "proof": "docs/parity.generated.json#Tooltip",

@@ -16,12 +16,22 @@ Simple text popup box.
 
 ## API
 
-`Tooltip` are exported from `@ceebee/ui/client`.
+`Tooltip` is exported from `@ceebee/ui/client`.
 
 A supplementary tooltip must retain an existing field description on its trigger. The local runtime
 pins Ant's `@rc-component/tooltip` dependency to 1.5.2: 1.5.1 replaced the trigger's
 `aria-describedby`, disconnecting a Select from its hint. A regression spec checks the description
 before and after opening the tooltip. The workspace override controls this repository's dependency
 resolution; it is not a published override for a consuming application.
+
+The exported Tooltip closes on Escape without moving trigger focus. When it is inside a dialog,
+the first Escape dismisses the visible tip; a later Escape can close the dialog. Controlled `open`
+remains owned by the caller: respond to `onOpenChange(false)` to close it. Native hover/focus triggers,
+portal positioning, styling and refs are preserved. This is an additive dismissal adapter over Ant,
+following [WCAG guidance for content on hover or focus](https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html).
+
+Use this explicit Tooltip around a focusable clipped text trigger when Escape dismissal is needed.
+Typography's internally generated ellipsis tooltip remains part of the upstream runtime; it does
+not pass through the exported adapter.
 
 <ApiReference component="Tooltip" />
