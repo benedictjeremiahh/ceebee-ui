@@ -50,6 +50,10 @@ buttons (rename, connect, remove); the shortcuts stay as accelerators, and on a 
 way to act. The diagram opens fitted, but never below a readable zoom; labels wrap to two lines with the full
 text as a tooltip; `legendLabels` names the node shapes in use.
 
+Selecting an edge keeps its inspector visible until another selection, a background click or `Escape`.
+An empty runtime selection notification does not discard the edge that was just clicked.
+When nested in an overlay, Escape clears an active selection or connection before reaching the overlay.
+
 <Guidance
   do="Keep nodes and edges in state and apply each request, rejecting the ones your rules forbid."
   dont="Treat onRemove as already done, or put interactive controls inside a node's content."

@@ -149,8 +149,8 @@ function DiagramEditorCanvas(props: DiagramEditorProps) {
   const connectingFrom = connect.mode === 'connecting' ? connect.from : null;
 
   // The latest props and state, read by callbacks whose identity must not change.
-  const latest = useRef({ props, cell, connect });
-  latest.current = { props, cell, connect };
+  const latest = useRef({ props, cell, connect, inspected });
+  latest.current = { props, cell, connect, inspected };
   const reportedSelection = useRef<string | null>(selectedId ?? null);
 
   /* React Flow draws drags and selection from its own node state. The caller's `nodes` are merged into that
@@ -197,7 +197,9 @@ function DiagramEditorCanvas(props: DiagramEditorProps) {
 
   const onSelectionChange = useCallback(({ nodes: chosen, edges: chosenEdges }: OnSelectionChangeParams) => {
     const edgeId = chosenEdges[0]?.id;
-    setInspected(chosen[0] ? { kind: 'node', id: chosen[0].id } : edgeId ? { kind: 'edge', id: edgeId } : null);
+    const target: DiagramSelectionTarget = chosen[0] ? { kind: 'node', id: chosen[0].id } : edgeId ? { kind: 'edge', id: edgeId } : null;
+    // Controlled edges can emit an empty runtime selection after their click selected the inspector.
+    setInspected((current) => target ?? (current?.kind === 'edge' ? current : null));
     const id = chosen[0]?.id;
     if (!id || id === reportedSelection.current) return;
     reportedSelection.current = id;
@@ -218,6 +220,7 @@ function DiagramEditorCanvas(props: DiagramEditorProps) {
   }, []);
 
   const onPaneClick = useCallback(() => {
+    setInspected(null);
     if (latest.current.connect.mode === 'connecting') step({ type: 'cancel' });
   }, [step]);
 
@@ -227,8 +230,10 @@ function DiagramEditorCanvas(props: DiagramEditorProps) {
       if (event.key.toLowerCase() === CONNECT_KEY && target?.kind === 'node' && !event.metaKey && !event.ctrlKey && !event.altKey) {
         event.preventDefault();
         step({ type: 'choose', nodeId: target.id });
-      } else if (event.key === 'Escape' && latest.current.connect.mode === 'connecting') {
-        step({ type: 'cancel' });
+      } else if (event.key === 'Escape') {
+        if (latest.current.inspected || latest.current.connect.mode === 'connecting') event.stopPropagation();
+        setInspected(null);
+        if (latest.current.connect.mode === 'connecting') step({ type: 'cancel' });
       } else if (event.key === 'F2' && target) {
         event.preventDefault();
         latest.current.props.onRename?.(target);
