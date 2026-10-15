@@ -2040,6 +2040,28 @@
         "Context fallback for removed Modal and Drawer openers"
       ],
       "interactionContract": "A caller-injected ready-aware destination receives focus after the focused control is removed. Connected overlay openers retain their normal priority; intentional focus elsewhere and active unrelated overlays are preserved."
+    },
+    "PrintDocument": {
+      "strategy": "ceebee-native",
+      "source": [
+        "packages/ui/src/media/print-document.tsx",
+        "packages/ui/src/media/print-document-snapshot.ts",
+        "packages/ui/src/media/print-document.css"
+      ],
+      "license": "MIT",
+      "adapter": "packages/ui/src/media/print-document.tsx",
+      "demoPath": "docs/components/print-document-demo.tsx",
+      "interactionContract": "Passive boundary around caller-rendered content. On native browser printing, the last active boundary in DOM order supplies a static HTML snapshot; the live UI remains mounted with its focus and form values. The helper restores the original theme attributes after printing and does not fetch data or remount React content.",
+      "substrate": [
+        "React effect",
+        "DOM cloneNode",
+        "Native browser beforeprint and afterprint events",
+        "Native browser print dialog"
+      ],
+      "parityGaps": [
+        "Snapshots include already-rendered HTML and images; canvas content and ancestor-dependent selectors are not reproduced.",
+        "ID references in embedded style-element selectors are not remapped."
+      ]
     }
   }
 }

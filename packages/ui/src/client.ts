@@ -30,6 +30,8 @@ export { Dropdown } from './nav/dropdown.js';
 export type { DropdownProps } from './nav/dropdown.js';
 export { Image } from './media/image.js';
 export type { ImageProps, ImagePreviewGroupProps } from './media/image.js';
+export { PrintDocument } from './media/print-document.js';
+export type { PrintDocumentProps } from './media/print-document.js';
 export { ThemeBridge } from './theme/theme-bridge.js';
 export type { ThemeBridgeProps } from './theme/theme-bridge.js';
 export { CeebeeAntStyleProvider } from './theme/ant-style-provider.js';

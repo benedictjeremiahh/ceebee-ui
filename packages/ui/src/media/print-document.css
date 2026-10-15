@@ -1,0 +1,22 @@
+.cb-print-document-source {
+  display: contents;
+}
+
+.cb-print-document-snapshot {
+  display: none;
+}
+
+@media print {
+  :root[data-cb-printing-document='active'],
+  :root[data-cb-printing-document='active'] body {
+    background: var(--cb-surface);
+  }
+
+  :root[data-cb-printing-document='active'] body > :not(.cb-print-document-snapshot) {
+    display: none !important;
+  }
+
+  :root[data-cb-printing-document='active'] body > .cb-print-document-snapshot {
+    display: block !important;
+  }
+}

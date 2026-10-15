@@ -11,6 +11,6 @@ export const UI_MANIFEST: UiManifest = {
   ],
   "exports": {
     "server": 25,
-    "client": 71
+    "client": 75
   }
 };

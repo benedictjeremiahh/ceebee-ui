@@ -1,0 +1,50 @@
+import { PrintDocumentDemo } from '../../../components/print-document-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# PrintDocument <span className="docs__label">Atom</span>
+
+A passive boundary that selects caller-rendered content for native browser printing. It adds no
+print button, keyboard shortcut, dismissal, or focus behavior; the browser owns the print dialog.
+
+## Usage
+
+<PrintDocumentDemo />
+
+## Print scope
+
+When several active boundaries are present, the last one in document order supplies the snapshot.
+The snapshot contains already-rendered static HTML and image markup. The live React content stays
+mounted, and the helper restores the original theme attributes when printing ends.
+
+Keep styles independent of ancestors outside the boundary. Selectors that rely on those ancestors
+may no longer match the snapshot. Canvas output is not copied, and ID selectors inside embedded
+`<style>` elements are not rewritten. The component does not fetch data or remount content, and it
+does not promise interactive form state in the printed copy.
+
+`colorMode="light"` temporarily selects the light theme for printing; `colorMode="current"` keeps
+the current theme. Both modes restore the original theme attributes after printing.
+
+<Guidance
+  do="Wrap a complete, already-rendered report when the browser should print that report alone."
+  dont="Use it for canvas-only output, ancestor-dependent styling, or content that must load during printing."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'children', type: 'ReactNode', description: 'The rendered document content to snapshot.' },
+  { name: 'active', type: 'boolean', default: 'true', description: 'Whether this boundary participates in print selection.' },
+  { name: 'colorMode', type: "'light' | 'current'", default: "'light'", description: 'Theme used while the browser prints.' },
+  { name: 'className', type: 'string', description: 'Class applied to the passive source boundary.' },
+]} />
+
+## Keyboard
+
+PrintDocument adds no keyboard handling, controls, or dismissal, and it does not move focus. Its
+children retain their own keyboard behavior. Browser-native print commands and the print dialog
+remain browser-owned.
+
+## Tokens
+
+`--cb-surface` supplies the paper background while the boundary is active. Document typography, spacing,
+and page geometry remain caller-owned.
