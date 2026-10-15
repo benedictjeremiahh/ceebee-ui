@@ -12,3 +12,13 @@
   align-content: center;
   vertical-align: middle;
 }
+
+/* The upstream clear button inherits its icon's small box. Keep the icon scale,
+   but provide a usable pointer target without changing selection or dismissal. */
+:where(.ant-picker-clear) {
+  min-inline-size: var(--cb-control-floor);
+  min-block-size: var(--cb-control-floor);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

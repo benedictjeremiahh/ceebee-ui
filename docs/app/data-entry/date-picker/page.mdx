@@ -24,6 +24,9 @@ Do use an explicit form action after selecting a date. Do not rely on confirming
 an unrelated form. This extension applies to `DatePicker`; static picker members retain their upstream
 keyboard contract.
 
+The clear button retains the upstream interaction and icon, with a token-sized minimum hit area
+from the shared Skin bridge. Its target must remain usable when the picker uses its small size.
+
 ## API
 
 `DatePicker`, `DatePicker.RangePicker`, and the picker panels are exported from `@ceebee/ui/client`.
