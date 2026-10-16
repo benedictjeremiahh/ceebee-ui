@@ -18,7 +18,7 @@
   --wx-color-link: var(--cb-fg-link);
   --wx-color-primary: var(--cb-tone-brand);
   --wx-color-danger: var(--cb-tone-danger);
-  --wx-font-family: var(--cb-font-family, inherit);
+  --wx-font-family: var(--cb-font-sans);
   --wx-font-size: var(--cb-text-sm);
   --wx-font-size-sm: var(--cb-text-sm);
 

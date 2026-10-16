@@ -6,6 +6,10 @@ import { PropsTable, Guidance } from '../../../components/props-table';
 One row per item, drawn against a time axis, with today marked. A **timeline**, not a list: the point is
 *which task runs which week*, *what overlaps*, and *what is late*.
 
+Schedule inherits typography from `--cb-font-sans`, including its canvas and grid. The bundled
+substrate stylesheet omits upstream `@font-face` rules, so it does not load remote typefaces or
+require a font CDN. Set the CeeBee font token when the application supplies its own typeface.
+
 ## Usage
 
 <ScheduleDemo />
