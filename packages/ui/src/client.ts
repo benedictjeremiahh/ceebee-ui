@@ -151,3 +151,6 @@ export type {
   DiagramShape,
   DiagramSkeletonProps,
 } from './data/diagram/index.js';
+
+export { OrgChart, OrgChartSkeleton } from './data/org-chart/index.js';
+export type { OrgChartNode, OrgChartProps } from './data/org-chart/index.js';

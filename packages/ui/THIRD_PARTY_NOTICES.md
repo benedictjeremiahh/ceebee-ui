@@ -67,3 +67,11 @@ dependency loaded on demand. It is licensed under the **Apache License, Version 
 the package at `node_modules/lightweight-charts/LICENSE`, and the attribution is retained here
 rather than painted into a consumer's chart, where the library's `attributionLogo` option is turned
 off.
+
+## react-organizational-chart
+
+Copyright (c) 2020 Daniel Hauser
+
+`OrgChart` uses `react-organizational-chart` 2.2.1 for nested-list layout and hierarchy connectors.
+The dependency is MIT-licensed. Ceebee supplies token values, cards and native-button branch
+disclosure; it does not reproduce the dependency's connector geometry.

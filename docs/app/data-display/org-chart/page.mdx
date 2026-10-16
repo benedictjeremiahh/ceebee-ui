@@ -1,0 +1,58 @@
+import { OrgChartDemo } from '../../../components/org-chart-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+import { Demo } from '../../../components/demo';
+import { OrgChartSkeleton } from '@ceebee/ui/client';
+
+# OrgChart <span className="docs__label">Composition</span>
+
+Readable hierarchy cards with automatic connectors and collapsible branches. The
+MIT-licensed `react-organizational-chart` runtime owns list layout and connector geometry;
+Ceebee supplies token-based cards and native-button disclosure.
+
+## Usage
+
+<OrgChartDemo />
+
+## Interaction contract
+
+The named region scrolls horizontally when the hierarchy is wider than its container.
+It contains nested native lists, not an ARIA tree widget. Each non-leaf card has one button
+showing its direct report count. Branches start expanded; toggling preserves the activating
+button and its focus. Separate roots remain separate real hierarchies.
+
+Cards are read-only; no selection, dragging, editing, zoom or dismissal is provided.
+No transition delays a disclosure result, including under reduced motion. The layout runtime
+loads only on the client; server rendering uses the same Skeleton as the loading fallback.
+
+<Guidance do="Use OrgChart to read hierarchical reporting relationships with full names."
+  dont="Use it to edit process paths or infer permissions; DiagramEditor and application rules own those concerns." />
+
+## Props
+
+<PropsTable rows={[
+  { name: 'nodes', type: 'OrgChartNode[]', description: 'Root nodes with unique ids, readable names, optional descriptions and nested children. Supply an acyclic hierarchy.' },
+  { name: 'label', type: 'string', description: 'Accessible name for the scrollable region.' },
+  { name: 'loadingLabel', type: 'string', description: 'Localizes the loading Skeleton name.' },
+  { name: 'getCountLabel', type: '(count: number) => string', description: 'Localizes the visible direct report count.' },
+  { name: 'getToggleLabel', type: '(node, expanded) => string', description: 'Localizes the button name for the current expand or collapse action.' },
+]}/>
+
+## Skeleton
+
+<Demo layout="block" code={`<OrgChart.Skeleton />`}>
+  <OrgChartSkeleton />
+</Demo>
+
+## Keyboard
+
+| Key | Result |
+| --- | --- |
+| Tab / Shift+Tab | Move between the scrollable region and visible branch buttons |
+| Enter / Space | Toggle the focused branch; focus stays on its button |
+| Arrow keys on the region | Scroll using the browser's native overflow behavior |
+
+## Tokens
+
+`--cb-space-*`, `--cb-radius-*`, `--cb-border`, `--cb-surface`, `--cb-bg-subtle`,
+`--cb-fg-*`, `--cb-font-*`, `--cb-focus-*`. Connector geometry is passed through
+the runtime's documented line-height, width, color, radius and node-padding props.

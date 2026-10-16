@@ -79,6 +79,11 @@
 /* An action-less toast must not reserve the row it would have sat in. */
 .cb-toast:not(:has(.cb-toast__action)) { grid-template-areas: "icon content close"; }
 .cb-toast__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--cb-space-6);
+  min-block-size: var(--cb-space-6);
   grid-area: close;
   border: none;
   background: transparent;
@@ -86,6 +91,9 @@
   cursor: pointer;
   padding: var(--cb-space-1);
   border-radius: var(--cb-radius-sm);
+}
+@media (pointer: coarse) {
+  .cb-toast__close { min-inline-size: var(--cb-space-7); min-block-size: var(--cb-space-7); }
 }
 @media (hover: hover) {
   .cb-toast__close:hover { color: var(--cb-fg); }

@@ -67,6 +67,7 @@
     "@xyflow/react": "12.11.6",
     "antd": "6.6.1",
     "dayjs": "1.11.18",
-    "lightweight-charts": "5.2.1"
+    "lightweight-charts": "5.2.1",
+    "react-organizational-chart": "2.2.1"
   }
 }

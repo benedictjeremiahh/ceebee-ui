@@ -216,6 +216,9 @@ importers:
       lucide-react:
         specifier: '>=0.400.0'
         version: 1.31.0(react@19.2.8)
+      react-organizational-chart:
+        specifier: 2.2.1
+        version: 2.2.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
     devDependencies:
       '@base-ui/react':
         specifier: ^1.7.0
@@ -2972,6 +2975,13 @@ packages:
 
   react-is@19.2.8:
     resolution: {integrity: sha512-s5un28nYxKJw5gvUHyW5PCC28CvBqLu9r3cWgzHT4Vo/5fqqkFcdRYsGcKf50WMPpjjFZS5d76fn3YCo2njKwQ==}
+
+  react-organizational-chart@2.2.1:
+    resolution: {integrity: sha512-JORmpLeYzCVtztdqCHsnKL8H3WiLRPHjohgh/PxQoszLuaQ+l3F8YefKSfpcBPZJhHwy3SlqjFjPC28a3Hh3QQ==}
+    engines: {node: '>=16', npm: '>=8'}
+    peerDependencies:
+      react: '>= 16.12.0'
+      react-dom: '>= 16.12.0'
 
   react-sticky-box@2.0.5:
     resolution: {integrity: sha512-JEIuN7Q3razU1NNS0vddC12GXCUkj7T4aCpC9ZSTjgBddFsBdTcN1RhYXFLjCE/KDOQqX2Ix308BcdrqtSJbkQ==}
@@ -6570,6 +6580,14 @@ snapshots:
   react-is@17.0.2: {}
 
   react-is@19.2.8: {}
+
+  react-organizational-chart@2.2.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+    dependencies:
+      '@emotion/css': 11.13.5
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
+    transitivePeerDependencies:
+      - supports-color
 
   react-sticky-box@2.0.5(react@19.2.8):
     dependencies:

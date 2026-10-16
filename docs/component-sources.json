@@ -2062,6 +2062,27 @@
         "Snapshots include already-rendered HTML and images; canvas content and ancestor-dependent selectors are not reproduced.",
         "ID references in embedded style-element selectors are not remapped."
       ]
+    },
+    "OrgChart": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/org-chart/org-chart.tsx",
+        "packages/ui/src/data/org-chart/org-chart-tree.tsx",
+        "packages/ui/src/data/org-chart/org-chart.types.ts",
+        "packages/ui/src/data/org-chart/org-chart.skeleton.tsx",
+        "packages/ui/src/data/org-chart/org-chart.css"
+      ],
+      "demoPath": "docs/app/data-display/org-chart",
+      "interactionContract": "nested native lists with automatic hierarchy connectors; initially expanded branches disclosed by stable native buttons; horizontal scrolling without graph editing, selection, pan or zoom",
+      "runtime": {
+        "package": "react-organizational-chart",
+        "version": "2.2.1",
+        "license": "MIT"
+      },
+      "substrate": [
+        "react",
+        "react-organizational-chart"
+      ]
     }
   }
 }
