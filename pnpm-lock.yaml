@@ -216,6 +216,9 @@ importers:
       lucide-react:
         specifier: '>=0.400.0'
         version: 1.31.0(react@19.2.8)
+      react-data-grid:
+        specifier: 7.0.0-beta.57
+        version: 7.0.0-beta.57(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       react-organizational-chart:
         specifier: 2.2.1
         version: 2.2.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -2931,6 +2934,12 @@ packages:
     resolution: {integrity: sha512-udnqVQitxC7QWADSPDOxVWULkLvKUWrDapn5i53HE4DPRVgs+Y5rr4bo25qEl8jSh+0l2cToJgGMx+clxPM3+w==}
     peerDependencies:
       react: '>= 16.3.0'
+
+  react-data-grid@7.0.0-beta.57:
+    resolution: {integrity: sha512-z0gcCsoXUS3xdOc2TGZZJGHFXImSorNVE9/wNUNUhcpBlH1eG1Fl7vo5ozxwOJrcaXkCj8nbEjmRAwcPJdw6Lg==}
+    peerDependencies:
+      react: ^19.0
+      react-dom: ^19.0
 
   react-dom@19.2.8:
     resolution: {integrity: sha512-rVprimfGBG3DR+Tq0IQG2DT5PxKth1WIGDmj5yPmlzr4YBe7uyE+Du4oVqTDXZSHGGGXRtTJEGSSePyQCMBglQ==}
@@ -6539,6 +6548,12 @@ snapshots:
     dependencies:
       countup.js: 2.10.1
       react: 19.2.8
+
+  react-data-grid@7.0.0-beta.57(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+    dependencies:
+      clsx: 2.1.1
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
 
   react-dom@19.2.8(react@19.2.8):
     dependencies:

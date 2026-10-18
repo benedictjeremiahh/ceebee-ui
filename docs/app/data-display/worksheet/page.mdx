@@ -1,0 +1,52 @@
+import { WorksheetDemo } from '../../../components/worksheet-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# Worksheet <span className="docs__label">Atom</span>
+
+An editable, fixed-schema grid with keyboard navigation, frozen columns and external rectangular
+paste. The pinned MIT `react-data-grid` 7.0.0-beta.57 runtime owns selection, focus, virtualization,
+ARIA grid semantics and cell editing. Ceebee owns token styling and atomic TSV paste mapping.
+
+## Usage
+
+<WorksheetDemo />
+
+Define columns with stable keys and editors, then pass `rows` and `onChange`. A column additionally
+needs a pure `write(row, clipboardText)` function to accept range paste. Keep calculated values and
+reference selections protected by omitting `write`; use `editable(row)` for per-row restrictions.
+The caller owns parsing, validation, persistence and localized failure messages.
+
+<Guidance do="Reuse the same column editability rules for typing and paste; validate values before persistence."
+  dont="Turn saved prices or calculated cells into writable text just to accept a wider clipboard range." />
+
+## Props
+
+<PropsTable rows={[
+  { name: 'label', type: 'string', description: 'Accessible grid name.' },
+  { name: 'rows / columns', type: 'readonly Row[] / WorksheetColumn<Row>[]', description: 'Controlled rows and stable-key column definitions, including runtime renderCell/renderEditCell, frozen and width options.' },
+  { name: 'onChange', type: '(rows: Row[]) => void', description: 'One controlled update for editing or a successful range paste. Omit for read-only mode.' },
+  { name: 'createRow', type: '() => Row', description: 'Optional blank-row factory for paste beyond the final row. Supply unique stable row keys.' },
+  { name: 'onPasteRejected', type: '(reason) => void', description: 'malformed, too-large, out-of-range or read-only. No partial update occurs.' },
+  { name: 'focusRequest', type: '{ row, columnKey, requestId, edit? }', description: 'A new requestId moves to a valid cell through the runtime handle. Ordinary rerenders preserve user selection.' },
+  { name: 'rowKeyGetter', type: '(row) => Key', description: 'Stable row identity.' },
+  { name: 'rowClass', type: 'runtime row-class callback', description: 'Caller-owned row presentation, such as protected section headings. The caller keeps hidden drafts and hierarchy outside the grid.' },
+  { name: 'rowHeight / headerRowHeight', type: 'runtime geometry options', description: 'Optional overrides; defaults resolve control-height and spacing Tokens.' },
+]} />
+
+## Keyboard and paste
+
+Arrow keys navigate cells; Enter or typing starts an editable cell, Tab commits and moves, and
+Escape cancels an active editor. The runtime owns that keyboard map. Native text-input paste stays
+native. Paste on a selected grid cell maps a rectangular plain-text TSV range, including quoted
+tabs/newlines, up to 10,000 cells. A protected destination rejects the whole range. Paste beyond
+existing rows requires `createRow`. Ragged or malformed clipboard text is refused.
+
+This is a fixed-schema worksheet, without arbitrary formula execution, file import, merged-cell
+editing, range-copy UI or drag-fill. The dependency is a pinned beta, so upgrading it requires
+keyboard, clipboard and rendered acceptance rather than assuming upstream main's API is identical.
+
+## Tokens
+
+`--cb-control-height-lg`, `--cb-space-2`, `--cb-fg`, `--cb-border`, `--cb-border-strong`,
+`--cb-surface`, `--cb-surface-raised`, `--cb-bg-subtle`, `--cb-brand-500`,
+`--cb-font-sans` and `--cb-text-md`.

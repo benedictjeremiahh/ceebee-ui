@@ -1,0 +1,62 @@
+import { Demo } from '../../../components/demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+import { FullscreenRegion } from '@ceebee/ui/client';
+
+# FullscreenRegion <span className="docs__label">Atom</span>
+
+Give an editable workspace more room while preserving its live controls and input state. The region
+owns fullscreen presentation; the caller owns and renders the content.
+
+## Usage
+
+<Demo layout="block" code={`<FullscreenRegion
+  label="Planning workspace"
+  labels={{ enter: 'Enter fullscreen', exit: 'Exit fullscreen', expand: 'Expand workspace',
+    collapse: 'Return to workspace', hint: 'Press Escape to exit fullscreen.',
+    expandedHint: 'Press Escape to return to the page.' }}
+  toolbar={<button type="button">Add item</button>}
+>
+  <label>Period <input defaultValue="This month" /></label>
+</FullscreenRegion>`}>
+  <FullscreenRegion label="Planning workspace" labels={{
+    enter: 'Enter fullscreen', exit: 'Exit fullscreen', expand: 'Expand workspace',
+    collapse: 'Return to workspace', hint: 'Press Escape to exit fullscreen.',
+    expandedHint: 'Press Escape to return to the page.',
+  }} toolbar={<button type="button">Add item</button>}>
+    <label>Period <input defaultValue="This month" /></label>
+  </FullscreenRegion>
+</Demo>
+
+The browser's native fullscreen mode is preferred. When it is unavailable or denied, the same region
+fills the viewport and the rest of the page becomes inert until the region closes. Both modes keep
+the mounted children and their input values in place.
+
+Descendant overlays that consume Ant's provider context, including `Modal.useModal` and popup controls,
+mount inside the region while it is expanded. Inline mode preserves the enclosing provider's popup
+container. Global static `Modal.confirm` calls run outside that descendant context and are not part of
+this contract.
+
+<Guidance
+  do="Keep editable controls and their toolbar inside the region so they remain available when expanded."
+  dont="Move the children into a second fullscreen tree; that remounts controls and loses local state."
+/>
+
+## Props
+
+<PropsTable rows={[
+  { name: 'label', type: 'string', description: 'Accessible name for the region.' },
+  { name: 'labels', type: 'FullscreenRegionLabels', description: 'Localized text for native and fallback controls and their Escape hints.' },
+  { name: 'toolbar', type: 'ReactNode', description: 'Optional caller-owned actions that stay mounted with the region.' },
+  { name: 'children', type: 'ReactNode', description: 'Caller-owned content retained in place across presentation modes.' },
+]} />
+
+## Keyboard
+
+- `Tab` moves through the toolbar and workspace controls.
+- `Escape` exits the isolated window fallback and returns focus to its opener.
+- Native fullscreen uses the browser's fullscreen keyboard behavior; exiting restores focus to the opener.
+
+## Tokens
+
+The region reads `--cb-surface`, `--cb-bg-subtle`, `--cb-fg`, `--cb-fg-muted`, `--cb-border`,
+`--cb-space-*`, `--cb-radius-*`, `--cb-control-height-lg`, `--cb-text-sm` and `--cb-z-overlay`.

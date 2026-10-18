@@ -75,3 +75,34 @@ Copyright (c) 2020 Daniel Hauser
 `OrgChart` uses `react-organizational-chart` 2.2.1 for nested-list layout and hierarchy connectors.
 The dependency is MIT-licensed. Ceebee supplies token values, cards and native-button branch
 disclosure; it does not reproduce the dependency's connector geometry.
+
+## React Data Grid
+
+Worksheet uses the pinned react-data-grid 7.0.0-beta.57 runtime and its base stylesheet.
+Keyboard navigation, grid accessibility, selection and cell editing remain upstream-owned.
+The package is MIT licensed; its exact published copyright and license follow.
+
+The MIT License (MIT)
+
+Original work Copyright (c) 2014 Prometheus Research
+Modified work Copyright 2015 Adazzle
+
+For the original source code please see https://github.com/prometheusresearch-archive/react-grid
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.

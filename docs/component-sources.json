@@ -2041,6 +2041,23 @@
       ],
       "interactionContract": "A caller-injected ready-aware destination receives focus after the focused control is removed. Connected overlay openers retain their normal priority; intentional focus elsewhere and active unrelated overlays are preserved."
     },
+    "FullscreenRegion": {
+      "strategy": "ceebee-native",
+      "source": [
+        "packages/ui/src/overlay/fullscreen-region/fullscreen-region.tsx",
+        "packages/ui/src/overlay/fullscreen-region/fullscreen-region.css",
+        "packages/ui/src/lib/use-region-fullscreen.ts",
+        "packages/ui/src/lib/isolate-region.ts"
+      ],
+      "adapter": "packages/ui/src/overlay/fullscreen-region/fullscreen-region.tsx",
+      "demoPath": "docs/app/overlay/fullscreen-region",
+      "interactionContract": "A labelled caller-owned region enters browser fullscreen or an isolated window fallback, with Escape and focus restoration. Its toolbar and children stay in the same mounted subtree across modes. Descendant context-driven overlays use the region as their popup container while expanded and retain the parent's popup container inline.",
+      "substrate": [
+        "React DOM fullscreen API",
+        "DOM inert isolation",
+        "@ceebee/ui Button"
+      ]
+    },
     "PrintDocument": {
       "strategy": "ceebee-native",
       "source": [
@@ -2082,6 +2099,27 @@
       "substrate": [
         "react",
         "react-organizational-chart"
+      ]
+    },
+    "Worksheet": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/worksheet/worksheet.tsx",
+        "packages/ui/src/data/worksheet/worksheet.types.ts",
+        "packages/ui/src/data/worksheet/worksheet-paste.ts",
+        "packages/ui/src/data/worksheet/worksheet.css"
+      ],
+      "demoPath": "docs/app/data-display/worksheet",
+      "interactionContract": "ARIA data grid; upstream keyboard, focus, editing and frozen columns; controlled immutable rows; native cell-range TSV paste refuses a protected destination atomically; native focused-input paste is preserved",
+      "runtime": {
+        "package": "react-data-grid",
+        "version": "7.0.0-beta.57",
+        "commit": "1720c1ad3a11949359fcc6b5dc437d41bdf5b6de",
+        "license": "MIT"
+      },
+      "substrate": [
+        "react",
+        "react-data-grid"
       ]
     }
   }

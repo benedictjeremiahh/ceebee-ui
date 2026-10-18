@@ -68,6 +68,7 @@
     "antd": "6.6.1",
     "dayjs": "1.11.18",
     "lightweight-charts": "5.2.1",
+    "react-data-grid": "7.0.0-beta.57",
     "react-organizational-chart": "2.2.1"
   }
 }

@@ -1,0 +1,22 @@
+.cb-worksheet {
+  min-inline-size: 0;
+  --cb-worksheet-row-height: calc(var(--cb-control-height-lg) + var(--cb-space-2) * 2);
+  --cb-worksheet-header-row-height: var(--cb-control-height-lg);
+}
+
+.cb-worksheet .rdg {
+  --rdg-color: var(--cb-fg);
+  --rdg-border-color: var(--cb-border);
+  --rdg-summary-border-color: var(--cb-border-strong);
+  --rdg-background-color: var(--cb-surface);
+  --rdg-header-background-color: var(--cb-bg-subtle);
+  --rdg-header-draggable-background-color: var(--cb-surface-raised);
+  --rdg-row-hover-background-color: var(--cb-bg-subtle);
+  --rdg-row-selected-background-color: var(--cb-bg-subtle);
+  --rdg-row-selected-hover-background-color: var(--cb-surface-raised);
+  --rdg-selection-color: var(--cb-brand-500);
+  --rdg-checkbox-focus-color: var(--cb-brand-500);
+  accent-color: var(--cb-brand-500);
+  font-family: var(--cb-font-sans);
+  font-size: var(--cb-text-md);
+}

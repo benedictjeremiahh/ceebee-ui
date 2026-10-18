@@ -6,6 +6,8 @@
  * Skins — see THIRD_PARTY_NOTICES.md and docs/component-sources.json for what came from where.
  */
 export * from 'antd';
+export { Worksheet } from './data/worksheet/index.js';
+export type { WorksheetCellProps, WorksheetColumn, WorksheetEditCellProps, WorksheetFocusRequest, WorksheetPasteFailure, WorksheetProps } from './data/worksheet/index.js';
 export { Button } from './form/button.js';
 export type { ButtonProps } from './form/button.js';
 export { DatePicker } from './form/date-picker.js';
@@ -16,6 +18,8 @@ export { Tooltip } from './overlay/tooltip.js';
 export type { TooltipProps } from './overlay/tooltip.js';
 export { Drawer } from './overlay/drawer.js';
 export type { DrawerProps } from './overlay/drawer.js';
+export { FullscreenRegion } from './overlay/fullscreen-region/index.js';
+export type { FullscreenRegionLabels, FullscreenRegionProps } from './overlay/fullscreen-region/index.js';
 export { FocusRecovery } from './focus/focus-recovery/index.js';
 export type { FocusRecoveryProps } from './focus/focus-recovery/index.js';
 export { Select } from './form/select.js';

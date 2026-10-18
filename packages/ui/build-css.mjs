@@ -56,6 +56,7 @@ const require = createRequire(import.meta.url);
 const substrateCss = [
   ['@xyflow/react/dist/base.css', require.resolve('@xyflow/react/dist/base.css')],
   ['@svar-ui/react-gantt/all.css', require.resolve('@svar-ui/react-gantt/all.css')],
+  ['react-data-grid/lib/styles.css', require.resolve('react-data-grid/lib/styles.css')],
 ];
 for (const [name, path] of substrateCss) {
   // Substrates supply layout; Tokens own typography without upstream CDN dependencies.
