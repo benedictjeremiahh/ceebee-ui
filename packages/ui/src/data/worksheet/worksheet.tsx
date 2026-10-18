@@ -86,7 +86,8 @@ export function Worksheet<Row extends object>({
     () => columns.map(column => ({
       key: column.key,
       write: onChange ? column.write : undefined,
-      canEdit: row => Boolean(onChange) && isEditable(column, row),
+      canEdit: row => Boolean(onChange) && isEditable(column, row) &&
+        (typeof column.pasteable === 'function' ? column.pasteable(row) : column.pasteable !== false),
     })),
     [columns, onChange],
   );

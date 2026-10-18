@@ -14,6 +14,8 @@ export interface WorksheetFocusRequest {
 export interface WorksheetColumn<Row extends object> extends Column<Row> {
   /** Updates this cell for a validated external paste. */
   write?: (row: Row, value: string) => Row;
+  /** Allows external range paste independently of direct cell editing. Defaults to true. */
+  pasteable?: boolean | ((row: Row) => boolean);
 }
 
 type WorksheetGridOptions<Row extends object> = Pick<

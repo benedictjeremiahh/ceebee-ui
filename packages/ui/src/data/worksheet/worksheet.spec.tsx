@@ -100,6 +100,45 @@ describe('Worksheet', () => {
     expect(onPasteRejected).toHaveBeenCalledWith('read-only');
   });
 
+  it.each([
+    { pasteable: false },
+    { pasteable: (_row: Row) => false },
+  ])('rejects paste into a cell protected by its paste permission while keeping it editable', ({ pasteable }) => {
+    const scrollIntoView = HTMLElement.prototype.scrollIntoView;
+    HTMLElement.prototype.scrollIntoView = () => undefined;
+    try {
+      const onChange = vi.fn<(next: Row[]) => void>();
+      const onPasteRejected = vi.fn<(reason: WorksheetPasteFailure) => void>();
+      const protectedColumns: readonly WorksheetColumn<Row>[] = [
+        { key: 'name', name: 'Name', editable: true, renderEditCell: textEditor, pasteable,
+          write: (row, value) => ({ ...row, name: value }) },
+      ];
+      render(
+        <Worksheet
+          label="Planning worksheet"
+          rows={initialRows}
+          columns={protectedColumns}
+          onChange={onChange}
+          onPasteRejected={onPasteRejected}
+          focusRequest={{ row: 0, columnKey: 'name', requestId: 1, edit: true }}
+          rowKeyGetter={row => row.id}
+        />,
+      );
+
+      expect(screen.getByDisplayValue('Alpha')).toBeTruthy();
+      const editor = screen.getByDisplayValue('Alpha');
+      fireEvent.keyDown(editor, { key: 'Escape' });
+      const cell = screen.getByRole('gridcell', { name: 'Alpha' });
+      const event = dispatchPaste(cell, 'Changed');
+
+      expect(event.defaultPrevented).toBe(true);
+      expect(onChange).not.toHaveBeenCalled();
+      expect(onPasteRejected).toHaveBeenCalledWith('read-only');
+    } finally {
+      HTMLElement.prototype.scrollIntoView = scrollIntoView;
+    }
+  });
+
   it('focuses and edits the requested cell through the grid handle', () => {
     const scrollIntoView = HTMLElement.prototype.scrollIntoView;
     HTMLElement.prototype.scrollIntoView = () => undefined;

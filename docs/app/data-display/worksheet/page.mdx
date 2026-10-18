@@ -14,16 +14,18 @@ ARIA grid semantics and cell editing. Ceebee owns token styling and atomic TSV p
 Define columns with stable keys and editors, then pass `rows` and `onChange`. A column additionally
 needs a pure `write(row, clipboardText)` function to accept range paste. Keep calculated values and
 reference selections protected by omitting `write`; use `editable(row)` for per-row restrictions.
-The caller owns parsing, validation, persistence and localized failure messages.
+Use `pasteable` when a cell remains directly editable but should reject external range paste, such
+as a section heading; it accepts a boolean or row predicate and defaults to true. The caller owns
+parsing, validation, persistence and localized failure messages.
 
-<Guidance do="Reuse the same column editability rules for typing and paste; validate values before persistence."
+<Guidance do="Use pasteable(row) for paste-only restrictions; validate values before persistence."
   dont="Turn saved prices or calculated cells into writable text just to accept a wider clipboard range." />
 
 ## Props
 
 <PropsTable rows={[
   { name: 'label', type: 'string', description: 'Accessible grid name.' },
-  { name: 'rows / columns', type: 'readonly Row[] / WorksheetColumn<Row>[]', description: 'Controlled rows and stable-key column definitions, including runtime renderCell/renderEditCell, frozen and width options.' },
+  { name: 'rows / columns', type: 'readonly Row[] / WorksheetColumn<Row>[]', description: 'Controlled rows and stable-key column definitions, including runtime renderCell/renderEditCell, frozen and width options. WorksheetColumn also supports pasteable?: boolean | ((row) => boolean), independent of direct editability.' },
   { name: 'onChange', type: '(rows: Row[]) => void', description: 'One controlled update for editing or a successful range paste. Omit for read-only mode.' },
   { name: 'createRow', type: '() => Row', description: 'Optional blank-row factory for paste beyond the final row. Supply unique stable row keys.' },
   { name: 'onPasteRejected', type: '(reason) => void', description: 'malformed, too-large, out-of-range or read-only. No partial update occurs.' },
