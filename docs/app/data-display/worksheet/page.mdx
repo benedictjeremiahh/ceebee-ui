@@ -18,6 +18,13 @@ Use `pasteable` when a cell remains directly editable but should reject external
 as a section heading; it accepts a boolean or row predicate and defaults to true. The caller owns
 parsing, validation, persistence and localized failure messages.
 
+Set `headerGroup` on adjacent columns to render one shared heading above their leaf headers. Its
+`key` joins only consecutive columns with the same key; an ungrouped column or a different key
+starts a new run. The `name` supplies the group heading. The wrapper exposes
+`--cb-worksheet-header-rows` as `1` or `2` so a containing region can account for the header height.
+Keyboard selection also requests the runtime’s scroll-to-cell geometry so custom focusable cell
+content stays visible when navigating across a wide worksheet.
+
 <Guidance do="Use pasteable(row) for paste-only restrictions; validate values before persistence."
   dont="Turn saved prices or calculated cells into writable text just to accept a wider clipboard range." />
 
@@ -25,7 +32,7 @@ parsing, validation, persistence and localized failure messages.
 
 <PropsTable rows={[
   { name: 'label', type: 'string', description: 'Accessible grid name.' },
-  { name: 'rows / columns', type: 'readonly Row[] / WorksheetColumn<Row>[]', description: 'Controlled rows and stable-key column definitions, including runtime renderCell/renderEditCell, frozen and width options. WorksheetColumn also supports pasteable?: boolean | ((row) => boolean), independent of direct editability.' },
+  { name: 'rows / columns', type: 'readonly Row[] / WorksheetColumn<Row>[]', description: 'Controlled rows and stable-key column definitions, including runtime renderCell/renderEditCell, frozen and width options. WorksheetColumn also supports headerGroup?: { key, name } for adjacent grouped headers, and pasteable?: boolean | ((row) => boolean), independent of direct editability.' },
   { name: 'onChange', type: '(rows: Row[]) => void', description: 'One controlled update for editing or a successful range paste. Omit for read-only mode.' },
   { name: 'createRow', type: '() => Row', description: 'Optional blank-row factory for paste beyond the final row. Supply unique stable row keys.' },
   { name: 'onPasteRejected', type: '(reason) => void', description: 'malformed, too-large, out-of-range or read-only. No partial update occurs.' },
@@ -33,6 +40,7 @@ parsing, validation, persistence and localized failure messages.
   { name: 'rowKeyGetter', type: '(row) => Key', description: 'Stable row identity.' },
   { name: 'rowClass', type: 'runtime row-class callback', description: 'Caller-owned row presentation, such as protected section headings. The caller keeps hidden drafts and hierarchy outside the grid.' },
   { name: 'rowHeight / headerRowHeight', type: 'runtime geometry options', description: 'Optional overrides; defaults resolve control-height and spacing Tokens.' },
+  { name: '--cb-worksheet-header-rows', type: 'CSS custom property', description: 'Wrapper value is 1 for flat headers and 2 when grouped headers are present.' },
 ]} />
 
 ## Keyboard and paste

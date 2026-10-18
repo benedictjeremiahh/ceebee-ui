@@ -2,6 +2,11 @@
   min-inline-size: 0;
   --cb-worksheet-row-height: calc(var(--cb-control-height-lg) + var(--cb-space-2) * 2);
   --cb-worksheet-header-row-height: var(--cb-control-height-lg);
+  --cb-worksheet-header-rows: 1;
+}
+
+.cb-worksheet[data-header-rows='2'] {
+  --cb-worksheet-header-rows: 2;
 }
 
 .cb-worksheet .rdg {

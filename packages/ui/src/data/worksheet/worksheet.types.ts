@@ -12,6 +12,8 @@ export interface WorksheetFocusRequest {
 }
 
 export interface WorksheetColumn<Row extends object> extends Column<Row> {
+  /** Groups adjacent columns under a shared header without changing their flat indexes. */
+  headerGroup?: { key: string; name: Column<Row>['name'] };
   /** Updates this cell for a validated external paste. */
   write?: (row: Row, value: string) => Row;
   /** Allows external range paste independently of direct cell editing. Defaults to true. */

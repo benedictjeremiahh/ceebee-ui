@@ -1,7 +1,7 @@
 'use client';
 
 import { DataGrid } from 'react-data-grid';
-import type { DataGridHandle } from 'react-data-grid';
+import type { ColumnGroup, ColumnOrColumnGroup, DataGridHandle } from 'react-data-grid';
 import type { WorksheetPasteColumn } from './worksheet-paste.js';
 import { planWorksheetPaste } from './worksheet-paste.js';
 import { useEffect, useMemo, useRef, useState, type ClipboardEvent } from 'react';
@@ -12,6 +12,41 @@ import './worksheet.css';
 interface ActiveCell {
   rowIdx: number;
   columnKey: string;
+}
+
+function groupWorksheetColumns<Row extends object>(
+  columns: readonly WorksheetColumn<Row>[],
+  editable: boolean,
+): readonly ColumnOrColumnGroup<Row>[] {
+  const result: ColumnOrColumnGroup<Row>[] = [];
+  let currentGroupKey: string | undefined;
+  let currentGroupIndex = -1;
+
+  for (const column of columns) {
+    const { headerGroup, ...leaf } = column;
+    const gridColumn = editable ? leaf : { ...leaf, editable: false };
+    if (!headerGroup) {
+      result.push(gridColumn);
+      currentGroupKey = undefined;
+      currentGroupIndex = -1;
+      continue;
+    }
+
+    if (headerGroup.key === currentGroupKey) {
+      const group = result[currentGroupIndex];
+      if (group && 'children' in group) {
+        result[currentGroupIndex] = { ...group, children: [...group.children, gridColumn] };
+      }
+      continue;
+    }
+
+    const group: ColumnGroup<Row> = { name: headerGroup.name, children: [gridColumn] };
+    result.push(group);
+    currentGroupKey = headerGroup.key;
+    currentGroupIndex = result.length - 1;
+  }
+
+  return result;
 }
 
 function isEditable<Row extends object>(column: WorksheetColumn<Row>, row: Row): boolean {
@@ -78,10 +113,7 @@ export function Worksheet<Row extends object>({
     });
   }, [focusRequest?.requestId]);
 
-  const gridColumns = useMemo(
-    () => columns.map(column => onChange ? column : { ...column, editable: false }),
-    [columns, onChange],
-  );
+  const gridColumns = useMemo(() => groupWorksheetColumns(columns, Boolean(onChange)), [columns, onChange]);
   const pasteColumns = useMemo<WorksheetPasteColumn<Row>[]>(
     () => columns.map(column => ({
       key: column.key,
@@ -111,7 +143,12 @@ export function Worksheet<Row extends object>({
   }
 
   return (
-    <div ref={host} className="cb-worksheet" onPasteCapture={onPasteCapture}>
+    <div
+      ref={host}
+      className="cb-worksheet"
+      data-header-rows={columns.some(column => column.headerGroup) ? '2' : '1'}
+      onPasteCapture={onPasteCapture}
+    >
       <DataGrid
         {...gridOptions}
         ref={grid}
@@ -128,6 +165,9 @@ export function Worksheet<Row extends object>({
         }}
         onSelectedCellChange={({ rowIdx, column }) => {
           activeCell.current = { rowIdx, columnKey: column.key };
+          // Custom cell children can take focus before native scrolling reveals a virtualized leaf.
+          // Let the runtime's own geometry bring the selected body cell into view.
+          if (rowIdx >= 0) grid.current?.scrollToCell({ rowIdx, idx: column.idx });
         }}
       />
     </div>

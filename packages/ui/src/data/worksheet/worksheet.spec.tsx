@@ -1,9 +1,13 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { textEditor } from 'react-data-grid';
 import { Worksheet } from './worksheet.js';
 import type { WorksheetColumn } from './worksheet.types.js';
 import type { WorksheetPasteFailure } from './worksheet-paste.js';
+
+const initialScrollIntoView = HTMLElement.prototype.scrollIntoView;
+beforeAll(() => { HTMLElement.prototype.scrollIntoView = () => undefined; });
+afterAll(() => { HTMLElement.prototype.scrollIntoView = initialScrollIntoView; });
 
 interface Row {
   id: string;
