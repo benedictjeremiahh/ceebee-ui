@@ -5,6 +5,31 @@
 Every released version, and what breaks when you move between them. Written from the changesets that
 shipped with each change.
 
+## 2.6.0
+
+### Minor Changes
+
+- ba7249f: Add optional grouped headers to Worksheet while keeping flat leaf columns authoritative for paste and focus behavior. Keep keyboard-selected body cells visible through the grid runtime’s scrolling API, including custom focusable cell content.
+- 612474b: Add the `PrintDocument` client primitive for printing one already-rendered document through the native browser dialog.
+- 8b189e9: Add OrgChart with readable hierarchy cards, native-list layout, keyboard-operable branch disclosure, and a client-only loading Skeleton. Keep toast dismissal targets usable at fine and coarse pointer sizes.
+- 8a3d248: Add Worksheet for controlled cell editing, frozen columns and atomic rectangular clipboard paste,
+  with token sizing and the pinned MIT data-grid runtime. Preserve native input paste and the grid's
+  keyboard contract, including the keyboard shortcut that precedes a range paste.
+  Allow paste-only protection for directly editable cells through the optional column pasteable rule.
+
+  Add FullscreenRegion to expand an existing editable region without remounting its controls.
+  Share the existing Schedule fullscreen lifecycle, including native-mode fallback and focus recovery.
+
+### Patch Changes
+
+- a102042: Include the complete Gantt substrate stylesheet and reconcile incidental table focus scrolling through its chart API so rows and bars stay aligned. Keep undated child items and partial coverage in the compact list, with distinct accessible detail actions. Improve child-name action contrast, hit area, and full-text discovery without changing the native button contract.
+- f73fb05: Confirm a DatePicker input with Enter without implicitly submitting its enclosing form. Keep the picker focused, preserve the caller's keyboard callback and upstream refs/static picker members, and leave explicit form actions keyboard-operable.
+- 703f9cc: Keep a clicked diagram edge visible in the inspector when the runtime clears its controlled selection. Background clicks and Escape still clear the inspector, and selecting a node replaces the edge.
+- 1c88589: Stop carrying actual progress into later planned dates in the accessible chart table. Preserve the latest summary, reported zero and values between reports. Generic dated series retain their existing carry-forward default and can opt out with `extendLastValue: false`.
+- bb31591: Keep a button's action name stable while its default loading icon appears or exits. Hide only the default decorative icon from the accessibility tree after hydration; preserve upstream motion, activation, delay, refs, and caller-supplied icons.
+- 55adc61: Keep widened Select popups inside the viewport and wrap long default option labels when width matching is disabled.
+- 3ae4d81: Expose full calendar scale labels when the schedule clips them.
+
 ## 2.5.10
 
 ### Patch Changes
