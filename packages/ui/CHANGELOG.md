@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 2.7.0
+
+### Minor Changes
+
+- 7489ec7: Add opt-in single-click worksheet editing and automatic wrapped row heights while preserving native keyboard navigation, embedded controls, and editor paste behavior.
+
 ## 2.6.0
 
 ### Minor Changes
