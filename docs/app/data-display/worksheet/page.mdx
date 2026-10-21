@@ -25,6 +25,18 @@ starts a new run. The `name` supplies the group heading. The wrapper exposes
 Keyboard selection also requests the runtime’s scroll-to-cell geometry so custom focusable cell
 content stays visible when navigating across a wide worksheet.
 
+Set `rowHeight="auto"` when rendered cell content needs variable row heights. Auto mode measures
+visible cells and their direct child geometry, caches heights by row object and stable column key,
+then lets the grid keep ownership of virtual row positions, selection and editing. A measured
+offscreen column continues to contribute to its row height; replacing a row object invalidates its
+cached measurements. The normal token row height remains the minimum. Auto mode sets
+cell content to normal wrapping and top alignment, but custom cell wrappers still need wrapping
+styles where their own CSS uses ellipsis or `white-space: nowrap`. Unmeasured virtual rows start at
+the minimum height; as they enter view, the native scrollbar thumb can update when their measured
+heights change. The wrapper exposes `--cb-worksheet-content-height`, including all current row
+heights, header rows and a spacing Token for the native scrollbar; a containing region can cap its
+block size against the viewport using that value.
+
 <Guidance do="Use pasteable(row) for paste-only restrictions; validate values before persistence."
   dont="Turn saved prices or calculated cells into writable text just to accept a wider clipboard range." />
 
@@ -37,17 +49,20 @@ content stays visible when navigating across a wide worksheet.
   { name: 'createRow', type: '() => Row', description: 'Optional blank-row factory for paste beyond the final row. Supply unique stable row keys.' },
   { name: 'onPasteRejected', type: '(reason) => void', description: 'malformed, too-large, out-of-range or read-only. No partial update occurs.' },
   { name: 'focusRequest', type: '{ row, columnKey, requestId, edit? }', description: 'A new requestId moves to a valid cell through the runtime handle. Ordinary rerenders preserve user selection.' },
+  { name: 'editOnClick', type: 'boolean', description: 'Default false. A plain click opens and focuses an editable cell. Protected cells, embedded controls and modified clicks keep their normal behavior.' },
   { name: 'rowKeyGetter', type: '(row) => Key', description: 'Stable row identity.' },
   { name: 'rowClass', type: 'runtime row-class callback', description: 'Caller-owned row presentation, such as protected section headings. The caller keeps hidden drafts and hierarchy outside the grid.' },
-  { name: 'rowHeight / headerRowHeight', type: 'runtime geometry options', description: 'Optional overrides; defaults resolve control-height and spacing Tokens.' },
+  { name: 'rowHeight / headerRowHeight', type: 'runtime geometry options', description: 'rowHeight accepts a number, row callback or "auto"; numeric and callback overrides are passed to the runtime unchanged. Auto measures rendered visible cells with the token row height as its minimum. headerRowHeight defaults to a Token-derived height.' },
   { name: '--cb-worksheet-header-rows', type: 'CSS custom property', description: 'Wrapper value is 1 for flat headers and 2 when grouped headers are present.' },
+  { name: '--cb-worksheet-content-height', type: 'CSS custom property', description: 'Auto-mode estimate of all current row heights, header rows and native-scrollbar spacing; it can change as virtual rows are measured.' },
 ]} />
 
 ## Keyboard and paste
 
 Arrow keys navigate cells; Enter or typing starts an editable cell, Tab commits and moves, and
-Escape cancels an active editor. The runtime owns that keyboard map. Native text-input paste stays
-native. Paste on a selected grid cell maps a rectangular plain-text TSV range, including quoted
+Escape cancels an active editor. The runtime owns that keyboard map. Native single-cell text paste
+stays native. With `editOnClick`, clipboard tabs/newlines also map a range from an active cell editor.
+Paste on a selected grid cell maps a rectangular plain-text TSV range, including quoted
 tabs/newlines, up to 10,000 cells. A protected destination rejects the whole range. Paste beyond
 existing rows requires `createRow`. Ragged or malformed clipboard text is refused.
 
@@ -59,4 +74,4 @@ keyboard, clipboard and rendered acceptance rather than assuming upstream main's
 
 `--cb-control-height-lg`, `--cb-space-2`, `--cb-fg`, `--cb-border`, `--cb-border-strong`,
 `--cb-surface`, `--cb-surface-raised`, `--cb-bg-subtle`, `--cb-brand-500`,
-`--cb-font-sans` and `--cb-text-md`.
+`--cb-font-sans`, `--cb-space-1` and `--cb-text-md`.

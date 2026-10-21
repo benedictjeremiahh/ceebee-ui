@@ -33,7 +33,7 @@ type WorksheetGridOptions<Row extends object> = Pick<
     | 'rows'
   >,
   'aria-description' | 'aria-describedby' | 'data-cy' | 'data-testid' | 'enableVirtualization' |
-  'headerRowHeight' | 'rowHeight' | 'rowKeyGetter' | 'rowClass'
+  'headerRowHeight' | 'rowKeyGetter' | 'rowClass'
 >;
 
 export type WorksheetProps<Row extends object> = WorksheetGridOptions<Row> & {
@@ -44,4 +44,8 @@ export type WorksheetProps<Row extends object> = WorksheetGridOptions<Row> & {
   createRow?: () => Row;
   onPasteRejected?: (reason: WorksheetPasteFailure) => void;
   focusRequest?: WorksheetFocusRequest;
+  /** Measure visible cell content and cache row heights while keeping the token height as a minimum. */
+  rowHeight?: DataGridProps<Row>['rowHeight'] | 'auto';
+  /** Open an editable body cell on a plain pointer click; keyboard navigation remains grid-owned. */
+  editOnClick?: boolean;
 };

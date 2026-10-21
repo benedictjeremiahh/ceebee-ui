@@ -4,8 +4,9 @@ import { DataGrid } from 'react-data-grid';
 import type { ColumnGroup, ColumnOrColumnGroup, DataGridHandle } from 'react-data-grid';
 import type { WorksheetPasteColumn } from './worksheet-paste.js';
 import { planWorksheetPaste } from './worksheet-paste.js';
-import { useEffect, useMemo, useRef, useState, type ClipboardEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type ClipboardEvent, type CSSProperties } from 'react';
 import { createCssProbe, watchTokens } from '../../lib/css-probe.js';
+import { useWorksheetAutoHeight } from './use-worksheet-auto-height.js';
 import type { WorksheetColumn, WorksheetFocusRequest, WorksheetProps } from './worksheet.types.js';
 import './worksheet.css';
 
@@ -69,6 +70,7 @@ export function Worksheet<Row extends object>({
   createRow,
   onPasteRejected,
   focusRequest,
+  editOnClick = false,
   rowHeight,
   headerRowHeight,
   ...gridOptions
@@ -95,7 +97,9 @@ export function Worksheet<Row extends object>({
     };
     updateHeights();
     const stopWatchingTokens = watchTokens(updateHeights);
+    window.addEventListener('resize', updateHeights);
     return () => {
+      window.removeEventListener('resize', updateHeights);
       stopWatchingTokens();
       probe.done();
     };
@@ -114,6 +118,20 @@ export function Worksheet<Row extends object>({
   }, [focusRequest?.requestId]);
 
   const gridColumns = useMemo(() => groupWorksheetColumns(columns, Boolean(onChange)), [columns, onChange]);
+  const autoHeight = rowHeight === 'auto';
+  const headerRows = columns.some(column => column.headerGroup) ? 2 : 1;
+  const { getRowHeight, contentHeight } = useWorksheetAutoHeight({
+    host,
+    rows,
+    columns,
+    minimum: tokenRowHeight,
+    headerHeight: headerRowHeight ?? tokenHeaderRowHeight,
+    headerRows,
+    enabled: autoHeight,
+  });
+  const worksheetStyle: CSSProperties & { '--cb-worksheet-content-height': string | undefined } = {
+    '--cb-worksheet-content-height': autoHeight ? contentHeight : undefined,
+  };
   const pasteColumns = useMemo<WorksheetPasteColumn<Row>[]>(
     () => columns.map(column => ({
       key: column.key,
@@ -126,7 +144,10 @@ export function Worksheet<Row extends object>({
 
   function onPasteCapture(event: ClipboardEvent<HTMLDivElement>) {
     const selected = activeCell.current;
-    if (!selected || !isGridCellTarget(event.target)) return;
+    const text = event.clipboardData.getData('text/plain');
+    const editorRange = editOnClick && /[\t\r\n]/.test(text) && event.target instanceof Element
+      && event.target.closest('input, textarea') && event.target.closest('[role="gridcell"]');
+    if (!selected || (!isGridCellTarget(event.target) && !editorRange)) return;
 
     event.preventDefault();
     event.stopPropagation();
@@ -135,7 +156,7 @@ export function Worksheet<Row extends object>({
       rows,
       columns: pasteColumns,
       start: { row: selected.rowIdx, column: startColumn },
-      text: event.clipboardData.getData('text/plain'),
+      text,
       createRow,
     });
     if (result.ok) onChange?.(result.rows);
@@ -146,18 +167,25 @@ export function Worksheet<Row extends object>({
     <div
       ref={host}
       className="cb-worksheet"
-      data-header-rows={columns.some(column => column.headerGroup) ? '2' : '1'}
+      data-header-rows={headerRows}
+      data-row-height={autoHeight ? 'auto' : undefined}
+      style={worksheetStyle}
       onPasteCapture={onPasteCapture}
     >
       <DataGrid
         {...gridOptions}
         ref={grid}
         aria-label={label}
-        rowHeight={rowHeight ?? tokenRowHeight}
+        rowHeight={autoHeight ? getRowHeight : rowHeight ?? tokenRowHeight}
         headerRowHeight={headerRowHeight ?? tokenHeaderRowHeight}
         columns={gridColumns}
         rows={rows}
         onRowsChange={onChange}
+        onCellClick={({ row, column, selectCell }, event) => {
+          if (!editOnClick || !onChange || event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+          if (event.target instanceof Element && event.target.closest('button, a, input, textarea, select, [role="button"], [role="combobox"]')) return;
+          if (isEditable(column, row)) selectCell(true);
+        }}
         onCellKeyDown={(args, event) => {
           if (args.mode === 'SELECT' && (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'v') {
             event.preventGridDefault();

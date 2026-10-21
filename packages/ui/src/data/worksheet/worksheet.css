@@ -25,3 +25,10 @@
   font-family: var(--cb-font-sans);
   font-size: var(--cb-text-md);
 }
+
+.cb-worksheet[data-row-height='auto'] .rdg-cell {
+  align-content: start;
+  line-height: normal;
+  padding-block: var(--cb-space-1);
+  white-space: normal;
+}
