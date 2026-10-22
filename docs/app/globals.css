@@ -688,6 +688,10 @@ body { margin: 0; font-family: var(--cb-font-sans); }
 
 @media (max-width: 860px) {
   .docs { grid-template-columns: minmax(0, 1fr); }
+  .docs__toolbar {
+    padding-inline-start: calc(var(--docs-main-padding-inline-start) + var(--cb-control-height-lg) + var(--cb-space-2));
+  }
+  .docs__skin-select { flex: 1 1 auto; min-inline-size: 0; }
   .docs__sidebar {
     --docs-sidebar-padding-block-start: max(var(--cb-space-5), env(safe-area-inset-top));
     --docs-sidebar-padding-inline-start: max(var(--cb-space-5), env(safe-area-inset-left));
