@@ -16,7 +16,7 @@ Add the prerelease from pub.dev:
 
 ```yaml
 dependencies:
-  ceebee_ui: ^0.1.0-dev.1
+  ceebee_ui: ^0.1.0-dev.4
 ```
 
 Flutter 3.35 or newer and Dart 3.8 or newer are required.

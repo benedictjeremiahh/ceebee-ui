@@ -440,6 +440,7 @@ const List<_SurfaceSample> _samples = <_SurfaceSample>[
 extension on CbSkin {
   String get label => switch (this) {
     CbSkin.ceebee => 'Default',
+    CbSkin.byceebee => 'byceebee',
     CbSkin.astra => 'Astra',
     CbSkin.clarity => 'Clarity',
     CbSkin.moodboard => 'Moodboard',

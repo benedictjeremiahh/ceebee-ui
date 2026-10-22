@@ -2,7 +2,7 @@ import type { ThemeConfig } from 'antd';
 
 import { generatedCeebeeAntSeeds } from './ant-theme-seeds.generated.js';
 
-export type CeebeeSkin = 'ceebee' | 'astra' | 'clarity' | 'moodboard';
+export type CeebeeSkin = 'byceebee' | 'ceebee' | 'astra' | 'clarity' | 'moodboard';
 export type ThemeMode = 'light' | 'dark';
 export type ThemeContrast = 'normal' | 'more';
 

@@ -84,7 +84,7 @@ export default async function Layout({ children }) {
 
 Set the same mode on the server-rendered document root; otherwise the generated Ant seed and the
 CSS Skin can disagree during the first paint. The `skin` prop must match the Skin stylesheet imported by the application. The default Skin is
-`ceebee`; the other generated choices are `astra`, `clarity`, and `moodboard`. On a reader's first
+`ceebee`; the other generated choices are `astra`, `clarity`, `moodboard`, and `byceebee`. On a reader's first
 request there may be no cookie yet. The application chooses its default for that request, while the
 zero-specificity pre-paint layer keeps controls readable until hydration; subsequent requests carry
 the browser's resolved mode and can safely use the framework's Ant style-extraction adapter.
@@ -138,6 +138,18 @@ export function AntStyleRegistry({ children }) {
 
 This adapter is Next-specific only at the insertion hook. Cache ownership, extraction, Ant's
 runtime, Skin seeds, and hydrated provider stay framework-neutral and versioned together.
+
+## byceebee studio identity
+
+Import `@ceebee/ui/skins/byceebee.css` after the base stylesheet and set
+`<ThemeProvider skin="byceebee">`. This Skin uses neutral surfaces, a restrained
+blue accent, and Satoshi with a system fallback. The host application
+obtains and serves its own licensed Satoshi fonts; font software is not included
+in this package.
+
+The Skin changes the interface palette and typography. It does not place a logo
+or attribution. Products that retain their own identity can show a byceebee
+endorsement without importing this Skin.
 
 ## Writing a Skin
 

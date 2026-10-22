@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 2.8.0
+
+### Minor Changes
+
+- Add the byceebee Skin with neutral surfaces, a blue accent, and Satoshi font selection. Include matching server-rendered theme seeds and Flutter tokens so the first render agrees with the selected Skin. Fonts remain host-provided.
+
 ## 2.7.0
 
 ### Minor Changes

@@ -21,6 +21,7 @@ const antSeedOut = resolve(root, 'packages/ui/src/theme/ant-theme-seeds.generate
 /** The base Skin every Skin file layers on top of, then the Skins themselves. */
 const BASE = 'packages/ui/src/tokens/skin.css';
 const SKINS = [
+  { name: 'byceebee', file: 'packages/ui/src/skins/byceebee.css', doc: 'The Reference Blue and monochrome Skin.' },
   { name: 'ceebee', file: null, doc: 'The default Ceebee Skin, defined by the base tokens alone.' },
   { name: 'astra', file: 'packages/ui/src/skins/astra.css', doc: 'The violet-to-blue gradient dashboard look.' },
   { name: 'clarity', file: 'packages/ui/src/skins/clarity.css', doc: "CeeBee's content-first glass Skin." },

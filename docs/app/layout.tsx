@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import { MotionProvider, ThemeProvider, ToastProvider } from '@ceebee/ui/client';
 import { DocsShell } from '../components/docs-shell';
 import '@ceebee/ui/styles.css';
+import '../../brand/byceebee/brand.css';
 import './globals.css';
 
 export const metadata: Metadata = {

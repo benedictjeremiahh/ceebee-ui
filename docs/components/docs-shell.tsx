@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
+import { ByceebeeEndorsement } from '../../brand/byceebee/react';
 import { Nav } from './nav';
 import { PageToc } from './page-toc';
 import { Toolbar } from './toolbar';
@@ -22,6 +23,9 @@ export function DocsShell({ children }: { children: ReactNode }) {
           <div className="docs__content">{children}</div>
           <PageToc />
         </div>
+        <footer className="docs__footer">
+          <ByceebeeEndorsement locale="en" />
+        </footer>
       </main>
     </div>
   );

@@ -20,7 +20,7 @@ afterEach(() => vi.restoreAllMocks());
 
 describe('image preview controls', () => {
   it('keeps the full-screen image ground opaque and preview controls readable in every seed', () => {
-    const skins: CeebeeSkin[] = ['ceebee', 'astra', 'clarity', 'moodboard'];
+    const skins: CeebeeSkin[] = ['ceebee', 'astra', 'clarity', 'moodboard', 'byceebee'];
     const modes: ThemeMode[] = ['light', 'dark'];
     const contrastModes: ThemeContrast[] = ['normal', 'more'];
     const failures = skins.flatMap((skin) => modes.flatMap((mode) => contrastModes.flatMap((contrastMode) => {

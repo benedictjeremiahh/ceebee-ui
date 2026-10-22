@@ -10,6 +10,8 @@ part 'package:ceebee_ui/src/tokens/generated/skins.g.dart';
 /// The Skins this package ships. Swapping brands means selecting a different [CbSkin], never
 /// editing a component — the same contract the CSS Skin files hold on the web.
 enum CbSkin {
+  /// Reference Blue and monochrome.
+  byceebee,
   /// The default Ceebee Skin.
   ceebee,
 

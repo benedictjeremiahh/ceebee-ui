@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.0-dev.4
+
+- Added the byceebee Skin with matching generated Flutter tokens.
+
 ## 0.1.0-dev.3
 
 - The moodboard Skin now carries its own high-contrast edges, in its own warmth,

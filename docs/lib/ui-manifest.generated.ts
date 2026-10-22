@@ -3,14 +3,15 @@ import type { UiManifest } from './ui-manifest';
 
 export const UI_MANIFEST: UiManifest = {
   "name": "@ceebee/ui",
-  "version": "2.5.10",
+  "version": "2.8.0",
   "skins": [
     "astra",
+    "byceebee",
     "clarity",
     "moodboard"
   ],
   "exports": {
     "server": 25,
-    "client": 75
+    "client": 79
   }
 };

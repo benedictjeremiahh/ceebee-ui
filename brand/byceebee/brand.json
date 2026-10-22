@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "name": "byceebee",
+  "homeUrl": "https://ceebee.biz.id",
+  "colours": {
+    "ink": "#111111",
+    "white": "#FFFFFF",
+    "paper": "#F7F6F2",
+    "mutedLight": "#63635F",
+    "mutedDark": "#BCBEB9",
+    "blue": "#2D7EFC",
+    "blueTextOnDark": "#9CC5FF"
+  },
+  "typography": {
+    "family": "Satoshi",
+    "bodyWeight": 400,
+    "headingWeight": 500,
+    "emphasisWeight": 700
+  },
+  "minimumVisibleWidths": {
+    "symbol": 64,
+    "wordmark": 140,
+    "stacked": 180,
+    "horizontal": 320
+  },
+  "productUse": {
+    "symbolWidth": 40,
+    "stackedSymbolWidth": 80,
+    "wordmarkWidth": 80,
+    "stackedGap": 12,
+    "horizontalGap": 16,
+    "margin": 16,
+    "contentGap": 24,
+    "targetHeight": 48,
+    "headerKind": "compact-horizontal",
+    "footerKind": "compact-stacked",
+    "wordmarkOnly": "space-constrained-exception",
+    "symbolMaster": "optical",
+    "medium": "digital"
+  },
+  "layout": {
+    "stacked": {
+      "symbolWidth": 480,
+      "wordmarkWidth": 840,
+      "gap": 104,
+      "margin": 128
+    },
+    "horizontal": {
+      "symbolWidth": 240,
+      "wordmarkWidth": 840,
+      "gap": 96,
+      "margin": 128
+    }
+  },
+  "endorsement": {
+    "logoKind": "compact-stacked",
+    "id": "Produk dari",
+    "en": "A product by",
+    "destinationId": "Kenali byceebee dan produknya",
+    "destinationEn": "Explore byceebee and its products"
+  },
+  "skinTokens": {
+    "light": {
+      "--cb-hue-brand": "216",
+      "--cb-brand-50": "#EFF5FF",
+      "--cb-brand-100": "#DBE9FF",
+      "--cb-brand-200": "#BDD6FF",
+      "--cb-brand-300": "#91BCFF",
+      "--cb-brand-400": "#609EFF",
+      "--cb-brand-500": "#2D7EFC",
+      "--cb-brand-600": "#1C5FCB",
+      "--cb-brand-700": "#174B9E",
+      "--cb-bg": "#F7F6F2",
+      "--cb-bg-subtle": "#EEEFF2",
+      "--cb-surface": "#FFFFFF",
+      "--cb-surface-raised": "#FFFFFF",
+      "--cb-border": "#D6D9DF",
+      "--cb-border-strong": "#767D87",
+      "--cb-fg": "#111111",
+      "--cb-fg-muted": "#5F636B",
+      "--cb-fg-subtle": "#646A73",
+      "--cb-fg-link": "#1C5FCB",
+      "--cb-fg-on-brand": "#FFFFFF",
+      "--cb-tone-brand": "#1C5FCB",
+      "--cb-tone-brand-bg": "#DBE9FF",
+      "--cb-image-preview-bg": "#111111",
+      "--cb-glass-bg": "#FFFFFF",
+      "--cb-glass-bg-opaque": "#FFFFFF",
+      "--cb-glass-border": "#D6D9DF",
+      "--cb-glass-border-strong": "#767D87",
+      "--cb-paper-bg": "#FFFFFF",
+      "--cb-paper-bg-warm": "#F7F6F2",
+      "--cb-paper-fg": "#111111",
+      "--cb-paper-border": "#D6D9DF",
+      "--cb-font-sans": "\"Satoshi\", ui-sans-serif, system-ui, sans-serif"
+    },
+    "dark": {
+      "--cb-bg": "#111111",
+      "--cb-bg-subtle": "#191B20",
+      "--cb-surface": "#20232A",
+      "--cb-surface-raised": "#292E37",
+      "--cb-border": "#424957",
+      "--cb-border-strong": "#8995A8",
+      "--cb-fg": "#F7F6F2",
+      "--cb-fg-muted": "#CDD2DC",
+      "--cb-fg-subtle": "#B8C0CF",
+      "--cb-brand-400": "#BDD6FF",
+      "--cb-brand-500": "#9CC5FF",
+      "--cb-brand-600": "#83B6FF",
+      "--cb-fg-link": "#9CC5FF",
+      "--cb-fg-on-brand": "#111111",
+      "--cb-tone-brand": "#9CC5FF",
+      "--cb-tone-brand-bg": "#152C4B",
+      "--cb-glass-bg": "#20232A",
+      "--cb-glass-bg-opaque": "#20232A",
+      "--cb-glass-border": "#424957",
+      "--cb-glass-border-strong": "#8995A8",
+      "--cb-paper-bg": "#20232A",
+      "--cb-paper-bg-warm": "#292E37",
+      "--cb-paper-fg": "#F7F6F2",
+      "--cb-paper-border": "#424957"
+    }
+  },
+  "logo": {
+    "defaultTreatment": "two-tone",
+    "accentParts": [
+      "c-arc",
+      "short-continuation"
+    ],
+    "neutralParts": [
+      "b-stem-and-bowl",
+      "wordmark"
+    ],
+    "continuation": {
+      "kind": "short-rounded-capsule",
+      "centerlineLength": 16,
+      "strokeWidth": 64,
+      "angleDegrees": -25
+    },
+    "oneColourFallback": "monochrome"
+  },
+  "revision": "6d42fce307cc81c964597e96e6da0b5a43702d8deab28ae39832b19b33c57598"
+}
