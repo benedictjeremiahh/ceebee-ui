@@ -1,7 +1,7 @@
 'use client';
 
 import { ExternalLink, Moon, Sun } from 'lucide-react';
-import { Button, Select, useTheme } from '@ceebee/ui/client';
+import { Button, Select, Tooltip, useTheme } from '@ceebee/ui/client';
 import { useEffect, useState } from 'react';
 
 const SKINS = ['default', 'astra', 'clarity', 'moodboard'] as const;
@@ -32,31 +32,39 @@ export function Toolbar() {
 
   return (
     <div className="docs__toolbar">
-      <Button
-        type="text"
-        size="small"
-        href={FLUTTER_DOCS_URL}
-        target="_blank"
-        rel="noreferrer"
-        icon={<ExternalLink size={16} />}
-      >
-        Flutter docs
-      </Button>
+      <Tooltip title="Flutter docs (opens in a new tab)">
+        <Button
+          aria-label="Flutter docs (opens in a new tab)"
+          className="docs__toolbar-action"
+          type="text"
+          size="large"
+          href={FLUTTER_DOCS_URL}
+          target="_blank"
+          rel="noreferrer"
+          icon={<ExternalLink size={16} />}
+        >
+          <span className="docs__toolbar-action-label">Flutter docs</span>
+        </Button>
+      </Tooltip>
       <Select<Skin>
         aria-label="Preview skin"
         className="docs__skin-select"
         onChange={setSkin}
         options={SKINS.map((value) => ({ value, label: SKIN_LABELS[value] }))}
-        size="small"
+        size="large"
         value={skin}
       />
-      <Button
-        size="small"
-        icon={resolved === 'dark' ? <Moon size={16} /> : <Sun size={16} />}
-        onClick={() => setChoice(choice === 'dark' ? 'light' : 'dark')}
-      >
-        {resolved === 'dark' ? 'Dark' : 'Light'}
-      </Button>
+      <Tooltip title={resolved === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}>
+        <Button
+          aria-label={resolved === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+          className="docs__toolbar-action"
+          size="large"
+          icon={resolved === 'dark' ? <Moon size={16} /> : <Sun size={16} />}
+          onClick={() => setChoice(choice === 'dark' ? 'light' : 'dark')}
+        >
+          <span className="docs__toolbar-action-label">{resolved === 'dark' ? 'Dark' : 'Light'}</span>
+        </Button>
+      </Tooltip>
     </div>
   );
 }
