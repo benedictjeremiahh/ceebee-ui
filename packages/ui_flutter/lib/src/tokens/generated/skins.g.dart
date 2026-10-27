@@ -10,7 +10,7 @@
 // Colours stay in oklch here rather than being flattened to sRGB, so Dart runs the same colour
 // space the CSS does — that is what lets a tint mix in oklch instead of approximating it.
 //
-// Source digest: c6c5acbf4ebefb13
+// Source digest: 04cf38912847fbdf
 // Regenerate with: node scripts/gen-flutter-tokens.mjs
 
 part of 'package:ceebee_ui/src/tokens/skin_tokens.dart';

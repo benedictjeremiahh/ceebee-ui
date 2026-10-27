@@ -254,7 +254,10 @@ function applies(rule, { brightness, contrast }) {
   /* The generated structure Tokens are the fine-pointer, default-contrast values. Touch geometry is
      a web runtime concern: Flutter sizes controls from its own platform metrics and never reads
      `pointer`, so the coarse ladder must not leak into the generated artefact. */
-  if (rule.media === '(pointer: coarse)') return false;
+  if (
+    rule.media === '(pointer: coarse)' ||
+    rule.media === '(pointer: coarse), (max-width: 48rem)'
+  ) return false;
   if (rule.media && !['(prefers-color-scheme: dark)', '(prefers-contrast: more)'].includes(rule.media)) {
     throw new Error(`Unmapped media condition in ${rule.file}: ${rule.media}`);
   }
