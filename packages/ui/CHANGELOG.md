@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 2.8.1
+
+### Patch Changes
+
+- bb54c33: Keep DatePicker popups within narrow viewports, expand Drawer close hit areas on touch devices, and focus the first invalid form field by default.
+
 ## 2.8.0
 
 ### Minor Changes
