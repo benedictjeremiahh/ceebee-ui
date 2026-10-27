@@ -91,12 +91,15 @@
   --cb-z-overlay: var(--cb-z-modal-backdrop);
 }
 
-/* A coarse pointer switches the active floor to the touch target. The resolved heights above are
+/* A coarse pointer or compact viewport switches the active floor to the touch target. The resolved heights above are
    `max()` of the preferred step and that floor, so `sm` and `md` both reach 44px and `lg` keeps its
    48px — nothing here restates a step, so retuning `--cb-control-height-base-*` on either pointer
    still cannot take a control under its floor. */
-@media (pointer: coarse) {
+@media (pointer: coarse), (max-width: 48rem) {
   :root {
     --cb-control-floor: var(--cb-control-floor-coarse);
+    /* Seven touch-sized day columns plus the panel's horizontal padding fit the narrowest
+       supported phone width. Ant derives DatePicker geometry from this token through ThemeBridge. */
+    --cb-date-picker-cell-width: calc(var(--cb-space-6) + var(--cb-space-1));
   }
 }

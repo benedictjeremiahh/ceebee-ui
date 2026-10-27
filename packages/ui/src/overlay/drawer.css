@@ -5,3 +5,13 @@
 .cb-drawer__backdrop {
   z-index: var(--cb-z-drawer-backdrop) !important;
 }
+
+/* Ant's Drawer close control is visually compact but its hit area is only fontSizeLG + paddingXS.
+   The semantic close slot is styled on touch pointers and compact viewports, using the same resolved target token as Buttons. */
+@media (pointer: coarse), (max-width: 48rem) {
+  .cb-drawer__close {
+    inline-size: var(--cb-control-height-md) !important;
+    block-size: var(--cb-control-height-md) !important;
+    flex: none;
+  }
+}

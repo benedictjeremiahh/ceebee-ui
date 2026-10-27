@@ -123,3 +123,44 @@ describe('DatePicker Enter behavior', () => {
     expect(DatePicker.YearPicker).toBe(AntDatePicker.YearPicker);
   });
 });
+
+describe('DatePicker popup layout', () => {
+  it('keeps the viewport width constraint while preserving caller popup styles', async () => {
+    const user = userEvent.setup();
+    render(
+      <DatePicker
+        aria-label="Date"
+        styles={{ popup: { root: { outline: '1px solid currentColor' } } }}
+      />,
+    );
+
+    await user.click(screen.getByRole('textbox', { name: 'Date' }));
+
+    const popup = document.querySelector('.ant-picker-dropdown');
+    expect(popup).toHaveStyle({
+      maxWidth: 'calc(100vw - var(--cb-space-4) - var(--cb-space-4))',
+      outline: '1px solid currentColor',
+    });
+    expect(document.querySelector('.ant-picker-panel-container')).toHaveStyle({
+      maxHeight: 'calc(100dvh - var(--cb-space-4) - var(--cb-space-4))', overflowY: 'auto',
+    });
+  });
+
+  it('composes the responsive popup constraint with a caller style function', async () => {
+    const user = userEvent.setup();
+    render(
+      <DatePicker
+        aria-label="Date"
+        styles={() => ({ popup: { root: { outline: '1px solid var(--cb-fg)' } } })}
+      />,
+    );
+
+    await user.click(screen.getByRole('textbox', { name: 'Date' }));
+
+    const popup = document.querySelector('.ant-picker-dropdown');
+    expect(popup).toHaveStyle({
+      maxWidth: 'calc(100vw - var(--cb-space-4) - var(--cb-space-4))',
+      outline: '1px solid var(--cb-fg)',
+    });
+  });
+});

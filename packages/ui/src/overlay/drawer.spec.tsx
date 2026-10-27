@@ -28,6 +28,17 @@ describe('Drawer stacking contract', () => {
     expect(document.querySelector('.ant-drawer-mask')).toHaveClass('cb-drawer__backdrop');
   });
 
+  it('adds its touch-target class through the documented close semantic slot', async () => {
+    render(
+      <Drawer open title="Record details" classNames={{ close: 'caller-close' }} onClose={() => {}}>
+        <p>Details</p>
+      </Drawer>,
+    );
+
+    await screen.findByRole('dialog', { name: 'Record details' });
+    expect(document.querySelector('.cb-drawer__close')).toHaveClass('caller-close');
+  });
+
   it('restores the connected opener when closing conditionally unmounts the Drawer', async () => {
     render(<ConditionalDrawer />);
     const opener = screen.getByRole('button', { name: 'Open panel' });

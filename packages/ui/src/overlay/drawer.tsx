@@ -117,11 +117,13 @@ function DrawerRoot({
           return {
             ...resolved,
             mask: cn('cb-drawer__backdrop', resolved.mask),
+            close: cn('cb-drawer__close', resolved.close),
           };
         }
       : {
           ...classNames,
           mask: cn('cb-drawer__backdrop', classNames?.mask),
+          close: cn('cb-drawer__close', classNames?.close),
         };
 
   return (

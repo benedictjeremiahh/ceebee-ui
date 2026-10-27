@@ -1,7 +1,7 @@
 'use client';
 
 import { ConfigProvider, theme as antdTheme, type ConfigProviderProps, type ThemeConfig } from 'antd';
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { createCssProbe, watchTokens } from '../lib/css-probe.js';
 import { antPresetTokens } from './ant-presets.js';
 import {
@@ -38,6 +38,12 @@ export function ThemeBridge({
      change the browser can actually resolve. */
   const [skinToken, setSkinToken] = useState<CeebeeTheme>(() =>
     getCeebeeAntThemeSeed({ skin, mode, contrast }));
+  const parentConfig = useContext(ConfigProvider.ConfigContext);
+
+  const formConfig = useMemo(() => ({
+    ...parentConfig.form,
+    scrollToFirstError: parentConfig.form?.scrollToFirstError ?? { focus: true },
+  }), [parentConfig.form]);
 
   const refresh = useCallback(() => {
     setSkinToken(readCeebeeThemeToken(document.documentElement));
@@ -81,11 +87,15 @@ export function ThemeBridge({
   // carrying the same theme, so a static dialog matches the page it was opened from.
   useEffect(() => {
     ConfigProvider.config({
-      holderRender: (holder) => <ConfigProvider theme={mergedTheme} locale={locale}>{holder}</ConfigProvider>,
+      holderRender: (holder) => (
+        <ConfigProvider theme={mergedTheme} locale={locale} form={formConfig}>
+          {holder}
+        </ConfigProvider>
+      ),
     });
-  }, [mergedTheme, locale]);
+  }, [formConfig, mergedTheme, locale]);
 
-  return <ConfigProvider theme={mergedTheme} locale={locale}>{children}</ConfigProvider>;
+  return <ConfigProvider theme={mergedTheme} locale={locale} form={formConfig}>{children}</ConfigProvider>;
 }
 
 export interface CeebeeTheme {
@@ -220,6 +230,11 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
       handleColor: trackBg,
       dotActiveBorderColor: trackBg,
     };
+  }
+
+  const datePickerCellWidth = length('--cb-date-picker-cell-width');
+  if (datePickerCellWidth !== undefined) {
+    components.DatePicker = { cellWidth: datePickerCellWidth };
   }
 
   /* A Switch keeps a 24px target (WCAG 2.5.8): Ant's track is 22px tall, under the minimum the audit and the
