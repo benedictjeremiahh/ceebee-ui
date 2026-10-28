@@ -6,6 +6,7 @@ import type { WorksheetPasteColumn } from './worksheet-paste.js';
 import { planWorksheetPaste } from './worksheet-paste.js';
 import { useEffect, useMemo, useRef, useState, type ClipboardEvent, type CSSProperties } from 'react';
 import { createCssProbe, watchTokens } from '../../lib/css-probe.js';
+import { useWorksheetColumnWidths } from './use-worksheet-column-widths.js';
 import { useWorksheetAutoHeight } from './use-worksheet-auto-height.js';
 import type { WorksheetColumn, WorksheetFocusRequest, WorksheetProps } from './worksheet.types.js';
 import './worksheet.css';
@@ -84,6 +85,7 @@ export function Worksheet<Row extends object>({
   }>({ rows, columns, request: focusRequest });
   focusState.current = { rows, columns, request: focusRequest };
   const host = useRef<HTMLDivElement>(null);
+  const { columnWidths, onColumnWidthsChange } = useWorksheetColumnWidths(columns, host);
   const [tokenRowHeight, setTokenRowHeight] = useState<number>();
   const [tokenHeaderRowHeight, setTokenHeaderRowHeight] = useState<number>();
 
@@ -179,6 +181,8 @@ export function Worksheet<Row extends object>({
         rowHeight={autoHeight ? getRowHeight : rowHeight ?? tokenRowHeight}
         headerRowHeight={headerRowHeight ?? tokenHeaderRowHeight}
         columns={gridColumns}
+        columnWidths={columnWidths}
+        onColumnWidthsChange={onColumnWidthsChange}
         rows={rows}
         onRowsChange={onChange}
         onCellClick={({ row, column, selectCell }, event) => {

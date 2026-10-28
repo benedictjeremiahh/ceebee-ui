@@ -25,6 +25,11 @@ starts a new run. The `name` supplies the group heading. The wrapper exposes
 Keyboard selection also requests the runtime’s scroll-to-cell geometry so custom focusable cell
 content stays visible when navigating across a wide worksheet.
 
+Fractional CSS column widths are remeasured after neighboring column widths settle, and when the
+container or visible column definitions change. Explicit user resizes remain authoritative, including
+a resized column that is temporarily hidden while the worksheet stays mounted. Deliberate widths
+may overflow the available area; the runtime retains horizontal scrolling and frozen-column geometry.
+
 Set `rowHeight="auto"` when rendered cell content needs variable row heights. Auto mode measures
 visible cells and their direct child geometry, caches heights by row object and stable column key,
 then lets the grid keep ownership of virtual row positions, selection and editing. A measured
