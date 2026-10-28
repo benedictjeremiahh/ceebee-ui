@@ -27,6 +27,13 @@ keyboard contract.
 The clear button retains the upstream interaction and icon, with a token-sized minimum hit area
 from the shared Skin bridge. Its target must remain usable when the picker uses its small size.
 
+## Responsive geometry
+
+An unset cell-width Token preserves the upstream calendar geometry rather than becoming a zero-width
+override. The bridge watches the same `(pointer: coarse), (max-width: 48rem)` condition as the compact
+Tokens, including while a picker is open. An explicitly configured zero remains a value; it is
+distinct from an absent Token.
+
 ## API
 
 `DatePicker`, `DatePicker.RangePicker`, and the picker panels are exported from `@ceebee/ui/client`.

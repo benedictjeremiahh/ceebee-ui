@@ -38,6 +38,8 @@ export function createCssProbe(root: HTMLElement): CssProbe {
 }
 
 export function resolveCssLength(probe: HTMLElement, name: string): number | undefined {
+  // An absent variable makes width auto; an empty probe then measures zero, not a token value.
+  if (!getComputedStyle(probe).getPropertyValue(name).trim()) return undefined;
   probe.style.width = `var(${name})`;
   const value = Number.parseFloat(getComputedStyle(probe).width);
   probe.style.removeProperty('width');
@@ -75,9 +77,8 @@ const SKIN_LINK_ID = 'cb-skin';
  * Calls back whenever the resolved value of a Token could have changed, and returns the unsubscribe.
  *
  * Anything that reads a Token *once* — the Ant seed, a canvas palette — is stale the moment the page
- * changes mode or Skin, and stale in the most visible way: dark text on a dark ground. There are
- * three ways that happens, and missing any one of them leaves a component that is correct until
- * somebody touches the theme switch.
+ * changes mode, Skin, or responsive geometry. Stale values can leave dark text on a dark ground or
+ * a calendar using the wrong cell width.
  */
 export function watchTokens(onChange: () => void): () => void {
   const rootObserver = new MutationObserver(onChange);
@@ -101,10 +102,15 @@ export function watchTokens(onChange: () => void): () => void {
   const dark = window.matchMedia('(prefers-color-scheme: dark)');
   dark.addEventListener('change', onChange);
 
+  // Match the compact geometry condition in structure.css, including wide touch devices.
+  const compact = window.matchMedia('(pointer: coarse), (max-width: 48rem)');
+  compact.addEventListener('change', onChange);
+
   return () => {
     rootObserver.disconnect();
     headObserver.disconnect();
     document.removeEventListener('load', onSkinLoad, true);
     dark.removeEventListener('change', onChange);
+    compact.removeEventListener('change', onChange);
   };
 }

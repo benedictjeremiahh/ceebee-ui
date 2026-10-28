@@ -75,6 +75,10 @@ export interface TimeSeriesChartProps {
   emptyLabel?: string;
   tableLabel?: string;
   dayLabel?: string;
+  /** Show the plotted series' labels and line treatments. Off when a Composition owns its legend. */
+  showLegend?: boolean;
+  /** Accessible name for the optional series legend. */
+  legendLabel?: string;
   loading?: boolean;
   className?: string;
 }

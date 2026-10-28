@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it } from 'vitest';
-import { createCssProbe } from './css-probe';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { createCssProbe, watchTokens } from './css-probe';
 
 /**
  * jsdom does not implement CSS Custom Property resolution: `getComputedStyle` hands back the
@@ -18,6 +18,7 @@ function host(styles: Record<string, string>) {
 }
 
 afterEach(() => {
+  vi.restoreAllMocks();
   document.body.replaceChildren();
 });
 
@@ -33,6 +34,26 @@ describe('createCssProbe', () => {
     const probe = createCssProbe(host({ '--cb-space-4': '16px' }));
     expect(probe.length('--cb-space-4')).toBeUndefined();
     expect(probe.length('--cb-font-sans')).toBeUndefined();
+    probe.done();
+  });
+
+  it('does not turn an absent token into the empty probe width', () => {
+    const element = host({});
+    element.style.width = '0px';
+    vi.spyOn(window, 'getComputedStyle').mockReturnValue(element.style);
+    const probe = createCssProbe(element);
+
+    expect(probe.length('--missing-length')).toBeUndefined();
+    probe.done();
+  });
+
+  it('preserves a deliberately configured zero length', () => {
+    const element = host({ '--zero-length': '0px' });
+    element.style.width = '0px';
+    vi.spyOn(window, 'getComputedStyle').mockReturnValue(element.style);
+    const probe = createCssProbe(element);
+
+    expect(probe.length('--zero-length')).toBe(0);
     probe.done();
   });
 
@@ -60,5 +81,26 @@ describe('createCssProbe', () => {
     const probe = createCssProbe(element);
     probe.done();
     expect(() => probe.done()).not.toThrow();
+  });
+});
+
+describe('responsive token changes', () => {
+  it('watches the canonical coarse-or-compact token query and removes its listener on cleanup', () => {
+    const original = window.matchMedia;
+    const compact = original('(pointer: coarse), (max-width: 48rem)');
+    const add = vi.spyOn(compact, 'addEventListener');
+    const remove = vi.spyOn(compact, 'removeEventListener');
+    vi.spyOn(window, 'matchMedia').mockImplementation(query => query === compact.media ? compact : original(query));
+    const refresh = vi.fn();
+
+    const stop = watchTokens(refresh);
+    expect(window.matchMedia).toHaveBeenCalledWith('(pointer: coarse), (max-width: 48rem)');
+    const listener = add.mock.calls.find(call => call[0] === 'change')?.[1];
+    expect(listener).toBeDefined();
+    if (typeof listener === 'function') listener.call(compact, new Event('change'));
+    expect(refresh).toHaveBeenCalledTimes(1);
+
+    stop();
+    expect(remove).toHaveBeenCalledWith('change', listener);
   });
 });

@@ -91,6 +91,12 @@ Its actual series sets `SeriesSpec.extendLastValue` to `false`, limiting the acc
 the reported date range. Generic dated charts retain their carry-forward default, which also suits
 balances that continue to hold after the final supplied entry.
 
+When using `TimeSeriesChart` directly, set `showLegend` to display the plotted series' labels with
+matching color and dashed/solid line samples. `legendLabel` names this list for assistive technology
+(default `Series`). It is off by default because Compositions such as ProgressCurve already own their
+legend. Baseline charts label only their first series; empty, loading and forced-colors renderings do
+not add a legend.
+
 That split happened when the second dated chart arrived
 ([BalanceCurve](/data-display/balance-curve)). The shared half is ~200 lines of canvas and Token
 handling in which three defects had already been found — a theme applied during the substrate's async
@@ -102,8 +108,8 @@ Underneath, TradingView's [Lightweight Charts](https://github.com/tradingview/li
 a consumer who shows no chart never downloads it — in a real consumer's production build it lands as its
 own 57 KB gzipped chunk. Attribution lives in `THIRD_PARTY_NOTICES.md` rather than on the canvas.
 
-Tokens are read from the DOM with `getComputedStyle` and re-read whenever the theme, the Skin or the
-system colour scheme changes — a canvas cannot inherit CSS. Where they do not resolve, nothing is drawn:
+Tokens are read from the DOM with `getComputedStyle` and re-read whenever the theme, the Skin, the
+system colour scheme or the coarse-pointer/compact-viewport condition changes — a canvas cannot inherit CSS. Where they do not resolve, nothing is drawn:
 the component will not invent a colour, and the table stands as the rendering until they do.
 
 ## Props

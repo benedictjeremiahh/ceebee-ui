@@ -33,6 +33,8 @@ export function TimeSeriesChart({
   emptyLabel = 'Nothing has been reported yet.',
   tableLabel = 'Readings by day',
   dayLabel = 'Day',
+  showLegend = false,
+  legendLabel = 'Series',
   locale: givenLocale,
   loading = false,
   className,
@@ -137,6 +139,15 @@ export function TimeSeriesChart({
       {empty || forcedColors ? null : (
         <div ref={host} className="cb-chart__canvas" style={{ height }} role="img" aria-label={label} />
       )}
+
+      {showLegend && !empty && !forcedColors ? (
+        <ul className="cb-chart-legend cb-chart__legend" aria-label={legendLabel}>
+          {(baseline ? cleaned.slice(0, 1) : cleaned).map(one => (
+            <li key={one.key} className="cb-chart-legend__key" data-emphasis={one.emphasis}
+              style={{ borderColor: `var(${one.colorToken})` }}>{one.label}</li>
+          ))}
+        </ul>
+      ) : null}
 
       {mark && markDay && !empty ? (
         <p className="cb-chart__mark"><span>{mark.label}</span> · <time dateTime={markDay}>{readableDay(markDay, locale)}</time></p>

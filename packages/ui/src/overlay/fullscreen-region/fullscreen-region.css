@@ -13,6 +13,8 @@
   align-items: center;
   background: var(--cb-bg-subtle);
   border-block-end: var(--cb-border-width) solid var(--cb-border);
+  border-start-end-radius: calc(var(--cb-radius-lg) - var(--cb-border-width));
+  border-start-start-radius: calc(var(--cb-radius-lg) - var(--cb-border-width));
   display: flex;
   gap: var(--cb-space-3);
   justify-content: space-between;
@@ -59,7 +61,8 @@
   z-index: 1;
 }
 
-.cb-fullscreen-region[data-mode='native'] {
+.cb-fullscreen-region[data-mode='native'],
+.cb-fullscreen-region[data-mode='native'] .cb-fullscreen-region__toolbar {
   border-radius: var(--cb-radius-none);
 }
 

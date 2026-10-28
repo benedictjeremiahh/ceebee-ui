@@ -135,3 +135,6 @@
 .cb-chart-legend__key[data-emphasis="primary"]::before {
   border-block-start-width: calc(var(--cb-border-width) * 2);
 }
+
+.cb-chart__legend { margin: 0; padding: 0; list-style: none; }
+.cb-chart__legend .cb-chart-legend__key::before { border-color: inherit; }
