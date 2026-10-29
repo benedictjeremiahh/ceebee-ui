@@ -1,0 +1,41 @@
+import { ExpressionEditorDemo } from '../../../components/expression-editor-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# ExpressionEditor <span className="docs__label">Atom</span>
+
+A controlled arithmetic text field with distinct variable, constant, operator and unknown-name styles.
+CodeMirror 6 owns the caret, text selection, composition and undo history. Tokenization is cosmetic:
+the caller validates grammar and evaluates the expression with its own trusted parser.
+
+## Usage
+
+<ExpressionEditorDemo />
+
+Supply the allowed variable and named constant lists. Unknown names receive a wavy underline as well
+as a different color. Decimal constants such as `0.5` remain ordinary editable text. Set `invalid`
+from caller validation and connect its visible message with `describedBy`.
+
+<Guidance do="Validate expressions before saving or evaluating them."
+  dont="Treat highlighting as proof that a formula or its physical units are correct." />
+
+## Props
+
+<PropsTable rows={[
+  { name: 'value / onChange', type: 'string / (value: string) => void', description: 'Controlled plain text. External updates do not echo onChange.' },
+  { name: 'variables / constants', type: 'readonly string[]', description: 'Allowed identifiers for cosmetic highlighting; constants defaults to an empty list.' },
+  { name: 'label / id / describedBy', type: 'string', description: 'Accessible name, optional label target and description IDs.' },
+  { name: 'required / invalid / disabled', type: 'boolean', description: 'Accessible field state. Disabled prevents editing.' },
+  { name: 'maxLength', type: 'number', description: 'Oversized editing transactions are refused atomically.' },
+]} />
+
+## Keyboard
+
+Normal CodeMirror text editing, selection, undo and redo apply. Enter inserts a line break. Tab leaves
+the field instead of inserting indentation. Escape is available to the surrounding dialog. The editor
+does not execute formulas, submit forms, provide autocomplete or implement spreadsheet references.
+
+## Tokens
+
+Uses `--cb-font-mono`, `--cb-text-md`, `--cb-leading-normal`, `--cb-space-3`, `--cb-radius-sm`,
+`--cb-border-width`, `--cb-border-strong`, `--cb-fg`, `--cb-fg-muted`, `--cb-fg-link`, `--cb-surface`,
+`--cb-tone-danger`, `--cb-brand-500` and the shared focus and control-height tokens.

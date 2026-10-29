@@ -92,6 +92,7 @@ const GROUPS: Group[] = [
       { href: '/data-entry/checkbox', label: 'Checkbox' },
       { href: '/data-entry/color-picker', label: 'ColorPicker' },
       { href: '/data-entry/date-picker', label: 'DatePicker' },
+      { href: '/data-entry/expression-editor', label: 'ExpressionEditor' },
       { href: '/data-entry/form', label: 'Form' },
       { href: '/data-entry/input', label: 'Input' },
       { href: '/data-entry/input-number', label: 'InputNumber' },

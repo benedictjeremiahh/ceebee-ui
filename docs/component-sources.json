@@ -2124,6 +2124,29 @@
         "react",
         "react-data-grid"
       ]
+    },
+    "ExpressionEditor": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/form/expression-editor/expression-editor.tsx",
+        "packages/ui/src/form/expression-editor/expression-language.ts",
+        "packages/ui/src/form/expression-editor/expression-editor.css"
+      ],
+      "demoPath": "docs/app/data-entry/expression-editor",
+      "interactionContract": "CodeMirror 6 owns text editing, caret, selection, IME and undo; Tab exits the field, Escape bubbles, controlled updates preserve the editor; caller owns validation and evaluation",
+      "runtime": {
+        "package": "@codemirror/view",
+        "version": "6.43.15",
+        "license": "MIT"
+      },
+      "substrate": [
+        "react",
+        "@codemirror/state",
+        "@codemirror/view",
+        "@codemirror/commands",
+        "@codemirror/language",
+        "@lezer/highlight"
+      ]
     }
   }
 }

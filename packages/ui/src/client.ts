@@ -158,3 +158,6 @@ export type {
 
 export { OrgChart, OrgChartSkeleton } from './data/org-chart/index.js';
 export type { OrgChartNode, OrgChartProps } from './data/org-chart/index.js';
+
+export { ExpressionEditor } from './form/expression-editor/expression-editor.js';
+export type { ExpressionEditorProps } from './form/expression-editor/expression-editor.js';
