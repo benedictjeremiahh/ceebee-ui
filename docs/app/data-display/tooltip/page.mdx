@@ -14,6 +14,17 @@ Simple text popup box.
 
 <TooltipShowcase />
 
+## Content contrast
+
+Neutral, muted and subtle CeeBee `Text`, plus `Heading`, inherit the tooltip container's foreground.
+This keeps brief emphasized content readable on the tooltip's dark surface in either page theme.
+Font size, weight and numeric formatting remain intact. Plain strings keep the upstream foreground;
+semantic tones and explicit caller styles remain intentional author choices.
+
+The adapter adds `cb-tooltip-content` through the upstream semantic container slot. Object and
+callback `classNames`, custom colors and styles are preserved. Use Popover for structured explanations
+or interactive content; its ordinary surface keeps its own text context.
+
 ## API
 
 `Tooltip` is exported from `@ceebee/ui/client`.

@@ -1,0 +1,5 @@
+/* Neutral rich text belongs to the tooltip surface, rather than the surrounding page theme. */
+.cb-tooltip-content .cb-heading,
+.cb-tooltip-content .cb-text:is([data-tone="neutral"], [data-tone="muted"], [data-tone="subtle"]) {
+  color: inherit;
+}

@@ -4,6 +4,8 @@ import { Tooltip as AntTooltip } from 'antd';
 import type { TooltipProps as AntTooltipProps } from 'antd';
 import { forwardRef, useCallback, useEffect, useState } from 'react';
 import type { ComponentRef } from 'react';
+import { cn } from '../lib/cn.js';
+import './tooltip.css';
 
 export type TooltipProps = AntTooltipProps & {
   visible?: boolean;
@@ -19,6 +21,7 @@ const TooltipRoot = forwardRef<ComponentRef<typeof AntTooltip>, TooltipProps>(fu
     defaultVisible,
     onOpenChange,
     onVisibleChange,
+    classNames,
     ...props
   },
   ref,
@@ -47,7 +50,15 @@ const TooltipRoot = forwardRef<ComponentRef<typeof AntTooltip>, TooltipProps>(fu
     return () => document.removeEventListener('keydown', dismissOnEscape, true);
   }, [renderedOpen, handleOpenChange]);
 
-  return <AntTooltip {...props} ref={ref} open={renderedOpen} onOpenChange={handleOpenChange} />;
+  const contentClassNames: TooltipProps['classNames'] = typeof classNames === 'function'
+    ? (info) => {
+        const resolved = classNames(info) ?? {};
+        return { ...resolved, container: cn('cb-tooltip-content', resolved.container) };
+      }
+    : { ...classNames, container: cn('cb-tooltip-content', classNames?.container) };
+
+  return <AntTooltip {...props} ref={ref} open={renderedOpen} onOpenChange={handleOpenChange}
+    classNames={contentClassNames} />;
 });
 
 TooltipRoot.displayName = 'Tooltip';

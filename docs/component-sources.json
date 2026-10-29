@@ -1457,9 +1457,10 @@
       "license": "MIT",
       "adapter": "packages/ui/src/overlay/tooltip.tsx",
       "additiveExtensions": [
-        "Escape dismisses the exported Tooltip before an ancestor dialog handles the same stroke, preserving the trigger focus and upstream geometry, props and ref"
+        "Escape dismisses the exported Tooltip before an ancestor dialog handles the same stroke, preserving the trigger focus and upstream geometry, props and ref",
+        "Neutral, muted and subtle foundation Text plus Heading inherit the tooltip container foreground, preserving caller semantic class names"
       ],
-      "ownsUpstreamAccessibility": "Escape dismissal only; pointer/focus triggers, portal placement, styling and transitions remain Ant's",
+      "ownsUpstreamAccessibility": "Escape dismissal and neutral rich-content foreground inheritance; pointer/focus triggers, portal placement, surface styling and transitions remain Ant's",
       "demoPath": "docs/components/data-display/tooltip",
       "parityGaps": [],
       "proof": "docs/parity.generated.json#Tooltip",
