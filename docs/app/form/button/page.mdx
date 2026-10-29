@@ -15,6 +15,10 @@ dashed buttons for adding actions, text buttons for secondary actions, and link 
 `danger`, `ghost`, `disabled`, and `loading` refine those action states without changing the button
 contract.
 
+Danger buttons use the selected Skin's semantic danger tone for normal, hover, and active states.
+The theme bridge preserves that tone at the component boundary, after the upstream palette is
+calculated. Explicit Button theme-token overrides still take precedence.
+
 The default loading spinner is decorative: a text button keeps its action name while loading
 and during the spinner's exit animation. Give an icon-only button an explicit `aria-label`;
 the spinner does not supply the action's name. Custom icons retain the semantics their caller

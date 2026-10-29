@@ -205,7 +205,11 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
   const components: NonNullable<ThemeConfig['components']> = {};
   const danger = color('--cb-tone-danger');
   /* Form's explain-error style reads the component token, which Ant derives into a low-contrast dark step. */
-  if (danger) components.Form = { colorError: danger };
+  if (danger) {
+    components.Form = { colorError: danger };
+    // Button reads palette aliases, which Ant otherwise darkens again after the global seed.
+    components.Button = { colorError: danger, colorErrorHover: danger, colorErrorActive: danger };
+  }
   /* Tooltip, Tour and Image preview put Ant's light-solid text on a dark neutral rather than on a tone.
      In dark mode the text on a tone turns dark (the tones have to be light to read as text), so these
      three keep light text of their own. */

@@ -602,6 +602,7 @@ function emitAntThemeSeeds() {
         // dark mode the text on a tone turns dark, so these keep light text of their own.
         const onDark = antColor(value('--cb-fg-on-dark'), `${skin.name}/${brightness}/${contrast}/--cb-fg-on-dark`);
         const imagePreviewBg = antColor(value('--cb-image-preview-bg'), `${skin.name}/${brightness}/${contrast}/--cb-image-preview-bg`);
+        const danger = antColor(value('--cb-tone-danger'), `${skin.name}/${brightness}/${contrast}/--cb-tone-danger`);
         registry[skin.name][brightness][contrast] = {
           token,
           components: {
@@ -610,7 +611,9 @@ function emitAntThemeSeeds() {
             Tag: antPresetTokens(brightness),
             Badge: antPresetTokens(brightness),
             // Form explain-error reads component colorError, so keep it on the accessible danger step.
-            Form: { colorError: antColor(value('--cb-tone-danger'), `${skin.name}/${brightness}/${contrast}/--cb-tone-danger`) },
+            Form: { colorError: danger },
+            // Button palette aliases must retain the semantic tone after Ant derives its global palette.
+            Button: { colorError: danger, colorErrorHover: danger, colorErrorActive: danger },
             Tooltip: { colorTextLightSolid: onDark },
             Tour: { colorTextLightSolid: onDark },
             Image: {
