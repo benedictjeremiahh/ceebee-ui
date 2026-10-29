@@ -1,0 +1,49 @@
+import { DragDropDemo } from '../../../components/drag-drop-demo';
+import { PropsTable, Guidance } from '../../../components/props-table';
+
+# DragDrop <span className="docs__label">Atom</span>
+
+A shared provider, handle, target and feedback surface for moving caller-owned records. The installed
+MIT dnd-kit core 6.3.1 runtime owns sensors, pointer/touch tracking, cancellation, announcements and
+focus restoration. Ceebee supplies measured semantic drop zones and discrete keyboard navigation.
+
+## Usage
+
+<DragDropDemo />
+
+Wrap the controlled content in `DragDropProvider`. Give a `DragDropHandle` to each movable record
+and a `DragDropTarget` to its bounded content. Targets default to before/after; `inside` enables a
+middle zone and `insideOnly` makes the whole target a destination. The caller approves each intent
+through `canDrop`, then changes its own data in `onDrop`. Approval is rechecked on release.
+
+<Guidance do="Keep handles separate from editable cells and ordinary action buttons."
+  dont="Attach geometry to display:contents rows or infer application hierarchy in this primitive." />
+
+## Props
+
+<PropsTable rows={[
+  { name: 'DragDropProvider.canDrop / onDrop', type: '(move: DragDropMove) => boolean / void', description: 'Move has sourceId, targetId and position: before, inside or after. The caller rejects cycles, unavailable destinations and inappropriate moves.' },
+  { name: 'labelOf / labels', type: 'function / Partial<DragDropLabels>', description: 'Names and localized instructions, pickup, description, cancellation and unavailable-position messages.' },
+  { name: 'DragDropHandle.id / label / disabled', type: 'string / string / boolean', description: 'Stable source identity, accessible action name and opt-out. Pointer activation requires movement; an ordinary click is not a move.' },
+  { name: 'DragDropHandle.tabIndex / focusRequest', type: 'number', description: 'Grid focus integration. A changed focusRequest focuses the mounted handle after the caller reveals or scrolls to a moved record.' },
+  { name: 'DragDropTarget.id / inside / insideOnly', type: 'string / boolean / boolean', description: 'Stable destination identity and semantic target zones. Disabled or rejected zones are excluded from hit-testing and keyboard choices.' },
+  { name: 'DragDropStatus.idle', type: 'string', description: 'Visible idle hint, replaced by the current approved move description during dragging. Optional renderMove supplies rich visual copy without changing announcements.' },
+]} />
+
+## Keyboard and touch
+
+Space or Enter picks up and drops; Escape cancels. Down/Right choose the next measured valid zone,
+Up/Left the previous one. Labels are announced by dnd-kit. Focus returns to the source handle when
+it remains mounted. A caller using virtualization must reveal and focus the moved source explicitly
+when its old handle unmounts. Worksheet leaves handle keystrokes to this interaction instead of
+running grid navigation. Hover tooltips inside the provider are suppressed during dragging so Escape reaches cancellation. Handles disable touch scrolling locally; the surrounding content still scrolls.
+
+Targets use real, separately registered geometry. Pointer movement outside valid zones cancels the
+move on release. The primitive does not mutate data, change parents, save, expand branches, sort,
+load offscreen rows or guarantee every virtualized destination is currently mounted. Native scrolling
+and dnd-kit ancestor auto-scroll remain available; tree/cycle rules belong to the caller.
+
+## Tokens
+
+Shared control heights, spacing, foreground, link and brand-background colors, focus widths/offsets,
+border/radius, shadow, typography and `--cb-z-tooltip` govern handles, target markers and the drag overlay.

@@ -191,6 +191,10 @@ export function Worksheet<Row extends object>({
           if (isEditable(column, row)) selectCell(true);
         }}
         onCellKeyDown={(args, event) => {
+          if (event.target instanceof Element && event.target.closest('.cb-drag-drop__handle')) {
+            event.preventGridDefault();
+            return;
+          }
           if (args.mode === 'SELECT' && (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'v') {
             event.preventGridDefault();
           }

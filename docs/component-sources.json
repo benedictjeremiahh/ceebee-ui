@@ -2147,6 +2147,27 @@
         "@codemirror/language",
         "@lezer/highlight"
       ]
+    },
+    "DragDrop": {
+      "strategy": "ceebee",
+      "source": [
+        "packages/ui/src/data/drag-drop/drag-drop.tsx",
+        "packages/ui/src/data/drag-drop/keyboard-coordinates.ts",
+        "packages/ui/src/data/drag-drop/types.ts",
+        "packages/ui/src/data/drag-drop/drag-drop.css",
+        "packages/ui/src/lib/drag-active.ts"
+      ],
+      "demoPath": "docs/app/interaction/drag-drop",
+      "interactionContract": "dnd-kit owns pointer and keyboard sensors, cancellation, focus restoration and announcements; registered measured before/inside/after zones forward an intent only when caller canDrop approves it; caller owns hierarchy and persistence",
+      "runtime": {
+        "package": "@dnd-kit/core",
+        "version": "6.3.1",
+        "license": "MIT"
+      },
+      "substrate": [
+        "react",
+        "@dnd-kit/core"
+      ]
     }
   }
 }

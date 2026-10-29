@@ -2,8 +2,9 @@
 
 import { Tooltip as AntTooltip } from 'antd';
 import type { TooltipProps as AntTooltipProps } from 'antd';
-import { forwardRef, useCallback, useEffect, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useState, useContext } from 'react';
 import type { ComponentRef } from 'react';
+import { DragActiveContext } from '../lib/drag-active.js';
 import { cn } from '../lib/cn.js';
 import './tooltip.css';
 
@@ -26,11 +27,12 @@ const TooltipRoot = forwardRef<ComponentRef<typeof AntTooltip>, TooltipProps>(fu
   },
   ref,
 ) {
+  const dragging = useContext(DragActiveContext);
   const controlled = open !== undefined || visible !== undefined;
   const [internalOpen, setInternalOpen] = useState(defaultOpen ?? defaultVisible ?? false);
   const effectiveOpen = open ?? visible ?? internalOpen;
   const hasContent = Boolean(props.title || props.overlay || props.title === 0);
-  const renderedOpen = controlled || hasContent ? effectiveOpen : false;
+  const renderedOpen = !dragging && (controlled || hasContent ? effectiveOpen : false);
 
   const handleOpenChange = useCallback((nextOpen: boolean) => {
     if (!controlled) setInternalOpen(nextOpen);
