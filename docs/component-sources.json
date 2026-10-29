@@ -685,9 +685,11 @@
       "parityGaps": [],
       "proof": "docs/parity.generated.json#DatePicker",
       "additiveExtensions": [
-        "Enter confirms a single picker input without triggering the browser implicit parent-form submission; explicit form submit controls remain keyboard-operable"
+        "Enter confirms a single picker input without triggering the browser implicit parent-form submission; explicit form submit controls remain keyboard-operable",
+        "An open single picker dismisses on viewport width changes, preserving its value and focus; height-only changes keep it open",
+        "Escape from an open single picker stops propagation so its parent dialog remains open until a subsequent Escape"
       ],
-      "ownsUpstreamAccessibility": "Enter default-action cancellation only; confirmation, propagation, focus, refs, calendar navigation, geometry and static picker members remain Ant's"
+      "ownsUpstreamAccessibility": "Enter default-action cancellation, open-only Escape propagation and width-change dismissal; confirmation, focus, refs, calendar navigation, popup positioning and static picker members remain Ant's"
     },
     "TimePicker": {
       "strategy": "antd-runtime",

@@ -2,8 +2,9 @@
 
 import { DatePicker as AntDatePicker } from 'antd';
 import type { DatePickerProps as AntDatePickerProps, GetRef } from 'antd';
-import type { RefAttributes } from 'react';
+import { useCallback, useState, type RefAttributes } from 'react';
 import type { Dayjs } from 'dayjs';
+import { useCalendarResize } from './use-calendar-resize.js';
 
 export type DatePickerProps<ValueType = Dayjs, IsMultiple extends boolean = false> =
   AntDatePickerProps<ValueType, IsMultiple>;
@@ -15,8 +16,19 @@ function DatePickerRoot<ValueType = Dayjs, IsMultiple extends boolean = false>({
   ref,
   styles,
   popupAlign,
+  open,
+  defaultOpen,
+  onOpenChange,
   ...props
 }: DatePickerProps<ValueType, IsMultiple> & RefAttributes<DatePickerRef>) {
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen ?? false);
+  const visible = open ?? uncontrolledOpen;
+  const changeOpen = useCallback((next: boolean) => {
+    setUncontrolledOpen(next);
+    onOpenChange?.(next);
+  }, [onOpenChange]);
+  const dismissForResize = useCallback(() => changeOpen(false), [changeOpen]);
+  useCalendarResize(visible, dismissForResize);
   const popupStyles: NonNullable<DatePickerProps<ValueType, IsMultiple>['styles']> = (info) => {
     const callerStyles = typeof styles === 'function' ? styles(info) : styles;
     return {
@@ -42,12 +54,16 @@ function DatePickerRoot<ValueType = Dayjs, IsMultiple extends boolean = false>({
     preventDefault,
   ) => {
     if (event.key === 'Enter') event.preventDefault();
+    // The open calendar owns Escape before an enclosing dialog handles the next one.
+    if (event.key === 'Escape' && visible) event.stopPropagation();
     onKeyDown?.(event, preventDefault);
   };
 
   return (
     <AntDatePicker<ValueType, IsMultiple>
       {...props}
+      open={visible}
+      onOpenChange={changeOpen}
       styles={popupStyles}
       popupAlign={{
         offset: [0, 0],
@@ -60,5 +76,5 @@ function DatePickerRoot<ValueType = Dayjs, IsMultiple extends boolean = false>({
   );
 }
 
-/** Ant's picker confirms Enter, but leaves the browser's implicit form-submit action enabled. */
+/** Ant calendar with shared form and responsive dismissal safeguards. */
 export const DatePicker: typeof AntDatePicker = Object.assign(DatePickerRoot, AntDatePicker);

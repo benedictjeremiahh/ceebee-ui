@@ -17,8 +17,9 @@ By clicking the input box, you can select a date from a popup calendar.
 
 Enter confirms the date in the `DatePicker` input and keeps focus there. It does not implicitly submit
 an enclosing form. Use Tab to reach the form's explicit submit button, then Enter or Space to activate it.
-The caller's `onKeyDown` still receives the event; the adapter cancels its default action without
-stopping propagation. The calendar, selection, ref and static picker APIs stay upstream-owned.
+The caller's `onKeyDown` still receives the event; for Enter, the adapter cancels only its default
+action. Escape closes an open calendar without also closing its parent dialog; the
+next Escape can reach the parent. The calendar, selection, ref and static picker APIs stay upstream-owned.
 
 Do use an explicit form action after selecting a date. Do not rely on confirming a date to also save
 an unrelated form. This extension applies to `DatePicker`; static picker members retain their upstream
@@ -33,6 +34,12 @@ An unset cell-width Token preserves the upstream calendar geometry rather than b
 override. The bridge watches the same `(pointer: coarse), (max-width: 48rem)` condition as the compact
 Tokens, including while a picker is open. An explicitly configured zero remains a value; it is
 distinct from an absent Token.
+
+An open `DatePicker` dismisses when the viewport width changes, because responsive form layout can
+move its input outside the visible area. The selected value and input focus stay intact; reopen the
+calendar at its new position. Height-only changes, such as a mobile keyboard opening, keep the panel
+open. Controlled callers receive `onOpenChange(false)` and retain ownership of `open`. Static picker
+members keep their upstream resize behavior.
 
 ## API
 
