@@ -3,6 +3,7 @@
   --cb-worksheet-row-height: calc(var(--cb-control-height-lg) + var(--cb-space-2) * 2);
   --cb-worksheet-header-row-height: var(--cb-control-height-lg);
   --cb-worksheet-header-rows: 1;
+  --cb-worksheet-header-background: color-mix(in oklch, var(--cb-bg-subtle) 90%, var(--cb-fg) 10%);
 }
 
 .cb-worksheet[data-header-rows='2'] {
@@ -14,7 +15,7 @@
   --rdg-border-color: var(--cb-border);
   --rdg-summary-border-color: var(--cb-border-strong);
   --rdg-background-color: var(--cb-surface);
-  --rdg-header-background-color: var(--cb-bg-subtle);
+  --rdg-header-background-color: var(--cb-worksheet-header-background);
   --rdg-header-draggable-background-color: var(--cb-surface-raised);
   --rdg-row-hover-background-color: var(--cb-bg-subtle);
   --rdg-row-selected-background-color: var(--cb-bg-subtle);
@@ -31,4 +32,12 @@
   line-height: normal;
   padding-block: var(--cb-space-1);
   white-space: normal;
+}
+
+.cb-worksheet .rdg-cell { padding-inline: var(--cb-space-3); }
+.cb-worksheet .rdg [role='columnheader'] {
+  align-content: center;
+  padding-block: 0;
+  border-block-end-color: var(--cb-border-strong);
+  font-weight: var(--cb-weight-semibold);
 }
