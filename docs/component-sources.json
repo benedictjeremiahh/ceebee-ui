@@ -1578,7 +1578,8 @@
         "Separate accessible description",
         "Focus restoration across conditional unmount",
         "Stable CeeBee semantic layer classes",
-        "Above-drawer stacking layer with automatic Drawer-descendant detection"
+        "Above-drawer stacking layer with automatic Drawer-descendant detection",
+        "Nested Modal ancestry with a backdrop between parent and child panels"
       ]
     },
     "Notification": {

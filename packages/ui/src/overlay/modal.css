@@ -1,17 +1,17 @@
 .cb-modal {
-  z-index: var(--cb-z-modal) !important;
+  z-index: var(--cb-z-modal);
 }
 
 .cb-modal__backdrop {
-  z-index: var(--cb-z-modal-backdrop) !important;
+  z-index: var(--cb-z-modal-backdrop);
 }
 
 .cb-modal--above-drawer {
-  z-index: var(--cb-z-modal-above-drawer) !important;
+  z-index: var(--cb-z-modal-above-drawer);
 }
 
 .cb-modal--above-drawer-backdrop {
-  z-index: var(--cb-z-modal-above-drawer-backdrop) !important;
+  z-index: var(--cb-z-modal-above-drawer-backdrop);
 }
 
 .cb-modal .ant-modal-header {
