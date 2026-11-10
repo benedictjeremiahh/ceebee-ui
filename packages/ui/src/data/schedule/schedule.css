@@ -3,6 +3,10 @@
    or a theme moves the schedule with everything else and no consumer imports the substrate's CSS. */
 
 .cb-schedule {
+  --cb-schedule-divider: var(--cb-ant-control-item-bg-hover, var(--cb-border));
+  --cb-schedule-grip: var(--cb-ant-color-fill, var(--cb-border-strong));
+  --cb-schedule-divider-width: calc(var(--cb-border-width) * 2);
+
   /* ── surfaces and type ── */
   --wx-background: var(--cb-surface);
   --wx-background-alt: var(--cb-bg-subtle);
@@ -80,6 +84,66 @@
   padding: var(--cb-space-4);
 }
 
+/* Give the pane and column handles the shared Splitter track and grip while SVAR owns resizing. */
+.cb-schedule .wx-resizer,
+.cb-schedule[data-mode='physical'] .wx-header .wx-grip {
+  background-color: transparent;
+  background-image: linear-gradient(var(--cb-schedule-grip), var(--cb-schedule-grip)),
+    linear-gradient(var(--cb-schedule-divider), var(--cb-schedule-divider));
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: var(--cb-schedule-divider-width) calc(var(--cb-space-4) + var(--cb-space-1)),
+    var(--cb-schedule-divider-width) 100%;
+}
+.cb-schedule .wx-resizer:hover,
+.cb-schedule[data-mode='physical'] .wx-header .wx-grip:hover {
+  --cb-schedule-divider: var(--cb-ant-control-item-bg-active, var(--cb-tone-brand-bg));
+}
+.cb-schedule .wx-resizer:active,
+.cb-schedule[data-mode='physical'] .wx-header .wx-grip:active {
+  --cb-schedule-divider: var(--cb-ant-control-item-bg-active-hover, var(--cb-border-strong));
+}
+.cb-schedule .wx-resizer.wx-resizer-grip-hover:hover::before,
+.cb-schedule .wx-resizer.wx-resizer-grip-hover:hover::after,
+.cb-schedule .wx-button-expand-content::before,
+.cb-schedule .wx-button-expand-content::after,
+.cb-schedule[data-mode='physical'] .wx-header .wx-cell .wx-grip::before,
+.cb-schedule[data-mode='physical'] .wx-header .wx-cell .wx-grip::after {
+  content: none;
+}
+/* Use the visible chart height, not the height of the virtualized rows inside it. */
+.cb-schedule[data-mode='physical'] .cb-schedule__chart {
+  container-type: size;
+}
+.cb-schedule[data-mode='physical'] .wx-header .wx-grip {
+  block-size: 100cqh;
+  inset-block-end: auto;
+  opacity: 1;
+}
+.cb-schedule[data-mode='physical'] .wx-header .wx-grip > div {
+  display: none;
+}
+.cb-schedule .wx-button-expand-content i {
+  align-items: center;
+  inline-size: var(--cb-space-3);
+  block-size: var(--cb-control-height-sm);
+  margin-inline: auto;
+  color: var(--cb-fg-muted);
+  background: var(--cb-bg-subtle);
+  border-radius: var(--cb-radius-sm);
+}
+.cb-schedule .wx-button-expand-content i::before {
+  content: '';
+  inline-size: var(--cb-space-1);
+  block-size: var(--cb-space-1);
+  border-inline-end: var(--cb-border-width) solid currentColor;
+  border-block-end: var(--cb-border-width) solid currentColor;
+  transform: rotate(-45deg);
+}
+.cb-schedule .wx-button-expand-left i::before {
+  transform: rotate(135deg);
+}
+
 /* SVAR deliberately makes its grid header's bottom border transparent. The Work Item column
    instead needs the same visible rule as the dated header, with text aligned to its row labels. */
 .cb-schedule .wx-table .wx-header .wx-cell.wx-col-text {
@@ -112,9 +176,18 @@
   color: var(--cb-fg);
   font-weight: var(--cb-weight-semibold);
 }
-.cb-schedule[data-mode='physical'] .wx-table .wx-cell {
+.cb-schedule[data-mode='physical'] {
+  --wx-grid-body-cell-border: var(--cb-border-width) solid transparent;
+}
+.cb-schedule[data-mode='physical'] .wx-table :is(.wx-header, .wx-body) .wx-cell {
   padding-inline: var(--cb-space-3);
-  border-inline-end: var(--cb-border-width) solid var(--cb-border);
+  border-inline-end: var(--cb-border-width) solid transparent;
+}
+.cb-schedule[data-mode='physical'] .wx-table .wx-cell.wx-col-progressText {
+  border-inline-start: 0;
+}
+.cb-schedule[data-mode='physical'] .wx-table-container {
+  border-inline-end-color: transparent;
 }
 .cb-schedule[data-mode='physical'] .wx-table .wx-header .wx-cell {
   border-block-end: var(--cb-border-width) solid var(--cb-border);

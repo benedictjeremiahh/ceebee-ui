@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 2.9.1
+
+### Patch Changes
+
+- Match the Schedule pane and physical-progress column dividers to the shared Splitter, preserving their native resize controls.
+
 ## 2.9.0
 
 ### Minor Changes
