@@ -133,7 +133,7 @@
     --cb-tone-brand: var(--cb-brand-500);
     --cb-tone-info: oklch(0.76 0.13 var(--cb-hue-info));
     --cb-tone-success: oklch(0.76 0.14 var(--cb-hue-success));
-    --cb-tone-warning: oklch(0.8 0.14 var(--cb-hue-warning));
+    --cb-tone-warning: oklch(0.8 0.11 var(--cb-hue-warning));
     --cb-tone-danger: oklch(0.72 0.17 var(--cb-hue-danger));
     --cb-fg-on-brand: oklch(0.18 0.02 280);
   --cb-tone-brand-bg: oklch(0.3 0.05 var(--cb-hue-brand));
@@ -203,7 +203,7 @@
   --cb-tone-brand: var(--cb-brand-500);
   --cb-tone-info: oklch(0.76 0.13 var(--cb-hue-info));
   --cb-tone-success: oklch(0.76 0.14 var(--cb-hue-success));
-  --cb-tone-warning: oklch(0.8 0.14 var(--cb-hue-warning));
+  --cb-tone-warning: oklch(0.8 0.11 var(--cb-hue-warning));
   --cb-tone-danger: oklch(0.72 0.17 var(--cb-hue-danger));
   --cb-fg-on-brand: oklch(0.18 0.02 280);
   --cb-tone-brand-bg: oklch(0.3 0.05 var(--cb-hue-brand));

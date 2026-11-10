@@ -31,3 +31,18 @@
 .cb-drag-drop__portal { position: fixed; inset: 0; z-index: var(--cb-z-tooltip); pointer-events: none; }
 .cb-drag-drop__overlay { max-inline-size: calc(var(--cb-space-8) * 12); padding: var(--cb-space-2) var(--cb-space-3); color: var(--cb-fg); background: var(--cb-surface-raised); border: var(--cb-border-width) solid var(--cb-fg-link); border-radius: var(--cb-radius-sm); box-shadow: var(--cb-shadow-md); font: var(--cb-text-sm) / var(--cb-leading-normal) var(--cb-font-sans); overflow-wrap: anywhere; }
 .cb-drag-drop__status { min-block-size: var(--cb-control-height-sm); display: flex; align-items: center; color: var(--cb-fg-muted); font-size: var(--cb-text-sm); }
+/* A lifted row: the consumer supplies its cells, the provider adds the grip. Raised, not animated. */
+.cb-drag-drop__overlay[data-lifted] {
+  display: flex;
+  align-items: center;
+  gap: var(--cb-space-2);
+  max-inline-size: calc(var(--cb-space-8) * 16);
+  min-block-size: var(--cb-control-height-lg);
+  padding-inline: var(--cb-space-2) var(--cb-space-4);
+  border-color: var(--cb-border-strong);
+  box-shadow: var(--cb-shadow-lg);
+  translate: 0 calc(var(--cb-space-1) * -1);
+  cursor: grabbing;
+}
+.cb-drag-drop__overlay-grip { flex: none; inline-size: var(--cb-space-4); block-size: var(--cb-space-4); color: var(--cb-fg-muted); }
+:root[data-cb-drag-drop-active], :root[data-cb-drag-drop-active] * { cursor: grabbing; }

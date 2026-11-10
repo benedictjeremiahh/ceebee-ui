@@ -1,5 +1,31 @@
 # @ceebee/ui
 
+## 2.9.0
+
+### Minor Changes
+
+- Expose accessible drag-and-drop primitives and ExpressionEditor. Worksheets can animate keyed row moves and display a drop placeholder.
+
+### Patch Changes
+
+- e00bdc8: Dismiss an open DatePicker when viewport width changes so responsive form layout cannot strand the
+  calendar outside the visible area. Preserve its selected date, focus, controlled open callbacks and
+  height-only resize behavior for mobile keyboards.
+
+  Consume Escape while the calendar is open so one keypress does not also dismiss its enclosing dialog.
+
+- Keep the Clarity light canvas and content surfaces within the sRGB gamut by reducing their chroma slightly. Their lightness and hue remain unchanged, allowing reproducible contrast measurement without relying on clipped color channels.
+- Support Space activation on Collapse headers without scrolling the page. Activate once on key
+  release, preserve focus and the existing controlled/accordion rules, and leave nested controls
+  and disabled panels unchanged.
+- Keep the dark warning tone within sRGB at its default hue. Preserve its lightness and hue while reducing chroma, so warning text can be measured without clipped color channels.
+- Preserve exact sRGB boundary colours in generated themes and support six-digit hex input in Flutter and Ant token generation.
+- 0a175cf: Keep a child Modal's backdrop above its parent panel. Compose semantic layers for elevated parents,
+  preserve caller styling, and retain the upstream popup and focus contracts.
+- 5f98689: Keep neutral rich tooltip content readable in both page themes by inheriting the tooltip surface
+  foreground. Preserve Text emphasis, caller object/callback semantic classes, custom colors and styles,
+  plain titles, focus/hover triggers and dismissal behavior.
+
 ## 2.8.1
 
 ### Patch Changes

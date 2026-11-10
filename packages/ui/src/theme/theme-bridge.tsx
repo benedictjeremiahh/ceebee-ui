@@ -210,6 +210,16 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
     // Button reads palette aliases, which Ant otherwise darkens again after the global seed.
     components.Button = { colorError: danger, colorErrorHover: danger, colorErrorActive: danger };
   }
+  /* A field's status prefix/suffix (the "Rp" of a money input) reads colorErrorAffix / colorWarningAffix,
+     which Ant re-derives per component into a darker step: a focused invalid money field measured 4.48:1. */
+  const warning = color('--cb-tone-warning');
+  if (danger && warning) {
+    const affix = { colorErrorAffix: danger, colorWarningAffix: warning };
+    components.Input = { ...components.Input, ...affix };
+    components.InputNumber = { ...components.InputNumber, ...affix };
+    components.Select = { ...components.Select, ...affix };
+    components.DatePicker = { ...components.DatePicker, ...affix };
+  }
   /* Tooltip, Tour and Image preview put Ant's light-solid text on a dark neutral rather than on a tone.
      In dark mode the text on a tone turns dark (the tones have to be light to read as text), so these
      three keep light text of their own. */
@@ -238,7 +248,7 @@ export function readCeebeeThemeToken(root: HTMLElement): CeebeeTheme {
 
   const datePickerCellWidth = length('--cb-date-picker-cell-width');
   if (datePickerCellWidth !== undefined) {
-    components.DatePicker = { cellWidth: datePickerCellWidth };
+    components.DatePicker = { ...components.DatePicker, cellWidth: datePickerCellWidth };
   }
 
   /* A Switch keeps a 24px target (WCAG 2.5.8): Ant's track is 22px tall, under the minimum the audit and the

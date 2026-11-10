@@ -16,6 +16,14 @@ export interface DragDropProviderProps {
   onDrop: (move: DragDropMove) => void;
   labelOf: (id: string) => string;
   labels?: Partial<DragDropLabels>;
+  /** Content of the lifted row that follows the pointer; the provider adds the grip. Defaults to `labelOf`. */
+  renderOverlay?: (activeId: string) => ReactNode;
+  /**
+   * The projected move while dragging, so a consumer can open a slot by reordering its rows. Fires when a
+   * different valid position is reached, keeps the last one while the pointer rests on the dragged row's own
+   * slot or on an unavailable position, and fires `null` when the drag ends or is cancelled.
+   */
+  onPreview?: (move: DragDropMove | null) => void;
 }
 
 export function dropData(value: unknown): DropData | undefined {

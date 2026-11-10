@@ -6,6 +6,8 @@
  * Skins — see THIRD_PARTY_NOTICES.md and docs/component-sources.json for what came from where.
  */
 export * from 'antd';
+export { Collapse } from './data/collapse/collapse.js';
+export type { CollapseProps } from './data/collapse/collapse.js';
 export { Worksheet } from './data/worksheet/index.js';
 export type { WorksheetCellProps, WorksheetColumn, WorksheetEditCellProps, WorksheetFocusRequest, WorksheetPasteFailure, WorksheetProps } from './data/worksheet/index.js';
 export { Button } from './form/button.js';

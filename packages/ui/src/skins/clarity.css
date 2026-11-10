@@ -3,9 +3,9 @@
 :root {
   --cb-hue-brand: 264;
 
-  --cb-bg: oklch(0.98 0.012 255);
+  --cb-bg: oklch(0.98 0.009 255);
   --cb-bg-subtle: oklch(0.945 0.026 258);
-  --cb-surface: oklch(0.995 0.003 255);
+  --cb-surface: oklch(0.995 0.002 255);
   --cb-surface-raised: oklch(1 0 0);
   --cb-border: oklch(0.86 0.018 255);
   --cb-border-strong: oklch(0.62 0.028 255);

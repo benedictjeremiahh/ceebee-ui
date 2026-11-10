@@ -41,3 +41,20 @@
   border-block-end-color: var(--cb-border-strong);
   font-weight: var(--cb-weight-semibold);
 }
+
+/* Rows travel to a new order instead of jumping; the motion is dropped under reduced motion. */
+.cb-worksheet .rdg-row.cb-worksheet__row--moving {
+  transition: transform var(--cb-duration-base) var(--cb-ease-standard);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cb-worksheet .rdg-row.cb-worksheet__row--moving { transition: none; }
+}
+
+/* The slot a dragged row will land in: same height, dashed, contents dimmed so the projected depth reads. */
+.cb-worksheet .rdg-row.cb-worksheet__row--placeholder > .rdg-cell {
+  background: var(--cb-bg-subtle);
+  border-block: var(--cb-border-width) dashed var(--cb-border-strong);
+}
+.cb-worksheet .rdg-row.cb-worksheet__row--placeholder > .rdg-cell > * { opacity: 0.4; }
+.cb-worksheet .rdg-row.cb-worksheet__row--placeholder > .rdg-cell:first-child { border-inline-start: var(--cb-border-width) dashed var(--cb-border-strong); }
+.cb-worksheet .rdg-row.cb-worksheet__row--placeholder > .rdg-cell:last-child { border-inline-end: var(--cb-border-width) dashed var(--cb-border-strong); }

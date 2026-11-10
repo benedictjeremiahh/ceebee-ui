@@ -19,3 +19,20 @@ A content area which can be collapsed and expanded.
 `Collapse` and `Collapse.Panel` are exported from `@ceebee/ui/client`.
 
 <ApiReference component="Collapse" />
+
+## Keyboard interaction
+
+| Key | Focused panel header |
+| --- | --- |
+| Enter | Opens or closes the panel using the runtime's existing behavior. |
+| Space | Prevents page scrolling while held; opens or closes once when released. |
+| Tab / Shift + Tab | Moves through the available controls without changing the open panel. |
+
+Space activation follows the [WAI-ARIA accordion pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
+It preserves focus, controlled keys, accordion rules and disabled panels. Inputs and other controls
+inside a panel or header keep their own keyboard behavior; a nested Collapse does not activate its
+parent. Releasing Space after focus moves away does not activate the old header.
+
+Do use the panel header as the disclosure trigger. Do not add application-specific Space handlers
+or wrap the header in a second button. The package adds the missing Space behavior to the pinned
+runtime without replacing its DOM, geometry, state management or animation.

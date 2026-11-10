@@ -46,6 +46,7 @@
 .cb-fullscreen-region[data-mode='native'],
 .cb-fullscreen-region[data-mode='window'] {
   block-size: 100dvh;
+  box-sizing: border-box;
   inline-size: 100vw;
   max-block-size: 100dvh;
   max-inline-size: 100vw;

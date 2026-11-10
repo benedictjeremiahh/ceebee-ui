@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "version": "1.0.0",
-  "revision": "6d42fce307cc81c964597e96e6da0b5a43702d8deab28ae39832b19b33c57598",
+  "revision": "86b0617c5db72aec1416dc170e43b76a143327d8acc10acce3bbd796fb31f0cf",
   "files": {
-    "react.tsx": "fcb1a4ddd936f2e6fa51be95ff0954bf00ee20559613540d1c2b7be15b453dd2",
-    "logo.tsx": "cd0448bc27659209eac8cdd631a54eda7c012789f07a48859730f551ae6ce1bd",
-    "endorsement.tsx": "3acea2fa29154ecdd492b1f5f3980edcf85744e471977119edfe688dd0c31524",
-    "brand.css": "1035b2c7a02d907a4f2b8254ecfabb420506d75be46be91b31bfe7ed5acb219e",
+    "react.tsx": "3a506d64b7d63d3fdc43f41568c6b31477498834fcf7b83b7f30154c60b24803",
+    "logo.tsx": "3af873c320d4a70726205dea56f86c0fc8bc836eb729b727ae3fb3185f7e6ca8",
+    "endorsement.tsx": "b7930eef2c735ca1c98e8e87ace0df122f27fe8715d17e4d31f1e42669749c4f",
+    "brand.css": "fb1aab39cba341ed05c66d1e4c5fafd874e15b28d445a4e2ec3d14c4efc09858",
     "assets/byceebee-symbol.svg": "5ba3d331821c3f4eb46b13617502f8ae2103bcdd30be5471e00c228921a1b954",
     "assets/byceebee-symbol-inverse.svg": "9c1d9bc01bb6e89576802335bd3fca9e780c17cc19122c2b1232468d206142ad",
     "assets/monochrome/byceebee-symbol-mono.svg": "5c2cb9821728e2594035a0702219179ba3b7e82166b3458e509a163f89e1bc86",
@@ -57,8 +57,8 @@
     "assets/compact-monochrome/byceebee-stacked-mono.png": "35ca01347affe17f0539d851cd9e6a1c4e4feb0a4a859dc10cca98743f0c210e",
     "assets/compact-monochrome/byceebee-stacked-mono-inverse.png": "479fc0121c1b09d06fb53995df37a068d6c1e880a8c35e143fc9330fd1fb183d",
     "assets/byceebee-avatar.png": "4b74b01d710556718bcc11c3289bee3bbb1d1da1b0fbd9e7baf1d84fd5bc2f87",
-    "skin.css": "4d0dffa0aea60578c95119e78417251413d98057877e630fc06a931e21d12d39",
-    "brand.json": "5eba0dc4dbfedacf2be2c7fac0d29d989432bd21980f0940fa1cdb1dc25161c4",
-    "brand.ts": "ea23d55efb599d6528fc804b2933d879521d94de97c5eec30761c9ecd446969b"
+    "skin.css": "65f3812bea686257811a2904ec435ce6a14a6864a4a92d3b4ad0913f22be8ac0",
+    "brand.json": "f9de94a0d2e2b095ae099b5a47c59098ed8238f7911eeb7cfb5920cf04094975",
+    "brand.ts": "f6c59b9590c1c620deb9210af85958a6a20c68c88be2322f2825fe3050dc315a"
   }
 }

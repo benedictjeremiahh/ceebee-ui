@@ -49,3 +49,14 @@ describe('DragDrop', () => {
     expect(dropData(null)).toBeUndefined();
   });
 });
+
+describe('several drop surfaces for one record', () => {
+  it('renders every surface of the same target with its own zones, so a whole table row can receive a drop', () => {
+    const { container } = render(<DragDropProvider canDrop={() => true} onDrop={() => undefined} labelOf={(id) => id}>
+      <DragDropTarget id="row-1"><span>handle cell</span></DragDropTarget>
+      <DragDropTarget id="row-1"><span>name cell</span></DragDropTarget>
+    </DragDropProvider>);
+    expect(container.querySelectorAll('.cb-drag-drop__target')).toHaveLength(2);
+    expect(container.querySelectorAll('.cb-drag-drop__zone[data-position="before"]')).toHaveLength(2);
+  });
+});

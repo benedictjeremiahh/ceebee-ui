@@ -77,6 +77,21 @@ describe('tone contrast', () => {
     expect(failing).toEqual([]);
   });
 
+  it('keeps status prefixes and suffixes of fields on the accessible tones in every component seed', () => {
+    // Ant paints a field's affix (the "Rp" of a money input) with colorErrorAffix / colorWarningAffix and
+    // re-derives them into a darker step per component: a focused invalid money field measured 4.48:1.
+    const failing = seeds.flatMap(({ name, seed }) =>
+      ['Input', 'InputNumber', 'Select', 'DatePicker'].flatMap((component) => {
+        const tokens = seed.components?.[component];
+        return [
+          ...(tokens?.colorErrorAffix !== seed.token.colorError ? [`${name} ${component} error affix`] : []),
+          ...(tokens?.colorWarningAffix !== seed.token.colorWarning ? [`${name} ${component} warning affix`] : []),
+        ];
+      }),
+    );
+    expect(failing).toEqual([]);
+  });
+
   it('carries its light-solid text at WCAG AA 4.5:1 on every tone fill', () => {
     const failing = seeds.flatMap(({ name, seed }) =>
       TONES.map((tone) => ({ tone, r: ratio(String(seed.token.colorTextLightSolid), String(seed.token[tone])) }))

@@ -14,13 +14,13 @@ describe('Select width', () => {
   it('is as wide as its longest option by default, capped', () => {
     const { container } = render(<Select options={OPTIONS} value="a" />);
     const root = container.querySelector<HTMLElement>('.cb-select');
-    expect(root?.style.inlineSize).toBe('clamp(12rem, calc(35ch + 4.5rem), 28rem)');
+    expect(root?.style.inlineSize).toBe('var(--cb-select-inline-size, clamp(12rem, calc(35ch + 4.5rem), 28rem))');
   });
 
   it('only widens as options change, so a searching select does not jump', () => {
     const { container, rerender } = render(<Select options={OPTIONS} value="a" />);
     rerender(<Select options={[{ value: 'a', label: 'Gudang' }]} value="a" />);
-    expect(container.querySelector<HTMLElement>('.cb-select')?.style.inlineSize).toBe('clamp(12rem, calc(35ch + 4.5rem), 28rem)');
+    expect(container.querySelector<HTMLElement>('.cb-select')?.style.inlineSize).toBe('var(--cb-select-inline-size, clamp(12rem, calc(35ch + 4.5rem), 28rem))');
   });
 
   it('keeps a width the consumer set', () => {
@@ -160,5 +160,18 @@ describe('TruncatedLabel', () => {
     fireEvent.mouseEnter(label);
     await new Promise((resolve) => setTimeout(resolve, 600));
     expect(screen.queryByRole('tooltip')).toBeNull();
+  });
+});
+
+describe('Select empty value', () => {
+  it('reads an empty string as nothing chosen when no option has that value, so the placeholder shows', () => {
+    const { container } = render(<Select options={OPTIONS} value="" placeholder="Choose a location" />);
+    expect(container.querySelector('.ant-select-placeholder')?.textContent).toBe('Choose a location');
+  });
+
+  it('keeps an empty string that is a real option, such as "All"', () => {
+    const { container } = render(<Select options={[{ value: '', label: 'All' }, ...OPTIONS]} value="" placeholder="Choose" />);
+    expect(container.querySelector('.ant-select-placeholder')).toBeNull();
+    expect(screen.getAllByText('All').length).toBeGreaterThan(0);
   });
 });

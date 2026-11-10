@@ -8,6 +8,8 @@ import { useEffect, useMemo, useRef, useState, type ClipboardEvent, type CSSProp
 import { createCssProbe, watchTokens } from '../../lib/css-probe.js';
 import { useWorksheetColumnWidths } from './use-worksheet-column-widths.js';
 import { useWorksheetAutoHeight } from './use-worksheet-auto-height.js';
+import { useWorksheetRowOrderAnimation } from './use-worksheet-row-order-animation.js';
+import { FocusRecovery } from '../../focus/focus-recovery/focus-recovery.js';
 import type { WorksheetColumn, WorksheetFocusRequest, WorksheetProps } from './worksheet.types.js';
 import './worksheet.css';
 
@@ -74,6 +76,9 @@ export function Worksheet<Row extends object>({
   editOnClick = false,
   rowHeight,
   headerRowHeight,
+  animateRowOrder = false,
+  isPlaceholderRow,
+  rowClass,
   ...gridOptions
 }: WorksheetProps<Row>) {
   const activeCell = useRef<ActiveCell | null>(null);
@@ -85,6 +90,11 @@ export function Worksheet<Row extends object>({
   }>({ rows, columns, request: focusRequest });
   focusState.current = { rows, columns, request: focusRequest };
   const host = useRef<HTMLDivElement>(null);
+  const recoveryTarget = useMemo(() => ({
+    get current() {
+      return host.current?.querySelector<HTMLElement>('[role="gridcell"][aria-selected="true"]') ?? host.current;
+    },
+  }), []);
   const { columnWidths, onColumnWidthsChange } = useWorksheetColumnWidths(columns, host);
   const [tokenRowHeight, setTokenRowHeight] = useState<number>();
   const [tokenHeaderRowHeight, setTokenHeaderRowHeight] = useState<number>();
@@ -131,6 +141,7 @@ export function Worksheet<Row extends object>({
     headerRows,
     enabled: autoHeight,
   });
+  useWorksheetRowOrderAnimation({ host, rows, rowKey: gridOptions.rowKeyGetter ?? undefined, headerRows, enabled: animateRowOrder });
   const worksheetStyle: CSSProperties & { '--cb-worksheet-content-height': string | undefined } = {
     '--cb-worksheet-content-height': autoHeight ? contentHeight : undefined,
   };
@@ -166,8 +177,9 @@ export function Worksheet<Row extends object>({
   }
 
   return (
-    <div
+    <FocusRecovery targetRef={recoveryTarget}><div
       ref={host}
+      tabIndex={-1}
       className="cb-worksheet"
       data-header-rows={headerRows}
       data-row-height={autoHeight ? 'auto' : undefined}
@@ -184,6 +196,8 @@ export function Worksheet<Row extends object>({
         columnWidths={columnWidths}
         onColumnWidthsChange={onColumnWidthsChange}
         rows={rows}
+        rowClass={isPlaceholderRow ? (row, rowIdx) => [rowClass?.(row, rowIdx),
+          isPlaceholderRow(row) ? 'cb-worksheet__row--placeholder' : undefined].filter(Boolean).join(' ') || undefined : rowClass}
         onRowsChange={onChange}
         onCellClick={({ row, column, selectCell }, event) => {
           if (!editOnClick || !onChange || event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
@@ -206,6 +220,6 @@ export function Worksheet<Row extends object>({
           if (rowIdx >= 0) grid.current?.scrollToCell({ rowIdx, idx: column.idx });
         }}
       />
-    </div>
+    </div></FocusRecovery>
   );
 }

@@ -31,6 +31,19 @@ export function longestLabel(options: readonly object[] | undefined): number {
   return longest;
 }
 
+/**
+ * The measured width yields to `--cb-select-inline-size` when a container sets it: a field stacked in a form
+ * column fills that column, so the controls of one form share an edge instead of each ending at its own
+ * option length. Unset, the measured width applies.
+ */
+/** Whether an option (or a grouped option) carries the empty string as its value, such as an "All" choice. */
+export function hasEmptyValue(options: readonly object[] | undefined): boolean {
+  return (options ?? []).some((option) => 'options' in option && Array.isArray(option.options)
+    ? hasEmptyValue(option.options)
+    : 'value' in option && option.value === '');
+}
+
 export function selectWidth(longest: number): string {
-  return longest === 0 ? SELECT_MIN : `clamp(${SELECT_MIN}, calc(${longest}ch + 4.5rem), ${SELECT_MAX})`;
+  const measured = longest === 0 ? SELECT_MIN : `clamp(${SELECT_MIN}, calc(${longest}ch + 4.5rem), ${SELECT_MAX})`;
+  return `var(--cb-select-inline-size, ${measured})`;
 }

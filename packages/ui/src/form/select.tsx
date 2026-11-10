@@ -7,7 +7,7 @@ import { CloseCircleFilled } from '@ant-design/icons';
 import type { CSSProperties } from 'react';
 import { useContext, useRef } from 'react';
 import { useLabels } from '../lib/labels.js';
-import { longestLabel, selectWidth, SELECT_POPUP_MAX } from './select.math.js';
+import { hasEmptyValue, longestLabel, selectWidth, SELECT_POPUP_MAX } from './select.math.js';
 import { TruncatedLabel } from './truncated-label.js';
 import './select.css';
 
@@ -34,7 +34,8 @@ function setsWidth(style: CSSProperties | undefined): boolean {
  * stock location path — were cut off in a field narrower than the space it had.
  *
  * - The field is as wide as the longest option it has held, between 12rem and 28rem, and never wider than its container,
- *   so it takes the full width on a phone. A consumer that sets a width keeps it.
+ *   so it takes the full width on a phone. A consumer that sets a width keeps it, and a container that sets
+ *   `--cb-select-inline-size` (a stacked form column sets `100%`) replaces the measured width for every select in it.
  * - The dropdown may be wider than the field, up to 32rem, so options are read whole where there is room.
  *   When it cannot expand to fit, options wrap unless the consumer enables width matching.
  * - The selected value ellipsises and shows its whole text in a tooltip when — and only when — it is cut.
@@ -49,6 +50,9 @@ function SelectRoot<V = any, O extends BaseOptionType | DefaultOptionType = Defa
 }: SelectProps<V, O>) {
   const labels = useLabels();
   const config = useContext(ConfigProvider.ConfigContext);
+  /* A form seeds an untouched field with '' so its rules run. With no option holding '', that value means
+     "nothing chosen yet": show the placeholder instead of an empty box that looks filled. */
+  const emptyMeansNone = props.value === '' && !hasEmptyValue(options);
   /* Only ever widens: a select that searches the server swaps its options on every keystroke, and a field
      that shrank and grew with them would jump under the cursor. */
   const widest = useRef(0);
@@ -87,6 +91,7 @@ function SelectRoot<V = any, O extends BaseOptionType | DefaultOptionType = Defa
   return (
     <AntSelect<V, O>
       {...props}
+      {...(emptyMeansNone ? { value: undefined } : {})}
       allowClear={localizedAllowClear}
       options={options}
       className={className ? `cb-select ${className}` : 'cb-select'}

@@ -308,10 +308,16 @@ function deref(value, tokens, seen = new Set()) {
 /* ---------------------------------------------------------------- value parsing */
 
 const OKLCH = /^oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*(?:\/\s*([\d.]+)\s*)?\)$/;
+const HEX_COLOR = /^#([\da-f]{6})$/i;
 
 function parseColor(value, where) {
   const raw = value.trim();
   if (raw === 'transparent') return 'CbOklch.transparent';
+  const hex = parseHexColor(raw);
+  if (hex) {
+    const [lightness, chroma, hue] = rgbToOklch(hex);
+    return `CbOklch(${[lightness, chroma, hue].map((part) => num(String(part))).join(', ')})`;
+  }
   const match = OKLCH.exec(raw);
   if (!match) throw new Error(`Unsupported colour at ${where}: ${raw}`);
   const [, l, c, h, alpha] = match;
@@ -319,6 +325,35 @@ function parseColor(value, where) {
   return alpha === undefined
     ? `CbOklch(${args.join(', ')})`
     : `CbOklch(${args.join(', ')}, alpha: ${num(alpha)})`;
+}
+
+function parseHexColor(value) {
+  const match = HEX_COLOR.exec(value);
+  if (!match) return null;
+  const hex = match[1];
+  return {
+    red: Number.parseInt(hex.slice(0, 2), 16),
+    green: Number.parseInt(hex.slice(2, 4), 16),
+    blue: Number.parseInt(hex.slice(4, 6), 16),
+  };
+}
+
+function rgbToOklch({ red, green, blue }) {
+  const decode = (channel) => {
+    const value = channel / 255;
+    return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+  };
+  const [r, g, b] = [red, green, blue].map(decode);
+  if (red === green && green === blue) return [Math.cbrt(r), 0, 0];
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+  const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+  const lightness = 0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s;
+  const a = 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s;
+  const bAxis = 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s;
+  const chroma = Math.hypot(a, bAxis);
+  const hue = (Math.atan2(bAxis, a) * 180 / Math.PI + 360) % 360;
+  return [lightness, chroma, hue].map((part) => Number(part.toPrecision(14)));
 }
 
 function num(text) {
@@ -603,6 +638,9 @@ function emitAntThemeSeeds() {
         const onDark = antColor(value('--cb-fg-on-dark'), `${skin.name}/${brightness}/${contrast}/--cb-fg-on-dark`);
         const imagePreviewBg = antColor(value('--cb-image-preview-bg'), `${skin.name}/${brightness}/${contrast}/--cb-image-preview-bg`);
         const danger = antColor(value('--cb-tone-danger'), `${skin.name}/${brightness}/${contrast}/--cb-tone-danger`);
+        const warning = antColor(value('--cb-tone-warning'), `${skin.name}/${brightness}/${contrast}/--cb-tone-warning`);
+        // A field's status prefix/suffix (the "Rp" of a money input) reads affix tokens Ant re-derives per component.
+        const affix = { colorErrorAffix: danger, colorWarningAffix: warning };
         registry[skin.name][brightness][contrast] = {
           token,
           components: {
@@ -614,6 +652,10 @@ function emitAntThemeSeeds() {
             Form: { colorError: danger },
             // Button palette aliases must retain the semantic tone after Ant derives its global palette.
             Button: { colorError: danger, colorErrorHover: danger, colorErrorActive: danger },
+            Input: affix,
+            InputNumber: affix,
+            Select: affix,
+            DatePicker: affix,
             Tooltip: { colorTextLightSolid: onDark },
             Tour: { colorTextLightSolid: onDark },
             Image: {
@@ -661,8 +703,10 @@ function antPresetTokens(brightness) {
 }
 
 function antColor(value, where) {
+  const hex = parseHexColor(value);
+  if (hex) return `rgba(${hex.red}, ${hex.green}, ${hex.blue}, 1)`;
   const match = OKLCH.exec(value);
-  if (!match) throw new Error(`Expected an oklch colour at ${where}: ${value}`);
+  if (!match) throw new Error(`Expected a six-digit hex or oklch colour at ${where}: ${value}`);
   const lightness = Number(match[1]);
   const chroma = Number(match[2]);
   const hue = Number(match[3]) * Math.PI / 180;
@@ -993,22 +1037,26 @@ const artefacts = [
   { path: resolve(root, 'packages/ui_flutter/lib/src/tokens/generated/skeleton.g.dart'), text: skeleton.text, label: 'Skeleton tokens' },
 ];
 
-if (process.argv.includes('--check')) {
-  for (const artefact of artefacts) {
-    let current = '';
-    try {
-      current = readFileSync(artefact.path, 'utf8');
-    } catch {
-      throw new Error(`The ${artefact.label} have never been generated. Run node scripts/gen-flutter-tokens.mjs.`);
+if (process.argv[1] && resolve(process.argv[1]) === resolve(import.meta.dirname, 'gen-flutter-tokens.mjs')) {
+  if (process.argv.includes('--check')) {
+    for (const artefact of artefacts) {
+      let current = '';
+      try {
+        current = readFileSync(artefact.path, 'utf8');
+      } catch {
+        throw new Error(`The ${artefact.label} have never been generated. Run node scripts/gen-flutter-tokens.mjs.`);
+      }
+      if (current !== artefact.text) {
+        throw new Error(`The ${artefact.label} are stale. Run node scripts/gen-flutter-tokens.mjs.`);
+      }
     }
-    if (current !== artefact.text) {
-      throw new Error(`The ${artefact.label} are stale. Run node scripts/gen-flutter-tokens.mjs.`);
+    console.log('Generated web and Flutter theme artefacts match the CSS Tokens.');
+  } else {
+    for (const artefact of artefacts) {
+      writeFileSync(artefact.path, artefact.text);
+      console.log(`Wrote ${artefact.path}`);
     }
-  }
-  console.log('Generated web and Flutter theme artefacts match the CSS Tokens.');
-} else {
-  for (const artefact of artefacts) {
-    writeFileSync(artefact.path, artefact.text);
-    console.log(`Wrote ${artefact.path}`);
   }
 }
+
+export { antColor, parseColor };

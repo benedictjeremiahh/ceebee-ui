@@ -166,6 +166,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(185, 32, 92, 1)",
             "colorErrorActive": "rgba(185, 32, 92, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -346,6 +362,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(185, 32, 92, 1)",
             "colorErrorActive": "rgba(185, 32, 92, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -378,7 +410,7 @@ export const generatedCeebeeAntSeeds = {
           "colorLinkHover": "rgba(156, 197, 255, 1)",
           "colorLinkActive": "rgba(156, 197, 255, 1)",
           "colorSuccess": "rgba(99, 202, 132, 1)",
-          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorWarning": "rgba(251, 165, 138, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
           "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(21, 44, 75, 1)",
@@ -528,6 +560,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(248, 112, 152, 1)",
             "colorErrorActive": "rgba(248, 112, 152, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -558,7 +606,7 @@ export const generatedCeebeeAntSeeds = {
           "colorLinkHover": "rgba(156, 197, 255, 1)",
           "colorLinkActive": "rgba(156, 197, 255, 1)",
           "colorSuccess": "rgba(99, 202, 132, 1)",
-          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorWarning": "rgba(251, 165, 138, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
           "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(21, 44, 75, 1)",
@@ -707,6 +755,22 @@ export const generatedCeebeeAntSeeds = {
             "colorError": "rgba(248, 112, 152, 1)",
             "colorErrorHover": "rgba(248, 112, 152, 1)",
             "colorErrorActive": "rgba(248, 112, 152, 1)"
+          },
+          "Input": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
           },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
@@ -892,6 +956,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(185, 32, 92, 1)",
             "colorErrorActive": "rgba(185, 32, 92, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -1072,6 +1152,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(185, 32, 92, 1)",
             "colorErrorActive": "rgba(185, 32, 92, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -1104,7 +1200,7 @@ export const generatedCeebeeAntSeeds = {
           "colorLinkHover": "rgba(130, 150, 255, 1)",
           "colorLinkActive": "rgba(130, 150, 255, 1)",
           "colorSuccess": "rgba(99, 202, 132, 1)",
-          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorWarning": "rgba(251, 165, 138, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
           "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(38, 44, 71, 1)",
@@ -1254,6 +1350,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(248, 112, 152, 1)",
             "colorErrorActive": "rgba(248, 112, 152, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -1284,7 +1396,7 @@ export const generatedCeebeeAntSeeds = {
           "colorLinkHover": "rgba(130, 150, 255, 1)",
           "colorLinkActive": "rgba(130, 150, 255, 1)",
           "colorSuccess": "rgba(99, 202, 132, 1)",
-          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorWarning": "rgba(251, 165, 138, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
           "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(38, 44, 71, 1)",
@@ -1433,6 +1545,22 @@ export const generatedCeebeeAntSeeds = {
             "colorError": "rgba(248, 112, 152, 1)",
             "colorErrorHover": "rgba(248, 112, 152, 1)",
             "colorErrorActive": "rgba(248, 112, 152, 1)"
+          },
+          "Input": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
           },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
@@ -1618,6 +1746,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(185, 32, 92, 1)",
             "colorErrorActive": "rgba(185, 32, 92, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -1798,6 +1942,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(185, 32, 92, 1)",
             "colorErrorActive": "rgba(185, 32, 92, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -1830,7 +1990,7 @@ export const generatedCeebeeAntSeeds = {
           "colorLinkHover": "rgba(140, 147, 255, 1)",
           "colorLinkActive": "rgba(140, 147, 255, 1)",
           "colorSuccess": "rgba(99, 202, 132, 1)",
-          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorWarning": "rgba(251, 165, 138, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
           "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(40, 43, 71, 1)",
@@ -1980,6 +2140,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(248, 112, 152, 1)",
             "colorErrorActive": "rgba(248, 112, 152, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -2010,7 +2186,7 @@ export const generatedCeebeeAntSeeds = {
           "colorLinkHover": "rgba(140, 147, 255, 1)",
           "colorLinkActive": "rgba(140, 147, 255, 1)",
           "colorSuccess": "rgba(99, 202, 132, 1)",
-          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorWarning": "rgba(251, 165, 138, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
           "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(40, 43, 71, 1)",
@@ -2160,6 +2336,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(248, 112, 152, 1)",
             "colorErrorActive": "rgba(248, 112, 152, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -2209,8 +2401,8 @@ export const generatedCeebeeAntSeeds = {
           "colorTextDisabled": "rgba(83, 84, 97, 1)",
           "colorTextDescription": "rgba(83, 84, 97, 1)",
           "colorTextLightSolid": "rgba(252, 252, 252, 1)",
-          "colorBgBase": "rgba(243, 249, 255, 1)",
-          "colorBgContainer": "rgba(252, 254, 255, 1)",
+          "colorBgBase": "rgba(244, 249, 255, 1)",
+          "colorBgContainer": "rgba(252, 253, 255, 1)",
           "colorBgElevated": "rgba(255, 255, 255, 1)",
           "colorBorder": "rgba(123, 135, 151, 1)",
           "colorBorderSecondary": "rgba(201, 210, 221, 1)",
@@ -2344,6 +2536,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(185, 32, 92, 1)",
             "colorErrorActive": "rgba(185, 32, 92, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -2389,8 +2597,8 @@ export const generatedCeebeeAntSeeds = {
           "colorTextDisabled": "rgba(56, 58, 69, 1)",
           "colorTextDescription": "rgba(56, 58, 69, 1)",
           "colorTextLightSolid": "rgba(252, 252, 252, 1)",
-          "colorBgBase": "rgba(243, 249, 255, 1)",
-          "colorBgContainer": "rgba(252, 254, 255, 1)",
+          "colorBgBase": "rgba(244, 249, 255, 1)",
+          "colorBgContainer": "rgba(252, 253, 255, 1)",
           "colorBgElevated": "rgba(255, 255, 255, 1)",
           "colorBorder": "rgba(83, 84, 97, 1)",
           "colorBorderSecondary": "rgba(156, 158, 167, 1)",
@@ -2524,6 +2732,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(185, 32, 92, 1)",
             "colorErrorActive": "rgba(185, 32, 92, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -2556,7 +2780,7 @@ export const generatedCeebeeAntSeeds = {
           "colorLinkHover": "rgba(102, 158, 255, 1)",
           "colorLinkActive": "rgba(102, 158, 255, 1)",
           "colorSuccess": "rgba(99, 202, 132, 1)",
-          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorWarning": "rgba(251, 165, 138, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
           "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(33, 45, 71, 1)",
@@ -2706,6 +2930,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(248, 112, 152, 1)",
             "colorErrorActive": "rgba(248, 112, 152, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -2736,7 +2976,7 @@ export const generatedCeebeeAntSeeds = {
           "colorLinkHover": "rgba(102, 158, 255, 1)",
           "colorLinkActive": "rgba(102, 158, 255, 1)",
           "colorSuccess": "rgba(99, 202, 132, 1)",
-          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorWarning": "rgba(251, 165, 138, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
           "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(33, 45, 71, 1)",
@@ -2885,6 +3125,22 @@ export const generatedCeebeeAntSeeds = {
             "colorError": "rgba(248, 112, 152, 1)",
             "colorErrorHover": "rgba(248, 112, 152, 1)",
             "colorErrorActive": "rgba(248, 112, 152, 1)"
+          },
+          "Input": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
           },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
@@ -3070,6 +3326,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(185, 32, 92, 1)",
             "colorErrorActive": "rgba(185, 32, 92, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -3250,6 +3522,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(185, 32, 92, 1)",
             "colorErrorActive": "rgba(185, 32, 92, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(185, 32, 92, 1)",
+            "colorWarningAffix": "rgba(161, 76, 50, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -3282,7 +3570,7 @@ export const generatedCeebeeAntSeeds = {
           "colorLinkHover": "rgba(246, 107, 185, 1)",
           "colorLinkActive": "rgba(246, 107, 185, 1)",
           "colorSuccess": "rgba(99, 202, 132, 1)",
-          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorWarning": "rgba(251, 165, 138, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
           "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(64, 35, 50, 1)",
@@ -3432,6 +3720,22 @@ export const generatedCeebeeAntSeeds = {
             "colorErrorHover": "rgba(248, 112, 152, 1)",
             "colorErrorActive": "rgba(248, 112, 152, 1)"
           },
+          "Input": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"
           },
@@ -3462,7 +3766,7 @@ export const generatedCeebeeAntSeeds = {
           "colorLinkHover": "rgba(246, 107, 185, 1)",
           "colorLinkActive": "rgba(246, 107, 185, 1)",
           "colorSuccess": "rgba(99, 202, 132, 1)",
-          "colorWarning": "rgba(255, 156, 122, 1)",
+          "colorWarning": "rgba(251, 165, 138, 1)",
           "colorError": "rgba(248, 112, 152, 1)",
           "colorErrorText": "rgba(248, 112, 152, 1)",
           "colorPrimaryBg": "rgba(64, 35, 50, 1)",
@@ -3611,6 +3915,22 @@ export const generatedCeebeeAntSeeds = {
             "colorError": "rgba(248, 112, 152, 1)",
             "colorErrorHover": "rgba(248, 112, 152, 1)",
             "colorErrorActive": "rgba(248, 112, 152, 1)"
+          },
+          "Input": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "InputNumber": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "Select": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
+          },
+          "DatePicker": {
+            "colorErrorAffix": "rgba(248, 112, 152, 1)",
+            "colorWarningAffix": "rgba(251, 165, 138, 1)"
           },
           "Tooltip": {
             "colorTextLightSolid": "rgba(252, 252, 252, 1)"

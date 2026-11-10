@@ -48,4 +48,8 @@ export type WorksheetProps<Row extends object> = WorksheetGridOptions<Row> & {
   rowHeight?: DataGridProps<Row>['rowHeight'] | 'auto';
   /** Open an editable body cell on a plain pointer click; keyboard navigation remains grid-owned. */
   editOnClick?: boolean;
+  /** Animate rows to their new place when the row order changes; rows are matched by `rowKeyGetter`. */
+  animateRowOrder?: boolean;
+  /** Marks the slot a dragged row will land in; it keeps its height and draws as a dashed, dimmed row. */
+  isPlaceholderRow?: (row: Row) => boolean;
 };

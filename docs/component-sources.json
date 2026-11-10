@@ -1218,11 +1218,14 @@
         "commit": "164a310f742f801c49b3ff748b2823d5596104bd"
       },
       "license": "MIT",
-      "adapter": "packages/ui/src/theme/theme-bridge.tsx",
+      "adapter": "packages/ui/src/data/collapse/collapse.tsx",
       "demoPath": "docs/components/data-display/collapse",
       "parityGaps": [],
       "proof": "docs/parity.generated.json#Collapse",
-      "legacyAdapter": "packages/ui/src/data/collapse/collapse.tsx"
+      "additiveExtensions": [
+        "Space prevents scrolling on a focused panel trigger and activates the existing runtime click once on key release; nested controls, caller cancellation and disabled panels retain their behavior"
+      ],
+      "ownsUpstreamAccessibility": "Missing Space activation only; Enter, state, refs, panel DOM, styles, animation and accordion behavior remain Ant's"
     },
     "Descriptions": {
       "strategy": "antd-runtime",
