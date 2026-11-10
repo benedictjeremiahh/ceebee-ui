@@ -123,6 +123,12 @@
 .cb-schedule[data-mode='physical'] .wx-header .wx-grip > div {
   display: none;
 }
+/* Two open panes are resize-only. An edge drag can still collapse a pane, so keep its reopen control.
+   Compact schedules already render a separate item list. */
+.cb-schedule .wx-resizer-layout-both .wx-button-expand-box,
+.cb-schedule:has(> .cb-schedule__mobile-items) .wx-button-expand-box {
+  display: none;
+}
 .cb-schedule .wx-button-expand-content i {
   align-items: center;
   inline-size: var(--cb-space-3);

@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 2.9.2
+
+### Patch Changes
+
+- Hide one-click collapse arrows while both Schedule panes are open. Keep the reopen control after an edge drag and use the item list on narrow layouts.
+
 ## 2.9.1
 
 ### Patch Changes
