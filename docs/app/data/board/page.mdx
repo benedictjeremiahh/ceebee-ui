@@ -84,9 +84,9 @@ why. An accepted move leaves an **Undo**, which is an ordinary move back through
 switcher, which is a deliberate rendering rather than a board squeezed until its columns are unusable.
 Force it with `layout="lanes"` to see it, or `layout="board"` to keep the columns.
 
-A card title clamps to two lines, so one long name cannot stretch its own card or the cards beside it.
-The whole title is the element's tooltip and stays its content, so the accessible name is never the cut
-one. Badges in `meta` wrap onto another line rather than being clipped.
+In the column layout, card titles clamp to two lines. In lanes, the full title wraps within its card.
+The title remains the element's content and is also available as a tooltip. Badges in `meta` wrap
+within the card.
 
 ## A long board
 

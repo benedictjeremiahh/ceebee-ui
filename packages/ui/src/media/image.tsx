@@ -73,7 +73,7 @@ function withImageClassNames(
         ...resolved,
         popup: {
           ...resolved.popup,
-          root: cn(ownerClassName, resolved.popup?.root),
+          root: cn('cb-image-preview', ownerClassName, resolved.popup?.root),
         },
       };
     };
@@ -83,7 +83,7 @@ function withImageClassNames(
     ...classNames,
     popup: {
       ...classNames?.popup,
-      root: cn(ownerClassName, classNames?.popup?.root),
+      root: cn('cb-image-preview', ownerClassName, classNames?.popup?.root),
     },
   };
 }
@@ -99,7 +99,7 @@ function withGroupClassNames(
         ...resolved,
         popup: {
           ...resolved.popup,
-          root: cn(ownerClassName, resolved.popup?.root),
+          root: cn('cb-image-preview', ownerClassName, resolved.popup?.root),
         },
       };
     };
@@ -109,7 +109,7 @@ function withGroupClassNames(
     ...classNames,
     popup: {
       ...classNames?.popup,
-      root: cn(ownerClassName, classNames?.popup?.root),
+      root: cn('cb-image-preview', ownerClassName, classNames?.popup?.root),
     },
   };
 }

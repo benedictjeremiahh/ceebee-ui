@@ -12,6 +12,31 @@
   overflow: hidden;
 }
 
+.cb-chart__plot { position: relative; isolation: isolate; }
+.cb-chart__canvas:focus-visible { outline: var(--cb-focus-width) solid var(--cb-focus); outline-offset: var(--cb-focus-offset-inset); }
+.cb-chart__tooltip {
+  position: absolute;
+  z-index: var(--cb-z-tooltip);
+  max-inline-size: calc(100% - var(--cb-space-4));
+  padding: var(--cb-space-2) var(--cb-space-3);
+  border: var(--cb-border-width) solid var(--cb-border);
+  border-radius: var(--cb-radius-md);
+  background: var(--cb-bg);
+  color: var(--cb-fg);
+  font-size: var(--cb-text-sm);
+}
+.cb-chart__tooltip time, .cb-chart__tooltip dd { font-weight: var(--cb-weight-semibold); }
+.cb-chart__tooltip dl { margin: var(--cb-space-1) 0 0; }
+.cb-chart__tooltip dl > div { display: flex; justify-content: space-between; gap: var(--cb-space-3); }
+.cb-chart__tooltip dd { margin: 0; text-align: end; font-variant-numeric: tabular-nums; }
+
+.cb-chart__tooltip-note {
+  margin: var(--cb-space-2) 0 0;
+  padding-block-start: var(--cb-space-2);
+  border-block-start: var(--cb-border-width) solid var(--cb-border);
+  font-weight: var(--cb-weight-semibold);
+}
+
 .cb-chart__mark {
   color: var(--cb-fg-muted);
   font-size: var(--cb-text-sm);

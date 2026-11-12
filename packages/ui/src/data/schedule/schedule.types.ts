@@ -87,6 +87,8 @@ export interface ScheduleLabels {
   itemDetails?: string;
   fullSchedule?: string;
   goToday?: string;
+  /** Accessible name of the time-scale selection. */
+  scaleLabel?: string;
   dayScale?: string;
   weekScale?: string;
   monthScale?: string;

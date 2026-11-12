@@ -18,6 +18,12 @@
   padding-inline-end: var(--cb-space-7);
 }
 
+/* The substrate centers the close target against its header estimate. Text resizing can make that inset negative. */
+.cb-modal .ant-modal .cb-modal__close {
+  inset-block-start: var(--cb-space-2);
+  inset-inline-end: var(--cb-space-2);
+}
+
 .cb-modal__description {
   margin-block-end: var(--cb-space-4);
   color: var(--cb-fg-muted);

@@ -15,6 +15,9 @@ Supply the allowed variable and named constant lists. Unknown names receive a wa
 as a different color. Decimal constants such as `0.5` remain ordinary editable text. Set `invalid`
 from caller validation and connect its visible message with `describedBy`.
 
+Import `ExpressionEditor` from `@ceebee/ui/client`. The build keeps the editor runtime in its own
+module so a consumer that defers the editor route can also defer CodeMirror.
+
 <Guidance do="Validate expressions before saving or evaluating them."
   dont="Treat highlighting as proof that a formula or its physical units are correct." />
 

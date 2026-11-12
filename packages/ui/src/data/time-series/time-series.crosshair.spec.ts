@@ -4,7 +4,9 @@ import { readableDay } from './time-series.math.js';
 
 const chartState = vi.hoisted(() => {
   const options: { localization?: { priceFormatter?: (value: number) => string; timeFormatter?: (time: unknown) => string } }[] = [];
-  return { options };
+  const moves = vi.fn<(callback: (point: { time?: string; point?: { x: number; y: number } }) => void) => void>();
+  const taps = vi.fn<typeof moves>();
+  return { options, moves, taps };
 });
 
 vi.mock('lightweight-charts', () => ({
@@ -18,7 +20,9 @@ vi.mock('lightweight-charts', () => ({
       addSeries: () => ({ applyOptions: () => undefined, setData: () => undefined }),
       applyOptions: (next: (typeof chartState.options)[number]) => chartState.options.push(next),
       remove: () => undefined,
-      timeScale: () => ({ fitContent: () => undefined }),
+      subscribeCrosshairMove: chartState.moves,
+      subscribeClick: chartState.taps,
+      timeScale: () => ({ fitContent: () => undefined, timeToCoordinate: () => 10 }),
     };
   },
   createSeriesMarkers: () => ({ setMarkers: () => undefined }),
@@ -51,6 +55,19 @@ describe('time-series crosshair localization', () => {
     expect(updatedLocalization?.priceFormatter?.(1250)).toBe('IDR 1250');
     expect(updatedLocalization?.timeFormatter?.('2026-10-09')).toBe('9 Okt 2026');
     chart.destroy();
+  });
+
+  it('reports only dated crosshair readings for hover and tap', async () => {
+    const onPoint = vi.fn();
+    await mountTimeSeries(document.createElement('div'), { series: [], format: String, onPoint },
+      { text: 'text', muted: 'muted', grid: 'grid', background: 'background', font: 'font', series: [], above: 'above', below: 'below' });
+    const hover = chartState.moves.mock.calls.at(-1)?.[0];
+    const tap = chartState.taps.mock.calls.at(-1)?.[0];
+    hover?.({ point: { x: 4, y: 12 } });
+    expect(onPoint).not.toHaveBeenCalled();
+    hover?.({ time: '2026-10-09', point: { x: 4, y: 12 } });
+    tap?.({ time: '2026-10-10', point: { x: 4, y: 12 } });
+    expect(onPoint.mock.calls).toEqual([['2026-10-09', { x: 10, y: 12 }], ['2026-10-10', { x: 10, y: 12 }]]);
   });
 
   it('leaves the substrate date formatter in place when no product formatter is supplied', async () => {

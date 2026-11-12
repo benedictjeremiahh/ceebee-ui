@@ -1,0 +1,8 @@
+@media (forced-colors: active) {
+  /* Forced colors can hide the ink bar's background. Keep selection visible
+     separately from keyboard focus without changing tab measurement. */
+  .ant-tabs [role="tab"][aria-selected="true"] {
+    text-decoration-line: underline;
+    text-underline-offset: var(--cb-space-1);
+  }
+}

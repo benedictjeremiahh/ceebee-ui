@@ -66,6 +66,7 @@ const SCHEMA = {
 
   '--cb-tone-neutral': { kind: 'color', field: 'toneNeutral' },
   '--cb-tone-brand': { kind: 'color', field: 'toneBrand' },
+  '--cb-focus': { kind: 'skip' }, // CSS alias for the existing toneBrand field.
   '--cb-tone-info': { kind: 'color', field: 'toneInfo' },
   '--cb-tone-success': { kind: 'color', field: 'toneSuccess' },
   '--cb-tone-warning': { kind: 'color', field: 'toneWarning' },

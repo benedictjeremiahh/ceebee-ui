@@ -1,0 +1,7 @@
+@media (forced-colors: active) {
+  /* The native checked state remains available when the selected fill disappears. */
+  .ant-segmented .ant-segmented-item-input:checked + .ant-segmented-item-label {
+    text-decoration-line: underline;
+    text-underline-offset: var(--cb-space-1);
+  }
+}

@@ -105,6 +105,11 @@ above the axis for readers and assistive technology. Lateness is this library's 
 The visible date above the axis is formatted for a reader; its `<time dateTime>` preserves the original
 calendar day. Pass `labels.todayDate` to write that date in the product's language.
 
+The weekly scale uses one row with a complete date for each week. Calendar months span different
+numbers of weeks, so a month heading would give some week cells the wrong label. Day and month
+scales retain their parent rows. Use `labels.scaleLabel` to name the scale selector independently
+of the full-schedule action.
+
 ### Completion formatting
 
 `labels.percent` receives the unrounded completion percentage for the desktop grid, compact item

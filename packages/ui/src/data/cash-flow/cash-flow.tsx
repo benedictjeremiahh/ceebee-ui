@@ -8,7 +8,7 @@ import { readableDay } from '../time-series/time-series.math.js';
 import { cashFlowPlot, mountCashFlow, type CashFlowPalette, type MountedCashFlow } from './cash-flow.chart.js';
 import { cashFlowReading, cashFlowRows } from './cash-flow.math.js';
 import type { CashFlowChartProps } from './cash-flow.types.js';
-import { cashFlowDetailPosition, type CashFlowAnchor } from './cash-flow.detail.js';
+import { chartDetailPosition, type ChartPoint } from '../chart-detail-position.js';
 
 /** The canvas is the visual rendering; the table remains the exact accessible rendering. */
 export function CashFlowChart({
@@ -43,10 +43,12 @@ export function CashFlowChart({
   const [mountedChart, setMountedChart] = useState<MountedCashFlow | null>(null);
   const [forcedColors, setForcedColors] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [hoveredPoint, setHoveredPoint] = useState<CashFlowAnchor | null>(null);
+  const [hoveredPoint, setHoveredPoint] = useState<ChartPoint | null>(null);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-  const activeIndex = focusedIndex ?? hoveredIndex;
+  const [inspectedPeriod, setInspectedPeriod] = useState<string | null>(null);
   const rows = useMemo(() => cashFlowRows(opening, periods), [opening, periods]);
+  const inspectedIndex = rows.findIndex(row => row.id === inspectedPeriod);
+  const activeIndex = focusedIndex ?? hoveredIndex ?? (inspectedIndex < 0 ? null : inspectedIndex);
   const reading = useMemo(() => cashFlowReading(rows, threshold.value), [rows, threshold.value]);
   const plot = useMemo(() => cashFlowPlot(opening, rows), [opening, rows]);
   const name = formatPeriod ?? ((day: string) => readableDay(day, locale, 'short'));
@@ -73,6 +75,11 @@ export function CashFlowChart({
     void mountCashFlow(element, plot, format, name, threshold.value, lowest, initial, (index, point) => {
       setHoveredIndex(index);
       setHoveredPoint(point);
+    }, (index) => {
+      setInspectedPeriod(index === null ? null : rows[index]?.id ?? null);
+      setFocusedIndex(null);
+      setHoveredIndex(null);
+      setHoveredPoint(null);
     }).then((chart) => {
       if (cancelled) {
         chart.destroy();
@@ -92,19 +99,41 @@ export function CashFlowChart({
       mounted?.destroy();
       setMountedChart(null);
     };
-  }, [empty, forcedColors, plot, reading, format, formatPeriod, locale, threshold.value]);
+  }, [empty, forcedColors, plot, reading, format, formatPeriod, locale, rows, threshold.value]);
+
+  useEffect(() => {
+    if (activeIndex === null || forcedColors) return;
+    const dismiss = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      event.stopPropagation();
+      mountedChart?.highlight(null);
+      setFocusedIndex(null);
+      setInspectedPeriod(null);
+      setHoveredIndex(null);
+      setHoveredPoint(null);
+    };
+    window.addEventListener('keydown', dismiss, true);
+    return () => window.removeEventListener('keydown', dismiss, true);
+  }, [activeIndex, forcedColors, mountedChart]);
+
+  const highlightedIndex = focusedIndex ?? (inspectedIndex < 0 ? null : inspectedIndex);
+  useEffect(() => {
+    if (highlightedIndex !== null) mountedChart?.highlight(highlightedIndex);
+  }, [highlightedIndex, mountedChart]);
 
   useLayoutEffect(() => {
     const element = host.current;
     const tooltip = detail.current;
     if (!element || !tooltip || activeIndex === null) return;
     const position = () => {
-      const point = focusedIndex === null ? hoveredPoint : mountedChart?.pointAt(focusedIndex);
+      if (getComputedStyle(tooltip).position !== 'absolute') return;
+      const point = focusedIndex === null && hoveredIndex !== null ? hoveredPoint : mountedChart?.pointAt(activeIndex);
       if (!point) return;
       const probe = createCssProbe(element);
       const gap = probe.length('--cb-space-2') ?? 0;
       probe.done();
-      const offset = cashFlowDetailPosition(point, element.getBoundingClientRect(), tooltip.getBoundingClientRect(), gap);
+      const offset = chartDetailPosition(point, element.getBoundingClientRect(), tooltip.getBoundingClientRect(), gap);
       tooltip.style.left = `${offset.left}px`;
       tooltip.style.top = `${offset.top}px`;
     };
@@ -113,7 +142,7 @@ export function CashFlowChart({
     resize.observe(element);
     resize.observe(tooltip);
     return () => resize.disconnect();
-  }, [activeIndex, focusedIndex, hoveredPoint, mountedChart, rows]);
+  }, [activeIndex, focusedIndex, hoveredIndex, hoveredPoint, mountedChart, rows]);
 
   if (empty) return <p className={cn('cb-cash-flow__empty', className)}>{emptyLabel}</p>;
   const from = reading.firstBelowIndex === null ? null : rows[reading.firstBelowIndex];

@@ -98,6 +98,15 @@ function ProgressCurveRoot({
         label={label}
         series={series}
         format={(value) => `${formatDetailNumber(value)}%`}
+        tooltipNote={({ actual, planned }) => {
+          if (actual === undefined || planned === undefined) return null;
+          const gap = actual - planned;
+          if (gap === 0) return onTrackLabel;
+          const magnitude = Math.abs(gap);
+          const amount = magnitude < 0.005 ? gapNumber(magnitude) : formatDetailNumber(magnitude);
+          const unit = magnitude === 1 && gapUnitLabel === 'points' ? 'point' : gapUnitLabel;
+          return `${amount} ${unit} ${gapWord(gap, { aheadLabel, behindLabel, onTrackLabel })}`;
+        }}
         range={{ min: 0, max: 100 }}
         mark={lastReport ? { day: lastReport, label: lastReportLabel } : undefined}
         height={height}

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { CashFlowChart } from './cash-flow.js';
 
@@ -19,6 +19,19 @@ describe('CashFlowChart', () => {
     fireEvent.focus(screen.getByRole('img', { name: /2026-10-05: In Rp 10/ }));
     expect(screen.getByTestId('cash-flow-detail')).toHaveTextContent('BalanceRp -10');
   });
+  it('dismisses exact details on Escape while keeping focus on the current period', () => {
+    render(<CashFlowChart label="Cash" opening={50} periods={PERIODS} format={money} formatPeriod={(day) => day} compact />);
+    const current = screen.getByRole('img', { name: /2026-10-05: In Rp 10/ });
+    const next = screen.getByRole('img', { name: /2026-10-12: In Rp 120/ });
+    act(() => current.focus());
+    expect(screen.getByTestId('cash-flow-detail')).toHaveTextContent('BalanceRp -10');
+    fireEvent.keyDown(current, { key: 'Escape' });
+    expect(screen.queryByTestId('cash-flow-detail')).not.toBeInTheDocument();
+    expect(current).toHaveFocus();
+    act(() => next.focus());
+    expect(screen.getByTestId('cash-flow-detail')).toHaveTextContent('BalanceRp 90');
+  });
+
   it('discloses an exact-value table instead of a second row of date labels', () => {
     const { container } = render(<CashFlowChart label="Cash" opening={50} periods={PERIODS} format={money}
       formatExact={(value) => `Exact ${value}`} formatPeriod={(day) => day}

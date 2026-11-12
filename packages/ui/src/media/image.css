@@ -1,0 +1,34 @@
+/* The preview canvas is opaque, but a zoomed image paints above it and behind the controls.
+   The substrate exposes no token for their translucent surfaces. Keep the controls readable
+   over the image with the same opaque ground as the canvas. */
+.cb-image-preview.ant-image-preview :is(
+  .ant-image-preview-close,
+  .ant-image-preview-switch,
+  .ant-image-preview-actions,
+  .ant-image-preview-progress
+),
+.cb-image-preview.ant-image-preview :is(.ant-image-preview-close, .ant-image-preview-switch):is(:hover, :active) {
+  background-color: var(--cb-image-preview-bg);
+}
+
+.cb-image-preview.ant-image-preview .ant-image-preview-progress {
+  padding: var(--cb-space-1) var(--cb-space-3);
+  border-radius: var(--cb-radius-full);
+}
+
+@media (max-width: 24rem) {
+  .cb-image-preview.ant-image-preview .ant-image-preview-actions {
+    max-inline-size: calc(100vi - var(--cb-space-2) * 2);
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--cb-space-1);
+    padding-inline: var(--cb-space-1);
+  }
+
+  .cb-image-preview.ant-image-preview .ant-image-preview-actions-action {
+    min-inline-size: var(--cb-control-floor-coarse);
+    min-block-size: var(--cb-control-floor-coarse);
+    align-items: center;
+    justify-content: center;
+  }
+}

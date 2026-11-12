@@ -1,8 +1,7 @@
 import { defineConfig } from 'tsup';
 
-// Two builds, not two entries of one build: the server entry must never inherit the
-// "use client" banner, and a shared chunk between them would carry the directive across
-// the server/client boundary.
+// The server and client builds stay separate so their chunks cannot carry the
+// "use client" directive across the boundary.
 export default defineConfig([
   {
     entry: ['src/index.ts'],
@@ -13,9 +12,25 @@ export default defineConfig([
     external: ['react', 'react-dom'],
   },
   {
-    entry: ['src/client.ts'],
+    entry: {
+      client: 'src/client.ts',
+      // Keep large runtimes separate from the helpers also used by eagerly loaded UI.
+      'internal/expression-editor': 'src/form/expression-editor/expression-editor.tsx',
+      'internal/worksheet': 'src/data/worksheet/worksheet.tsx',
+      'internal/schedule': 'src/data/schedule/schedule.tsx',
+      'internal/diagram': 'src/data/diagram/diagram.tsx',
+      'internal/diagram-editor': 'src/data/diagram/diagram-editor.tsx',
+      'internal/focus-recovery': 'src/focus/focus-recovery/focus-recovery.tsx',
+      'internal/css-probe': 'src/lib/css-probe.ts',
+      'internal/cn': 'src/lib/cn.ts',
+      'internal/media-query': 'src/lib/use-media-query.ts',
+      'internal/region-fullscreen': 'src/lib/use-region-fullscreen.ts',
+      'internal/time-series-math': 'src/data/time-series/time-series.math.ts',
+      'internal/pan-zoom-skeleton': 'src/data/pan-zoom-canvas/pan-zoom-canvas.skeleton.tsx',
+    },
     format: ['esm'],
-    dts: true,
+    splitting: true,
+    dts: { entry: ['src/client.ts'] },
     clean: false,
     treeshake: true,
     banner: { js: '"use client";' },

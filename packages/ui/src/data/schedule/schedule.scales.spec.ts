@@ -20,7 +20,7 @@ describe('scheduleScales', () => {
     ]);
   });
 
-  it('can draw week cells for a longer schedule without forcing a day-by-day scroll', () => {
+  it('draws weeks on one level so unequal calendar months cannot mislabel their dates', () => {
     const scales = scheduleScales(
       {
         month: () => 'September',
@@ -29,8 +29,8 @@ describe('scheduleScales', () => {
       },
       'week'
     );
-    expect(scales.map((scale) => scale.unit)).toEqual(['month', 'week']);
-    const formatter = scales[1]?.format;
+    expect(scales.map((scale) => scale.unit)).toEqual(['week']);
+    const formatter = scales[0]?.format;
     expect(typeof formatter === 'function' ? formatter(new Date('2026-09-27T00:00:00Z')) : null).toBe('Pekan 4');
   });
 });

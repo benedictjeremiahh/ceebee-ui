@@ -22,7 +22,7 @@ cash and is not one.
 Above the plot, one sentence gives the two figures a decision needs: the first period below the
 threshold and the lowest balance. The period selector marks a dip, including one hidden inside a period
 that later closes above the threshold. A dot marks the lowest point on the plot; the sentence supplies
-its exact figure. Lightweight Charts draws the bars, line, threshold, grid and numeric axis. Hover a
+its exact figure. Lightweight Charts draws the bars, line, threshold, grid and numeric axis. Hover or tap a
 period on the plot to read its exact inflow, outflow and closing balance without interpreting the
 compact axis labels. If the period's intra-period low differs from its close, the detail shows that too.
 
@@ -44,8 +44,10 @@ Read-only unless `onSelectPeriod` is given. Then each period is a button named w
 exact figures, `aria-pressed` for `selectedPeriod`, so the consumer can list what is behind it beside the chart.
 Keyboard focus on any period reveals the same exact-value detail as hover. Without an action callback,
 periods remain focusable labelled images, not buttons that promise an unavailable action.
-The detail follows the active period near the pointer, or its balance point during keyboard focus.
-It flips and stays within the chart bounds near an edge rather than jumping to the opposite chart edge.
+On a wide chart, the detail follows the pointer or the active period’s balance point. It flips
+near an edge to stay inside the chart. On a narrow chart, it appears below the plot and leaves
+the plotted values visible. A tap opens the reading without triggering `onSelectPeriod`. Escape
+closes the reading and keeps keyboard focus on the same control.
 Pass `periodControlsLabel` to put the exact-value table in an initially closed native disclosure.
 This leaves only the plot's date axis visible in a compact overview. Enter or Space on the summary
 opens rows with the period, inflow, outflow, optional adjustment and closing balance. Numbers use
@@ -53,7 +55,7 @@ opens rows with the period, inflow, outflow, optional adjustment and closing bal
 when `onSelectPeriod` is provided they retain their selection buttons and keyboard detail.
 Use `periodLabel` to translate the period column heading. Do not label a date-only selector as an
 exact-amount table.
-For a read-only overview where hover details are sufficient, omit `periodControlsLabel` and pass
+For a read-only overview where plot inspection is sufficient, omit `periodControlsLabel` and pass
 `compact`. Period controls stay visually hidden until keyboard focus, while exact values remain
 available in the screen-reader table. Do not add a second visible table merely to repeat the plot.
 
@@ -78,7 +80,7 @@ assumption. The chart has no entry animation, including under reduced motion.
   { name: 'opening', type: 'number', description: 'The balance before the first period. Required.' },
   { name: 'periods', type: 'CashFlowPeriod[]', description: '`{ id, start, inflow, outflow, adjustment?, low? }` in order; adjustments affect balance, not flow bars; `low` is the lowest balance within the period.' },
   { name: 'format', type: '(value: number) => string', description: 'How a value is written. The product owns this.' },
-  { name: 'formatExact', type: '(value: number) => string', default: 'format', description: 'Full-precision values for hover, focused period buttons and the accessible table.' },
+  { name: 'formatExact', type: '(value: number) => string', default: 'format', description: 'Full-precision values for hover, tap, focused periods and the accessible table.' },
   { name: 'formatPeriod', type: '(start: string) => string', description: 'How a period is named. Defaults to its start day.' },
   { name: 'threshold', type: '{ value: number; label?: string }', default: '{ value: 0 }', description: 'The line the balance is read against.' },
   { name: 'onSelectPeriod', type: '(id: string) => void', description: 'Makes each period a button.' },

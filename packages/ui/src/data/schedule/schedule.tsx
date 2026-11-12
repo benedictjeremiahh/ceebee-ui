@@ -16,7 +16,7 @@ import { ScheduleBar } from './schedule-bar.js';
 import { ScheduleControls } from './schedule-controls.js';
 import { ScheduleSkeleton } from './schedule.skeleton.js';
 import { ScheduleCells, ScheduleNameCell, ScheduleProgressCell, ScheduleVarianceCell } from './schedule-cells.js';
-import { scheduleScales } from './schedule.scales.js';
+import { fitScheduleScale, scheduleScales } from './schedule.scales.js';
 import { useScheduleGridColor } from './use-schedule-grid-color.js';
 import { useScheduleFullscreen } from './use-schedule-fullscreen.js';
 import { ScheduleFullscreenTools } from './schedule-fullscreen-tools.js';
@@ -80,11 +80,14 @@ function ScheduleRoot({
   }, [items.length]);
   const compact = width === null ? narrow : width < (mode === 'physical' ? 760 : 680);
   const chartNarrow = chartMode.color === gridColor && chartMode.narrow;
+  const measured = width !== null && width > 0;
+  const chartReady = mounted && measured && Boolean(gridColor) && chartMode.color === gridColor;
   useEffect(() => {
-    if (!mounted || !gridColor) return;
+    // The substrate measures synchronously. Its first draw needs the actual pane and mode.
+    if (!mounted || !measured || !gridColor) return;
     const frame = requestAnimationFrame(() => setChartMode({ color: gridColor, narrow: compact }));
     return () => cancelAnimationFrame(frame);
-  }, [mounted, compact, gridColor]);
+  }, [mounted, measured, compact, gridColor]);
   const [localExpanded, setLocalExpanded] = useState<ReadonlySet<string>>(new Set());
   const expanded = useMemo(
     () => (controlledExpanded ? new Set(controlledExpanded) : localExpanded),
@@ -107,9 +110,12 @@ function ScheduleRoot({
     { start: Infinity, end: -Infinity }
   );
   const physical = mode === 'physical';
-  const selectedScale = physical ? navigation.scale : scale;
   const gridWidth = chartNarrow ? 112 : physical ? 550 : 380;
   const rangeDays = (bounds.end - bounds.start) / 86400000 + 4;
+  const initialScale = physical && !navigation.initialized && rows.length > 0 && chartReady
+    ? fitScheduleScale(rangeDays, (width ?? 0) - gridWidth)
+    : null;
+  const selectedScale = physical ? initialScale ?? navigation.scale : scale;
   const units =
     selectedScale === 'day'
       ? rangeDays
@@ -126,12 +132,9 @@ function ScheduleRoot({
       ? 44
       : 120;
   useEffect(() => {
-    if (!physical || !width || navigation.initialized || !rows.length) return;
-    const available = width - gridWidth;
-    const fitScale =
-      rangeDays * 44 <= available ? 'day' : (Math.ceil(rangeDays / 7) + 1) * 70 <= available ? 'week' : 'month';
-    changeView({ ...navigation, scale: fitScale, initialized: true });
-  }, [physical, width, navigation.initialized]);
+    if (!initialScale) return;
+    changeView({ ...navigation, scale: initialScale, initialized: true });
+  }, [initialScale]);
   const axisKey = `${gridColor}:${selectedScale}:${cellWidth}:${today ?? ''}:${bounds.start}:${bounds.end}`;
   const itemById = useMemo(() => new Map(hierarchy.visible.map((item) => [item.id, item])), [hierarchy]);
   // An undated row still needs a slot in the grid; its bar is never drawn, so the anchor day is inert.
@@ -192,8 +195,8 @@ function ScheduleRoot({
       ) : null}
       {compact ? <p className="cb-schedule__pan">{text.pan}</p> : null}
       <ScheduleScaleLabels labels={clippedScaleLabels} label={text.calendarLabels} />
-      <div className="cb-schedule__chart" style={{ height: presentation.mode === 'inline' ? height : undefined }} aria-busy={!mounted || !gridColor}>
-        {mounted && gridColor ? (
+      <div className="cb-schedule__chart" style={{ height: presentation.mode === 'inline' ? height : undefined }} aria-busy={!chartReady}>
+        {chartReady ? (
           <ScheduleCells rows={rowById} text={text} onItemOpen={onItemOpen} itemHref={itemHref}
             onChildOpen={onChildOpen} items={itemById}
             hierarchy={hierarchy} expanded={expanded} onToggle={toggle}>

@@ -3,6 +3,7 @@ import { Button, Segmented } from 'antd';
 import type { IApi } from '@svar-ui/react-gantt';
 import type { RefObject } from 'react';
 import { dayForGantt, dayToDate } from './schedule.math.js';
+import { fitScheduleScale } from './schedule.scales.js';
 import type { ResolvedScheduleLabels, ScheduleView } from './schedule.types.js';
 
 export function ScheduleControls({
@@ -29,9 +30,7 @@ export function ScheduleControls({
       <Button
         size="small"
         onClick={() => {
-          const available = (width ?? 1100) - gridWidth;
-          const scale =
-            rangeDays * 44 <= available ? 'day' : (Math.ceil(rangeDays / 7) + 1) * 70 <= available ? 'week' : 'month';
+          const scale = fitScheduleScale(rangeDays, (width ?? 1100) - gridWidth);
           onChange({ scale, fit: true, left: 0, top: navigation.top, initialized: true });
           void api.current?.exec('scroll-chart', { left: 0 });
         }}
@@ -59,7 +58,7 @@ export function ScheduleControls({
       <Segmented<'day' | 'week' | 'month'>
         size="small"
         className="cb-schedule__scales"
-        aria-label={text.fullSchedule}
+        aria-label={text.scaleLabel}
         value={navigation.scale}
         options={[
           { value: 'day', label: text.dayScale },

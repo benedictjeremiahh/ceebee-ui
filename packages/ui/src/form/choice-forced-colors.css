@@ -1,0 +1,56 @@
+@media (forced-colors: active) {
+  /* The canvas replaces the selected fill. Keep the existing marks visible. */
+  .ant-checkbox.ant-checkbox-checked,
+  .ant-checkbox.ant-checkbox-indeterminate,
+  .ant-radio.ant-radio-checked {
+    border-color: CanvasText;
+  }
+
+  .ant-checkbox.ant-checkbox-checked::after {
+    forced-color-adjust: none;
+    border-color: CanvasText;
+  }
+
+  .ant-checkbox.ant-checkbox-indeterminate::after,
+  .ant-radio.ant-radio-checked::after {
+    forced-color-adjust: none;
+    background-color: CanvasText;
+  }
+
+  .ant-checkbox.ant-checkbox-disabled,
+  .ant-radio.ant-radio-disabled {
+    border-color: GrayText;
+  }
+
+  .ant-checkbox.ant-checkbox-checked.ant-checkbox-disabled::after {
+    border-color: GrayText;
+  }
+
+  .ant-checkbox.ant-checkbox-indeterminate.ant-checkbox-disabled::after,
+  .ant-radio.ant-radio-checked.ant-radio-disabled::after {
+    background-color: GrayText;
+  }
+
+  /* Draw the track without changing the switch geometry or focus outline. */
+  .ant-switch::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: var(--cb-border-width) solid CanvasText;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .ant-switch .ant-switch-handle::before {
+    forced-color-adjust: none;
+    background-color: CanvasText;
+  }
+
+  .ant-switch:disabled::before {
+    border-color: GrayText;
+  }
+
+  .ant-switch:disabled .ant-switch-handle::before {
+    background-color: GrayText;
+  }
+}

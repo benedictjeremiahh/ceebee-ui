@@ -60,6 +60,12 @@ export interface TimeSeriesChartProps {
   series: SeriesSpec[];
   /** Turns a value into the text on the price scale and in the table. */
   format: (value: number) => string;
+  /** Exact reading for a tooltip when the axis uses abbreviations. Defaults to format. */
+  formatTooltip?: (value: number) => string;
+  /** Locale-specific display for a series without a point on the selected day. */
+  missingPointLabel?: string;
+  /** Optional contextual reading, computed from the exact series points displayed in the tooltip. */
+  tooltipNote?: (values: Readonly<Record<string, number | undefined>>) => string | null;
   range?: ValueRange;
   /** Draws one series against a base value, shaded above and below. Only the first series is drawn. */
   baseline?: Baseline;

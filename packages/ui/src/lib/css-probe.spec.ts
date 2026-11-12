@@ -19,6 +19,7 @@ function host(styles: Record<string, string>) {
 
 afterEach(() => {
   vi.restoreAllMocks();
+  vi.unstubAllGlobals();
   document.body.replaceChildren();
 });
 
@@ -85,6 +86,34 @@ describe('createCssProbe', () => {
 });
 
 describe('responsive token changes', () => {
+  it('refreshes when the root text unit changes and removes its probe on cleanup', () => {
+    let resize: (() => void) | undefined;
+    const observe = vi.fn((_probe: HTMLElement) => {});
+    const disconnect = vi.fn();
+    vi.stubGlobal('ResizeObserver', class {
+      constructor(callback: () => void) { resize = callback; }
+      observe = observe;
+      disconnect = disconnect;
+    });
+    let width = 16;
+    vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(() => new DOMRect(0, 0, width, 0));
+    const refresh = vi.fn();
+    const stop = watchTokens(refresh);
+    try {
+      const probe = observe.mock.calls[0]?.[0];
+      if (!probe) throw new Error('Expected a root text-size probe');
+      expect(probe.style.width).toBe('1rem');
+      resize?.();
+      expect(refresh).not.toHaveBeenCalled();
+      width = 32;
+      resize?.();
+      resize?.();
+      expect(refresh).toHaveBeenCalledTimes(1);
+    } finally { stop(); }
+    expect(disconnect).toHaveBeenCalledOnce();
+    expect(observe.mock.calls[0]?.[0]?.isConnected).toBe(false);
+  });
+
   it('watches the canonical coarse-or-compact token query and removes its listener on cleanup', () => {
     const original = window.matchMedia;
     const compact = original('(pointer: coarse), (max-width: 48rem)');

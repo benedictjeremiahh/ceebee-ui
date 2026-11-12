@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { generatedCeebeeAntSeeds } from './ant-theme-seeds.generated.js';
 
@@ -34,6 +36,11 @@ const TONES = ['colorPrimary', 'colorInfo', 'colorSuccess', 'colorWarning', 'col
 const SURFACES = ['colorBgContainer', 'colorBgBase', 'colorBgElevated'] as const;
 
 describe('tone contrast', () => {
+  it('resolves keyboard focus to the accessible brand tone', () => {
+    const skin = readFileSync(resolve(process.cwd(), 'packages/ui/src/tokens/skin.css'), 'utf8');
+    expect(skin).toMatch(/--cb-focus:\s*var\(--cb-tone-brand\);/);
+  });
+
   it('covers every seed', () => {
     expect(seeds.length).toBeGreaterThan(0);
   });

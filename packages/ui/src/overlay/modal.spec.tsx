@@ -26,6 +26,12 @@ function ConditionalModal() {
 }
 
 describe('Modal', () => {
+  it('retains a caller close class beside its shared close-target class', () => {
+    render(<Modal open title="Details" classNames={{ close: 'custom-close' }} />);
+    const close = screen.getByRole('button', { name: 'Close' });
+    expect(close).toHaveClass('custom-close', 'cb-modal__close');
+  });
+
   it('keeps the title and description as distinct accessible relationships', async () => {
     render(<ConditionalModal />);
     fireEvent.click(screen.getByRole('button', { name: 'Open details' }));

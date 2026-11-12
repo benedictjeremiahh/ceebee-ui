@@ -16,8 +16,9 @@
   border-start-end-radius: calc(var(--cb-radius-lg) - var(--cb-border-width));
   border-start-start-radius: calc(var(--cb-radius-lg) - var(--cb-border-width));
   display: flex;
+  flex-wrap: wrap;
   gap: var(--cb-space-3);
-  justify-content: space-between;
+  justify-content: flex-end;
   min-block-size: var(--cb-control-height-lg);
   padding: var(--cb-space-2) var(--cb-space-3);
 }
@@ -25,9 +26,23 @@
 .cb-fullscreen-region__tools {
   align-items: center;
   display: flex;
-  flex: 1;
+  flex: 1 1 var(--cb-control-floor);
+  flex-wrap: wrap;
   gap: var(--cb-space-2);
   min-inline-size: 0;
+}
+
+.cb-fullscreen-region__tools > .ant-btn-icon-only {
+  flex: none;
+  min-inline-size: var(--cb-control-floor);
+}
+
+.cb-fullscreen-region__toolbar > .ant-btn {
+  block-size: auto;
+  max-inline-size: 100%;
+  min-block-size: var(--cb-control-height-sm);
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .cb-fullscreen-region__hint {

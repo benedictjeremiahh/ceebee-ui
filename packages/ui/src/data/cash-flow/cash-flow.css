@@ -4,6 +4,7 @@
   flex-direction: column;
   gap: var(--cb-space-3);
   min-inline-size: 0;
+  container: cb-cash-flow / inline-size;
   font-family: var(--cb-font-sans);
   color: var(--cb-fg);
   --cb-cash-flow-in: var(--cb-tone-success);
@@ -49,6 +50,17 @@
 .cb-cash-flow__detail dl > div { display: flex; justify-content: space-between; gap: var(--cb-space-4); }
 .cb-cash-flow__detail dt { color: var(--cb-fg-muted); }
 .cb-cash-flow__detail dd { margin: 0; text-align: end; }
+@container cb-cash-flow (max-width: 24rem) {
+  .cb-cash-flow__detail {
+    position: static;
+    margin-block-start: var(--cb-space-3);
+    inline-size: auto;
+    max-inline-size: none;
+    pointer-events: auto;
+  }
+  .cb-cash-flow__detail dt,
+  .cb-cash-flow__detail dd { overflow-wrap: anywhere; }
+}
 .cb-cash-flow__periods {
   display: flex;
   flex-wrap: wrap;

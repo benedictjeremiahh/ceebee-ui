@@ -96,7 +96,9 @@ describe('Image preview labels', () => {
       </LabelsProvider>,
     );
 
-    const controls = within(await previewRoot());
+    const preview = await previewRoot();
+    expect(preview).toHaveClass('cb-image-preview');
+    const controls = within(preview);
     expect(controls.getByRole('button', { name: 'Gambar sebelumnya' })).toBeDisabled();
     fireEvent.click(controls.getByRole('button', { name: 'Gambar berikutnya' }));
     expect(onChange).toHaveBeenCalledWith(1, 0);
@@ -173,6 +175,7 @@ describe('Image preview labels', () => {
 
     const preview = await previewRoot();
     expect(preview).toHaveClass('consumer-image');
+    expect(preview).toHaveClass('cb-image-preview');
     expect(preview.className.split(' ').some((name) => name.startsWith('cb-image-preview-'))).toBe(true);
     expect(within(preview).getByRole('button', { name: 'Perbesar' })).toBeInTheDocument();
   });

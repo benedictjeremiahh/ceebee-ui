@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { ProgressCurve } from './progress-curve';
 
@@ -14,6 +14,29 @@ describe('ProgressCurve fractional gaps', () => {
     expect(reading).toHaveTextContent(`less than 0.1 points ${direction}`);
     expect(reading).toHaveAttribute('data-state', state);
     expect(reading).not.toHaveTextContent('0 points');
+  });
+
+  it('reads the gap on each selected date and leaves a future plan-only point unqualified', () => {
+    render(<ProgressCurve label="Site progress"
+      planned={[
+        { day: '2026-09-01', percent: 10.53 }, { day: '2026-09-08', percent: 20 },
+        { day: '2026-09-15', percent: 30 }, { day: '2026-09-22', percent: 40 },
+      ]}
+      actual={[
+        { day: '2026-09-01', percent: 8.41 }, { day: '2026-09-08', percent: 23 },
+        { day: '2026-09-15', percent: 30 },
+      ]}
+      formatDetailNumber={value => value.toFixed(2).replace('.', ',')}
+      gapUnitLabel="poin" behindLabel="tertinggal" aheadLabel="di atas rencana" onTrackLabel="sesuai rencana" />);
+    const chart = screen.getByRole('img', { name: 'Site progress' });
+    for (const text of ['2,12 poin tertinggal', '3,00 poin di atas rencana', 'sesuai rencana']) {
+      fireEvent.keyDown(chart, { key: 'ArrowRight' });
+      expect(screen.getByRole('status')).toHaveTextContent(text);
+    }
+    fireEvent.keyDown(chart, { key: 'ArrowRight' });
+    const future = screen.getByRole('status');
+    expect(future).toHaveTextContent('Actual—');
+    expect(future).not.toHaveTextContent(/poin|sesuai rencana/);
   });
 
   it('lets a consumer format the gap magnitude independently from progress percentages', () => {

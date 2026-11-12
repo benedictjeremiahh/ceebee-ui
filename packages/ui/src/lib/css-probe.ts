@@ -24,17 +24,21 @@ export interface CssProbe {
  * rather than at the document's.
  */
 export function createCssProbe(root: HTMLElement): CssProbe {
-  const probe = document.createElement('span');
-  probe.style.position = 'fixed';
-  probe.style.pointerEvents = 'none';
-  probe.style.visibility = 'hidden';
-  root.append(probe);
-
+  const probe = appendProbe(root);
   return {
     color: (name) => resolveCssColor(probe, name),
     length: (name) => resolveCssLength(probe, name),
     done: () => probe.remove(),
   };
+}
+
+function appendProbe(root: HTMLElement): HTMLElement {
+  const probe = document.createElement('span');
+  probe.style.position = 'fixed';
+  probe.style.pointerEvents = 'none';
+  probe.style.visibility = 'hidden';
+  root.append(probe);
+  return probe;
 }
 
 export function resolveCssLength(probe: HTMLElement, name: string): number | undefined {
@@ -73,6 +77,22 @@ export function resolveCssColor(probe: HTMLElement, name: string): string | unde
 
 const SKIN_LINK_ID = 'cb-skin';
 
+function watchRootTextSize(onChange: () => void): () => void {
+  if (typeof ResizeObserver === 'undefined') return () => {};
+  const probe = appendProbe(document.body);
+  // Watch a root-relative length so viewport or page-content resizing alone cannot refresh the seed.
+  probe.style.width = '1rem';
+  let width = probe.getBoundingClientRect().width;
+  const observer = new ResizeObserver(() => {
+    const nextWidth = probe.getBoundingClientRect().width;
+    if (nextWidth === width) return;
+    width = nextWidth;
+    onChange();
+  });
+  observer.observe(probe);
+  return () => { observer.disconnect(); probe.remove(); };
+}
+
 /**
  * Calls back whenever the resolved value of a Token could have changed, and returns the unsubscribe.
  *
@@ -81,6 +101,7 @@ const SKIN_LINK_ID = 'cb-skin';
  * a calendar using the wrong cell width.
  */
 export function watchTokens(onChange: () => void): () => void {
+  const stopWatchingTextSize = watchRootTextSize(onChange);
   const rootObserver = new MutationObserver(onChange);
   rootObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
@@ -107,6 +128,7 @@ export function watchTokens(onChange: () => void): () => void {
   compact.addEventListener('change', onChange);
 
   return () => {
+    stopWatchingTextSize();
     rootObserver.disconnect();
     headObserver.disconnect();
     document.removeEventListener('load', onSkinLoad, true);

@@ -1,4 +1,5 @@
-import type { Time } from 'lightweight-charts';
+import type { ChartPoint } from '../chart-detail-position.js';
+import type { MouseEventParams, Time } from 'lightweight-charts';
 import { dayOf, niceRange, valueSpan, type SeriesPoint } from './time-series.math.js';
 import type { Baseline, ChartPalette, SeriesSpec, ValueRange } from './time-series.types.js';
 
@@ -16,6 +17,7 @@ import type { Baseline, ChartPalette, SeriesSpec, ValueRange } from './time-seri
 export interface MountedChart {
   setData(series: readonly { points: readonly SeriesPoint[] }[]): void;
   mark(day: string | null, text: string): void;
+  pointAt(day: string): ChartPoint | null;
   applyPalette(palette: ChartPalette): void;
   destroy(): void;
 }
@@ -27,6 +29,7 @@ export interface ChartShape {
   tickMark?: (day: string) => string;
   /** A crosshair's day in the product's words. Omitted, the substrate's own date stands. */
   formatDay?: (day: string) => string;
+  onPoint?: (day: string, point: ChartPoint) => void;
   range?: ValueRange;
   baseline?: Baseline;
 }
@@ -147,6 +150,26 @@ export async function mountTimeSeries(
     });
   };
   apply(palette);
+  if (shape.onPoint) {
+    const onPoint = shape.onPoint;
+    const selectPoint = ({ time, point, seriesData }: MouseEventParams<Time>) => {
+      if (time === undefined || !point) return;
+      const x = chart.timeScale().timeToCoordinate(time) ?? point.x;
+      let y = point.y;
+      let distance = Number.POSITIVE_INFINITY;
+      for (const series of drawn) {
+        const datum = seriesData.get(series);
+        if (!datum || !('value' in datum) || typeof datum.value !== 'number') continue;
+        const coordinate = series.priceToCoordinate(datum.value);
+        if (coordinate === null || Math.abs(coordinate - point.y) >= distance) continue;
+        y = coordinate;
+        distance = Math.abs(coordinate - point.y);
+      }
+      onPoint(dayOf(time), { x, y });
+    };
+    chart.subscribeCrosshairMove(selectPoint);
+    chart.subscribeClick(selectPoint);
+  }
 
   return {
     setData(series) {
@@ -166,6 +189,17 @@ export async function mountTimeSeries(
         color: current.series[current.series.length - 1] ?? current.text,
         text,
       }]);
+    },
+    pointAt(day) {
+      const x = chart.timeScale().timeToCoordinate(day);
+      if (x === null) return null;
+      for (const [index, series] of drawn.entries()) {
+        const value = shape.series[index]?.points.find(point => point.day === day)?.value;
+        if (value === undefined) continue;
+        const y = series.priceToCoordinate(value);
+        if (y !== null) return { x, y };
+      }
+      return null;
     },
     applyPalette: apply,
     destroy() {

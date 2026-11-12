@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
+import { chartDetailPosition, type ChartPoint } from '../chart-detail-position.js';
 import { cn } from '../../lib/cn.js';
 import { createCssProbe, watchTokens } from '../../lib/css-probe.js';
 import { useDocumentLocale } from '../../lib/use-document-locale.js';
@@ -26,6 +27,9 @@ export function TimeSeriesChart({
   label,
   series,
   format,
+  formatTooltip = format,
+  missingPointLabel = '—',
+  tooltipNote,
   range,
   baseline,
   mark,
@@ -41,6 +45,9 @@ export function TimeSeriesChart({
 }: TimeSeriesChartProps) {
   const locale = useDocumentLocale(givenLocale);
   const host = useRef<HTMLDivElement>(null);
+  const chartRef = useRef<MountedChart | null>(null);
+  const tooltip = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState<{ day: string; anchor: ChartPoint | null; keyboard: boolean }>();
   const [forcedColors, setForcedColors] = useState(false);
 
   const cleaned = useMemo(
@@ -49,6 +56,52 @@ export function TimeSeriesChart({
   );
   const rows = useMemo(() => alignRows(cleaned), [cleaned]);
   const empty = rows.length === 0;
+  const point = active && rows.some(row => row.day === active.day) ? active : undefined;
+  const pointSeries = point ? (baseline ? cleaned.slice(0, 1) : cleaned).map(one => ({
+    key: one.key, label: one.label, value: one.points.find(reading => reading.day === point.day)?.value,
+  })) : [];
+  const note = point && tooltipNote ? tooltipNote(Object.fromEntries(pointSeries.map(one => [one.key, one.value]))) : null;
+  const navigatePoints = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Escape' && point) {
+      event.stopPropagation();
+      setActive(undefined);
+      return;
+    }
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    const selectedIndex = rows.findIndex(row => row.day === point?.day);
+    const direction = event.key === 'ArrowLeft' ? -1 : 1;
+    const next = rows[selectedIndex < 0 ? (direction < 0 ? rows.length - 1 : 0)
+      : Math.max(0, Math.min(rows.length - 1, selectedIndex + direction))];
+    if (next) setActive({ day: next.day, anchor: null, keyboard: true });
+  };
+  useEffect(() => {
+    if (!point || point.keyboard) return;
+    const dismiss = (event: globalThis.KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      event.stopPropagation();
+      setActive(undefined);
+    };
+    window.addEventListener('keydown', dismiss, true);
+    return () => window.removeEventListener('keydown', dismiss, true);
+  }, [point]);
+  useLayoutEffect(() => {
+    const plot = host.current, detail = tooltip.current;
+    if (!point || !plot || !detail) return;
+    const place = () => {
+      const anchor = point.anchor ?? chartRef.current?.pointAt(point.day) ?? { x: 0, y: 0 };
+      const gap = Number.parseFloat(getComputedStyle(detail).paddingBlockStart) || 0;
+      const offset = chartDetailPosition(anchor, plot.getBoundingClientRect(), detail.getBoundingClientRect(), gap);
+      detail.style.left = `${offset.left}px`;
+      detail.style.top = `${offset.top}px`;
+    };
+    place();
+    if (typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(place);
+    observer.observe(plot);
+    observer.observe(detail);
+    return () => observer.disconnect();
+  }, [point]);
   const markDay = useMemo(
     () => (mark ? nearestDay(rows.map((row) => row.day), mark.day) : null),
     [rows, mark],
@@ -92,6 +145,9 @@ export function TimeSeriesChart({
         baseline,
         tickMark: (day) => readableDay(day, locale, 'short'),
         formatDay: (day) => readableDay(day, locale),
+        onPoint: (day, anchor) => setActive(previous =>
+          previous?.day === day && previous.anchor?.x === anchor.x && previous.anchor.y === anchor.y && !previous.keyboard
+            ? previous : { day, anchor, keyboard: false }),
       },
       palette,
     ).then((mounted) => {
@@ -100,6 +156,7 @@ export function TimeSeriesChart({
         return;
       }
       chart = mounted;
+      chartRef.current = mounted;
       /* The Tokens are re-read here rather than reused from before the import. The substrate is loaded
          asynchronously, so a theme applied during that gap — which is exactly what a page restoring a
          saved theme after first paint does — would otherwise be missed by the watcher below (there was
@@ -124,6 +181,7 @@ export function TimeSeriesChart({
       stopWatchingTokens();
       chart?.destroy();
       chart = null;
+      chartRef.current = null;
     };
   }, [cleaned, tokens, format, range, baseline, markDay, mark, empty, forcedColors, loading, locale]);
 
@@ -137,7 +195,17 @@ export function TimeSeriesChart({
           would still be announced as an image, and would still hold a chart's worth of blank space,
           which is a worse answer than the table taking its place. */}
       {empty || forcedColors ? null : (
-        <div ref={host} className="cb-chart__canvas" style={{ height }} role="img" aria-label={label} />
+        <div className="cb-chart__plot" onMouseLeave={() => setActive(previous => previous?.keyboard ? previous : undefined)}>
+          <div ref={host} className="cb-chart__canvas" style={{ height }} role="img" aria-label={label}
+            tabIndex={0} aria-keyshortcuts="ArrowLeft ArrowRight Escape" onKeyDown={navigatePoints} onBlur={() => setActive(previous => previous?.keyboard ? undefined : previous)} />
+          {point ? <div ref={tooltip} className="cb-chart__tooltip" role={point.keyboard ? 'status' : 'tooltip'}>
+            <time dateTime={point.day}>{readableDay(point.day, locale)}</time>
+            <dl>{pointSeries.map(one => <div key={one.key}>
+              <dt>{one.label}</dt><dd>{one.value === undefined ? missingPointLabel : formatTooltip(one.value)}</dd>
+            </div>)}</dl>
+            {note ? <p className="cb-chart__tooltip-note">{note}</p> : null}
+          </div> : null}
+        </div>
       )}
 
       {showLegend && !empty && !forcedColors ? (

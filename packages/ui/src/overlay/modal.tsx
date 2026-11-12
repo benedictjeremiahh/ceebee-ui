@@ -108,11 +108,13 @@ function ModalRoot({
           ...resolved,
           wrapper: cn('cb-modal', resolvedLayer === 'above-drawer' && 'cb-modal--above-drawer', resolved.wrapper),
           mask: cn('cb-modal__backdrop', resolvedLayer === 'above-drawer' && 'cb-modal--above-drawer-backdrop', resolved.mask),
+          close: cn('cb-modal__close', resolved.close),
         };
       }
     : {
         ...classNames,
         wrapper: cn('cb-modal', resolvedLayer === 'above-drawer' && 'cb-modal--above-drawer', classNames?.wrapper),
+        close: cn('cb-modal__close', classNames?.close),
         mask: cn(
           'cb-modal__backdrop',
           resolvedLayer === 'above-drawer' && 'cb-modal--above-drawer-backdrop',

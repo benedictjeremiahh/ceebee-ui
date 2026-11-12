@@ -1,7 +1,7 @@
-import type { Time } from 'lightweight-charts';
+import type { MouseEventParams, Time } from 'lightweight-charts';
 import { dayOf } from '../time-series/time-series.math.js';
 import type { CashFlowRow } from './cash-flow.math.js';
-import type { CashFlowAnchor } from './cash-flow.detail.js';
+import type { ChartPoint } from '../chart-detail-position.js';
 
 interface PlotPoint { time: string; value: number }
 
@@ -45,7 +45,8 @@ export function cashFlowPlot(opening: number, rows: readonly CashFlowRow[]): Cas
 
 export interface MountedCashFlow {
   applyPalette(palette: CashFlowPalette): void;
-  pointAt(index: number): CashFlowAnchor | null;
+  pointAt(index: number): ChartPoint | null;
+  highlight(index: number | null): void;
   destroy(): void;
 }
 
@@ -58,7 +59,8 @@ export async function mountCashFlow(
   threshold: number,
   lowest: { index: number; value: number } | null,
   initialPalette: CashFlowPalette,
-  onHover?: (index: number | null, point: CashFlowAnchor | null) => void,
+  onHover?: (index: number | null, point: ChartPoint | null) => void,
+  onInspect?: (index: number | null) => void,
 ): Promise<MountedCashFlow> {
   const { ColorType, HistogramSeries, LineSeries, LineStyle, createChart, createSeriesMarkers } =
     await import('lightweight-charts');
@@ -71,7 +73,7 @@ export async function mountCashFlow(
     handleScroll: false,
     handleScale: false,
     timeScale: { tickMarkFormatter: periodName, fixLeftEdge: true, fixRightEdge: true },
-    localization: { priceFormatter: format, timeFormatter: periodName },
+    localization: { priceFormatter: (value: number) => format(value === 0 ? 0 : value), timeFormatter: periodName },
   });
   const common = { priceLineVisible: false, lastValueVisible: false };
   const incoming = chart.addSeries(HistogramSeries, { ...common, base: 0 });
@@ -95,19 +97,24 @@ export async function mountCashFlow(
   const resizeObserver = new ResizeObserver(() => chart.timeScale().fitContent());
   resizeObserver.observe(host);
   const indexByTime = new Map(plot.inflow.map((point, index) => [point.time, index]));
-  const pointAt = (index: number): CashFlowAnchor | null => {
+  const pointAt = (index: number): ChartPoint | null => {
     const row = plot.balance[index + 1];
     if (!row) return null;
     const x = chart.timeScale().timeToCoordinate(row.time);
     const y = running.priceToCoordinate(row.value);
     return x === null || y === null ? null : { x, y };
   };
-  const handleCrosshairMove = (param: { time?: Time; point?: CashFlowAnchor }) => {
-    const index = param.time === undefined ? undefined : indexByTime.get(dayOf(param.time));
-    const point = index === undefined || !param.point ? null : pointAt(index);
+  const periodIndex = ({ time, point }: MouseEventParams) =>
+    time === undefined || !point ? undefined : indexByTime.get(dayOf(time));
+  const handleCrosshairMove = (param: MouseEventParams) => {
+    const index = periodIndex(param);
+    const point = index === undefined ? null : pointAt(index);
     onHover?.(point ? index ?? null : null, point && param.point ? { x: point.x, y: param.point.y } : null);
   };
+  // Lightweight Charts routes both a mouse click and a touch tap through this subscription.
+  const handleClick = (param: MouseEventParams) => onInspect?.(periodIndex(param) ?? null);
   chart.subscribeCrosshairMove(handleCrosshairMove);
+  chart.subscribeClick(handleClick);
 
   const applyPalette = (palette: CashFlowPalette) => {
     chart.applyOptions({
@@ -134,9 +141,15 @@ export async function mountCashFlow(
   return {
     applyPalette,
     pointAt,
+    highlight: (index) => {
+      const row = index === null ? undefined : plot.balance[index + 1];
+      if (row) chart.setCrosshairPosition(row.value, row.time, running);
+      else chart.clearCrosshairPosition();
+    },
     destroy: () => {
       resizeObserver.disconnect();
       chart.unsubscribeCrosshairMove(handleCrosshairMove);
+      chart.unsubscribeClick(handleClick);
       chart.remove();
     },
   };
