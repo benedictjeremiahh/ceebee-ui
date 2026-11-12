@@ -1,5 +1,11 @@
 # @ceebee/ui
 
+## 2.10.0
+
+### Minor Changes
+
+- b47b44a: Add accessible inspection and contextual readings to time-series charts. Improve progress and cash-flow detail, Schedule initialization, overlay controls, and forced-color focus indicators.
+
 ## 2.9.2
 
 ### Patch Changes
