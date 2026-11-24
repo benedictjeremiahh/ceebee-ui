@@ -1,12 +1,13 @@
 'use client';
 
-import { Background, ConnectionMode, ControlButton, Controls, ReactFlow, type ReactFlowProps } from '@xyflow/react';
+import { Background, ConnectionMode, ControlButton, Controls, ReactFlow, type Edge, type Node, type ReactFlowProps } from '@xyflow/react';
 import { Tooltip } from 'antd';
 import { Maximize2 } from 'lucide-react';
-import { useId, useMemo, useRef } from 'react';
+import { useCallback, useId, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
 import { DiagramLegend, type DiagramLegendEntry, DiagramOutline, FIT_VIEW, NODE_TYPES, safeId, useCellSize, SCROLL_PANS } from './diagram-flow.js';
 import { toFlowEdges, toFlowNodes } from './diagram.math.js';
 import { DiagramSkeleton, type DiagramSkeletonProps } from './diagram.skeleton.js';
+import { describeSelection, type DiagramSelection, type DiagramSelectionTarget } from './diagram.selection.js';
 import type { DiagramEdge, DiagramNode, DiagramShape } from './diagram.types.js';
 
 export interface DiagramProps {
@@ -35,25 +36,62 @@ export interface DiagramProps {
    */
   onMaximize?: () => void;
   maximizeLabel?: string;
+  /**
+   * Opt-in reading panel beside the canvas (below it on a narrow screen), the same one DiagramEditor offers.
+   * Given, a node or edge can be chosen by click, or by focusing it and pressing Enter or Space, and the panel
+   * renders what is chosen in a person's terms; `null` when nothing is, so render a hint then. Without it the
+   * drawing stays inert.
+   */
+  renderInspector?: (selection: DiagramSelection | null) => ReactNode;
+  /** Accessible name for the inspector panel. */
+  inspectorLabel?: string;
+}
+
+function targetOf(element: EventTarget | null): DiagramSelectionTarget {
+  if (!(element instanceof Element)) return null;
+  const node = element.closest('.react-flow__node')?.getAttribute('data-id');
+  if (node) return { kind: 'node', id: node };
+  const edge = element.closest('.react-flow__edge')?.getAttribute('data-id');
+  return edge ? { kind: 'edge', id: edge } : null;
 }
 
 /**
  * A read-only drawing of nodes joined by arrows, on the React Flow runtime. Pan and zoom are the
- * viewport's; nothing in the drawing is focusable, draggable or selectable. The diagram is also given as an
+ * viewport's; nothing in the drawing is draggable or editable. Without `renderInspector` nothing is focusable
+ * or selectable either; with it, a node or edge can be chosen to read about it. The diagram is also given as an
  * outline list, which the viewport is described by.
  */
-function DiagramRoot({ label, nodes, edges, hint, outlineLabel = 'Diagram outline', ariaLabels, legendLabels, legend, fitMinZoom, onMaximize, maximizeLabel = 'Maximize' }: DiagramProps) {
+function DiagramRoot({
+  label, nodes, edges, hint, outlineLabel = 'Diagram outline', ariaLabels, legendLabels, legend, fitMinZoom, onMaximize,
+  maximizeLabel = 'Maximize', renderInspector, inspectorLabel = 'Selection',
+}: DiagramProps) {
   const fitView = useMemo(() => (fitMinZoom === undefined ? FIT_VIEW : { ...FIT_VIEW, minZoom: fitMinZoom }), [fitMinZoom]);
   const base = safeId(useId());
   const cellRef = useRef<HTMLSpanElement>(null);
   const cell = useCellSize(cellRef);
-  const flowNodes = useMemo(() => toFlowNodes(nodes, cell, { connectable: false }), [nodes, cell]);
+  const inspecting = Boolean(renderInspector);
+  const [inspected, setInspected] = useState<DiagramSelectionTarget>(null);
+  const selectedId = inspected?.kind === 'node' ? inspected.id : null;
+  const flowNodes = useMemo(() => toFlowNodes(nodes, cell, { connectable: false, selectedId }), [nodes, cell, selectedId]);
   const flowEdges = useMemo(() => toFlowEdges(edges, nodes), [edges, nodes]);
+  const selection = useMemo(() => describeSelection(inspected, nodes, edges), [inspected, nodes, edges]);
+
+  const onNodeClick = useCallback((_: MouseEvent, node: Node) => setInspected({ kind: 'node', id: node.id }), []);
+  const onEdgeClick = useCallback((_: MouseEvent, edge: Edge) => setInspected({ kind: 'edge', id: edge.id }), []);
+  const onPaneClick = useCallback(() => setInspected(null), []);
+  const onKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    const target = targetOf(event.target);
+    if (!target) return;
+    event.preventDefault();
+    setInspected(target);
+  }, []);
 
   return (
-    <div className="cb-diagram">
+    <div className="cb-diagram" data-inspector={inspecting ? 'true' : undefined}>
       <span ref={cellRef} className="cb-diagram__cell" aria-hidden="true" />
       {hint ? <p className="cb-diagram__hint">{hint}</p> : null}
+      <div className="cb-diagram__body">
       <div className="cb-diagram__viewport" role="region" aria-label={label} aria-describedby={`${base}-outline`}>
         <ReactFlow
           nodes={flowNodes}
@@ -63,8 +101,9 @@ function DiagramRoot({ label, nodes, edges, hint, outlineLabel = 'Diagram outlin
           nodesDraggable={false}
           nodesConnectable={false}
           elementsSelectable={false}
-          nodesFocusable={false}
-          edgesFocusable={false}
+          nodesFocusable={inspecting}
+          edgesFocusable={inspecting}
+          {...(inspecting ? { onNodeClick, onEdgeClick, onPaneClick, onKeyDown } : {})}
           {...SCROLL_PANS}
           fitView
           fitViewOptions={fitView}
@@ -83,6 +122,12 @@ function DiagramRoot({ label, nodes, edges, hint, outlineLabel = 'Diagram outlin
             ) : null}
           </Controls>
         </ReactFlow>
+      </div>
+      {renderInspector ? (
+        <aside className="cb-diagram__inspector" aria-label={inspectorLabel}>
+          {renderInspector(selection)}
+        </aside>
+      ) : null}
       </div>
       {legend || legendLabels ? <DiagramLegend nodes={nodes} labels={legendLabels} entries={legend} /> : null}
       <DiagramOutline id={`${base}-outline`} nodes={nodes} edges={edges} label={outlineLabel} />

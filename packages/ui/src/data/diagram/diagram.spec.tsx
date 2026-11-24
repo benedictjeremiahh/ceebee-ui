@@ -4,6 +4,7 @@ import { Diagram } from './diagram.js';
 import { DiagramEditor } from './diagram-editor.js';
 import { edgeHandles } from './diagram.math.js';
 import type { DiagramEdge, DiagramNode } from './diagram.types.js';
+import type { DiagramSelection } from './diagram.selection.js';
 
 /* Dragging, panning, zooming, selection and Delete are React Flow's and depend on layout jsdom does not
    have; they are proven in a browser. These specs cover what this library adds on top: the outline, the
@@ -194,5 +195,37 @@ describe('Diagram explicit legend', () => {
     const swatches = [...document.querySelectorAll('.cb-diagram__legend-swatch')].map((s) => s.getAttribute('data-tone'));
     expect(swatches).toEqual(['success', 'danger']);
     expect(document.querySelector('.cb-diagram__legend')?.textContent).toBe('SelesaiKalah');
+  });
+});
+
+describe('Diagram reading panel', () => {
+  const inspector = (selection: DiagramSelection | null) =>
+    selection?.kind === 'node' ? <p>Chosen {selection.node.label}, then {selection.outgoing.map((link) => link.node.label).join(', ')}</p>
+      : selection?.kind === 'edge' ? <p>Edge {selection.from.label} to {selection.to.label}</p>
+        : <p>Choose a node</p>;
+
+  it('stays inert without a panel: no inspector, nothing focusable', () => {
+    render(<Diagram label="Approval process" nodes={nodes} edges={edges} />);
+    expect(screen.queryByRole('complementary')).toBeNull();
+    expect(wrapperOf('Draft').getAttribute('tabindex')).toBeNull();
+  });
+
+  it('describes the node a click chooses and clears on the empty canvas', () => {
+    render(<Diagram label="Approval process" nodes={nodes} edges={edges} renderInspector={inspector} inspectorLabel="Stage details" />);
+    const panel = screen.getByRole('complementary', { name: 'Stage details' });
+    expect(panel).toHaveTextContent('Choose a node');
+    fireEvent.click(wrapperOf('Review'));
+    expect(panel).toHaveTextContent('Chosen Review, then Approved');
+    expect(wrapperOf('Review')).toHaveClass('selected');
+    fireEvent.click(document.querySelector('.react-flow__pane') as Element);
+    expect(panel).toHaveTextContent('Choose a node');
+  });
+
+  it('chooses a focused node with Enter, so the keyboard reaches the panel too', () => {
+    render(<Diagram label="Approval process" nodes={nodes} edges={edges} renderInspector={inspector} />);
+    const draft = wrapperOf('Draft');
+    expect(draft.getAttribute('tabindex')).toBe('0');
+    fireEvent.keyDown(draft, { key: 'Enter' });
+    expect(screen.getByRole('complementary', { name: 'Selection' })).toHaveTextContent('Chosen Draft, then Review');
   });
 });
