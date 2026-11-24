@@ -26,11 +26,23 @@ export const SCROLL_PANS = { panOnScroll: true, zoomOnScroll: false, zoomOnPinch
 /** Stable across renders: React Flow re-mounts every node when this object changes identity. */
 export const NODE_TYPES: NodeTypes = { [FLOW_NODE_TYPE]: DiagramNodeView };
 
-/** One grid cell in pixels, read from the Token-sized element the diagram renders, so the grid follows the Skin. */
+/**
+ * One grid cell in pixels, read from the Token-sized element the diagram renders, so the grid follows the Skin.
+ * The layout width is read, not the on-screen box: a diagram that mounts inside an opening Modal is still scaled
+ * by the Modal's zoom, and measuring that scaled box packed the nodes together while they kept their full size.
+ * A ResizeObserver re-reads the cell when the Token changes after mount.
+ */
 export function useCellSize(ref: RefObject<HTMLElement | null>): number {
   const [cell, setCell] = useState(FALLBACK_CELL);
   useEffect(() => {
-    setCell(cellSize(ref.current?.getBoundingClientRect().width));
+    const element = ref.current;
+    if (!element) return;
+    const measure = () => setCell(cellSize(element.offsetWidth));
+    measure();
+    if (typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    return () => observer.disconnect();
   }, [ref]);
   return cell;
 }
